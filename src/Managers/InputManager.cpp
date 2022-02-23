@@ -6,6 +6,6 @@
 *
 */
 
-Class InputManager {
+class InputManager {
   
-}
+};
