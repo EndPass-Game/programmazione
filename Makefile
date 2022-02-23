@@ -16,6 +16,7 @@ main: $(OBJS)
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(addprefix $(BUILD_FOLD)/, $(OBJS)) -o $(BUILD_FOLD)/$@
 
 %.o : %.cpp
+	mkdir -p $(BUILD_FOLD)/$(@D)
 	$(CC) $(CFLAGS) $< -c -o $(BUILD_FOLD)/$@
 
 clean:

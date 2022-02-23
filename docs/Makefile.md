@@ -53,8 +53,10 @@ Sto cercando questi file in una cartella di build e sto mettendo l'output in una
 Analiziamo la riga principale per compilare ogni singolo file.
 ```
 %.o : %.cpp
+    mkdir -p $(BUILD_FOLD)/$@
 	$(CC) $(CFLAGS) $(CPPFLAGS) $< -c -o $(BUILD_FOLD)/$@
 ```
+Io sto creando la cartella se non esiste (e sto creando anche le cartelle genitori) con mkdir
 La particolarità di questa riga è che sta utilizzando matching con il simbolo %, infatti se un file termina per .o, sto prendendo il nome di questo file, richiedo come ingrediente nome del file.cpp, e inizio la compilazione coi comandi presenti sotto in modo simile al precedente.
 
 Da notare sono i caratteri particolari $@, $<:
