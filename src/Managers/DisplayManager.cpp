@@ -7,5 +7,5 @@ Funzioni:
 */
 
 class DisplayManager {
-	virtual int render();
+	int nextFrame();
 };
