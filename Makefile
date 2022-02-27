@@ -1,7 +1,5 @@
 CC = g++
-#CC = clang
 CFLAGS =  -Wall -g
-#CPPFLAGS = $(HEADER_FLAGS) -lncurses -lstdc++ -lpthread
 CPPFLAGS = $(HEADER_FLAGS) -lncurses -lstdc++ -pthread
 
 BUILD_FOLD = ./build
@@ -26,3 +24,5 @@ clean:
 
 run: main
 	$(BUILD_FOLD)/$<
+
+	

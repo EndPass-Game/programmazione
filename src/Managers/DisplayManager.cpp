@@ -7,6 +7,8 @@ Funzioni:
 */
 #include "DisplayManager.hpp"
 
+DisplayManager::DisplayManager(){}
+
 void DisplayManager::gameLoop(){
 
 }
