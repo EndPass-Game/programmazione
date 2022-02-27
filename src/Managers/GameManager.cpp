@@ -6,8 +6,8 @@ GameManager* GameManager::instance=nullptr;
 GameManager::GameManager(){
     //istanza di Input Manager
     //istanza level Manager
-    inputManager.levelManager=(&levelManager);
-    displayManager.levelManager=(&levelManager);
+    inputManager.setLevelManager(&levelManager);
+    displayManager.setLevelManager(&levelManager);
 }
 //crea il singleton o restituisce l'oggetto statico
 GameManager* GameManager::GetInstance(){

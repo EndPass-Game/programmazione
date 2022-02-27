@@ -10,7 +10,9 @@ Funzioni:
 void DisplayManager::gameLoop(){
 
 }
-
+void DisplayManager::setLevelManager(LevelManager* levelManager){
+	this->levelManager=levelManager;
+}
 void DisplayManager::nextFrame(){
 
 }
