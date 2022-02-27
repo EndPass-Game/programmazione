@@ -5,7 +5,12 @@ Questa classe si occupa di mostrare sullo schermo
 Funzioni:
 1. Errori 
 */
+#include "DisplayManager.hpp"
 
-class DisplayManager {
-	int nextFrame();
-};
+void DisplayManager::gameLoop(){
+
+}
+
+void DisplayManager::nextFrame(){
+
+}

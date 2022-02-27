@@ -5,7 +5,13 @@
 *  
 *
 */
+#include "InputManager.hpp"
 
-class InputManager {
-  
-};
+InputManager::InputManager(){
+
+}
+
+
+void InputManager::runInputManager(){
+
+}

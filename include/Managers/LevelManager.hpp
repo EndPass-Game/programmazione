@@ -13,3 +13,13 @@ Funzioni:
 
 
 */
+#pragma once
+
+
+class LevelManager{
+private:
+
+public:
+    LevelManager();
+
+};

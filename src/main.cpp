@@ -1,8 +1,10 @@
 
-#include <ncurses.h>
+#include "GameManager.hpp"
 
-
-int main(){}
+int main(){
+    GameManager* gameInstance=GameManager::GetInstance();
+    gameInstance->run();
+}
 
 /*
  * PROVA GAME

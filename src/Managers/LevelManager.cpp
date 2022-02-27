@@ -13,3 +13,9 @@ Funzioni:
 
 
 */
+
+#include "LevelManager.hpp"
+
+LevelManager::LevelManager(){
+    
+}

@@ -8,17 +8,21 @@ private:
     // Singoletto: unica istanza di GameManager
     // Che deve gestire ad alto livello anche tutte le altre istanze
     // di managers
-    DisplayManager *displayManager;
-    // TODO: aggiungere variabili per input e display
+
+    //  aggiungere variabili per input e display
+    LevelManager levelManager;
+    DisplayManager displayManager;
+    InputManager inputManager;
+
+    static GameManager *instance;
 
     // Design-issue: Invece di chiamaretutti i file "manager"
-    // Possiamo mettere tutti questo in un namespace Manage
+    // TODO: Possiamo mettere tutti questo in un namespace Manage
     // in cui stanno tutti i manager
 public:
-    static GameManager *instance;
     GameManager();
-    ~GameManager();
-    GameManager* GetInstance();
+    //~GameManager();
+    static GameManager* GetInstance();
 
     // Inizializza il gameloop e inizia il gioco
     void run();
