@@ -18,8 +18,10 @@ Funzioni:
 
 class LevelManager{
 private:
-
 public:
+    bool isRunning;
+    const int WINDOWS_SIZE_X=10;
+    const int WINDOWS_SIZE_Y=20;
     LevelManager();
 
 };

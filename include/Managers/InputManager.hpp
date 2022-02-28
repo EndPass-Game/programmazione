@@ -7,6 +7,7 @@
 #pragma once
 
 #include "LevelManager.hpp"
+#include <ncurses.h>
 
 class InputManager {
 private:
@@ -14,6 +15,5 @@ private:
 public:
     InputManager();
     //~InputManager();
-    void setLevelManager(LevelManager* levelManager);
-    void runInputManager();
+    void runInputManager(LevelManager* levelManager);
 };

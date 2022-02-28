@@ -9,6 +9,9 @@ Funzioni:
 
 #include <ncurses.h>
 #include "LevelManager.hpp"
+#include <thread>
+#include <chrono>
+
 
 class DisplayManager {
 private:
@@ -17,8 +20,7 @@ private:
 public:
     DisplayManager();
     //~DisplayManager();
-    void gameLoop();
-    void setLevelManager(LevelManager* levelManager);
+    void gameLoop(LevelManager* levelManager);
     void nextFrame();
 
     // methods to render something

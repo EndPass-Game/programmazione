@@ -17,5 +17,5 @@ Funzioni:
 #include "LevelManager.hpp"
 
 LevelManager::LevelManager(){
-    
+    isRunning=true; 
 }

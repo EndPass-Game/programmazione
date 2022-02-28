@@ -6,8 +6,6 @@ GameManager* GameManager::instance=nullptr;
 GameManager::GameManager(){
     //istanza di Input Manager
     //istanza level Manager
-    inputManager.setLevelManager(&levelManager);
-    displayManager.setLevelManager(&levelManager);
 }
 //crea il singleton o restituisce l'oggetto statico
 GameManager* GameManager::GetInstance(){
@@ -19,9 +17,9 @@ GameManager* GameManager::GetInstance(){
 }
 void GameManager::run(){
     //inizio gioco
-    std::thread inputThread(&InputManager::runInputManager,inputManager);
+    std::thread inputThread(&InputManager::runInputManager,inputManager,&levelManager);
     inputThread.detach();
-    std::thread displayThread(&DisplayManager::gameLoop,displayManager);
+    std::thread displayThread(&DisplayManager::gameLoop,displayManager,&levelManager);
     inputThread.join();
     //fine gioco
 }

@@ -11,10 +11,33 @@ InputManager::InputManager(){
 
 }
 
-void InputManager::setLevelManager(LevelManager* levelManager){
-    this->levelManager=levelManager;
-}
 
-void InputManager::runInputManager(){
-    
+void InputManager::runInputManager(LevelManager* levelManager){
+	timeout(300);
+    while(!levelManager->isRunning){
+        int current_input=getch();
+        if(current_input==-1)continue;
+        char char_value=(char)current_input;
+        switch (char_value)
+        {
+        case KEY_LEFT:
+
+            break;
+        case KEY_RIGHT:
+
+            break;
+        case KEY_DOWN:
+
+            break;
+        case KEY_UP:
+
+            break;
+        case 'p':
+            break;
+        case 'q':
+            break;
+        default:
+            break;
+        }
+    }
 }
