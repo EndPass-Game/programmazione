@@ -10,12 +10,11 @@ Dati
 Funzioni:
 
 
-
-
 */
 
 #include "LevelManager.hpp"
 
 LevelManager::LevelManager(){
-    isRunning=true; 
+    gameState=GameState::RUNNING; 
+    player=new Player();
 }

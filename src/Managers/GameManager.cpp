@@ -1,5 +1,4 @@
 #include "GameManager.hpp"
-#include <thread>
 
 GameManager* GameManager::instance=nullptr;
 
@@ -11,19 +10,21 @@ GameManager::GameManager(){
 GameManager* GameManager::GetInstance(){
     
     if(GameManager::instance==nullptr){
-        GameManager::instance=new GameManager();
+        GameManager::instance = new GameManager();
+        initscr();
+        noecho();
+        keypad(stdscr, TRUE);
     }
     return GameManager::instance;
 }
-void GameManager::run(){
+void GameManager::run()
+{
     //inizio gioco
-    std::thread inputThread(&InputManager::runInputManager,inputManager,&levelManager);
+    std::thread inputThread(&InputManager::runInputManager, inputManager, &levelManager);
     inputThread.detach();
-    std::thread displayThread(&DisplayManager::gameLoop,displayManager,&levelManager);
-    inputThread.join();
+    std::thread displayThread(&DisplayManager::gameLoop, displayManager, &levelManager);
+    displayThread.join();
     //fine gioco
+
+    endwin();
 }
-
-
-
-

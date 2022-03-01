@@ -21,7 +21,7 @@ public:
     DisplayManager();
     //~DisplayManager();
     void gameLoop(LevelManager* levelManager);
-    void nextFrame();
+    void nextFrame(LevelManager* levelManager);
 
     // methods to render something
     // Boxes

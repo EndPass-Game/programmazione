@@ -2,6 +2,9 @@
 #include "DisplayManager.hpp"
 #include "InputManager.hpp"
 #include "LevelManager.hpp"
+#include <thread>
+#include <ncurses.h>
+
 
 class GameManager {
 private:

@@ -14,29 +14,28 @@ InputManager::InputManager(){
 
 void InputManager::runInputManager(LevelManager* levelManager){
 	timeout(300);
-    while(!levelManager->isRunning){
+    Player* player=levelManager->player;
+    while(levelManager->gameState==GameState::RUNNING){
         int current_input=getch();
         if(current_input==-1)continue;
-        char char_value=(char)current_input;
-        switch (char_value)
-        {
-        case KEY_LEFT:
-
+        switch(current_input){
+        case 'a':
+            player->direction=Direction::LEFT;
             break;
-        case KEY_RIGHT:
-
+        case 'd':
+            player->direction=Direction::RIGHT;
             break;
-        case KEY_DOWN:
-
+        case 's':
+            player->direction=Direction::DOWN;
             break;
-        case KEY_UP:
-
+        case 'w':
+            player->direction=Direction::UP;
             break;
         case 'p':
+            levelManager->gameState=GameState::PAUSE;
             break;
         case 'q':
-            break;
-        default:
+            levelManager->gameState=GameState::FINISH;
             break;
         }
     }

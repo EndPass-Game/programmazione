@@ -15,13 +15,20 @@ Funzioni:
 */
 #pragma once
 
+class LevelManager;
+
+#include "GameStateEnum.hpp"
+#include "Player.hpp"
+
+
 
 class LevelManager{
 private:
 public:
-    bool isRunning;
-    const int WINDOWS_SIZE_X=10;
-    const int WINDOWS_SIZE_Y=20;
+    Player* player;
+    GameState gameState;
+    const int WINDOWS_SIZE_X=15;
+    const int WINDOWS_SIZE_Y=25;
     LevelManager();
 
 };

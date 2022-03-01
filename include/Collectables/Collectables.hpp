@@ -1,5 +1,4 @@
 #pragma once
-#include "posizione.hpp"
 /*
 Dati:
 1. posizione
@@ -12,8 +11,7 @@ Funzioni:
 
 class Collectable extends Display{
 private:
-	Posizione pos;	  
 public:
 
 
-}
+};
