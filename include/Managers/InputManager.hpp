@@ -15,5 +15,8 @@ private:
 public:
     InputManager();
     //~InputManager();
+
+    // ISSUE: perché questa funzione prende level manager se lo
+    // ho già come membro privato?
     void runInputManager(LevelManager* levelManager);
 };

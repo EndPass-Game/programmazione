@@ -27,7 +27,6 @@ void DisplayManager::deleteWindow()
     win = nullptr;
 }
 
-
 void DisplayManager::gameLoop(LevelManager *levelManager)
 {
     //create windows

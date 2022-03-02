@@ -3,8 +3,11 @@
 #include <climits>
 #include <ncurses.h>
 
+// ISSUE: muovere questo in una directory per classi astratte?
+// ISSUE: chiamare questa classe displayable, dato che è astratta?
+// così ha senso derivare
 
-//Display: è una classe che astrae 
+//Display: è una classe che astratta per printare gli oggetti
 class Display{
 public:
     //Ultima posizione dell'oggetto rispetto alla finestra

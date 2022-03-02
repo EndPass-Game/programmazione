@@ -1,6 +1,7 @@
 CC = g++
 CFLAGS =  -Wall -g
-CPPFLAGS = $(HEADER_FLAGS) -lncurses -lstdc++ -pthread
+CPPFLAGS =  $(HEADER_FLAGS)  
+LINKER_FLAG = -lstdc++ -pthread -lncurses
 
 BUILD_FOLD = ./build
 HEADERS = ./include
@@ -13,7 +14,7 @@ sources = $(shell find $(SRC)/ -type f -name '*.cpp')
 OBJS := $(patsubst %.cpp,%.o,$(sources))
 
 main:  $(OBJS) 
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(addprefix $(BUILD_FOLD)/, $(OBJS)) -o $(BUILD_FOLD)/$@
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(addprefix $(BUILD_FOLD)/, $(OBJS)) $(LINKER_FLAG)  -o $(BUILD_FOLD)/$@
 
 %.o : %.cpp 
 	@mkdir -p $(BUILD_FOLD)/$(@D)

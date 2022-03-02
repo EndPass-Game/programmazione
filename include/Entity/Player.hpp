@@ -21,12 +21,16 @@ class Player;
 #include "Direction.hpp"
 #include "Display.hpp"
 #include "LevelManager.hpp"
-
-class Player: public Display{
+//Player: classe che contiene il personaggio
+//estende Display
+class Player: public Display {
 public:
-    Direction direction; 
+    //enum che contine la direzione che dovrà essere intrapresa nel prossimo frame
+    Direction direction;
     Player();
+    //è muovrere il player nella direction settata
     void move(LevelManager* level);
+    //
     bool canMove(int x,int y,LevelManager* level);
 private:
 

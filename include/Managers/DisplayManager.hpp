@@ -18,6 +18,9 @@ private:
     //la windows che contine il gioco
     WINDOW *win=nullptr;
 public:
+
+    // Design-issue: 3 funzioni prendon il level manager come input
+    // Dovrebbe essere un membro provato della classe?
     DisplayManager();
     //~DisplayManager();
     //crea la finestra e calcola il next frame

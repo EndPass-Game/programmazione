@@ -15,7 +15,9 @@ InputManager::InputManager(){
 void InputManager::runInputManager(LevelManager* levelManager){
 	timeout(300);
     Player* player=levelManager->player;
-    while(levelManager->gameState==GameState::RUNNING){
+    while(levelManager->gameState!=GameState::FINISH){
+        // TODO: mettere direction del player privata (ed encapsulata)
+        // e aggiungere getter e setter
         int current_input=getch();
         if(current_input==-1)continue;
         switch(current_input){
