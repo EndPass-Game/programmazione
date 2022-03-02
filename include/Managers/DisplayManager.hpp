@@ -15,16 +15,18 @@ Funzioni:
 
 class DisplayManager {
 private:
-    WINDOW *win;
-    LevelManager* levelManager;
+    //la windows che contine il gioco
+    WINDOW *win=nullptr;
 public:
     DisplayManager();
     //~DisplayManager();
+    //crea la finestra e calcola il next frame
     void gameLoop(LevelManager* levelManager);
+    //fa il display degli oggetti
     void nextFrame(LevelManager* levelManager);
+    //crea la finestra di gioco
+    void createWindow(LevelManager* levelManager);
+    //distrugge la finestra di gioco
+    void deleteWindow();
 
-    // methods to render something
-    // Boxes
-    // people
-    // Writings ok?
 };
