@@ -1,4 +1,3 @@
-#pragma once
 /*
 Dati:
 1. posizione
@@ -9,7 +8,11 @@ Funzioni:
 3. Undisplay
 */
 
-class Collectable extends Display{
+#pragma once
+
+#include "displayable.hpp"
+
+class Collectable: public Displayable {
 private:
 public:
 

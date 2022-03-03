@@ -1,10 +1,10 @@
 
-#include "GameManager.hpp"
+#include "game.hpp"
 
 
 int main(){
     
-    GameManager* gameInstance=GameManager::GetInstance();
+    manager::Game* gameInstance = manager::Game::GetInstance();
     gameInstance->run();
     delete gameInstance;
 }
