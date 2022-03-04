@@ -6,17 +6,18 @@
 */
 #pragma once
 
-#include "LevelManager.hpp"
-#include <ncurses.h>
+#include "level.hpp"
 
-class InputManager {
-private:
-    LevelManager* levelManager;
-public:
-    InputManager();
-    //~InputManager();
+namespace manager {
+    class Input {
+      private:
+        Level* levelManager_; // FIXME: perché qui c'è un level manager ma non lo uso
+      public:
+        Input();
+        //~InputManager();
 
-    // ISSUE: perché questa funzione prende level manager se lo
-    // ho già come membro privato?
-    void runInputManager(LevelManager* levelManager);
-};
+        // ISSUE: perché questa funzione prende level manager se lo
+        // ho già come membro privato?
+        void run(Level* levelManager);
+    };
+}

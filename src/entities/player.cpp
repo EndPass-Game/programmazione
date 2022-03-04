@@ -14,38 +14,49 @@ Funzioni
 Altro
 1. Inventario ( Classe apparte? )
 */
-#include "Player.hpp"
+#include "player.hpp"
 
-Player::Player():Display(Position{1,1},'P'),direction(NONE){}
+#include "direction.hpp"
+#include "displayable.hpp"
 
-void Player::move(LevelManager* level){
-    int new_x=current.x,new_y=current.y;
-    switch(this->direction){
-        case Direction::UP:
-            new_x-=1;
+#include "display.hpp" // TODO: rimuovere questo import per le costanti di win quando si avrà il sistema per detection collisioni
+
+Player::Player(): Displayable(Position{1,1}, 'P'), direction_(enums::NONE){}
+
+void Player::move(){
+    int new_x = current_.x, new_y = current_.y;
+    switch(this->direction_){
+        case enums::Direction::UP:
+            new_x -= 1;
             break;
-        case Direction::RIGHT:
-            new_y+=1;
+        case enums::Direction::RIGHT:
+            new_y += 1;
             break;
-        case Direction::LEFT:
-            new_y-=1;
+        case enums::Direction::LEFT:
+            new_y -= 1;
             break;
-        case Direction::DOWN:
-            new_x+=1;
+        case enums::Direction::DOWN:
+            new_x += 1;
             break;
-        case Direction::NONE:
-        //TODO:questa non piacerà al prof
+        case enums::Direction::NONE:
+            // TODO: creare un modo migliore per uscire dalla funzione
+            // invece che un return qui
             return;
             break;
     }
-    if(canMove(new_x,new_y,level)){
-        movePosition({new_x,new_y});
+
+    if(canMove(new_x, new_y)){
+        movePosition({new_x, new_y});
     }
-    this->direction=Direction::NONE;
+    
+    this->direction_ = enums::Direction::NONE;
 }
 
-bool Player::canMove(int x,int y,LevelManager* level){
-    return (x>0 and y>0) and
-        (x<level->WINDOWS_SIZE_X-1 and y<level->WINDOWS_SIZE_Y-1);
+bool Player::canMove(int x, int y){
+    return (x > 0 && y > 0) &&
+        (x < manager::kWindowSizeX - 1 && y < manager::kWindowSizeY - 1);
 }
 
+void Player::setDirection(enums::Direction direction) {
+    direction_ = direction;
+}

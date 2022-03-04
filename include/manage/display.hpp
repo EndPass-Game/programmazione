@@ -8,28 +8,41 @@ Funzioni:
 #pragma once
 
 #include <ncurses.h>
-#include "LevelManager.hpp"
-#include <thread>
-#include <chrono>
+
+#include "level.hpp"
 
 
-class DisplayManager {
-private:
-    //la windows che contine il gioco
-    WINDOW *win=nullptr;
-public:
+namespace manager {
+    // Descrive la dimensione orizzontale della schermata di gioco
+    const int kWindowSizeX = 15;
 
-    // Design-issue: 3 funzioni prendon il level manager come input
-    // Dovrebbe essere un membro provato della classe?
-    DisplayManager();
-    //~DisplayManager();
-    //crea la finestra e calcola il next frame
-    void gameLoop(LevelManager* levelManager);
-    //fa il display degli oggetti
-    void nextFrame(LevelManager* levelManager);
-    //crea la finestra di gioco
-    void createWindow(LevelManager* levelManager);
-    //distrugge la finestra di gioco
-    void deleteWindow();
+    // Descrive la dimensione verticale della schermata di gioco
+    const int kWindowSizeY = 25;
 
-};
+    class Display {
+      private:
+        // WINDOW di ncurses che contiene tutte le entità, muri
+        // che sono mostrati al giocatore
+        WINDOW *win_ = nullptr;
+        
+      public:
+
+        // TODO: Design-issue: 3 funzioni prendon il level manager come input
+        // Dovrebbe essere un membro provato della classe?
+        Display();
+
+        // ~DisplayManager();
+
+        // crea la finestra e calcola il next frame
+        void gameLoop(Level* levelManager);
+
+        // fa il display degli oggetti
+        void nextFrame(Level* levelManager);
+
+        // crea la finestra di gioco
+        void createWindow();
+
+        // distrugge la finestra di gioco
+        void deleteWindow();
+    };
+}

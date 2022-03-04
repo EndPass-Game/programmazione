@@ -8,13 +8,15 @@ Dati
 6. stanze
 
 Funzioni:
-
-
 */
 
-#include "LevelManager.hpp"
+#include "game_state.hpp"
+#include "level.hpp"
+#include "player.hpp"
 
-LevelManager::LevelManager(){
-    gameState=GameState::RUNNING; 
-    player=new Player();
+namespace manager {
+    Level::Level() {
+        gameState = enums::GameState::RUNNING; 
+        player = new Player();
+    }
 }

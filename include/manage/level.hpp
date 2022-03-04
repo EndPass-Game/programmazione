@@ -15,28 +15,24 @@ Funzioni:
 */
 #pragma once
 
-class LevelManager;
+#include "game_state.hpp"
+#include "player.hpp"
 
-#include "GameStateEnum.hpp"
-#include "Player.hpp"
+namespace manager {
+    // Level manager:contiene tutte gli oggetti che vengono mostrati
+    // nel gioco
 
+    // TODO: come descritto nel commento di commit, per le interfacce present qui
+    // questo dovrebbe essere una struct, ma essendo un manager questo simbolo
+    // dovrebbe fare molto di più (come costruzione dell'ambiente schermo)
+    // bisogna definire meglio le responsabilità di questo level manager
+    struct Level {
+      public:
+        Level();
 
-// Level manager:contiene tutte gli oggetti che vengono mostrati
-// nel gioco
-class LevelManager{
-private:
-public:
-    //la classe del giocatore principale
-    Player* player;
-    //Enum che identifica lo stato del gioco
-    GameState gameState;
+        //la classe del giocatore principale
+        Player* player;
 
-    //La size della schermata dove è contenuto il gioco
-    const int WINDOWS_SIZE_X=15;
-    //La size della schermata dove è contenuto il gioco
-    const int WINDOWS_SIZE_Y=25;
-
-
-    LevelManager();
-
-};
+        enums::GameState gameState;
+    };
+}
