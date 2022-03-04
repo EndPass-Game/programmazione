@@ -1,9 +1,8 @@
 CC = g++
 CFLAGS =  -Wall -g
-CPPFLAGS =  $(HEADER_FLAGS)  
 LINKER_FLAG = -lstdc++ -pthread -lncurses
 
-BUILD_FOLD = ./build
+BUILD_PATH = ./build
 HEADERS = ./include
 SRC = ./src
 
@@ -11,19 +10,20 @@ headers = $(shell find $(HEADERS)/ -type d)
 HEADER_FLAGS = $(addprefix -I, $(headers))
 
 sources = $(shell find $(SRC)/ -type f -name '*.cpp')
-OBJS := $(patsubst %.cpp,%.o,$(sources))
+OBJS_NO_BUILD_PATH := $(patsubst %.cpp,%.o,$(sources))
+OBJS = $(addprefix $(BUILD_PATH)/, $(OBJS_NO_BUILD_PATH))
 
 main:  $(OBJS) 
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(addprefix $(BUILD_FOLD)/, $(OBJS)) $(LINKER_FLAG)  -o $(BUILD_FOLD)/$@
+	$(CC) $(CFLAGS) $(HEADER_FLAGS) $(OBJS) $(LINKER_FLAG)  -o $(BUILD_PATH)/$@
 
-%.o : %.cpp 
-	@mkdir -p $(BUILD_FOLD)/$(@D)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $< -c -o $(BUILD_FOLD)/$@
+$(OBJS): $(BUILD_PATH)/%.o : %.cpp 
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) $(HEADER_FLAGS) $< -c -o $@
 
 clean:
-	rm $(addprefix $(BUILD_FOLD)/, $(OBJS))
+	rm $(OBJS)
 
 run: main
-	$(BUILD_FOLD)/$<
+	$(BUILD_PATH)/$<
 
 	
