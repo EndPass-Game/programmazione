@@ -10,10 +10,8 @@
 
 class InputManager {
 private:
-    LevelManager* levelManager;
 public:
     InputManager();
     //~InputManager();
-    void setLevelManager(LevelManager* levelManager);
-    void runInputManager();
+    void runInputManager(LevelManager* levelManager);
 };

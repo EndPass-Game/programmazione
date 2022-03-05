@@ -13,12 +13,9 @@ Funzioni:
 class DisplayManager {
 private:
     WINDOW *win;
-    LevelManager* levelManager;
 public:
-    DisplayManager();
-    //~DisplayManager();
-    void gameLoop();
-    void setLevelManager(LevelManager* levelManager);
+    //DisplayManager();
+    void gameLoop(LevelManager* levelManager);
     void nextFrame();
 
     // methods to render something

@@ -7,11 +7,8 @@ Funzioni:
 */
 #include "DisplayManager.hpp"
 
-void DisplayManager::gameLoop(){
+void DisplayManager::gameLoop(LevelManager* levelManager){
 
-}
-void DisplayManager::setLevelManager(LevelManager* levelManager){
-	this->levelManager=levelManager;
 }
 void DisplayManager::nextFrame(){
 

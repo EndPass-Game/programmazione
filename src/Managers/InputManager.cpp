@@ -11,10 +11,7 @@ InputManager::InputManager(){
 
 }
 
-void InputManager::setLevelManager(LevelManager* levelManager){
-    this->levelManager=levelManager;
-}
 
-void InputManager::runInputManager(){
+void InputManager::runInputManager(LevelManager* levelManager){
     
 }
