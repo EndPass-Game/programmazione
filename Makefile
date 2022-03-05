@@ -6,7 +6,7 @@ BUILD_PATH = ./build
 HEADERS = ./include
 SRC = ./src
 
-headers = $(shell find $(HEADERS)/ -type d)
+headers = $(shell find $(HEADERS)/ -type d) src/data_structure/
 HEADER_FLAGS = $(addprefix -I, $(headers))
 
 sources = $(shell find $(SRC)/ -type f -name '*.cpp')

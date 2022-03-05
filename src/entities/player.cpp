@@ -24,7 +24,7 @@ Altro
 Player::Player(): Displayable(Position{1,1}, 'P'), direction_(enums::NONE){}
 
 void Player::move(){
-    int new_x = current_.x, new_y = current_.y;
+    int new_x = getPosition().x, new_y = getPosition().y;
     switch(this->direction_){
         case enums::Direction::UP:
             new_x -= 1;

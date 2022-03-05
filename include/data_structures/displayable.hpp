@@ -3,6 +3,10 @@
 #include <ncurses.h>
 
 #include "position.hpp"
+#include "changeable.hpp"
+
+//TODO:bisogna poter includere questo file
+
 
 // ISSUE: muovere questo in una directory per classi astratte?
 
@@ -10,11 +14,9 @@
 // sullo schermo
 class Displayable {
   protected:  
-    // Ultima posizione dell'oggetto rispetto alla finestra
-    Position last_; 
-
-    // Posizione corrente dell'oggetto rispetto alla finestra
-    Position current_;
+    //oggetto che contiene le ultime due posizioni dell'oggetto
+    //e controlla quando cambia la posizione
+    Changeable<Position> *position;
 
     // la char che viene printata a video
     char displayChar_;
@@ -22,6 +24,9 @@ class Displayable {
   public:
 
     Displayable(Position current, char displayChar);
+    ~Displayable();
+
+    Position getPosition();
 
     // Modifica la posizione e se non è uguale a quella corrente
     void movePosition(Position newPosition);
@@ -31,4 +36,5 @@ class Displayable {
 
     // Se la posizione è stata modificata riprinta il carattere nella posizione corrente
     void render(WINDOW* win);
+
 };

@@ -1,28 +1,29 @@
 #include "displayable.hpp"
-#include "position.hpp"
-
 
 Displayable::Displayable(Position current, char display_char) : 
-    last_({-1, -1}),  // all'inizio del gioco non ho un valore vecchio, -1 per non esistenza (fuori schermo)
-    current_(current), 
-    displayChar_(display_char) {}
+    displayChar_(display_char) {
+        position=new Changeable<Position>(current);
+    }
 
 void Displayable::movePosition(Position new_position) {
-    if (new_position != current_) {
-        last_ = current_;
-        current_ = new_position;
-    }
+    position->setCurrent(new_position);
 }
 
 void Displayable::clearLast(WINDOW *win) {
-    if (last_ != current_ && last_ != Position{-1,-1}) {
-        mvwprintw(win, last_.x, last_.y, " ");
+    if (position->isChanged()) {
+        mvwprintw(win, position->getLast().x, position->getLast().y, " ");
     }
 }
 
+Position Displayable::getPosition(){
+    return position->getCurrent();
+}
 void Displayable::render(WINDOW *win) {
-    if (last_ != current_) {
-        mvwprintw(win, current_.x, current_.y, "%c", displayChar_);
-        last_ = current_;
+    if (position->isChanged() or position->isFirstValue()) {
+        mvwprintw(win, position->getCurrent().x, position->getCurrent().y, "%c", displayChar_);
+        movePosition(position->getCurrent());
     }
+}
+Displayable::~Displayable(){
+    delete position;
 }

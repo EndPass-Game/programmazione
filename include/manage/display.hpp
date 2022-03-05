@@ -10,6 +10,7 @@ Funzioni:
 #include <ncurses.h>
 
 #include "level.hpp"
+#include "size.hpp"
 
 
 namespace manager {
@@ -23,8 +24,19 @@ namespace manager {
       private:
         // WINDOW di ncurses che contiene tutte le entità, muri
         // che sono mostrati al giocatore
-        WINDOW *win_ = nullptr;
+        WINDOW *gameWin_ = nullptr;
+        // crea la finestra di gioco
+        void createGameWindow();
+
+        // distrugge la finestra di gioco
+        void deleteGameWindow();
+
+        Size getSizeScreen();
+
+        Size getSizeWindow(WINDOW* win);
+
         
+
       public:
 
         // TODO: Design-issue: 3 funzioni prendon il level manager come input
@@ -39,10 +51,5 @@ namespace manager {
         // fa il display degli oggetti
         void nextFrame(Level* levelManager);
 
-        // crea la finestra di gioco
-        void createWindow();
-
-        // distrugge la finestra di gioco
-        void deleteWindow();
     };
 }

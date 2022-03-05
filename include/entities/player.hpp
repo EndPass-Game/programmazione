@@ -21,6 +21,8 @@ Altro
 
 // Player: classe che contiene il personaggio
 // estende Display
+//TODO:refactor mettere displayable come superclasse di entity e mettere
+//entiti come superclasse di Player
 class Player: public Displayable {
   private:
     // Contiene la direzione che dovrà essere intrapresa nel prossimo frame
