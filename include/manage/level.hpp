@@ -17,6 +17,7 @@ Funzioni:
 
 #include "game_state.hpp"
 #include "player.hpp"
+#include "changeable.hpp"
 
 namespace manager {
     // Level manager:contiene tutte gli oggetti che vengono mostrati
@@ -29,10 +30,11 @@ namespace manager {
     struct Level {
       public:
         Level();
+        ~Level();
 
         //la classe del giocatore principale
         Player* player;
-
-        enums::GameState gameState;
+        //TODO:deve messere in una mutex perchè più thread ci accedono contemporaneamente
+        Changeable<enums::GameState> gameState;
     };
 }
