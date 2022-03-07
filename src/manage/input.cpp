@@ -40,7 +40,14 @@ namespace manager {
                 player->setDirection(enums::Direction::UP);
                 break;
             case 'p':
-                levelManager->gameState = enums::GameState::PAUSE;
+                {
+                    if(levelManager->gameState==enums::GameState::PAUSE){
+                        levelManager->gameState = enums::GameState::RUNNING;
+                    }else{
+                        levelManager->gameState = enums::GameState::PAUSE;
+                    }
+
+                }
                 break;
             case 'q':
                 levelManager->gameState = enums::GameState::FINISH;

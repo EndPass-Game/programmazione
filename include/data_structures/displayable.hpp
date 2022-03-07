@@ -35,6 +35,6 @@ class Displayable {
     void clearLast(WINDOW* win);
 
     // Se la posizione è stata modificata riprinta il carattere nella posizione corrente
-    void render(WINDOW* win);
+    void render(WINDOW* win,bool forced=false);
 
 };

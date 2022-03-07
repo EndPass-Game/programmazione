@@ -54,7 +54,7 @@ void Player::move(){
 
 bool Player::canMove(int x, int y){
     return (x > 0 && y > 0) &&
-        (x < manager::kWindowSizeX - 1 && y < manager::kWindowSizeY - 1);
+        (x < manager::kGameWindowsSize.x - 1 && y < manager::kGameWindowsSize.y - 1);
 }
 
 void Player::setDirection(enums::Direction direction) {

@@ -18,8 +18,8 @@ void Displayable::clearLast(WINDOW *win) {
 Position Displayable::getPosition(){
     return position->getCurrent();
 }
-void Displayable::render(WINDOW *win) {
-    if (position->isChanged() or position->isFirstValue()) {
+void Displayable::render(WINDOW *win,bool forced) {
+    if (position->isChanged() or position->isFirstValue() or forced) {
         mvwprintw(win, position->getCurrent().x, position->getCurrent().y, "%c", displayChar_);
         movePosition(position->getCurrent());
     }

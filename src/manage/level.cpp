@@ -16,7 +16,12 @@ Funzioni:
 
 namespace manager {
     Level::Level() {
-        gameState = enums::GameState::RUNNING; 
         player = new Player();
+        gameState= new Changeable<enums::GameState>(enums::GameState::RUNNING);
+    }
+
+    Level::~Level(){
+        delete player;
+        delete gameState;
     }
 }
