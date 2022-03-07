@@ -27,6 +27,8 @@ class Player: public Displayable {
   private:
     // Contiene la direzione che dovrà essere intrapresa nel prossimo frame
     enums::Direction direction_;
+
+    std::mutex mutex;
   public:
     Player();
 

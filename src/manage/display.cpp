@@ -79,9 +79,11 @@ namespace manager {
             createGameWindow();
         }
         if (currentScreenSize_->getCurrent().x < kGameWindowsSize.x 
-            and currentScreenSize_->getCurrent().y < kGameWindowsSize.y)
+            or currentScreenSize_->getCurrent().y < kGameWindowsSize.y)
         {
-            levelManager->gameState=enums::GameState::SCREEN_TO_SMALL;
+            levelManager->gameState->setCurrent(enums::GameState::SCREEN_TO_SMALL);
+        }else if(levelManager->gameState->getCurrent()==enums::GameState::SCREEN_TO_SMALL){
+            levelManager->gameState->setCurrent(enums::GameState::PAUSE);
         }
 
         return isChanged;
@@ -89,10 +91,13 @@ namespace manager {
 
     void Display::runningLoop(Level *levelManager)
     {
-        while (levelManager->gameState == enums::GameState::RUNNING)
+        clear();
+        bool first=true;
+        while (levelManager->gameState->getCurrent() == enums::GameState::RUNNING)
         {
             // TODO: le variabili qui sopra non sono utilizzate, farle
             bool changed = handleSizeChange(levelManager);
+            changed|=first;
             nextFrame(levelManager, changed);
             wrefresh(gameWin_);
             std::this_thread::sleep_for(std::chrono::milliseconds(kSleepTime));
@@ -100,10 +105,11 @@ namespace manager {
     }
     void Display::pauseLoop(Level *levelManager)
     {
-        while (levelManager->gameState == enums::GameState::PAUSE)
+        clear();
+        while (levelManager->gameState->getCurrent() == enums::GameState::PAUSE)
         {
             handleSizeChange(levelManager);
-            mvprintw(0, 0, "GameState Paused");
+            mvprintw(0, 0, "GameState Paused, click 'p' to resume");
             refresh();
             std::this_thread::sleep_for(std::chrono::milliseconds(kSleepTime));
         }
@@ -113,9 +119,9 @@ namespace manager {
     {
 
         createGameWindow();
-        while (levelManager->gameState != enums::GameState::FINISH)
+        while (levelManager->gameState->getCurrent() != enums::GameState::FINISH)
         {
-            switch (levelManager->gameState)
+            switch (levelManager->gameState->getCurrent())
             {
             case enums::GameState::RUNNING:
                 runningLoop(levelManager);
@@ -126,7 +132,7 @@ namespace manager {
             case enums::GameState::SCREEN_TO_SMALL:
             {
                 //TODO:va wrappato in una funzione es smallScreenLoop();
-                while (levelManager->gameState == enums::GameState::SCREEN_TO_SMALL)
+                while (levelManager->gameState->getCurrent() == enums::GameState::SCREEN_TO_SMALL)
                 {
                     handleSizeChange(levelManager);
                     mvprintw(0, 0, "screen TO small");

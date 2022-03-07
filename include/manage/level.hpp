@@ -18,6 +18,7 @@ Funzioni:
 #include "game_state.hpp"
 #include "player.hpp"
 #include "changeable.hpp"
+#include <mutex>
 
 namespace manager {
     // Level manager:contiene tutte gli oggetti che vengono mostrati
@@ -28,13 +29,18 @@ namespace manager {
     // dovrebbe fare molto di più (come costruzione dell'ambiente schermo)
     // bisogna definire meglio le responsabilità di questo level manager
     struct Level {
+      private:
+        //
+        std::mutex levelMutex;
       public:
         Level();
         ~Level();
 
+        void getCurrentGameState(enums::GameState game);
         //la classe del giocatore principale
         Player* player;
-        //TODO:deve messere in una mutex perchè più thread ci accedono contemporaneamente
-        Changeable<enums::GameState> gameState;
+        Changeable<enums::GameState>* gameState;
+
+
     };
 }
