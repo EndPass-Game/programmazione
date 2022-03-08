@@ -14,8 +14,11 @@ namespace manager {
       public:
         //Input();
         //~InputManager();
+        //fa l'handle degli input che il programma prende se è nello stato Running
         void gameState(int input,Level* levelManager); 
+        //fa l'handle degli input che il programma prende se è nello stato di pausa
         void pauseState(int input,Level* levelManager); 
+        //fa l'handle degli input che il programma prende in qualsiasi stato
         void allState(int input,Level* levelManager);
 
         // ISSUE: perché questa funzione prende level manager se lo

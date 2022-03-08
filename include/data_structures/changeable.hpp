@@ -9,20 +9,36 @@ template <class T>
 class Changeable
 {
 private:
+    //ultimo valore dell'elemento
     T last_;
+    // elemento corrente
     T current_;
+    // vera solo quando è chiamato il costruttore senza last
     bool firstValue_;
+    //mutex per mantenere l'oggetto thread safe
     std::mutex mutex;
 public:
+    //inizializziamo anche con il valore vecchio
+    //isFirstValue sarà false e isChange darà last!=current come risultato
     Changeable(T last, T current);
+    //Costruttore che setta solo il valore corrente
+    //isChange darà false ma isFirstVAlue darà true
     Changeable(T current);
 
+    //se è la prima volta che è stato inizializzato
+    // da true come risultato
     bool isFirstValue();
 
+    //ritorna true se l'oggetto è stato cambiato
     bool isChanged();
 
+    //mette current=last e current=newVal
     void setCurrent(T newVal);
+
+    //ritorna penultimo valore preso da setCurrent
     T getLast();
+
+    //ritorna l'ultimo valore preso da setCurrent
     T getCurrent();
 };
 

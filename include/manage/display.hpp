@@ -20,25 +20,35 @@ namespace manager {
     const int kSleepTime=50;
     class Display {
       private:
+        //mantiene una struttura che ricorda lo stato vecchio della size
         Changeable<Size>* currentScreenSize_;
         // WINDOW di ncurses che contiene tutte le entità, muri
         // che sono mostrati al giocatore
         WINDOW *gameWin_ = nullptr;
         // crea la finestra di gioco
         void createGameWindow();
+        //esegue delle operazioni in base a come si è modificata la dimensione
+        // setta lo stato Game to small e le varie schermate
         bool handleSizeChange(Level* level);
 
         // distrugge la finestra di gioco
         void deleteGameWindow();
 
+        //funzione che calcola la posizione della finestra di gioco per centrarla
         Position getGameWindowPosition();
 
-
+        //ricalcola la screen size guardando anche se cambia
         Size updateScreenSize();
 
+        //TODO:funzione non utilizzata, ma potrebbe servire in un futuro
         Size getSizeWindow(WINDOW *win);
 
+        //funzione che viene eseguita quando il programma entra nello stato di pausa
+        //e finisce di eseguire quando cambia stato
         void pauseLoop(Level* level);
+
+        //funzione che viene eseguita quando il programma entra nello stato di running
+        //e finisce di eseguire quando cambia stato
         void runningLoop(Level* level);
 
       public:
@@ -51,7 +61,7 @@ namespace manager {
         // crea la finestra e calcola il next frame
         void gameLoop(Level *levelManager);
 
-        // fa il display degli oggetti
+        //mostra gli oggetti a video, e li muove, se force è true foza gli oggetti ad essere riprintati
         void nextFrame(Level *levelManager,bool force);
     };
 }

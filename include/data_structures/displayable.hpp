@@ -23,9 +23,12 @@ class Displayable {
 
   public:
 
+    //construttore che inizializza l'oggetto changable e display char
     Displayable(Position current, char displayChar);
+    //elimina i pointer
     ~Displayable();
 
+    //
     Position getPosition();
 
     // Modifica la posizione e se non è uguale a quella corrente
