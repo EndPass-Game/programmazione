@@ -11,9 +11,12 @@
 namespace manager {
     class Input {
       private:
-        Level* levelManager_; // FIXME: perché qui c'è un level manager ma non lo uso
+
+        void handleInputOnGameState(int input,Level* levelManager); 
+        void handleInputOnPauseState(int input,Level* levelManager); 
+        void handleInputOnAllState(int input,Level* levelManager);
       public:
-        Input();
+        //Input();
         //~InputManager();
 
         // ISSUE: perché questa funzione prende level manager se lo
