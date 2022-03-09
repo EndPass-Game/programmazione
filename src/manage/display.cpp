@@ -51,11 +51,10 @@ namespace manager {
         return Size{getmaxx(win), getmaxy(win)};
     }
 
-    Size Display::updateScreenSize()
+    void Display::updateScreenSize()
     {
         Size newSize={LINES,COLS};
         currentScreenSize_->setCurrent(newSize);
-        return newSize;
     }
 
 
@@ -67,7 +66,7 @@ namespace manager {
     }
     
 
-    bool Display::handleSizeChange(Level* levelManager)
+    bool Display:: handleScreenSizeChange(Level* levelManager)
     {
         updateScreenSize();
         bool isChanged=currentScreenSize_->isChanged();
@@ -97,7 +96,7 @@ namespace manager {
         while (levelManager->gameState->getCurrent() == enums::GameState::RUNNING)
         {
             // TODO: le variabili qui sopra non sono utilizzate, farle
-            bool changed = handleSizeChange(levelManager);
+            bool changed =  handleScreenSizeChange(levelManager);
             changed |= first;
             nextFrame(levelManager, changed);
             wrefresh(gameWin_);
@@ -109,7 +108,7 @@ namespace manager {
         clear();
         while (levelManager->gameState->getCurrent() == enums::GameState::PAUSE)
         {
-            handleSizeChange(levelManager);
+             handleScreenSizeChange(levelManager);
             mvprintw(0, 0, "GameState Paused, click 'p' to resume");
             refresh();
             std::this_thread::sleep_for(std::chrono::milliseconds(kSleepTime));
@@ -135,7 +134,7 @@ namespace manager {
                 //TODO:va wrappato in una funzione es smallScreenLoop();
                 while (levelManager->gameState->getCurrent() == enums::GameState::SCREEN_TO_SMALL)
                 {
-                    handleSizeChange(levelManager);
+                     handleScreenSizeChange(levelManager);
                     mvprintw(0, 0, "screen TO small");
                     refresh();
                     std::this_thread::sleep_for(std::chrono::milliseconds(kSleepTime));

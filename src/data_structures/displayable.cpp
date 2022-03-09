@@ -2,28 +2,28 @@
 
 Displayable::Displayable(Position current, char display_char) : 
     displayChar_(display_char) {
-        position=new Changeable<Position>(current);
+        position_=new Changeable<Position>(current);
     }
 
-void Displayable::movePosition(Position new_position) {
-    position->setCurrent(new_position);
+void Displayable::setPosition(Position new_position_) {
+    position_->setCurrent(new_position_);
 }
 
 void Displayable::clearLast(WINDOW *win) {
-    if (position->isChanged()) {
-        mvwprintw(win, position->getLast().x, position->getLast().y, " ");
+    if (position_->isChanged()) {
+        mvwprintw(win, position_->getLast().x, position_->getLast().y, " ");
     }
 }
 
 Position Displayable::getPosition(){
-    return position->getCurrent();
+    return position_->getCurrent();
 }
 void Displayable::render(WINDOW *win,bool forced) {
-    if (position->isChanged() or position->isFirstValue() or forced) {
-        mvwprintw(win, position->getCurrent().x, position->getCurrent().y, "%c", displayChar_);
-        movePosition(position->getCurrent());
+    if (position_->isChanged() or position_->isFirstValue() or forced) {
+        mvwprintw(win, position_->getCurrent().x, position_->getCurrent().y, "%c", displayChar_);
+        setPosition(position_->getCurrent());
     }
 }
 Displayable::~Displayable(){
-    delete position;
+    delete position_;
 }

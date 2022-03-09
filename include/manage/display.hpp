@@ -29,7 +29,7 @@ namespace manager {
         void createGameWindow();
         //esegue delle operazioni in base a come si è modificata la dimensione
         // setta lo stato Game to small e le varie schermate
-        bool handleSizeChange(Level* level);
+        bool  handleScreenSizeChange(Level* level);
 
         // distrugge la finestra di gioco
         void deleteGameWindow();
@@ -38,7 +38,7 @@ namespace manager {
         Position getGameWindowPosition();
 
         //ricalcola la screen size guardando anche se cambia
-        Size updateScreenSize();
+        void updateScreenSize();
 
         //TODO:funzione non utilizzata, ma potrebbe servire in un futuro
         Size getSizeWindow(WINDOW *win);

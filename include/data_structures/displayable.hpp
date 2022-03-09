@@ -16,7 +16,7 @@ class Displayable {
   protected:  
     //oggetto che contiene le ultime due posizioni dell'oggetto
     //e controlla quando cambia la posizione
-    Changeable<Position> *position;
+    Changeable<Position> *position_;
 
     // la char che viene printata a video
     char displayChar_;
@@ -28,11 +28,10 @@ class Displayable {
     //elimina i pointer
     ~Displayable();
 
-    //
     Position getPosition();
 
-    // Modifica la posizione e se non è uguale a quella corrente
-    void movePosition(Position newPosition);
+    
+    void setPosition(Position newPosition);
 
     // Se la posizione è stata aggiornata mette al posto del carattere un carattere vuoto
     void clearLast(WINDOW* win);

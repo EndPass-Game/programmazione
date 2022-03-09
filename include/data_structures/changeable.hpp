@@ -3,36 +3,43 @@
 
 
 //Questa classe mantiene un oggetto che può cambiare nel tempo
-//e ha una semplice interfaccia per vedere se è stato modificato
-
+//e ha una semplice interfaccia per vedere se è stato modificato,
+//si può settare subito il suo ultimo valore, o se si lascia indefinito
+//si potrà verificare che è il primo valore che lì'oggetto riceve da isFirstVal
 template <class T>
 class Changeable
 {
 private:
-    //ultimo valore dell'elemento
+    //Contine il valore che aveva current prima di essere stato settato dall'ultimo setCurrent
     T last_;
-    // elemento corrente
+    //Contiene il valore che è stato settato per ultimo da setCurrent
     T current_;
-    // vera solo quando è chiamato il costruttore senza last
+    //È true solo se last_ non ha un valore, cio'è quando l'oggetto è
+    //inizializzato dal costruttore che non prende last come argomento
     bool firstValue_;
     //mutex per mantenere l'oggetto thread safe
     std::mutex mutex;
+
 public:
-    //inizializziamo anche con il valore vecchio
-    //isFirstValue sarà false e isChange darà last!=current come risultato
+    //Questo costruttore permette di inizializzare sia il valore corrente
+    //che l'ultimo che ha avuto l'oggetto, essendo che last ha un valore
+    //isFirstValue() sarà false
     Changeable(T last, T current);
-    //Costruttore che setta solo il valore corrente
-    //isChange darà false ma isFirstVAlue darà true
+
+    //Questo costruttore inizializza solo il valore corrente
+    //essendo che il valore vecchio è indefinito per nostra
+    //isChange()=false, ma isFisrtVal()=true
     Changeable(T current);
 
-    //se è la prima volta che è stato inizializzato
-    // da true come risultato
+    //da come risultato vero solo se è la classe non ha un vecchio valore
+    //, ma solo il corrente
     bool isFirstValue();
 
     //ritorna true se l'oggetto è stato cambiato
     bool isChanged();
 
-    //mette current=last e current=newVal
+    //cambia il valore corrente dell'oggetto 
+    //e cambia l'ultimo valore che l'oggetto ha avuto
     void setCurrent(T newVal);
 
     //ritorna penultimo valore preso da setCurrent
@@ -43,15 +50,15 @@ public:
 };
 
 template <class T>
-Changeable<T>::Changeable(T last,T current):last_(last),current_(current),firstValue_(false){}
+Changeable<T>::Changeable(T last, T current) : last_(last), current_(current), firstValue_(false) {}
 template <class T>
-Changeable<T>::Changeable(T current):last_(current),current_(current),firstValue_(true){}
+Changeable<T>::Changeable(T current) : last_(current), current_(current), firstValue_(true) {}
 
 template <class T>
 void Changeable<T>::setCurrent(T newVal)
 {
     std::lock_guard<std::mutex> lock(mutex);
-    firstValue_=false;
+    firstValue_ = false;
     last_ = current_;
     current_ = newVal;
 }
@@ -60,7 +67,7 @@ template <class T>
 bool Changeable<T>::isChanged()
 {
     std::lock_guard<std::mutex> lock(mutex);
-    return  last_!=  current_;
+    return last_ != current_;
 }
 
 template <class T>
@@ -74,12 +81,12 @@ template <class T>
 T Changeable<T>::getLast()
 {
     std::lock_guard<std::mutex> lock(mutex);
-    return  last_;
+    return last_;
 }
 
 template <class T>
 T Changeable<T>::getCurrent()
 {
     std::lock_guard<std::mutex> lock(mutex);
-    return  current_;
+    return current_;
 }

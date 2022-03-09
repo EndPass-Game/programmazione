@@ -32,7 +32,8 @@ class Player: public Displayable {
   public:
     Player();
 
-    // muove il player in base alla direction settata
+    //cambia le cordinate del player in base direzione settata in precedenza 
+    //se è possibile andarci
     void move();
 
     //funzione che fa il check se è possibile andare in una certa posizione

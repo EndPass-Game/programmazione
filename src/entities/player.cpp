@@ -49,7 +49,7 @@ void Player::move(){
     }
 
     if(canMove(new_x, new_y)){
-        movePosition({new_x, new_y});
+        setPosition({new_x, new_y});
     }
     
     this->direction_ = enums::Direction::NONE;

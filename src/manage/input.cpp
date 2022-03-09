@@ -15,7 +15,7 @@
 namespace manager
 {
 
-    void Input::gameState(int input, Level *levelManager)
+    void Input::handleInputOnGameState(int input, Level *levelManager)
     {
         Player *player = levelManager->player;
         switch (input)
@@ -37,7 +37,7 @@ namespace manager
             break;
         }
     }
-    void Input::pauseState(int input, Level *levelManager)
+    void Input::handleInputOnPauseState(int input, Level *levelManager)
     {
         switch (input)
         {
@@ -46,7 +46,7 @@ namespace manager
             break;
         }
     }
-    void Input::allState(int input, Level *levelManager)
+    void Input::handleInputOnAllState(int input, Level *levelManager)
     {
         switch (input)
         {
@@ -67,13 +67,13 @@ namespace manager
                 switch (levelManager->gameState->getCurrent())
                 {
                 case enums::GameState::PAUSE:
-                    pauseState(current_input,levelManager);
+                    handleInputOnPauseState(current_input,levelManager);
                     break;
                 case enums::GameState::RUNNING:
-                    gameState(current_input,levelManager);
+                    handleInputOnGameState(current_input,levelManager);
                     break;
                 }
-                allState(current_input, levelManager);
+                handleInputOnAllState(current_input, levelManager);
             }
         }
     }
