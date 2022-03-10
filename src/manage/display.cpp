@@ -46,7 +46,7 @@ namespace manager {
         gameWin_ = nullptr;
     }
 
-    Size Display::getSizeWindow(WINDOW *win)
+    Size Display::getSizeWindow(WINDOW *win) const
     {
         return Size{getmaxx(win), getmaxy(win)};
     }
@@ -148,16 +148,31 @@ namespace manager {
         deleteGameWindow();
     }
 
-    void Display::nextFrame(Level *levelManager, bool forceRebuild)
-    {
+    void Display::updateObjects(Level *levelManager, bool forceRebuild) {
         Player *player = levelManager->player;
+        // TODO: gestire in seguito quando enemy diventa una lista, o collezione
+        // di nemici
+        Enemy *enemy = levelManager->enemy;
 
-        // tutti gli oggetti devono essere cancellati se hanno cambiato la posizione
         player->move();
         player->clearLast(gameWin_);
-
-        // tutti gli oggetti devono essere riprintati
         player->render(gameWin_, forceRebuild);
+
+        if (player->hasActed()) {
+            // TODO: in questa parte si dovrebbero updatare tutte le entità
+            // o qualunque cosa si deve muovere o fare
+            enemy->wander();
+            enemy->move();
+            enemy->clearLast(gameWin_);
+            enemy->render(gameWin_, forceRebuild);
+
+            player->resetAction();
+        }
+    }
+
+    void Display::nextFrame(Level *levelManager, bool forceRebuild)
+    {
+        updateObjects(levelManager, forceRebuild);
         //TODO:muri fatti male XD
         for (int i = 0; i < kGameWindowsSize.x; i++)
         {
@@ -170,4 +185,4 @@ namespace manager {
             mvwprintw(gameWin_, kGameWindowsSize.x - 1, i, "#");
         }
     }
-}
+} // namespace manager
