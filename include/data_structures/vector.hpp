@@ -11,7 +11,7 @@ class Vector {
         return x;
     }
 
-  private:
+  public:
     Vector(uint size) {
         size_ = 0;
         realSize_ = _getHigherPowerOfTwo(size);    
@@ -20,19 +20,18 @@ class Vector {
 
     Vector(): Vector(0) {}
 
-    uint size() {
+    uint size() const {
         return size_;
+    }
+
+    uint isEmpty() const {
+        return size_ == 0;
     }
 
     // TODO: better return an iterator?
     void push_back(T element) {
         if (size_ == realSize_) {
-            realSize_ *= 2;
-            T new_space[] = new T[realSize_]();
-            for (int i = 0; i < size_; i++) {
-                new_space[i] = data_[i];
-            }
-            data_ = new_space;
+            resize(size_);
         }
 
         data_[size_] = element;
@@ -40,13 +39,9 @@ class Vector {
     }
 
     T pop_back() {
+        if (isEmpty()) throw;
         if (size_ == realSize_ / 4) {
-            realSize_ /= 2;
-            T new_space[] = new T[realSize_]();
-            for (int i = 0; i < size_; i++) {
-                new_space[i] = data_[i];
-            }
-            data_ = new_space;
+            resize(size_);
         }
 
         size_ -= 1;
@@ -54,7 +49,6 @@ class Vector {
         return element;
     }
 
-    // 
     void resize(uint size) {
         realSize_ = _getHigherPowerOfTwo(size); 
         int endIndex;
@@ -65,6 +59,7 @@ class Vector {
         for (int i = 0; i < endIndex) {
             new_space[i] = data_[i];
         }
+        delete[] data_;
         data_ = new_space;
     }
 };
