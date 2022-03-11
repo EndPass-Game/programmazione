@@ -5,53 +5,67 @@ class Queue {
     uint end_;
     uint start_;
     uint realSize_;
-  private:
+
+    uint _getHigherPowerOfTwo(uint n) {
+        int x = 1;
+        while (x < size_) x >> 1;
+        return x;
+    }
+
+    void _resize(uint size) {
+        uint newSize = _getHigherPowerOfTwo(size); 
+        T new_space[] = new T[newSize]();
+        int i = start_;
+        int j = 0;
+        while (i != end_ && j < newSize) {
+            new_space[j] = data_[i];
+            j++;
+            i++;
+            if (i == realSize_) i -= realSize_;
+        }
+        realSize_ = newSize;
+        delete[] data_;
+        data_ = new_space;
+    }
+
+  public:
     Queue(uint size) {
         end_ = 1;
         start_ = 0;
-        realSize_ = 1;
-        while (realSize_ < size) realSize_ >> 1;
+        realSize_ = _getHigherPowerOfTwo(size);
         data_ = new T[realSize_]();
     }
+    Queue(): Queue(0) {}
 
-    uint size() {
+    uint size() const {
         return end_ - start_;
+    }
+
+    uint isEmpty() const {
+        return end_ == start_;
     }
 
     // TODO: better return an iterator?
     void push(T element) {
         if (size() == realSize_) {
-            realSize_ *= 2;
-            T new_space[] = new T[realSize_]();
-            int i = start_;
-            int j = 0;
-            while (i != end_) {
-                new_space[j] = data_[i];
-                j++;
-                i++;
-                i %= 
-            }
-            for (int i = 0; i < size_; i++) {
-            }
-            data_ = new_space;
+            _resize(size());
         }
 
-        data_[size_] = element;
-        size_ += 1;
+        data_[end_] = element;
+        end_ += 1;
+        if (end_ == realSize_) end_ -= realSize_;
     }
 
     T pop() {
-        if (size_ == realSize_ / 4) {
-            realSize_ /= 2;
-            T new_space[] = new T[realSize_]();
-            for (int i = 0; i < size_; i++) {
-                new_space[i] = data_[i];
-            }
-            data_ = new_space;
+        if (isEmpty()) throw;
+
+        if (size() == realSize_ / 4) {
+            _resize(size());
         }
 
-        size_ -= 1;
         T element = data_[size_];
+        start_ += 1;
+        if (start_ == realSize_) start_ -= realSize_;
         return element;
     }
 };
