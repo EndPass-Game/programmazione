@@ -30,7 +30,7 @@ rerun: clean run
 
 # remove the last build
 clean:
-	rm $(OBJS) ||true
+	rm $(OBJS) || true
 
 # build and run the program
 run: main
