@@ -21,9 +21,9 @@ namespace test {
     void correct_size() {
         std::cout << "Testando la funzione: " << __func__ << " --- ";
         Vector<int> v;
-        for (int i = 0; i < 20; i++) {
+        for (uint i = 0; i < 20; i++) {
             v.push_back(i);
-            assert(v.size() == i);
+            assert(v.size() == i + 1);
         }
         std::cout << "Ok! ✔️" << std::endl;
     }

@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS =  -Wall -g
+CFLAGS =  -Wall -g -fsanitize=address,undefined
 LINKER_FLAG = -lstdc++ -pthread -lncurses
 
 BUILD_PATH = ./build
@@ -22,6 +22,7 @@ main:  $(OBJS)
 tests: $(filter-out %main.o, $(OBJS))
 	@for file in $(shell ls $(TESTS)); 													\
 	do																					\
+		echo "Compilando il file : $${file}";											\
 		$(CC) $(CFLAGS) $(HEADER_FLAGS) -c $(TESTS)/$${file};							\
 		$(CC) $(CFLAGS) $(HEADER_FLAGS) $^ "$${file%.cpp}.o" $(LINKER_FLAG) -o ./out; 	\
 		./out;																			\
