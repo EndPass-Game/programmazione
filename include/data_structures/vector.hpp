@@ -1,13 +1,17 @@
+#include <stdexcept>
 template<class T>
 class Vector {
   private:
-    T data_[];
     uint size_;
     uint realSize_;
+    T *data_;
 
     uint _getHigherPowerOfTwo(uint n) {
-        int x = 1;
-        while (x < size_) x >> 1;
+        uint x = 1;
+        while (x <= size_) {
+            x <<= 1;
+            if (x == 0) throw std::overflow_error("can't handle bigger size"); 
+        }
         return x;
     }
 
@@ -15,10 +19,13 @@ class Vector {
     Vector(uint size) {
         size_ = 0;
         realSize_ = _getHigherPowerOfTwo(size);    
-        data_ = new T[realSize_]();
+        data_ = new T[realSize_];
     }
 
     Vector(): Vector(0) {}
+    ~Vector() {
+        delete [] data_;
+    }
 
     uint size() const {
         return size_;
@@ -28,7 +35,6 @@ class Vector {
         return size_ == 0;
     }
 
-    // TODO: better return an iterator?
     void push_back(T element) {
         if (size_ == realSize_) {
             resize(size_);
@@ -51,15 +57,13 @@ class Vector {
 
     void resize(uint size) {
         realSize_ = _getHigherPowerOfTwo(size); 
-        int endIndex;
-        if (size < realSize_) endIndex = size;
-        else endIndex = realSize_;   
+        int endIndex = size < realSize_ ? size : realSize_;
 
-        T new_space[] = new T[realsSize_]();
-        for (int i = 0; i < endIndex) {
+        T *new_space = new T[realSize_];
+        for (int i = 0; i < endIndex; i++) {
             new_space[i] = data_[i];
         }
-        delete[] data_;
+        delete [] data_;
         data_ = new_space;
     }
 };

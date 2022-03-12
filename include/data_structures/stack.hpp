@@ -19,7 +19,7 @@ class Stack {
         data_.push_back(element);
     }
 
-    T pop_back() {
+    T pop() {
         return data_.pop_back();
     }
 };
