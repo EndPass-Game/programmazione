@@ -2,10 +2,13 @@
 #include <cassert>
 
 #include "queue.hpp"
+struct functionMETA {
+    void (*funcPtr) ();
+    const char *funcName;
+};
 
 namespace test {
     void basic_push_and_pop() {
-        std::cout << "Testando la funzione: " << __func__ << " --- ";
         Queue<int> v;
         for (int i = 0; i < 20; i++) {
             v.push(i);
@@ -15,11 +18,9 @@ namespace test {
             int val = v.pop();
             assert(val == i);
         }
-        std::cout << "Ok! ✔️" << std::endl;
     }
 
     void alternate_push_and_pop() {
-        std::cout << "Testando la funzione: " << __func__ << " --- ";
         // questo è per verificare che la queue ciclica funzioni
         int counter = 0;
         Queue<int> v;
@@ -31,11 +32,25 @@ namespace test {
                 counter++;
             }
         }
+    }
+
+    // Wrappa una funzione di test per mostrare l'output di una funzione
+    // se gli assert dentro la funzione di test sono corretti, da input a schermo
+    void run(void (*f) (), const char *name) {
+        std::cout << "Testando la funzione: " << name  << " --- ";
+        f();
         std::cout << "Ok! ✔️" << std::endl;
     }
 }
 
+functionMETA func_table[] = {
+    {test::basic_push_and_pop, "basic_push_and_pop"},
+    {test::alternate_push_and_pop, "alternate_push_and_pop"},
+};
+
 int main() {
-    test::basic_push_and_pop();
-    test::alternate_push_and_pop();
+    uint n_tests = sizeof(func_table) / sizeof(functionMETA);
+    for (uint i = 0; i < n_tests; i++) {
+        test::run(func_table[i].funcPtr, func_table[i].funcName);
+    }
 }

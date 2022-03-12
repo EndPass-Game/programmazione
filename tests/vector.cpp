@@ -3,10 +3,13 @@
 
 #include "vector.hpp"
 
-// TODO: questi test falliscono, errori di compilazione
+struct functionMETA {
+    void (*funcPtr) ();
+    const char *funcName;
+};
+
 namespace test {
     void basic_push_and_pop() {
-        std::cout << "Testando la funzione: " << __func__ << " --- ";
         Vector<int> v;
         for (int i = 0; i < 20; i++) {
             v.push_back(i);
@@ -15,21 +18,33 @@ namespace test {
         for (int i = 19; i >= 0; i--) {
             assert(v.pop_back() == i);
         }
-        std::cout << "Ok! ✔️" << std::endl;
     }
 
     void correct_size() {
-        std::cout << "Testando la funzione: " << __func__ << " --- ";
         Vector<int> v;
         for (uint i = 0; i < 20; i++) {
             v.push_back(i);
             assert(v.size() == i + 1);
         }
+    }
+
+    // Wrappa una funzione di test per mostrare l'output di una funzione
+    // se gli assert dentro la funzione di test sono corretti, da input a schermo
+    void run(void (*f) (), const char *name) {
+        std::cout << "Testando la funzione: " << name  << " --- ";
+        f();
         std::cout << "Ok! ✔️" << std::endl;
     }
-}
+} 
+
+functionMETA func_table[] = {
+    {test::basic_push_and_pop, "basic_push_and_pop"},
+    {test::correct_size, "correct_size"},
+};
 
 int main() {
-    test::basic_push_and_pop();
-    test::correct_size();
+    uint n_tests = sizeof(func_table) / sizeof(functionMETA);
+    for (uint i = 0; i < n_tests; i++) {
+        test::run(func_table[i].funcPtr, func_table[i].funcName);
+    }
 }
