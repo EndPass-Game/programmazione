@@ -21,10 +21,13 @@ Altro
 
 #include "display.hpp" // TODO: rimuovere questo import per le costanti di win quando si avrà il sistema per detection collisioni
 
+#include <mutex>
+
 Player::Player(): Displayable(Position{1,1}, 'P'), direction_(enums::NONE){}
 
 void Player::move(){
-    int new_x = current_.x, new_y = current_.y;
+    std::lock_guard<std::mutex> lock(mutex);
+    int new_x = getPosition().x, new_y = getPosition().y;
     switch(this->direction_){
         case enums::Direction::UP:
             new_x -= 1;
@@ -46,7 +49,7 @@ void Player::move(){
     }
 
     if(canMove(new_x, new_y)){
-        movePosition({new_x, new_y});
+        setPosition({new_x, new_y});
     }
     
     this->direction_ = enums::Direction::NONE;
@@ -54,9 +57,10 @@ void Player::move(){
 
 bool Player::canMove(int x, int y){
     return (x > 0 && y > 0) &&
-        (x < manager::kWindowSizeX - 1 && y < manager::kWindowSizeY - 1);
+        (x < manager::kGameWindowsSize.x - 1 && y < manager::kGameWindowsSize.y - 1);
 }
 
 void Player::setDirection(enums::Direction direction) {
+    std::lock_guard<std::mutex> lock(mutex);
     direction_ = direction;
 }
