@@ -26,5 +26,5 @@ class Logger{
         static Logger* getInstance();
 
         //funzione che scrive nel file il messaggio corrispondente
-        static void log(char *type, char *msg);
+        static void log(const char *format, ...);
 };

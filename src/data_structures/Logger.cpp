@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <cstring>
+#include <stdarg.h>
 using namespace std;
 
 
@@ -21,8 +22,9 @@ Logger* Logger::getInstance(){
     return instance_;
 }
 //funzione che scrive nel file il messaggio corrispondente
-void Logger::log(char *type, char *msg){
-    loggerFile=fopen(loggerFileName, "w");
-    fprintf(loggerFile, type, msg);
-    fclose(loggerFile);
+void Logger::log(const char *format, ...){
+    va_list args;
+    va_start (args, format);
+    vfprintf (loggerFile, format, args);
+    va_end (args);
 }
