@@ -12,42 +12,69 @@
 #include "level.hpp"
 #include "player.hpp"
 
-namespace manager {
+namespace manager
+{
 
-    Input::Input() {
-
+    void Input::handleInputOnGameState(int input, Level *levelManager)
+    {
+        Player *player = levelManager->player;
+        switch (input)
+        {
+        case 'a':
+            player->setDirection(enums::Direction::LEFT);
+            break;
+        case 'd':
+            player->setDirection(enums::Direction::RIGHT);
+            break;
+        case 's':
+            player->setDirection(enums::Direction::DOWN);
+            break;
+        case 'w':
+            player->setDirection(enums::Direction::UP);
+            break;
+        case 'p':
+            levelManager->gameState->setCurrent(enums::GameState::PAUSE);
+            break;
+        }
+    }
+    void Input::handleInputOnPauseState(int input, Level *levelManager)
+    {
+        switch (input)
+        {
+        case 'p':
+            levelManager->gameState->setCurrent(enums::GameState::RUNNING);
+            break;
+        }
+    }
+    void Input::handleInputOnAllState(int input, Level *levelManager)
+    {
+        switch (input)
+        {
+        case 'q':
+            levelManager->gameState->setCurrent(enums::GameState::FINISH);
+            break;
+        }
     }
 
-    void Input::run(Level* levelManager){
+    void Input::run(Level *levelManager)
+    {
         timeout(300);
-        Player* player = levelManager->player;
-        while(levelManager->gameState != enums::GameState::FINISH){
-            // TODO: mettere direction del player privata (ed encapsulata)
-            // e aggiungere getter e setter
+        while (levelManager->gameState->getCurrent() != enums::GameState::FINISH)
+        {
             int current_input = getch();
-            if(current_input == -1)continue;
-            switch(current_input) {
-            case 'a':
-                player->setDirection(enums::Direction::LEFT);
-                break;
-            case 'd':
-                player->setDirection(enums::Direction::RIGHT);
-                break;
-            case 's':
-                player->setDirection(enums::Direction::DOWN);
-                break;
-            case 'w':
-                player->setDirection(enums::Direction::UP);
-                break;
-            case 'p':
-                levelManager->gameState = enums::GameState::PAUSE;
-                break;
-            case 'q':
-                levelManager->gameState = enums::GameState::FINISH;
-                break;
+            if (current_input != -1){
 
-            // TODO: un defult case? serve?
+                switch (levelManager->gameState->getCurrent())
+                {
+                case enums::GameState::PAUSE:
+                    handleInputOnPauseState(current_input,levelManager);
+                    break;
+                case enums::GameState::RUNNING:
+                    handleInputOnGameState(current_input,levelManager);
+                    break;
+                }
+                handleInputOnAllState(current_input, levelManager);
             }
         }
-    }   
+    }
 }

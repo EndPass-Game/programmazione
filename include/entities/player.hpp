@@ -21,17 +21,24 @@ Altro
 
 // Player: classe che contiene il personaggio
 // estende Display
+//TODO:refactor mettere displayable come superclasse di entity e mettere
+//entiti come superclasse di Player
 class Player: public Displayable {
   private:
     // Contiene la direzione che dovrà essere intrapresa nel prossimo frame
     enums::Direction direction_;
+    //aggiunta la thread safe
+    std::mutex mutex;
   public:
     Player();
 
-    // è muovrere il player nella direction settata
+    //cambia le cordinate del player in base direzione settata in precedenza 
+    //se è possibile andarci
     void move();
 
+    //funzione che fa il check se è possibile andare in una certa posizione
     bool canMove(int x, int y);
 
+    //setta la direzione del player 
     void setDirection(enums::Direction direction);
 };
