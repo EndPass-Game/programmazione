@@ -10,6 +10,8 @@ namespace enums {
         //Gioco in pausa, anche dopo un errrore
         PAUSE,
         //Gioco finito
-        FINISH
+        FINISH,
+        //Gioco non deve incominciare
+        ABORT
     };
 }
