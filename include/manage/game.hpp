@@ -2,6 +2,7 @@
 
 #include <ncurses.h>
 
+#include "menu.hpp"
 #include "display.hpp"
 #include "input.hpp"
 #include "level.hpp"
@@ -16,9 +17,9 @@ namespace manager {
     // in due thread
     class Game {
       private:
-        Level levelManager_;
         Display displayManager_;
         Input inputManager_;
+        Menu menu_;
 
         // istanza del singleton
         static Game *instance_;
