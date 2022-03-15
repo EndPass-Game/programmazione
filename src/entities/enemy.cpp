@@ -7,12 +7,12 @@
 #include "position.hpp"
 
 Enemy::Enemy(): 
-    Entity(12, 3, 0, 0, // TODO: gestire queste costanti hardcoded in un file di setting
+    Entity(12, 3, // TODO: gestire queste costanti hardcoded in un file di setting
     {4, 4}, /* position di spawn */ 
     'E') {}
 
 Enemy::Enemy(Position spawnPos): 
-    Entity(12, 3, 0, 0,
+    Entity(12, 3,
     spawnPos,
     'E') {}
 

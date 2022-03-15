@@ -5,22 +5,16 @@
 #include "display.hpp" // TODO: rimuovere questo import per le costanti di win quando si avrà il sistema per detection collisioni
 #include "position.hpp"
 
-Entity::Entity(int life, int attack, int defense, int shield): 
+Entity::Entity(int life, int attack): 
     Displayable(Position{1,1}, 'E'), 
     life_(life),
     attack_(attack),
-    defense_(defense),
-    shield_(shield),
     direction_(enums::Direction::NONE) {}
 
-Entity::Entity(int life, int attack, int defense, int shield,
-    Position current,
-    char displayChar): 
+Entity::Entity(int life, int attack, Position current, char displayChar): 
     Displayable(current, displayChar), 
     life_(life),
     attack_(attack),
-    defense_(defense),
-    shield_(shield),
     direction_(enums::Direction::NONE) {}
 
 bool Entity::canMove(int x, int y) const {
@@ -66,20 +60,10 @@ bool Entity::isDead() const {
     return life_ <= 0;
 }
 
-void Entity::attack(Entity *entity) {
-    std::lock_guard<std::mutex> lock(mutex_); // TODO: serve sto mutex qui?
-    entity->applyDamage(attack_);
-}
+void Entity::attack(Entity *entity) {}
 
 void Entity::applyDamage(int damage) {
     std::lock_guard<std::mutex> lock(mutex_);
-    int damageAfterShield = damage - shield_;
-    
-    if (damageAfterShield > 0) {
-        shield_ = 0; // rappresenta uno scudo rotto
-        life_ -= (damageAfterShield - defense_);
-    } else {
-        shield_ -= damage;
-    }
+    life_ -= damage;
 }
 

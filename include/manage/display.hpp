@@ -17,7 +17,12 @@ Funzioni:
 namespace manager {
     // Descrive la dimensione orizzontale della schermata di gioco
     const Size kGameWindowsSize  = {18,60};
-    const int kSleepTime=50;
+
+    // Decide ogni quanti millisecondi avviene un update a schermo
+    const int kSleepTime = 50;
+
+    // Descrive ogni quanti frame si può muovere un nemico
+    const int kObjectTimer = 10;
     class Display {
       private:
         //mantiene una struttura che ricorda lo stato vecchio della size
@@ -25,6 +30,10 @@ namespace manager {
         // WINDOW di ncurses che contiene tutte le entità, muri
         // che sono mostrati al giocatore
         WINDOW *gameWin_ = nullptr;
+
+        // Counter per update degli oggetti, vedi kObjectTimer.
+        int currFrameTime_;
+
         // crea la finestra di gioco
         void createGameWindow();
         //esegue delle operazioni in base a come si è modificata la dimensione

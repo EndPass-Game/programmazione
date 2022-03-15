@@ -18,34 +18,15 @@ Altro
 #include "entity.hpp"
 
 Player::Player(): 
-    Entity(12, 3, 0, 0, // TODO: gestire queste costanti hardcoded in un file di setting
+    Entity(12, 3, // TODO: gestire queste costanti hardcoded in un file di setting
     {1, 1}, /* position di spawn */ 
-    'P'), /* charattere mostrato su schermo */ 
-    hasActed_(true) {}
-
-bool Player::hasActed() const {
-    return hasActed_;
-}
-
-void Player::resetAction() {
-    hasActed_ = false;
-}
-
-void Player::move() {
-    if (hasActed_) return;
-
-    Entity::move();
-    if (position_->isChanged()) hasActed_ = true;
-}
+    'P') /* charattere mostrato su schermo */ {}
 
 // TODO
 void Player::attack() {
-    if (hasActed_) return;
-    hasActed_ = true;
 }
 
 // TODO
 void Player::pickup() {
-    if (hasActed_) return;
-    hasActed_ = true;
+
 }

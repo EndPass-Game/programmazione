@@ -15,19 +15,18 @@ class Entity: public Displayable {
   protected:
     int life_;      // quantità di vita
     int attack_;    // danno fatto alle altre entità
-    int defense_;   // difesa costante dell'entità
-    int shield_;    // difesa temporanea che si può rompere
 
     // Contiene la direzione che dovrà essere intrapresa nel prossimo frame
     enums::Direction direction_;
+    
     // Permette un update thread safe 
     std::mutex mutex_;
-
   public:
-    Entity(int life, int attack, int defense = 0, int shield = 0);
-    Entity(int life, int attack, int defense, int shield, 
-        Position current,
-        char displayChar);
+    Entity(int life, int attack);
+    Entity(int life, int attack, Position current, char displayChar);
+
+    // sarà definita a seconda del metodo d'attacco dell'entità
+    virtual void attack(Entity *target);
 
     // muove l'entità secondo la direzione impostata
     void move();
@@ -36,9 +35,6 @@ class Entity: public Displayable {
     bool canMove(int x, int y) const;
 
     bool isDead() const;
-
-    // Toglie vita all'entità in input a seconda del proprio attacco
-    void attack(Entity *entity);
 
     void applyDamage(int damage);
 

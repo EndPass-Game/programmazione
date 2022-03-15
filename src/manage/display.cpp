@@ -15,7 +15,8 @@ Funzioni:
 namespace manager {
 
     Display::Display() {
-        currentScreenSize_=new Changeable<Size>({LINES,COLS});
+        currentScreenSize_ = new Changeable<Size>({LINES,COLS});
+        currFrameTime_ = 0;
     }
 
     Display::~Display()
@@ -117,7 +118,6 @@ namespace manager {
 
     void Display::gameLoop(Level *levelManager)
     {
-
         createGameWindow();
         while (levelManager->gameState->getCurrent() != enums::GameState::FINISH)
         {
@@ -158,15 +158,15 @@ namespace manager {
         player->clearLast(gameWin_);
         player->render(gameWin_, forceRebuild);
 
-        if (player->hasActed()) {
-            // TODO: in questa parte si dovrebbero updatare tutte le entità
-            // o qualunque cosa si deve muovere o fare
+        // TODO: in questa parte si dovrebbero updatare tutte le entità
+        // o qualunque cosa si deve muovere o fare
+        currFrameTime_ += 1;
+        if (currFrameTime_ >= kObjectTimer) {
             enemy->wander();
             enemy->move();
             enemy->clearLast(gameWin_);
             enemy->render(gameWin_, forceRebuild);
-
-            player->resetAction();
+            currFrameTime_ = 0;
         }
     }
 
