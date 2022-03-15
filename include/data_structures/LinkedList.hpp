@@ -1,7 +1,7 @@
 //TODO: test ed eliminare le funzioni in più che non servono
 
 template<class T>
-class Stack {
+class LinkedList {
   private:
     Data *first;
     Data *last;
@@ -16,12 +16,12 @@ class Stack {
     };
 
     T back(){
-        if(last==nullptr)return nullptr;
+        if(last==nullptr)return 0;
         else return last->dato;
     }
 
     T front(){
-        if(first==nullptr)return nullptr;
+        if(first==nullptr)return 0;
         else return first->dato;
     }
 
@@ -47,18 +47,19 @@ class Stack {
     void push_back(T element){
         if(size==0){
             first = new Data{nullptr, nullptr, element};
+            last=first;
         }
         else
         {
             Data *waslast = last;
             last = new Data{waslast,nullptr, element};
-            waslast->prev = last;
+            waslast->next = last;
         }
         size++;
     }
     void pop_back(){
         if(size==0) throw;
-        Data* sl= last->next;
+        Data* sl= last->prev;
         delete last;
         last=sl;
         size--;
