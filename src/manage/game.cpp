@@ -14,6 +14,7 @@ namespace manager {
         initscr();
         noecho();
         keypad(stdscr, TRUE); // TODO: commentino o creazione di variabile con nome per spiegare questa?
+        timeout(300);
     }
 
     // crea il singleton o restituisce l'oggetto statico
@@ -27,12 +28,13 @@ namespace manager {
     void Game::run() {
         //Il menu setta le impostazioni del Level Manager
         Level *levelManager;
-        while ((levelManager = menu_.runMenu())->gameState->getCurrent() != enums::ABORT)
+        while ((levelManager = menu_.runMenu())->gameState->getCurrent() != enums::GameState::FINISH)
         {
+            displayManager_=Display(levelManager);
             //crea i thread che runnano il gioco
-            std::thread inputThread(&Input::run, inputManager_, levelManager);
+            std::thread inputThread(&Input::run, &inputManager_, levelManager);
             inputThread.detach();
-            std::thread displayThread(&Display::gameLoop, displayManager_, levelManager);
+            std::thread displayThread(&Display::gameLoop, &displayManager_);
             displayThread.join();
             //elimina l'istanza del level manager
             delete levelManager;

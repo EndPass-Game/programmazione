@@ -58,7 +58,6 @@ namespace manager
 
     void Input::run(Level *levelManager)
     {
-        timeout(300);
         while (levelManager->gameState->getCurrent() != enums::GameState::FINISH)
         {
             int current_input = getch();
