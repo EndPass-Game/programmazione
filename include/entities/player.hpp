@@ -16,29 +16,19 @@ Altro
 */
 #pragma once
 
-#include "direction.hpp"
-#include "displayable.hpp"
-
+#include "entity.hpp"
 // Player: classe che contiene il personaggio
-// estende Display
-//TODO:refactor mettere displayable come superclasse di entity e mettere
-//entiti come superclasse di Player
-class Player: public Displayable {
+class Player: public Entity {
   private:
-    // Contiene la direzione che dovrà essere intrapresa nel prossimo frame
-    enums::Direction direction_;
-    //aggiunta la thread safe
-    std::mutex mutex;
+    // TODO inventario
   public:
     Player();
 
-    //cambia le cordinate del player in base direzione settata in precedenza 
-    //se è possibile andarci
-    void move();
+    // funzione che sarà chiamata dall'input del giocatore
+    // TODO: ricerca il mostro da attaccare in un certo range
+    // se trova applica il danno
+    void attack();
 
-    //funzione che fa il check se è possibile andare in una certa posizione
-    bool canMove(int x, int y);
-
-    //setta la direzione del player 
-    void setDirection(enums::Direction direction);
+    // TODO
+    void pickup(); 
 };

@@ -10,6 +10,7 @@ Dati
 Funzioni:
 */
 
+#include "enemy.hpp"
 #include "game_state.hpp"
 #include "level.hpp"
 #include "player.hpp"
@@ -17,11 +18,13 @@ Funzioni:
 namespace manager {
     Level::Level() {
         player = new Player();
-        gameState= new Changeable<enums::GameState>(enums::GameState::RUNNING);
+        enemy = new Enemy();
+        gameState = new Changeable<enums::GameState>(enums::GameState::RUNNING);
     }
 
     Level::~Level(){
         delete player;
+        delete enemy;
         delete gameState;
     }
 }

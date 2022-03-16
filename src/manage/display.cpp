@@ -15,7 +15,8 @@ Funzioni:
 namespace manager {
 
     Display::Display() {
-        currentScreenSize_=new Changeable<Size>({LINES,COLS});
+        currentScreenSize_ = new Changeable<Size>({LINES,COLS});
+        currFrameTime_ = 0;
     }
 
     Display::~Display()
@@ -46,7 +47,7 @@ namespace manager {
         gameWin_ = nullptr;
     }
 
-    Size Display::getSizeWindow(WINDOW *win)
+    Size Display::getSizeWindow(WINDOW *win) const
     {
         return Size{getmaxx(win), getmaxy(win)};
     }
@@ -117,7 +118,6 @@ namespace manager {
 
     void Display::gameLoop(Level *levelManager)
     {
-
         createGameWindow();
         while (levelManager->gameState->getCurrent() != enums::GameState::FINISH)
         {
@@ -148,16 +148,31 @@ namespace manager {
         deleteGameWindow();
     }
 
-    void Display::nextFrame(Level *levelManager, bool forceRebuild)
-    {
+    void Display::updateObjects(Level *levelManager, bool forceRebuild) {
         Player *player = levelManager->player;
+        // TODO: gestire in seguito quando enemy diventa una lista, o collezione
+        // di nemici
+        Enemy *enemy = levelManager->enemy;
 
-        // tutti gli oggetti devono essere cancellati se hanno cambiato la posizione
         player->move();
         player->clearLast(gameWin_);
-
-        // tutti gli oggetti devono essere riprintati
         player->render(gameWin_, forceRebuild);
+
+        // TODO: in questa parte si dovrebbero updatare tutte le entità
+        // o qualunque cosa si deve muovere o fare
+        currFrameTime_ += 1;
+        if (currFrameTime_ >= kObjectTimer) {
+            enemy->wander();
+            enemy->move();
+            enemy->clearLast(gameWin_);
+            enemy->render(gameWin_, forceRebuild);
+            currFrameTime_ = 0;
+        }
+    }
+
+    void Display::nextFrame(Level *levelManager, bool forceRebuild)
+    {
+        updateObjects(levelManager, forceRebuild);
         //TODO:muri fatti male XD
         for (int i = 0; i < kGameWindowsSize.x; i++)
         {
@@ -170,4 +185,4 @@ namespace manager {
             mvwprintw(gameWin_, kGameWindowsSize.x - 1, i, "#");
         }
     }
-}
+} // namespace manager

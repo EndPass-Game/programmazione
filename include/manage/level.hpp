@@ -15,7 +15,9 @@ Funzioni:
 */
 #pragma once
 
+#include "changeable.hpp"
 #include "game_state.hpp"
+#include "enemy.hpp"
 #include "player.hpp"
 #include "changeable.hpp"
 #include <mutex>
@@ -36,11 +38,14 @@ namespace manager {
         Level();
         ~Level();
 
-        void getCurrentGameState(enums::GameState game);
-        //la classe del giocatore principale
-        Player* player;
+        // la classe del giocatore principale
+        Player *player;
+
+        // TODO: dovrebbe essere sostituita da una struttura di dati
+        // che contenga ogni nemico, in modo simile sarebbe buono
+        // avere muri e artefatti
+        Enemy *enemy; 
+
         Changeable<enums::GameState>* gameState;
-
-
     };
 }

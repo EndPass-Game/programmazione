@@ -15,52 +15,14 @@ Altro
 1. Inventario ( Classe apparte? )
 */
 #include "player.hpp"
+#include "entity.hpp"
 
-#include "direction.hpp"
-#include "displayable.hpp"
+Player::Player(): 
+    Entity(12, 3, // TODO: gestire queste costanti hardcoded in un file di setting
+    {1, 1}, /* position di spawn */ 
+    'P') /* charattere mostrato su schermo */ {}
+// TODO
+void Player::attack() {}
 
-#include "display.hpp" // TODO: rimuovere questo import per le costanti di win quando si avrà il sistema per detection collisioni
-
-#include <mutex>
-
-Player::Player(): Displayable(Position{1,1}, 'P'), direction_(enums::NONE){}
-
-void Player::move(){
-    std::lock_guard<std::mutex> lock(mutex);
-    int new_x = getPosition().x, new_y = getPosition().y;
-    switch(this->direction_){
-        case enums::Direction::UP:
-            new_x -= 1;
-            break;
-        case enums::Direction::RIGHT:
-            new_y += 1;
-            break;
-        case enums::Direction::LEFT:
-            new_y -= 1;
-            break;
-        case enums::Direction::DOWN:
-            new_x += 1;
-            break;
-        case enums::Direction::NONE:
-            // TODO: creare un modo migliore per uscire dalla funzione
-            // invece che un return qui
-            return;
-            break;
-    }
-
-    if(canMove(new_x, new_y)){
-        setPosition({new_x, new_y});
-    }
-    
-    this->direction_ = enums::Direction::NONE;
-}
-
-bool Player::canMove(int x, int y){
-    return (x > 0 && y > 0) &&
-        (x < manager::kGameWindowsSize.x - 1 && y < manager::kGameWindowsSize.y - 1);
-}
-
-void Player::setDirection(enums::Direction direction) {
-    std::lock_guard<std::mutex> lock(mutex);
-    direction_ = direction;
-}
+// TODO
+void Player::pickup() {}
