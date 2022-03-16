@@ -14,13 +14,14 @@ Funzioni:
 
 namespace manager {
 
-    Display::Display() {
-        currentScreenSize_=new Changeable<Size>({LINES,COLS});
+    Display::Display():ResizableWindow() {
+    }
+    Display::Display(Level* level):ResizableWindow() {
+        levelManager_=level;
     }
 
     Display::~Display()
     {
-        delete currentScreenSize_;
         deleteGameWindow();
     }
 
@@ -51,13 +52,6 @@ namespace manager {
         return Size{getmaxx(win), getmaxy(win)};
     }
 
-    void Display::updateScreenSize()
-    {
-        Size newSize={LINES,COLS};
-        currentScreenSize_->setCurrent(newSize);
-    }
-
-
     Position Display::getGameWindowPosition(){
         Size screen=currentScreenSize_->getCurrent();
         int startY=(screen.y-kGameWindowsSize.y)/2;
@@ -66,75 +60,68 @@ namespace manager {
     }
     
 
-    bool Display:: handleScreenSizeChange(Level* levelManager)
+    void Display::handleScreenSizeChange()
     {
-        updateScreenSize();
-        bool isChanged=currentScreenSize_->isChanged();
-        if (isChanged)
+        //when the screen size change
+        deleteGameWindow();
+        clear();
+        createGameWindow();
+        if (currentScreenSize_->getCurrent().x < kGameWindowsSize.x or currentScreenSize_->getCurrent().y < kGameWindowsSize.y)
         {
-            //when the screen size change
-            deleteGameWindow();
-            clear();
-            createGameWindow();
-            if (currentScreenSize_->getCurrent().x < kGameWindowsSize.x or currentScreenSize_->getCurrent().y < kGameWindowsSize.y)
-            {
-                levelManager->gameState->setCurrent(enums::GameState::SCREEN_TO_SMALL);
-            }
-            else if (levelManager->gameState->getCurrent() == enums::GameState::SCREEN_TO_SMALL)
-            {
-                levelManager->gameState->setCurrent(enums::GameState::PAUSE);
-            }
+            levelManager_->gameState->setCurrent(enums::GameState::SCREEN_TO_SMALL);
         }
-
-        return isChanged;
+        else if (levelManager_->gameState->getCurrent() == enums::GameState::SCREEN_TO_SMALL)
+        {
+            levelManager_->gameState->setCurrent(enums::GameState::PAUSE);
+        }
     }
 
-    void Display::runningLoop(Level *levelManager)
+    void Display::runningLoop()
     {
         clear();
         bool first = true;
-        while (levelManager->gameState->getCurrent() == enums::GameState::RUNNING)
+        while (levelManager_->gameState->getCurrent() == enums::GameState::RUNNING)
         {
             // TODO: le variabili qui sopra non sono utilizzate, farle
-            bool changed =  handleScreenSizeChange(levelManager);
+            bool changed = updateScreenSize();
             changed |= first;
-            nextFrame(levelManager, changed);
+            nextFrame(changed);
             wrefresh(gameWin_);
             std::this_thread::sleep_for(std::chrono::milliseconds(kSleepTime));
         }
     }
-    void Display::pauseLoop(Level *levelManager)
+    void Display::pauseLoop()
     {
         clear();
-        while (levelManager->gameState->getCurrent() == enums::GameState::PAUSE)
+        while (levelManager_->gameState->getCurrent() == enums::GameState::PAUSE)
         {
-             handleScreenSizeChange(levelManager);
+            updateScreenSize();
             mvprintw(0, 0, "GameState Paused, click 'p' to resume");
             refresh();
             std::this_thread::sleep_for(std::chrono::milliseconds(kSleepTime));
         }
     }
 
-    void Display::gameLoop(Level *levelManager)
+    void Display::gameLoop()
     {
 
         createGameWindow();
-        while (levelManager->gameState->getCurrent() != enums::GameState::FINISH)
+        while (levelManager_->gameState->getCurrent() != enums::GameState::FINISH)
         {
-            switch (levelManager->gameState->getCurrent())
+            switch (levelManager_->gameState->getCurrent())
             {
             case enums::GameState::RUNNING:
-                runningLoop(levelManager);
+                runningLoop();
                 break;
             case enums::GameState::PAUSE:
-                pauseLoop(levelManager);
+                pauseLoop();
                 break;
             case enums::GameState::SCREEN_TO_SMALL:
             {
                 //TODO:va wrappato in una funzione es smallScreenLoop();
-                while (levelManager->gameState->getCurrent() == enums::GameState::SCREEN_TO_SMALL)
+                while (levelManager_->gameState->getCurrent() == enums::GameState::SCREEN_TO_SMALL)
                 {
-                     handleScreenSizeChange(levelManager);
+                    updateScreenSize();
                     mvprintw(0, 0, "screen TO small");
                     refresh();
                     std::this_thread::sleep_for(std::chrono::milliseconds(kSleepTime));
@@ -148,9 +135,9 @@ namespace manager {
         deleteGameWindow();
     }
 
-    void Display::nextFrame(Level *levelManager, bool forceRebuild)
+    void Display::nextFrame(bool forceRebuild)
     {
-        Player *player = levelManager->player;
+        Player *player = levelManager_->player;
 
         // tutti gli oggetti devono essere cancellati se hanno cambiato la posizione
         player->move();
