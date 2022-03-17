@@ -7,7 +7,7 @@ using namespace std;
 
 
 Logger* Logger::instance_=nullptr;
-char* Logger::loggerFileName= strcpy(loggerFileName, "logger.txt");
+char* Logger::loggerFileName= "game.log";
 
 FILE* Logger::loggerFile=fopen(loggerFileName, "w");
 
