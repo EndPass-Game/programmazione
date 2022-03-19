@@ -22,6 +22,7 @@ main:  $(OBJS)
 
 
 .PHONY: tests
+# make tests TESTS="tests/binary-tree.cpp" per fare un solo test
 tests: $(filter-out %main.o, $(OBJS))
 	@for file in $(TESTS); 													\
 	do																					\
