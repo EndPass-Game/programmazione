@@ -1,22 +1,20 @@
-#include <stdexcept>
 template<class T>
 class Vector {
   private:
-    uint size_;
-    uint realSize_;
+    size_t size_;
+    size_t realSize_;
     T *data_;
 
-    uint _getHigherPowerOfTwo(uint n) {
-        uint x = 1;
+    size_t _getHigherPowerOfTwo(size_t n) {
+        size_t x = 1;
         while (x <= size_) {
             x <<= 1;
-            if (x == 0) throw std::overflow_error("can't handle bigger size"); 
         }
         return x;
     }
 
   public:
-    Vector(uint size) {
+    Vector(size_t size) {
         size_ = 0;
         realSize_ = _getHigherPowerOfTwo(size);    
         data_ = new T[realSize_];
@@ -27,11 +25,11 @@ class Vector {
         delete [] data_;
     }
 
-    uint size() const {
+    size_t size() const {
         return size_;
     }
 
-    uint isEmpty() const {
+    size_t isEmpty() const {
         return size_ == 0;
     }
 
@@ -45,7 +43,7 @@ class Vector {
     }
 
     T pop_back() {
-        if (isEmpty()) throw;
+        if (isEmpty()) return T();
         if (size_ == realSize_ / 4) {
             resize(size_);
         }
@@ -55,7 +53,7 @@ class Vector {
         return element;
     }
 
-    void resize(uint size) {
+    void resize(size_t size) {
         realSize_ = _getHigherPowerOfTwo(size); 
         int endIndex = size < realSize_ ? size : realSize_;
 
@@ -65,5 +63,9 @@ class Vector {
         }
         delete [] data_;
         data_ = new_space;
+    }
+
+    T &operator [](const int index) const {
+        return data_[index];
     }
 };

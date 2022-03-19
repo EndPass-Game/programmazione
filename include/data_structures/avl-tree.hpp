@@ -17,7 +17,7 @@ class AVLTree: public BinaryTree<T> {
         AVLNode *right = (AVLNode *) node->right;
         if (right->left != nullptr) right->left->parent = node;
 
-        if (node == this->head) this->head = right;
+        if (node == this->head_) this->head_ = right;
         else BinaryTree<T>::_setParentNode(node, right);
 
         // sistema i pointer dei due nodi che ruotano        
@@ -35,7 +35,7 @@ class AVLTree: public BinaryTree<T> {
         AVLNode *left = (AVLNode *) node->left;
         if (left->right != nullptr) left->right->parent = node;
 
-        if (node == this->head) this->head = left;
+        if (node == this->head_) this->head_ = left;
         else BinaryTree<T>::_setParentNode(node, left);
 
         // sistema i pointer dei due nodi che ruotano        

@@ -5,10 +5,6 @@ class Stack {
   private:
     Vector<T> data_;
   public:
-    Stack(uint size) {
-        data_ = Vector<T>(size);
-    }
-
     Stack(): Stack(0) {}
 
     uint isEmpty() const {

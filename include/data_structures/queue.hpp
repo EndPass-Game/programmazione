@@ -1,27 +1,25 @@
-#include <stdexcept>
 template<class T>
 class Queue {
   private:
-    uint end_;
-    uint start_;
-    uint size_;
-    uint realSize_;
+    size_t end_;
+    size_t start_;
+    size_t size_;
+    size_t realSize_;
     T *data_;
 
-    uint _getHigherPowerOfTwo(uint n) {
-        uint x = 1;
+    size_t _getHigherPowerOfTwo(size_t n) {
+        size_t x = 1;
         while (x <= size_) {
             x <<= 1;
-            if (x == 0) throw std::overflow_error("can't handle bigger size"); 
         }
         return x;
     }
 
-    void _resize(uint size) {
-        uint newSize = _getHigherPowerOfTwo(size); 
-        uint minSize = size_ < newSize ? size_ : newSize;
+    void _resize(size_t size) {
+        size_t newSize = _getHigherPowerOfTwo(size); 
+        size_t minSize = size_ < newSize ? size_ : newSize;
         T *new_space = new T[newSize];
-        for (uint i = start_, j = 0; j < minSize; i++, j++) {
+        for (size_t i = start_, j = 0; j < minSize; i++, j++) {
             if (i == realSize_) i -= realSize_;
             new_space[j] = data_[i];
         }
@@ -31,17 +29,9 @@ class Queue {
         start_ = 0;
         end_ = size_;
     }
-
-    void _debugPrint() {
-        for (uint i = start_, j = 0; j < size_; i++, j++) {
-            if (i == realSize_) i -= realSize_;
-            std::cout << data_[i] << " ";
-        }
-        std::cout << std::endl;
-        printf("DEBUG: start=%d end=%d, realsize=%d, size=%d\n", end_, realSize_, size_);
-    }
+    
   public:
-    Queue(uint size) {
+    Queue(size_t size) {
         end_ = 0;
         start_ = 0;
         size_ = 0;
@@ -53,15 +43,14 @@ class Queue {
         delete[] data_;
     }
 
-    uint size() const {
+    size_t size() const {
         return size_;
     }
 
-    uint isEmpty() const {
+    size_t isEmpty() const {
         return size_ == 0;
     }
 
-    // TODO: better return an iterator?
     void push(T element) {
         if (size_ == realSize_) {
             _resize(size_);
@@ -70,11 +59,10 @@ class Queue {
         end_ += 1;
         size_ += 1;
         if (end_ == realSize_) end_ -= realSize_;
-
     }
 
     T pop() {
-        if (isEmpty()) throw;
+        if (isEmpty()) return T();
 
         if (size_ == realSize_ / 4) {
             _resize(size_);

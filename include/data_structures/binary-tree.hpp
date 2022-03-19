@@ -16,9 +16,9 @@ class BinaryTree {
             parent(nullptr),
             data(data) {}
     };
-    Node *head;
-    size_t size;
-    size_t counter; // variabile globale usata SOLO per asArray();
+    Node *head_;
+    size_t size_;
+    size_t counter_; // variabile globale usata SOLO per asArray();
 
     void _setParentNode(Node *curr, Node *ptr) {
         if (curr == nullptr or curr->parent == nullptr) return;
@@ -50,8 +50,8 @@ class BinaryTree {
     // ritorna la foglia su cui si può inserire il valore target
     // come figlio
     Node *_searchParent(T target) {
-        if (this->head == nullptr) return nullptr; 
-        Node *curr = this->head;
+        if (head_ == nullptr) return nullptr; 
+        Node *curr = head_;
         Node *parent = nullptr;
         while (curr != nullptr) {
             parent = curr;
@@ -63,8 +63,8 @@ class BinaryTree {
 
     // ritorna prima istanza che fa match con target
     Node *_search(T target) {
-        if (this->head == nullptr) return nullptr; 
-        Node *curr = this->head;
+        if (head_ == nullptr) return nullptr; 
+        Node *curr = head_;
         while (curr != nullptr) {
             if (curr->data == target) break;
             if (target > curr->data) curr = curr->right;
@@ -105,15 +105,15 @@ class BinaryTree {
     void _buildArray(T *array, Node *node) {
         if (node == nullptr) return;
         _buildArray(array, node->left);
-        array[this->counter] = node->data;
-        this->counter += 1;
+        array[counter_] = node->data;
+        counter_ += 1;
         _buildArray(array, node->right);
     }
 
     void _insert(Node *toInsert) {
         Node *parent = nullptr;
-        if (this->head == nullptr) {
-            this->head = toInsert;
+        if (head_ == nullptr) {
+            head_ = toInsert;
         } else {
             parent = this->_searchParent(toInsert->data);
             if (toInsert->data <= parent->data) {
@@ -123,7 +123,7 @@ class BinaryTree {
             }
         }
         toInsert->parent = parent;
-        this->size += 1;
+        size_ += 1;
     }
 
     Node *_remove(T elem) {
@@ -161,36 +161,36 @@ class BinaryTree {
         }
 
         // sistema il pointer del genitore
-        if (toDelete == this->head) this->head = substitute;
+        if (toDelete == head_) head_ = substitute;
         else _setParentNode(toDelete, substitute);
 
-        this->size -= 1;
+        size_ -= 1;
         return toDelete;
     }
 
   public:
     BinaryTree() {
-        this->head = nullptr;
-        this->size = 0;
+        head_ = nullptr;
+        size_ = 0;
     }
 
     BinaryTree(T data) {
-        this->head = new Node(data);
-        this->size = 1;
+        head_ = new Node(data);
+        size_ = 1;
     }
 
     ~BinaryTree() {
-        _recDelete(this->head);
+        _recDelete(head_);
     }
 
     T max() {
-        Node *node = _max(head);
+        Node *node = _max(head_);
         if (node == nullptr) return T();
         else return node->data;
     }
 
     T min() {
-        Node *node = _min(head);
+        Node *node = _min(head_);
         if (node == nullptr) return T();
         else return node->data;
     }
@@ -202,7 +202,7 @@ class BinaryTree {
     }
 
     size_t getSize() {
-        return this->size;
+        return size_;
     }
 
     void insert(T elem) {
@@ -219,10 +219,10 @@ class BinaryTree {
 
     // ritorna la rappresentazione in array dell'albero con visita infissa.
     T *asArray() {
-        if (this->head == nullptr) return nullptr;
-        this->counter = 0;
-        T *newArray = new T[this->size];
-        _buildArray(newArray, this->head);
+        if (head_ == nullptr) return nullptr;
+        counter_ = 0;
+        T *newArray = new T[size_];
+        _buildArray(newArray, head_);
         return newArray;
     }
 };
