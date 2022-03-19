@@ -1,4 +1,9 @@
-//TODO: test ed eliminare le funzioni in più che non servono
+#pragma once
+
+
+namespace datastruct {
+
+} // namespace data struct
 
 template<class T>
 class LinkedList {
