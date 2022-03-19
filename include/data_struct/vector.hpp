@@ -49,9 +49,18 @@ class Vector {
         if (size_ == realSize_ / 4) {
             resize(size_);
         }
-
         size_ -= 1;
-        T element = data_[size_];
+        return data_[size_];
+    }
+
+    T remove(size_t index) {
+        if (index >= size_ or index < 0) return T();
+        if (size_ == realSize_ / 4) {
+            resize(size_);
+        }
+        T element = data_[index];
+        size_ -= 1;
+        data_[index] = data_[size_];
         return element;
     }
 
