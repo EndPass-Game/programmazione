@@ -3,6 +3,7 @@
 
 #include "linked-list.hpp"
 
+using namespace datastruct;
 struct functionMETA {
     void (*funcPtr) ();
     const char *funcName;

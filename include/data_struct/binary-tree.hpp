@@ -1,5 +1,6 @@
 #pragma once
 
+namespace datastruct {
 template<class T>
 class BinaryTree {
   protected:
@@ -226,3 +227,4 @@ class BinaryTree {
         return newArray;
     }
 };
+} // namespace datastruct

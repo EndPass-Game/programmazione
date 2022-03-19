@@ -1,7 +1,7 @@
 #pragma once
 #include "binary-tree.hpp"
 
-
+namespace datastruct {
 template<class T>
 class AVLTree: public BinaryTree<T> {
   private:
@@ -166,3 +166,4 @@ class AVLTree: public BinaryTree<T> {
         }
     }
 };
+} // namespace datastruct
