@@ -1,3 +1,5 @@
+
+namespace datastruct {
 template<class T>
 class Vector {
   private:
@@ -69,3 +71,5 @@ class Vector {
         return data_[index];
     }
 };
+
+} // namespace datastruct

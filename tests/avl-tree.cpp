@@ -4,6 +4,7 @@
 
 #include "avl-tree.hpp"
 #include "binary-tree.hpp"
+using namespace datastruct;
 struct functionMETA {
     void (*funcPtr) ();
     const char *funcName;

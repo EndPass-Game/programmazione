@@ -1,3 +1,5 @@
+#pragma once
+namespace datastruct {
 template<class T>
 class Queue {
   private:
@@ -75,3 +77,4 @@ class Queue {
         return element;
     }
 };
+} // namespace datastruct

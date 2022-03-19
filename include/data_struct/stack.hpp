@@ -1,5 +1,6 @@
 #include "vector.hpp"
 
+namespace datastruct {
 template<class T>
 class Stack {
   private:
@@ -19,3 +20,4 @@ class Stack {
         return data_.pop_back();
     }
 };
+} // namespace datastruct

@@ -1,10 +1,5 @@
 #pragma once
-
-
 namespace datastruct {
-
-} // namespace data struct
-
 template<class T>
 class LinkedList {
   public:
@@ -92,3 +87,4 @@ class LinkedList {
         return nullptr;
     }
 };
+} // namespace datastruct

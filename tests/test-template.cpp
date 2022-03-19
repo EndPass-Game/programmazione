@@ -1,19 +1,9 @@
 #include <iostream>
 #include <assert.h>
 
-// Questo è un piccolo template per i test. 
-// Ci sarebbero delle feature che sarebbe bello se si potesse implementare: 
-// TODO:
-// 1. Funzione runner nei test: che fa il display della funzione che viene runnata
-// e a seconda del risultato fa un ✔️ oppure un ❌
-// 2. Una funzione che esegua automaticamente i test presenti nel namespace, o classe
-// 3. Una flag, o direttiva che contrassegni se una funzione è da runnare o meno
-// 4. Una piccola CLI che gestisca ad alto livello le funzioni da chiamare (un pò come
-// cargo test di rust, se si esegue la funzione con un nome di una classe esegue solo
-// un insieme di test ben precisato)
-// AGGIORNAMENTO: 1,2,3 sono più o meno fatti, 2 non`e automatizzato ma utilizza la table
-// 3 basterebbe commentare una entry nella tabella dei test
+#include "vector.hpp"
 
+using namespace datastruct;
 struct functionMETA {
     void (*funcPtr) ();
     const char *funcName;
