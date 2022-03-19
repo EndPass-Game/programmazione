@@ -28,6 +28,16 @@ namespace test {
         }
     }
 
+    void bracket_operator() {
+        Vector<int> v;
+        for (int i = 0; i < 20; i++) {
+            v.push_back(i);
+            assert(v[i] == i);
+        }
+        v[0] = 10;
+        assert(v[0] == 10);
+    }
+
     // Wrappa una funzione di test per mostrare l'output di una funzione
     // se gli assert dentro la funzione di test sono corretti, da input a schermo
     void run(void (*f) (), const char *name) {
@@ -40,6 +50,7 @@ namespace test {
 functionMETA func_table[] = {
     {test::basic_push_and_pop, "basic_push_and_pop"},
     {test::correct_size, "correct_size"},
+    {test::bracket_operator, "bracket_operator"},
 };
 
 int main() {
