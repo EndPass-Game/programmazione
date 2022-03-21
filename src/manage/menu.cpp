@@ -3,6 +3,15 @@
 namespace manager
 {
 
+    Menu::Menu(){
+    }
+
+    void Menu::handleScreenSizeChange(){
+    }
+   
+
+    void Menu::createWindows() {
+
     void Menu::createWindows() {
         int currentRow=0;
         currentRow += padding;

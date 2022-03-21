@@ -26,7 +26,6 @@ namespace manager {
     }
 
     void Game::run() {
-
         //Il menu setta le impostazioni del Level Manager
         Level *levelManager;
         while ((levelManager = menu_.runMenu())->gameState->getCurrent() != enums::GameState::FINISH)

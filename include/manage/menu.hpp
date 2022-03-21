@@ -6,15 +6,20 @@
 #include "resizableWindow.hpp"
 
 namespace manager{
-    class Menu: ResizableWindow{
+    class Menu: graphics::ResizableWindow{
     public:
+        Menu();
         Level *runMenu();
 
     private:
+        void calcSize();
+        void handleScreenSizeChange();
+        void recenterWindows();
         void createWindows();
         void deleteWindows();
         enums::MenuState menuState_;
         const Size kAsciiArtSize{4, 40};
+        Size windowsSize_;
         WINDOW *asciiArtWin_;
         const int padding = 1;
         const char *kAsciiArt[4] = {
