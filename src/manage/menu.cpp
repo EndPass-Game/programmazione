@@ -10,7 +10,6 @@ namespace manager
     }
    
 
-    void Menu::createWindows() {
 
     void Menu::createWindows() {
         int currentRow=0;

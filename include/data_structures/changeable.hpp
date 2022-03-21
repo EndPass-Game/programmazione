@@ -91,11 +91,8 @@ T Changeable<T>::getCurrent()
 {
     std::lock_guard<std::mutex> lock(mutex);
     return current_;
-<<<<<<< HEAD
 }
 template <class T>
 Changeable<T>::~Changeable(){
 
-=======
->>>>>>> 44e147739ca773f1618c04690e6cf5b0af610366
 }
