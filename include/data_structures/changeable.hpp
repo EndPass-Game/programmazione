@@ -26,8 +26,11 @@ public:
     //isFirstValue() sarà false
     Changeable(T last, T current);
 
+<<<<<<< HEAD
     ~Changeable();
 
+=======
+>>>>>>> 44e147739ca773f1618c04690e6cf5b0af610366
     //Questo costruttore inizializza solo il valore corrente
     //essendo che il valore vecchio è indefinito per nostra
     //isChange()=false, ma isFisrtVal()=true

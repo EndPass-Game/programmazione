@@ -46,7 +46,11 @@ rerun: clean run
 
 # remove the last build
 clean:
+<<<<<<< HEAD
 	rm $(OBJS) || true
+=======
+	rm $(OBJS) ||true
+>>>>>>> 44e147739ca773f1618c04690e6cf5b0af610366
 
 # build and run the program
 run: main
