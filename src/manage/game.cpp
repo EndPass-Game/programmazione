@@ -27,9 +27,9 @@ namespace manager {
     void Game::run() {
         // fai vedere il menu
         // crea il livello in base al menu    
-        std::thread inputThread(&Input::run, inputManager_, &levelManager_);
+        std::thread inputThread(&Input::run, &inputManager_, &levelManager_);
         inputThread.detach();
-        std::thread displayThread(&Display::gameLoop, displayManager_, &levelManager_);
+        std::thread displayThread(&Display::gameLoop, &displayManager_, &levelManager_);
         displayThread.join();
 
         // TODO: da mettere nel decostruttore

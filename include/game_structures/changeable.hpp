@@ -26,6 +26,8 @@ public:
     //isFirstValue() sarà false
     Changeable(T last, T current);
 
+    ~Changeable();
+
     //Questo costruttore inizializza solo il valore corrente
     //essendo che il valore vecchio è indefinito per nostra
     //isChange()=false, ma isFisrtVal()=true
@@ -89,4 +91,8 @@ T Changeable<T>::getCurrent()
 {
     std::lock_guard<std::mutex> lock(mutex);
     return current_;
+}
+template <class T>
+Changeable<T>::~Changeable(){
+
 }
