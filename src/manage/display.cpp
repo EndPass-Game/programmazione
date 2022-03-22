@@ -8,6 +8,7 @@ Funzioni:
 #include <chrono>
 #include <thread>
 
+#include "game.hpp" // level manager
 #include "display.hpp"
 #include "level.hpp"
 
@@ -67,8 +68,9 @@ namespace manager {
     }
     
 
-    bool Display:: handleScreenSizeChange(Level* levelManager)
+    bool Display:: handleScreenSizeChange()
     {
+        Level *levelManager = Game::GetInstance()->getLevelManager();
         updateScreenSize();
         bool isChanged=currentScreenSize_->isChanged();
         if (isChanged)
@@ -90,51 +92,55 @@ namespace manager {
         return isChanged;
     }
 
-    void Display::runningLoop(Level *levelManager)
+    void Display::runningLoop()
     {
+        Level *levelManager = Game::GetInstance()->getLevelManager();
         clear();
         bool first = true;
         while (levelManager->gameState->getCurrent() == enums::GameState::RUNNING)
         {
             // TODO: le variabili qui sopra non sono utilizzate, farle
-            bool changed =  handleScreenSizeChange(levelManager);
+            bool changed =  handleScreenSizeChange();
             changed |= first;
-            nextFrame(levelManager, changed);
+            nextFrame(changed);
             wrefresh(gameWin_);
             std::this_thread::sleep_for(std::chrono::milliseconds(kSleepTime));
         }
     }
-    void Display::pauseLoop(Level *levelManager)
+
+    void Display::pauseLoop()
     {
+        Level *levelManager = Game::GetInstance()->getLevelManager();
         clear();
         while (levelManager->gameState->getCurrent() == enums::GameState::PAUSE)
         {
-             handleScreenSizeChange(levelManager);
+            handleScreenSizeChange();
             mvprintw(0, 0, "GameState Paused, click 'p' to resume");
             refresh();
             std::this_thread::sleep_for(std::chrono::milliseconds(kSleepTime));
         }
     }
 
-    void Display::gameLoop(Level *levelManager)
+    void Display::gameLoop()
     {
+        Level *levelManager = Game::GetInstance()->getLevelManager();
         createGameWindow();
         while (levelManager->gameState->getCurrent() != enums::GameState::FINISH)
         {
             switch (levelManager->gameState->getCurrent())
             {
             case enums::GameState::RUNNING:
-                runningLoop(levelManager);
+                runningLoop();
                 break;
             case enums::GameState::PAUSE:
-                pauseLoop(levelManager);
+                pauseLoop();
                 break;
             case enums::GameState::SCREEN_TO_SMALL:
             {
                 //TODO:va wrappato in una funzione es smallScreenLoop();
                 while (levelManager->gameState->getCurrent() == enums::GameState::SCREEN_TO_SMALL)
                 {
-                     handleScreenSizeChange(levelManager);
+                    handleScreenSizeChange();
                     mvprintw(0, 0, "screen TO small");
                     refresh();
                     std::this_thread::sleep_for(std::chrono::milliseconds(kSleepTime));
@@ -148,7 +154,8 @@ namespace manager {
         deleteGameWindow();
     }
 
-    void Display::updateObjects(Level *levelManager, bool forceRebuild) {
+    void Display::updateObjects(bool forceRebuild) {   
+        Level *levelManager = Game::GetInstance()->getLevelManager();
         Player *player = levelManager->player;
         // TODO: gestire in seguito quando enemy diventa una lista, o collezione
         // di nemici
@@ -170,9 +177,9 @@ namespace manager {
         }
     }
 
-    void Display::nextFrame(Level *levelManager, bool forceRebuild)
+    void Display::nextFrame(bool forceRebuild)
     {
-        updateObjects(levelManager, forceRebuild);
+        updateObjects(forceRebuild);
         //TODO:muri fatti male XD
         for (int i = 0; i < kGameWindowsSize.x; i++)
         {

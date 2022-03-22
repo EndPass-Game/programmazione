@@ -38,7 +38,7 @@ namespace manager {
         void createGameWindow();
         //esegue delle operazioni in base a come si è modificata la dimensione
         // setta lo stato Game to small e le varie schermate
-        bool handleScreenSizeChange(Level* level);
+        bool handleScreenSizeChange();
 
         // distrugge la finestra di gioco
         void deleteGameWindow();
@@ -54,14 +54,14 @@ namespace manager {
 
         //funzione che viene eseguita quando il programma entra nello stato di pausa
         //e finisce di eseguire quando cambia stato
-        void pauseLoop(Level* level);
+        void pauseLoop();
 
         //funzione che viene eseguita quando il programma entra nello stato di running
         //e finisce di eseguire quando cambia stato
-        void runningLoop(Level* level);
+        void runningLoop();
 
         // ri-renderizza ogni oggetto che si è mosso nello schermo
-        void updateObjects(Level *levelManager, bool forceRebuild);
+        void updateObjects(bool forceRebuild);
         
       public:
         // TODO: Design-issue: 3 funzioni prendon il level manager come input
@@ -71,9 +71,9 @@ namespace manager {
         ~Display();
 
         // crea la finestra e calcola il next frame
-        void gameLoop(Level *levelManager);
+        void gameLoop();
 
         //mostra gli oggetti a video, e li muove, se force è true foza gli oggetti ad essere riprintati
-        void nextFrame(Level *levelManager,bool force);
+        void nextFrame(bool force);
     };
 }
