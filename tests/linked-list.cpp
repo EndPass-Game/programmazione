@@ -51,11 +51,11 @@ namespace test {
         const int test_size = 50;
         for (int i = 0; i < test_size; i++) {
             l.push_back(i);
-            assert(l.getSize() == i + 1u);
+            assert(l.size() == i + 1u);
         }
         for (int i = 0; i < test_size; i++) {
             l.pop_back();
-            assert(l.getSize() == test_size - i - 1u);
+            assert(l.size() == test_size - i - 1u);
         }
     }
 
