@@ -1,5 +1,6 @@
 #include "entity.hpp"
 
+#include "changeable.hpp"
 #include "displayable.hpp"
 #include "direction.hpp"
 #include "display.hpp" // TODO: rimuovere questo import per le costanti di win quando si avrà il sistema per detection collisioni
@@ -17,16 +18,18 @@ Entity::Entity(int life, int attack, Position current, char displayChar):
     attack_(attack),
     direction_(enums::Direction::NONE) {}
 
+Entity::~Entity() {}
+
 bool Entity::canMove(int x, int y) const {
     return (x > 0 && y > 0) &&
         (x < manager::kGameWindowsSize.x - 1 && y < manager::kGameWindowsSize.y - 1);
 }
 
 void Entity::move() {
-    std::lock_guard<std::mutex> lock(mutex_);
+    mutex_.lock();
     int new_x = getPosition().x, new_y = getPosition().y;
     bool isMoving = true;
-    switch(this->direction_) {
+    switch(this->direction_.getCurrent()) {
         case enums::Direction::UP:
             new_x -= 1;
             break;
@@ -48,12 +51,16 @@ void Entity::move() {
         setPosition({new_x, new_y});
     }
     
-    this->direction_ = enums::Direction::NONE;
+    // direction_.setCurrent(enums::Direction::NONE);
+    mutex_.unlock();
+    setDirection(enums::Direction::NONE);
 }
 
 void Entity::setDirection(enums::Direction direction) {
     std::lock_guard<std::mutex> lock(mutex_);
-    direction_ = direction;
+    if (direction_.getCurrent() != direction) {
+        direction_.setCurrent(direction);
+    }
 }
 
 bool Entity::isDead() const {

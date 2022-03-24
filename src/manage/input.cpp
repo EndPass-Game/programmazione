@@ -7,6 +7,7 @@
 */
 #include <ncurses.h>
 
+#include "bullet.hpp"
 #include "game_state.hpp"
 #include "input.hpp"
 #include "level.hpp"
@@ -34,6 +35,12 @@ namespace manager
             break;
         case 'p':
             levelManager->gameState->setCurrent(enums::GameState::PAUSE);
+            break;
+        case 'j':
+            Bullet *bullet = player->attack(); // TODO: fare anche un attacck un-ranged
+            levelManager->bulletMutex.lock();
+            levelManager->bullets->push_back(bullet);
+            levelManager->bulletMutex.unlock();
             break;
         }
     }

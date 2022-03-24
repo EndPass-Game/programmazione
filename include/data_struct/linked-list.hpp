@@ -36,10 +36,6 @@ class LinkedList {
     };
 
 
-    T back() const {
-        if (last_ == nullptr) return T();
-        else return last_->dato;
-    }
 
     T front() {
         if (first_ == nullptr) return T();

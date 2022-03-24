@@ -15,16 +15,20 @@ Funzioni:
 #include "level.hpp"
 #include "player.hpp"
 
+// #include <iostream>
 namespace manager {
     Level::Level() {
         player = new Player();
         enemy = new Enemy();
+        bullets = new datastruct::Vector<Bullet*>(5);
         gameState = new Changeable<enums::GameState>(enums::GameState::RUNNING);
     }
 
     Level::~Level(){
         delete player;
         delete enemy;
+        delete bullets;
         delete gameState;
+        // std::cout << "hello\n";
     }
 }

@@ -17,6 +17,7 @@ Altro
 #pragma once
 
 #include "entity.hpp"
+#include "bullet.hpp"
 // Player: classe che contiene il personaggio
 class Player: public Entity {
   private:
@@ -27,7 +28,7 @@ class Player: public Entity {
     // funzione che sarà chiamata dall'input del giocatore
     // TODO: ricerca il mostro da attaccare in un certo range
     // se trova applica il danno
-    void attack();
+    Bullet *attack();
 
     // TODO
     void pickup(); 

@@ -15,12 +15,15 @@ Funzioni:
 */
 #pragma once
 
+#include <mutex>
+
+
 #include "changeable.hpp"
 #include "game_state.hpp"
 #include "enemy.hpp"
 #include "player.hpp"
-#include "changeable.hpp"
-#include <mutex>
+#include "vector.hpp"
+#include "bullet.hpp"
 
 namespace manager {
     // Level manager:contiene tutte gli oggetti che vengono mostrati
@@ -31,10 +34,8 @@ namespace manager {
     // dovrebbe fare molto di più (come costruzione dell'ambiente schermo)
     // bisogna definire meglio le responsabilità di questo level manager
     struct Level {
-      private:
-        //
-        std::mutex levelMutex;
       public:
+        std::mutex bulletMutex;
         Level();
         ~Level();
 
@@ -45,6 +46,8 @@ namespace manager {
         // che contenga ogni nemico, in modo simile sarebbe buono
         // avere muri e artefatti
         Enemy *enemy; 
+
+        datastruct::Vector<Bullet*> *bullets;
 
         Changeable<enums::GameState>* gameState;
     };

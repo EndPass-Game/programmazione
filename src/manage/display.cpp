@@ -10,8 +10,12 @@ Funzioni:
 
 #include "display.hpp"
 #include "level.hpp"
-
-
+#include "enemy.hpp"
+#include "player.hpp"
+#include "position.hpp"
+#include "changeable.hpp"
+#include "vector.hpp"
+#include "bullet.hpp"
 namespace manager {
 
     Display::Display() {
@@ -153,7 +157,7 @@ namespace manager {
         // TODO: gestire in seguito quando enemy diventa una lista, o collezione
         // di nemici
         Enemy *enemy = levelManager->enemy;
-
+        datastruct::Vector<Bullet*> &bullets = *levelManager->bullets;
         player->move();
         player->clearLast(gameWin_);
         player->render(gameWin_, forceRebuild);
@@ -167,6 +171,19 @@ namespace manager {
             enemy->clearLast(gameWin_);
             enemy->render(gameWin_, forceRebuild);
             currFrameTime_ = 0;
+
+            levelManager->bulletMutex.lock();
+            for (size_t i = 0; i < bullets.size(); i++) {
+                bullets[i]->move();
+                bullets[i]->clearLast(gameWin_);
+                if (bullets[i]->hasHit()) {
+                    delete bullets[i];
+                    bullets.remove(i);
+                } else {
+                    bullets[i]->render(gameWin_, forceRebuild);
+                }
+            }
+            levelManager->bulletMutex.unlock();
         }
     }
 

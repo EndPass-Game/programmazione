@@ -4,6 +4,7 @@ deve tenere le vite, artefatti, posizione, e items
 
 #pragma once
 
+#include "changeable.hpp"
 #include "displayable.hpp"
 #include "direction.hpp"
 #include "position.hpp"
@@ -17,14 +18,14 @@ class Entity: public Displayable {
     int attack_;    // danno fatto alle altre entità
 
     // Contiene la direzione che dovrà essere intrapresa nel prossimo frame
-    enums::Direction direction_;
+    Changeable<enums::Direction> direction_;
     
     // Permette un update thread safe 
     std::mutex mutex_;
   public:
     Entity(int life, int attack);
     Entity(int life, int attack, Position current, char displayChar);
-
+    virtual ~Entity();
     // sarà definita a seconda del metodo d'attacco dell'entità
     virtual void attack(Entity *target);
 
