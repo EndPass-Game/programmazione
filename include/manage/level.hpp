@@ -19,6 +19,7 @@ Funzioni:
 #include "game_state.hpp"
 #include "enemy.hpp"
 #include "player.hpp"
+#include "vector.hpp"
 #include "changeable.hpp"
 #include <mutex>
 
@@ -27,10 +28,12 @@ namespace manager {
     // nel gioco
     struct Level {
       private:
-        std::mutex levelMutex;
+        
       public:
         Level();
         ~Level();
+
+        std::mutex bulletMutex;
 
         // la classe del giocatore principale
         Player *player;
@@ -39,6 +42,8 @@ namespace manager {
         // che contenga ogni nemico, in modo simile sarebbe buono
         // avere muri e artefatti
         Enemy *enemy; 
+
+        datastruct::Vector<Bullet*> *bullets;
 
         Changeable<enums::GameState>* gameState;
     };
