@@ -37,6 +37,12 @@ namespace manager
         case 'p':
             levelManager->gameState->setCurrent(enums::GameState::PAUSE);
             break;
+        case 'j':
+            Bullet *bullet = player->attack(); // TODO: fare anche un attacck un-ranged
+            levelManager->bulletMutex.lock();
+            levelManager->bullets->push_back(bullet);
+            levelManager->bulletMutex.unlock();
+            break;
         }
     }
     void Input::handleInputOnPauseState(int input)

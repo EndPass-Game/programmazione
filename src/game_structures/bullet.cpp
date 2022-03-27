@@ -16,8 +16,7 @@ Bullet::Bullet(Position position, enums::Direction direction):
 bool Bullet::hasHit() {
     int x = getPosition().x;
     int y = getPosition().y;
-    return !(x > 0 && y > 0) or  
-        !(x < manager::kGameWindowsSize.x - 1 && y < manager::kGameWindowsSize.y - 1);
+    return !Displayable::collisionDetection(x, y);
 }
 
 void Bullet::handleEntityHit(Entity *entity) {

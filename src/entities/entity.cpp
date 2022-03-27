@@ -20,11 +20,6 @@ Entity::Entity(int life, int attack, Position current, char displayChar):
 
 Entity::~Entity() {}
 
-bool Entity::canMove(int x, int y) const {
-    return (x > 0 && y > 0) &&
-        (x < manager::kGameWindowsSize.x - 1 && y < manager::kGameWindowsSize.y - 1);
-}
-
 void Entity::move() {
     mutex_.lock();
     int new_x = getPosition().x, new_y = getPosition().y;
@@ -47,7 +42,7 @@ void Entity::move() {
             break;
     }
 
-    if(isMoving and canMove(new_x, new_y)) {
+    if(isMoving and Displayable::collisionDetection(new_x, new_y)) {
         setPosition({new_x, new_y});
     }
     

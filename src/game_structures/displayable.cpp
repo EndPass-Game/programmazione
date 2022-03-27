@@ -1,4 +1,6 @@
 #include "displayable.hpp"
+#include "display.hpp"
+#include "game.hpp"
 
 Displayable::Displayable(Position current, char display_char) : 
     displayChar_(display_char) {
@@ -26,4 +28,14 @@ void Displayable::render(WINDOW *win,bool forced) {
 }
 Displayable::~Displayable(){
     delete position_;
+}
+
+bool Displayable::collisionDetection(int x, int y){
+    manager::Level *levelManager = manager::Game::GetInstance()->getLevelManager();
+    Player *player = levelManager->player;
+    Enemy *enemy = levelManager->enemy;
+    if(enemy->position_->getCurrent().x == x && enemy->position_->getCurrent().y == y) return false;
+    if(player->position_->getCurrent().x == x && player->position_->getCurrent().y == y) return false;
+    return (x > 0 && y > 0) &&
+        (x < manager::kGameWindowsSize.x - 1 && y < manager::kGameWindowsSize.y - 1);
 }
