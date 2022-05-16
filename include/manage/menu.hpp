@@ -3,19 +3,21 @@
 #include "level.hpp"
 #include "size.hpp"
 #include "menu_state.hpp"
-#include "resizableWindow.hpp"
+#include "stackLayout.hpp"
+#include "vector.hpp"
 
 namespace manager{
-    class Menu: ResizableWindow{
+    class Menu:public graphics::StackLayout{
     public:
         Level *runMenu();
+        Menu();
+
+        void handleScreenToSmall();
+        void handleResizedScreen();
 
     private:
-        void createWindows();
-        void deleteWindows();
+        Size windows[2] = {{4, 40}, {3, 10}};
         enums::MenuState menuState_;
-        const Size kAsciiArtSize{4, 40};
-        WINDOW *asciiArtWin_;
         const int padding = 1;
         const char *kAsciiArt[4] = {
             "   ___  _  __ __   ___   _    ___   ___",

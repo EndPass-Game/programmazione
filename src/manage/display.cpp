@@ -32,7 +32,8 @@ namespace manager {
         gameWin_ = newwin(
             kGameWindowsSize.x,
             kGameWindowsSize.y,
-            /* Questi ultimi 2 valori descrivono l'offset della finestra */ pos.x, pos.y);
+            /* Questi ultimi 2 valori descrivono l'offset della finestra */
+             pos.x, pos.y);
 
         // TODO: alcune funzioni di ncurses prendono parametri che non sono affatto ovvi
         // se si pensa che sia di difficile comprensione, potrebbe essere una buona
@@ -47,10 +48,7 @@ namespace manager {
         gameWin_ = nullptr;
     }
 
-    Size Display::getSizeWindow(WINDOW *win)
-    {
-        return Size{getmaxx(win), getmaxy(win)};
-    }
+   
 
     Position Display::getGameWindowPosition(){
         Size screen=currentScreenSize_->getCurrent();

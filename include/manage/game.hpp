@@ -17,9 +17,9 @@ namespace manager {
     // in due thread
     class Game {
       private:
-        Display displayManager_;
+        Display *displayManager_;
         Input inputManager_;
-        Menu menu_;
+        Menu* menu_;
 
         // istanza del singleton
         static Game *instance_;

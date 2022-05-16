@@ -4,7 +4,7 @@
 #include "changeable.hpp"
 #include <ncurses.h>
 
-namespace manager
+namespace graphics
 {
     class ResizableWindow
     {

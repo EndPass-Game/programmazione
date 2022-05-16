@@ -28,18 +28,24 @@ namespace manager {
     void Game::run() {
         //Il menu setta le impostazioni del Level Manager
         Level *levelManager;
-        while ((levelManager = menu_.runMenu())->gameState->getCurrent() != enums::GameState::FINISH)
+
+        Menu menu=Menu();
+
+        while ((levelManager = menu.runMenu())->gameState->getCurrent() != enums::GameState::FINISH)
         {
-            displayManager_=Display(levelManager);
+            displayManager_=new Display(levelManager);
+            
             //crea i thread che runnano il gioco
             std::thread inputThread(&Input::run, &inputManager_, levelManager);
             inputThread.detach();
-            std::thread displayThread(&Display::gameLoop, &displayManager_);
+            std::thread displayThread(&Display::gameLoop, displayManager_);
             displayThread.join();
             //elimina l'istanza del level manager
             delete levelManager;
+            delete displayManager_;
         }
 
+        delete levelManager;
         // TODO: da mettere nel decostruttore
         endwin();
     }

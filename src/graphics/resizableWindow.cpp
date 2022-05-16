@@ -1,6 +1,6 @@
 #include "resizableWindow.hpp"
 
-namespace manager
+namespace graphics 
 {
     ResizableWindow::ResizableWindow(){
         currentScreenSize_=new Changeable<Size>({LINES,COLS});

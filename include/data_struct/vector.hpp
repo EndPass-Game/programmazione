@@ -1,3 +1,6 @@
+#pragma once
+#include <cstddef>
+
 
 namespace datastruct {
 template<class T>
@@ -20,6 +23,24 @@ class Vector {
         size_ = 0;
         realSize_ = _getHigherPowerOfTwo(size);    
         data_ = new T[realSize_];
+    }
+
+    Vector(T *array,size_t size) {
+        size_ = size;
+        realSize_ = _getHigherPowerOfTwo(size);    
+        data_ = new T[realSize_];
+        for(size_t i=0;i<size;i++){
+            data_[i]=array[i];
+        }
+    }
+
+    Vector(const Vector<T> &obj){
+        size_=obj.size_;
+        realSize_=obj.realSize_;
+        data_=new T[realSize_];
+        for(size_t i=0;i<obj.size_;i++){
+            data_[i]=obj.data_[i];
+        }
     }
 
     Vector(): Vector(0) {}

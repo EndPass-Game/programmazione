@@ -18,7 +18,7 @@ namespace manager {
     // Descrive la dimensione orizzontale della schermata di gioco
     const Size kGameWindowsSize  = {18,60};
     const int kSleepTime=50;
-    class Display: public ResizableWindow{
+    class Display: public graphics::ResizableWindow{
       private:
         // WINDOW di ncurses che contiene tutte le entità, muri
         // che sono mostrati al giocatore
@@ -36,8 +36,6 @@ namespace manager {
         //funzione che calcola la posizione della finestra di gioco per centrarla
         Position getGameWindowPosition();
 
-        //TODO:funzione non utilizzata, ma potrebbe servire in un futuro
-        Size getSizeWindow(WINDOW *win);
 
         //funzione che viene eseguita quando il programma entra nello stato di pausa
         //e finisce di eseguire quando cambia stato
