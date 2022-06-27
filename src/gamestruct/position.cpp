@@ -1,18 +1,18 @@
 #include "gamestruct/position.hpp"
 
 void Position::operator=(const Position& pos) {
-    x = pos.x;
-    y = pos.y;
+    riga = pos.riga;
+    colonna = pos.colonna;
 }
 
 bool Position::operator!=(const Position& pos) {
-    return x != pos.x || y != pos.y;
+    return riga != pos.riga || colonna != pos.colonna;
 }
 
 bool Position::operator==(const Position& pos) {
-    return x == pos.x && y == pos.y;
+    return riga == pos.riga && colonna == pos.colonna;
 }
 
 bool Position::operator<(const Position& pos) {
-    return x < pos.x && y < pos.y;
+    return riga < pos.riga && colonna < pos.colonna;
 }

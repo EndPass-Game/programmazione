@@ -11,7 +11,7 @@ void Displayable::setPosition(Position new_position_) {
 
 void Displayable::clearLast(WINDOW *win) {
     if (position_->isChanged()) {
-        mvwprintw(win, position_->getLast().x, position_->getLast().y, " ");
+        mvwprintw(win, position_->getLast().riga, position_->getLast().colonna, " ");
     }
 }
 
@@ -20,7 +20,7 @@ Position Displayable::getPosition(){
 }
 void Displayable::render(WINDOW *win,bool forced) {
     if (position_->isChanged() or position_->isFirstValue() or forced) {
-        mvwprintw(win, position_->getCurrent().x, position_->getCurrent().y, "%c", displayChar_);
+        mvwprintw(win, position_->getCurrent().riga, position_->getCurrent().colonna, "%c", displayChar_);
         setPosition(position_->getCurrent());
     }
 }

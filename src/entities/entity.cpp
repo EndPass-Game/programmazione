@@ -19,12 +19,12 @@ Entity::Entity(int life, int attack, Position current, char displayChar):
 
 bool Entity::canMove(int x, int y) const {
     return (x > 0 && y > 0) &&
-        (x < manager::kGameWindowsSize.x - 1 && y < manager::kGameWindowsSize.y - 1);
+        (x < manager::kGameWindowsSize.riga - 1 && y < manager::kGameWindowsSize.colonna - 1);
 }
 
 void Entity::move() {
     std::lock_guard<std::mutex> lock(mutex_);
-    int new_x = getPosition().x, new_y = getPosition().y;
+    int new_x = getPosition().riga, new_y = getPosition().colonna;
     bool isMoving = true;
     switch(this->direction_) {
         case enums::Direction::UP:

@@ -32,9 +32,9 @@ namespace manager {
         // assert(win_==nullptr);
         Position pos=getGameWindowPosition();
         gameWin_ = newwin(
-            kGameWindowsSize.x,
-            kGameWindowsSize.y,
-            /* Questi ultimi 2 valori descrivono l'offset della finestra */ pos.x, pos.y);
+            kGameWindowsSize.riga,
+            kGameWindowsSize.colonna,
+            /* Questi ultimi 2 valori descrivono l'offset della finestra */ pos.riga, pos.colonna);
 
         // TODO: alcune funzioni di ncurses prendono parametri che non sono affatto ovvi
         // se si pensa che sia di difficile comprensione, potrebbe essere una buona
@@ -63,7 +63,7 @@ namespace manager {
 
     Position Display::getGameWindowPosition(){
         Size screen=currentScreenSize_->getCurrent();
-        int startY=(screen.y-kGameWindowsSize.y)/2;
+        int startY=(screen.colonna-kGameWindowsSize.colonna)/2;
         if(startY<0)startY=0;
         return {0,startY};
     }
@@ -80,7 +80,7 @@ namespace manager {
             deleteGameWindow();
             clear();
             createGameWindow();
-            if (currentScreenSize_->getCurrent().x < kGameWindowsSize.x or currentScreenSize_->getCurrent().y < kGameWindowsSize.y)
+            if (currentScreenSize_->getCurrent().riga < kGameWindowsSize.riga or currentScreenSize_->getCurrent().colonna < kGameWindowsSize.colonna)
             {
                 levelManager->gameState->setCurrent(enums::GameState::SCREEN_TO_SMALL);
             }
@@ -182,15 +182,15 @@ namespace manager {
     {
         updateObjects(forceRebuild);
         //TODO:muri fatti male XD
-        for (int i = 0; i < kGameWindowsSize.x; i++)
+        for (int i = 0; i < kGameWindowsSize.riga; i++)
         {
             mvwprintw(gameWin_, i, 0, "#");
-            mvwprintw(gameWin_, i, kGameWindowsSize.y - 1, "#");
+            mvwprintw(gameWin_, i, kGameWindowsSize.colonna - 1, "#");
         }
-        for (int i = 0; i < kGameWindowsSize.y; i++)
+        for (int i = 0; i < kGameWindowsSize.colonna; i++)
         {
             mvwprintw(gameWin_, 0, i, "#");
-            mvwprintw(gameWin_, kGameWindowsSize.x - 1, i, "#");
+            mvwprintw(gameWin_, kGameWindowsSize.riga - 1, i, "#");
         }
     }
 } // namespace manager
