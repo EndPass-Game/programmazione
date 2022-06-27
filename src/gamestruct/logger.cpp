@@ -1,8 +1,9 @@
-#include "Logger.hpp"
+#include "gamestruct/logger.hpp"
 
-#include <stdio.h>
 #include <cstring>
-#include <stdarg.h>
+#include <cstdarg>
+#include <cstdio>
+
 using namespace std;
 
 

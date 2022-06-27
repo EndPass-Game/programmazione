@@ -14,8 +14,9 @@ Funzioni
 Altro
 1. Inventario ( Classe apparte? )
 */
-#include "player.hpp"
-#include "entity.hpp"
+#include "entities/player.hpp"
+
+#include "entities/entity.hpp"
 
 Player::Player(): 
     Entity(12, 3, // TODO: gestire queste costanti hardcoded in un file di setting

@@ -1,7 +1,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-#include "game.hpp"
+#include "manager/game.hpp"
 
 
 int main(){

@@ -2,8 +2,8 @@
 #include <chrono>
 #include <assert.h>
 
-#include "avl-tree.hpp"
-#include "binary-tree.hpp"
+#include "datastruct/avl-tree.hpp"
+#include "datastruct/binary-tree.hpp"
 using namespace datastruct;
 struct functionMETA {
     void (*funcPtr) ();

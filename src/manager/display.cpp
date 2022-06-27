@@ -5,12 +5,13 @@ Questa classe si occupa di mostrare sullo schermo
 Funzioni:
 1. Errori 
 */
+#include "manager/display.hpp"
+
 #include <chrono>
 #include <thread>
 
-#include "game.hpp" // level manager
-#include "display.hpp"
-#include "level.hpp"
+#include "manager/game.hpp" // level manager
+#include "manager/level.hpp"
 
 
 namespace manager {

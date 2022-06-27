@@ -1,9 +1,10 @@
+#include "manager/game.hpp"
+
 #include <thread>
 
-#include "game.hpp"
-#include "level.hpp"
-#include "display.hpp"
-#include "input.hpp"
+#include "manager/level.hpp"
+#include "manager/display.hpp"
+#include "manager/input.hpp"
 
 namespace manager {
     Game *Game::instance_ = nullptr;

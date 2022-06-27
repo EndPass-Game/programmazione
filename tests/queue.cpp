@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cassert>
 
-#include "queue.hpp"
+#include "datastruct/queue.hpp"
 using namespace datastruct;
 struct functionMETA {
     void (*funcPtr) ();

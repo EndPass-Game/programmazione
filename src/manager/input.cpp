@@ -5,13 +5,14 @@
 *  
 *
 */
+#include "manager/input.hpp"
+
 #include <ncurses.h>
 
-#include "game.hpp"
-#include "game_state.hpp"
-#include "input.hpp"
-#include "level.hpp"
-#include "player.hpp"
+#include "enums/game_state.hpp"
+#include "entities/player.hpp"
+#include "manager/game.hpp"
+#include "manager/level.hpp"
 
 namespace manager
 {

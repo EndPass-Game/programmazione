@@ -1,4 +1,4 @@
-#include "position.hpp"
+#include "gamestruct/position.hpp"
 
 void Position::operator=(const Position& pos) {
     x = pos.x;

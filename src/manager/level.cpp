@@ -9,11 +9,11 @@ Dati
 
 Funzioni:
 */
+#include "manager/level.hpp"
 
-#include "enemy.hpp"
-#include "game_state.hpp"
-#include "level.hpp"
-#include "player.hpp"
+#include "enums/game_state.hpp"
+#include "entities/player.hpp"
+#include "entities/enemy.hpp"
 
 namespace manager {
     Level::Level() {

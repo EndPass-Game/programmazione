@@ -1,7 +1,7 @@
 #include <iostream>
 #include <assert.h>
 
-#include "linked-list.hpp"
+#include "datastruct/linked-list.hpp"
 
 using namespace datastruct;
 struct functionMETA {

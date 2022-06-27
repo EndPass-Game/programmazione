@@ -1,4 +1,4 @@
-#include "displayable.hpp"
+#include "gamestruct/displayable.hpp"
 
 Displayable::Displayable(Position current, char display_char) : 
     displayChar_(display_char) {

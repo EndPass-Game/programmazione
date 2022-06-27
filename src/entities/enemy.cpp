@@ -1,10 +1,11 @@
+#include "entities/enemy.hpp"
+
 #include <stdlib.h>
 #include <mutex>
 
-#include "direction.hpp"
-#include "enemy.hpp"
-#include "entity.hpp"
-#include "position.hpp"
+#include "gamestruct/position.hpp"
+#include "enums/direction.hpp"
+#include "entities/entity.hpp"
 
 Enemy::Enemy(): 
     Entity(12, 3, // TODO: gestire queste costanti hardcoded in un file di setting

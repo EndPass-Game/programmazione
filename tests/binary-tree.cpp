@@ -1,7 +1,7 @@
 #include <iostream>
 #include <assert.h>
 
-#include "binary-tree.hpp"
+#include "datastruct/binary-tree.hpp"
 using namespace datastruct;
 struct functionMETA {
     void (*funcPtr) ();
