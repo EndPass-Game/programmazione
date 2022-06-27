@@ -2,22 +2,24 @@
 #include "position.hpp"
 #include "size.hpp"
 
-class View{
-private:
+namespace views
+{
 
-    WINDOW *window; 
+    class View
+    {
+    private:
+        WINDOW *window;
 
-public:
+    public:
 
-    virtual void renderContent();
+        virtual void handleInput(char input);
 
-    virtual void handleInput(char input);
-    
-    void render();
+        virtual void render();
 
-    void touchAndRender();
+        void touchAndRender();
 
-    View(Position pos,Size s);
+        View(Position pos, Size s);
 
-    ~View();
+        ~View();
+    };
 };

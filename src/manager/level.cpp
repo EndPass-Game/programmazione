@@ -11,20 +11,20 @@ Funzioni:
 */
 #include "manager/level.hpp"
 
-#include "enums/game_state.hpp"
 #include "entities/player.hpp"
 #include "entities/enemy.hpp"
 
-namespace manager {
-    Level::Level() {
+namespace manager
+{
+    Level::Level()
+    {
         player = new Player();
         enemy = new Enemy();
-        gameState = new Changeable<enums::GameState>(enums::GameState::RUNNING);
     }
 
-    Level::~Level(){
+    Level::~Level()
+    {
         delete player;
         delete enemy;
-        delete gameState;
     }
 }
