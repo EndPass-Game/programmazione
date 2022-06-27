@@ -16,19 +16,21 @@ namespace manager {
     // in due thread
     class Game {
       private:
-        Level levelManager_;
-        Display displayManager_;
-        Input inputManager_;
+        Display *displayManager_;
+        Input *inputManager_;
+        Level *levelInstance_;
 
         // istanza del singleton
         static Game *instance_;
 
       public:
         Game();
-        //~Game();
+        ~Game();
 
         //ritorna l'istanza del singoletto
-        static Game* GetInstance();
+        static Game *GetInstance();
+
+        Level *getLevelManager() const;
 
         //Crea i thread e gestisce i menu prima e dopo il gioco
         void run();

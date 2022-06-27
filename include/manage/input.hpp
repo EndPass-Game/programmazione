@@ -11,16 +11,12 @@
 namespace manager {
     class Input {
       private:
+        void handleInputOnGameState(int input); 
+        void handleInputOnPauseState(int input); 
+        void handleInputOnAllState(int input);
 
-        void handleInputOnGameState(int input,Level* levelManager); 
-        void handleInputOnPauseState(int input,Level* levelManager); 
-        void handleInputOnAllState(int input,Level* levelManager);
       public:
-        //Input();
-        //~InputManager();
-
-        // ISSUE: perché questa funzione prende level manager se lo
-        // ho già come membro privato?
-        void run(Level* levelManager);
+        Input();
+        void run();
     };
 }

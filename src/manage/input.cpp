@@ -7,6 +7,7 @@
 */
 #include <ncurses.h>
 
+#include "game.hpp"
 #include "game_state.hpp"
 #include "input.hpp"
 #include "level.hpp"
@@ -14,9 +15,10 @@
 
 namespace manager
 {
-
-    void Input::handleInputOnGameState(int input, Level *levelManager)
+    Input::Input() {}
+    void Input::handleInputOnGameState(int input)
     {
+        Level *levelManager = Game::GetInstance()->getLevelManager();
         Player *player = levelManager->player;
         switch (input)
         {
@@ -37,8 +39,9 @@ namespace manager
             break;
         }
     }
-    void Input::handleInputOnPauseState(int input, Level *levelManager)
+    void Input::handleInputOnPauseState(int input)
     {
+        Level *levelManager = Game::GetInstance()->getLevelManager();
         switch (input)
         {
         case 'p':
@@ -46,8 +49,9 @@ namespace manager
             break;
         }
     }
-    void Input::handleInputOnAllState(int input, Level *levelManager)
+    void Input::handleInputOnAllState(int input)
     {
+        Level *levelManager = Game::GetInstance()->getLevelManager();
         switch (input)
         {
         case 'q':
@@ -56,24 +60,24 @@ namespace manager
         }
     }
 
-    void Input::run(Level *levelManager)
+    void Input::run()
     {
+        Level *levelManager = Game::GetInstance()->getLevelManager();
         timeout(300);
         while (levelManager->gameState->getCurrent() != enums::GameState::FINISH)
         {
             int current_input = getch();
             if (current_input != -1){
-
                 switch (levelManager->gameState->getCurrent())
                 {
                 case enums::GameState::PAUSE:
-                    handleInputOnPauseState(current_input,levelManager);
+                    handleInputOnPauseState(current_input);
                     break;
                 case enums::GameState::RUNNING:
-                    handleInputOnGameState(current_input,levelManager);
+                    handleInputOnGameState(current_input);
                     break;
                 }
-                handleInputOnAllState(current_input, levelManager);
+                handleInputOnAllState(current_input);
             }
         }
     }
