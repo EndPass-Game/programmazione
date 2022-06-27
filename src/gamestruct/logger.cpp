@@ -1,31 +1,21 @@
 #include "gamestruct/logger.hpp"
 
-#include <cstring>
-#include <cstdarg>
-#include <cstdio>
+#include <cstdarg> // va_list 
+#include <cstdlib>
 
-using namespace std;
-
-
-Logger* Logger::instance_=nullptr;
-char* Logger::loggerFileName= "game.log";
-
-FILE* Logger::loggerFile=fopen(loggerFileName, "w");
-
-//Costruttore vuoto della classe
-Logger::Logger(){}
-
-// crea il singleton o restituisce l'oggetto statico
-Logger* Logger::getInstance(){
-    if(instance_ == nullptr){
-        instance_ = new Logger();
+Logger::Logger(const char* filename, const char *mode) {
+    fileStream_ = fopen(filename, mode);    
+    if (fileStream_ == nullptr) {
+        fprintf(stderr, "Impossibile aprire il file %s per il log\n", filename);
+        exit(1);
     }
-    return instance_;
 }
-//funzione che scrive nel file il messaggio corrispondente
+
+Logger::~Logger() {
+    fclose(fileStream_);
+}
+
 void Logger::log(const char *format, ...){
     va_list args;
-    va_start (args, format);
-    vfprintf (loggerFile, format, args);
-    va_end (args);
+    vfprintf (fileStream_, format, args);
 }
