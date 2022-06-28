@@ -7,6 +7,8 @@ deve tenere le vite, artefatti, posizione, e items
 #include "enums/direction.hpp"
 #include "gamestruct/displayable.hpp"
 #include "gamestruct/position.hpp"
+#include "enums/direction.hpp"
+#include "manager/display.hpp" // TODO: rimuovere questo import per le costanti di win quando si avrà il sistema per detection collisioni
 
 // TODO: invece che ogni classe figlia erediti da questa
 // sarebbe buona cosa rendere questa classe una factory

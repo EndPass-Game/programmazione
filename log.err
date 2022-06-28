@@ -1,0 +1,55 @@
+        =================================================================
+==31338==ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7ffe400de7e0 at pc 0x5926bc63964f bp 0x7ffe400de620 sp 0x7ffe400de618
+WRITE of size 8 at 0x7ffe400de7e0 thread T0
+    #0 0x5926bc63964e in manager::Menu::Menu() src/manage/menu.cpp:6
+    #1 0x5926bc633bf1 in manager::Game::run() src/manage/game.cpp:32
+    #2 0x5926bc63a891 in main src/main.cpp:7
+    #3 0x7aa31c00609a in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2409a)
+    #4 0x5926bc62d389 in _start (/home/giospadaccini74/project/programmazione/build/main+0x2d389)
+
+Address 0x7ffe400de7e0 is located in stack of thread T0 at offset 320 in frame
+    #0 0x5926bc633b23 in manager::Game::run() src/manage/game.cpp:28
+
+  This frame has 4 object(s):
+    [32, 40) 'levelManager'
+    [96, 104) 'inputThread'
+    [160, 168) 'displayThread'
+    [224, 320) 'menu' <== Memory access at offset 320 overflows this variable
+HINT: this may be a false positive if your program uses some custom stack unwind mechanism or swapcontext
+      (longjmp and C++ exceptions *are* supported)
+SUMMARY: AddressSanitizer: stack-buffer-overflow src/manage/menu.cpp:6 in manager::Menu::Menu()
+Shadow bytes around the buggy address:
+  0x100048013ca0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x100048013cb0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x100048013cc0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x100048013cd0: 00 00 00 00 f1 f1 f1 f1 00 f4 f4 f4 f2 f2 f2 f2
+  0x100048013ce0: 00 f4 f4 f4 f2 f2 f2 f2 00 f4 f4 f4 f2 f2 f2 f2
+=>0x100048013cf0: 00 00 00 00 00 00 00 00 00 00 00 00[f3]f3 f3 f3
+  0x100048013d00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x100048013d10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x100048013d20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x100048013d30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x100048013d40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==31338==ABORTING
+make: *** [run] Error 1

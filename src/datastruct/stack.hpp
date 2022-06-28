@@ -16,6 +16,10 @@ class Stack {
         data_.push_back(element);
     }
 
+    T last() {
+      return data_[data_.size-1];
+    }
+
     T pop() {
         return data_.pop_back();
     }

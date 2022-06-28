@@ -1,9 +1,5 @@
 #include "entities/entity.hpp"
 
-#include "enums/direction.hpp"
-#include "gamestruct/displayable.hpp"
-#include "gamestruct/position.hpp"
-#include "manager/display.hpp" // TODO: rimuovere questo import per le costanti di win quando si avrà il sistema per detection collisioni
 
 Entity::Entity(int life, int attack): 
     Displayable(Position{1,1}, 'E'), 

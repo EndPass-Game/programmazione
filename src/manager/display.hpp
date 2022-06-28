@@ -8,22 +8,35 @@ Funzioni:
 #pragma once
 
 #include <ncurses.h>
+#include <chrono>
+#include <thread>
 
 #include "manager/viewManager.hpp"
+#include "gamestruct/size.hpp"
+#include "gamestruct/changeable.hpp"
+
 
 namespace manager
 {
-
-  // Decide ogni quanti millisecondi avviene un update a schermo
-  const int kSleepTime = 50;
 
   class Display
   {
   private:
     ViewManager *viewManager;
 
+    Changeable<Size> screenSize;
+
+    Size getScreenSize();
+
+    bool checkUpdateView();
+
+    void updateScreenSize();
+
   public:
+
+
     Display(ViewManager *viewManager);
+
     void gameLoop();
   };
 }

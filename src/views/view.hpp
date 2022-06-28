@@ -1,25 +1,36 @@
+#pragma once
+
 #include "ncurses.h"
-#include "position.hpp"
-#include "size.hpp"
+#include "gamestruct/position.hpp"
+#include "gamestruct/size.hpp"
+#include "gamestruct/changeable.hpp"
+#include "manager/viewManager.hpp"
+
 
 namespace views
 {
 
     class View
     {
-    private:
+    protected:
+        
         WINDOW *window;
+     
+        Size winSize;
+        
+        Position winPosition;
+
 
     public:
 
+        virtual void handleScreenBeforeRender(Changeable<Size> &screen,manager::ViewManager* view);
+
         virtual void handleInput(char input);
 
-        virtual void render();
-
-        void touchAndRender();
+        virtual void render(bool repaint);
 
         View(Position pos, Size s);
 
         ~View();
     };
-};
+}; // namespace views

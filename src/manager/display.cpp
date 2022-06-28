@@ -7,19 +7,39 @@ Funzioni:
 */
 #include "manager/display.hpp"
 
-#include <chrono>
-#include <thread>
 
 namespace manager
 {
 
-    Display::Display(ViewManager *viewManager) : viewManager(viewManager) {}
+    Display::Display(ViewManager *viewManager) : viewManager(viewManager),screenSize(getScreenSize()) {
+    }
+
+    Size Display::getScreenSize(){
+        return Size{LINES,COLS};
+    }
+
+    void Display::updateScreenSize(){
+        screenSize.setCurrent(getScreenSize());
+    }
+
+    bool Display::checkUpdateView(){
+        bool changed=false;
+        bool tmpChangedView;
+        do{
+            viewManager->last()->handleScreenBeforeRender(screenSize,viewManager);
+            tmpChangedView=viewManager->isChangedView();
+            changed|=tmpChangedView;
+        }while(tmpChangedView);
+
+        return changed;
+    }
 
     void Display::gameLoop()
     {
         while (viewManager->empty())
         {
-            viewManager->last()->render();
+            bool hasUpdated=checkUpdateView();
+            viewManager->last()->render(hasUpdated);
             std::this_thread::sleep_for(std::chrono::milliseconds(kSleepTime));
         }
     }
