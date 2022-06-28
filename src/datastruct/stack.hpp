@@ -6,9 +6,9 @@ class Stack {
   private:
     Vector<T> data_;
   public:
-    Stack(): Stack(0) {}
+    Stack(): data_(0){}
 
-    uint isEmpty() const {
+    int isEmpty() const {
         return data_.isEmpty();
     }
 
@@ -21,7 +21,8 @@ class Stack {
     }
 
     T last() {
-      return data_[data_.size-1];
+      int last=data_.size()-1;
+      return data_[last];
     }
 
     T pop() {

@@ -6,7 +6,7 @@ template<class T>
 class AVLTree: public BinaryTree<T> {
   private:
     struct AVLNode: public BinaryTree<T>::Node {
-        uint height;
+        int height;
         AVLNode(T elem): 
             BinaryTree<T>::Node(elem), 
             height(0) {}
@@ -49,7 +49,7 @@ class AVLTree: public BinaryTree<T> {
     }
 
     void _updateHeight(AVLNode *node) {
-        uint currHeight = 0;
+        int currHeight = 0;
         AVLNode *left = (AVLNode *) node->left;
         AVLNode *right = (AVLNode *) node->right;
         if (left != nullptr and left->height >= currHeight) {

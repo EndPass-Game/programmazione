@@ -1,3 +1,5 @@
+#include  <stddef.h>
+
 
 namespace datastruct {
 
@@ -113,7 +115,7 @@ class Vector {
     // il valore VAL in input per indici 0..SIZE-1.
     void assign(size_t size, T val) {
         resize(size);
-        for (uint i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             data_[i] = val;
         }
         size_ = size;

@@ -94,7 +94,7 @@ namespace test {
         }
 
         int *array = h.asArray();
-        for (uint i = 0; i < h.getSize(); i++) {
+        for (int i = 0; i < h.getSize(); i++) {
             assert(array[i] == (int) i);
         }
         assert(h.max() == 99);
@@ -177,8 +177,8 @@ functionMETA func_table[] = {
 
 
 int main() {
-    uint n_tests = sizeof(func_table) / sizeof(functionMETA);
-    for (uint i = 0; i < n_tests; i++) {
+    int n_tests = sizeof(func_table) / sizeof(functionMETA);
+    for (int i = 0; i < n_tests; i++) {
         test::run(func_table[i].funcPtr, func_table[i].funcName);
     }
 }

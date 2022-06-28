@@ -23,24 +23,27 @@ namespace manager
     }
 
     bool Display::checkUpdateView(){
-        bool changed=false;
+        updateScreenSize();
+        bool changed=screenSize.isChanged();
         bool tmpChangedView;
         do{
             viewManager->last()->handleScreenBeforeRender(screenSize,viewManager);
             tmpChangedView=viewManager->isChangedView();
             changed|=tmpChangedView;
-        }while(tmpChangedView);
+        }while(tmpChangedView and !viewManager->empty());
 
         return changed;
     }
 
     void Display::gameLoop()
     {
-        while (viewManager->empty())
+        while (!viewManager->empty())
         {
             bool hasUpdated=checkUpdateView();
-            viewManager->last()->render(hasUpdated);
-            std::this_thread::sleep_for(std::chrono::milliseconds(kSleepTime));
+            if(!viewManager->empty()){
+                viewManager->last()->render(hasUpdated);
+                std::this_thread::sleep_for(std::chrono::milliseconds(kSleepTime));
+            }
         }
     }
 

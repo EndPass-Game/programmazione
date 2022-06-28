@@ -22,21 +22,19 @@ namespace manager
   class Display
   {
   private:
+
     ViewManager *viewManager;
-
     Changeable<Size> screenSize;
-
     Size getScreenSize();
-
+    // chiama l'handleScrennSize nella view corrente
     bool checkUpdateView();
-
     void updateScreenSize();
 
   public:
 
 
     Display(ViewManager *viewManager);
-
+    // funzione che viene eseguita finché non ci sono più view nello stack
     void gameLoop();
   };
 }

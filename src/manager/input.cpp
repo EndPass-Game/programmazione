@@ -1,10 +1,3 @@
-/*
- *  Descrizione:
- *  Questa classe gestisce tutti gli input del gioco
- *  e chiama le funzioni corrette a seconda dell'input
- *
- *
- */
 #include "manager/input.hpp"
 
 #include <ncurses.h>
@@ -21,7 +14,7 @@ namespace manager
     void Input::run()
     {
         timeout(300);
-        while (viewManager->empty())
+        while (!viewManager->empty())
         {
             int current_input = getch();
             if (current_input != -1)
@@ -30,4 +23,4 @@ namespace manager
             }
         }
     }
-} // namespace manager;
+} // namespace manager

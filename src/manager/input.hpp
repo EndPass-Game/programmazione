@@ -14,10 +14,14 @@ namespace manager
   class Input
   {
   private:
+
     ViewManager *viewManager;
 
   public:
+
     Input(ViewManager *viewManager);
+    //funzione che viene eseguita finché rimangono elementi nel viewmanager
     void run();
+
   };
 }

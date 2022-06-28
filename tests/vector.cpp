@@ -34,7 +34,7 @@ namespace test {
 
     void correct_size() {
         Vector<int> v;
-        for (uint i = 0; i < 20; i++) {
+        for (int i = 0; i < 20; i++) {
             v.push_back(i);
             assert(v.size() == i + 1);
         }
@@ -86,8 +86,8 @@ functionMETA func_table[] = {
 };
 
 int main() {
-    uint n_tests = sizeof(func_table) / sizeof(functionMETA);
-    for (uint i = 0; i < n_tests; i++) {
+    int n_tests = sizeof(func_table) / sizeof(functionMETA);
+    for (int i = 0; i < n_tests; i++) {
         test::run(func_table[i].funcPtr, func_table[i].funcName);
     }
 }
