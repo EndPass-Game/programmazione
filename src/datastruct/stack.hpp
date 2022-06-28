@@ -12,6 +12,10 @@ class Stack {
         return data_.isEmpty();
     }
 
+    T top() const {
+        return data_.back();
+    }
+
     void push(T element) {
         data_.push_back(element);
     }
