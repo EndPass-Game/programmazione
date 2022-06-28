@@ -1,3 +1,4 @@
+#pragma once
 #include "datastruct/vector.hpp"
 
 namespace datastruct {
@@ -8,8 +9,12 @@ class Stack {
   public:
     Stack(): Stack(0) {}
 
-    uint isEmpty() const {
+    bool isEmpty() const {
         return data_.isEmpty();
+    }
+
+    T top() const {
+        return data_.back();
     }
 
     void push(T element) {

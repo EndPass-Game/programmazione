@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stddef.h> // size_t
+
 namespace datastruct {
 template<class T>
 class BinaryTree {
