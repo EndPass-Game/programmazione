@@ -14,18 +14,18 @@
 // sullo schermo
 class Displayable {
   protected:  
-    //oggetto che contiene le ultime due posizioni dell'oggetto
-    //e controlla quando cambia la posizione
+    // oggetto che contiene le ultime due posizioni dell'oggetto
+    // e controlla quando cambia la posizione
     Changeable<Position> *position_;
 
     // la char che viene printata a video
     char displayChar_;
 
   public:
-
-    //construttore che inizializza l'oggetto changable e display char
+    Displayable();
+    // construttore che inizializza l'oggetto changable e display char
     Displayable(Position current, char displayChar);
-    //elimina i pointer
+    // elimina i pointer
     ~Displayable();
 
     Position getPosition();
