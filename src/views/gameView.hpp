@@ -3,6 +3,7 @@
 #include "views/resizableView.hpp"
 #include "views/pauseView.hpp"
 #include "manager/viewManager.hpp"
+#include "manager/level.hpp"
 
 namespace views
 {
@@ -12,6 +13,7 @@ namespace views
         // TODO: variabili per cunicare tra i due thread in un futuro andranno wrappate in una struct o classe mutex protected
         bool quit = false;
         bool pause = false;
+        manager::Level levelManager;
 
     public:
         

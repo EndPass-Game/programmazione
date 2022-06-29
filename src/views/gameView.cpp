@@ -3,7 +3,9 @@
 namespace views
 {
 
-    GameView::GameView(Position pos) : ResizableView(pos, manager::kGameWindowsSize) {}
+    GameView::GameView(Position pos) : ResizableView(pos, manager::kGameWindowsSize) {
+
+    }
 
     void GameView::handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView)
     {
@@ -27,12 +29,27 @@ namespace views
             case 'p':
                 pause=true;
                 break;
+            case 'w':
+                levelManager.player->setDirection(enums::Direction::UP);
+                break;
+            case 'a':
+                levelManager.player->setDirection(enums::Direction::LEFT);
+                break;
+            case 'd':
+                levelManager.player->setDirection(enums::Direction::RIGHT);
+                break;
+            case 's':
+                levelManager.player->setDirection(enums::Direction::DOWN);
+                break;
         }
     }
 
     void GameView::render(bool force)
     {
-
+        
+        levelManager.player->move();
+        levelManager.player->clearLast(window);
+        levelManager.player->render(window,force);
         mvwprintw(window, 0, 0, "#");
         for (int i = 0; i < manager::kGameWindowsSize.riga; i++)
         {
