@@ -1,9 +1,5 @@
 #include "entities/entity.hpp"
 
-#include "enums/direction.hpp"
-#include "gamestruct/displayable.hpp"
-#include "gamestruct/position.hpp"
-#include "manager/display.hpp" // TODO: rimuovere questo import per le costanti di win quando si avrà il sistema per detection collisioni
 
 Entity::Entity(int life, int attack): 
     Displayable(Position{1,1}, 'E'), 
@@ -23,7 +19,6 @@ bool Entity::canMove(int x, int y) const {
 }
 
 void Entity::move() {
-    std::lock_guard<std::mutex> lock(mutex_);
     int new_x = getPosition().riga, new_y = getPosition().colonna;
     bool isMoving = true;
     switch(this->direction_) {
@@ -52,7 +47,6 @@ void Entity::move() {
 }
 
 void Entity::setDirection(enums::Direction direction) {
-    std::lock_guard<std::mutex> lock(mutex_);
     direction_ = direction;
 }
 
@@ -63,7 +57,6 @@ bool Entity::isDead() const {
 void Entity::attack(Entity *entity) {}
 
 void Entity::applyDamage(int damage) {
-    std::lock_guard<std::mutex> lock(mutex_);
     life_ -= damage;
 }
 

@@ -15,19 +15,13 @@ Funzioni:
 */
 #pragma once
 
-#include "enums/game_state.hpp"
 #include "entities/enemy.hpp"
 #include "entities/player.hpp"
-#include "gamestruct/changeable.hpp"
-#include "gamestruct/changeable.hpp"
-#include <mutex>
 
 namespace manager {
     // Level manager: contiene tutte gli oggetti che vengono mostrati
     // nel gioco
     struct Level {
-      private:
-        std::mutex levelMutex;
       public:
         Level();
         ~Level();
@@ -40,6 +34,5 @@ namespace manager {
         // avere muri e artefatti
         Enemy *enemy; 
 
-        Changeable<enums::GameState>* gameState;
     };
 }

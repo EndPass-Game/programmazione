@@ -1,5 +1,6 @@
-#pragma once
+
 #include <stddef.h> // size_t
+
 namespace datastruct {
 
 // implementazione di vector che utilizza un array dinamico doubling-halving
@@ -115,6 +116,7 @@ class Vector {
     void assign(size_t size, T val) {
         resize(size);
         for (unsigned int i = 0; i < size; i++) {
+
             data_[i] = val;
         }
         size_ = size;

@@ -9,6 +9,7 @@ class AVLTree: public BinaryTree<T> {
   private:
     struct AVLNode: public BinaryTree<T>::Node {
         unsigned int height;
+
         AVLNode(T elem): 
             BinaryTree<T>::Node(elem), 
             height(0) {}
@@ -52,6 +53,7 @@ class AVLTree: public BinaryTree<T> {
 
     void _updateHeight(AVLNode *node) {
         unsigned int currHeight = 0;
+
         AVLNode *left = (AVLNode *) node->left;
         AVLNode *right = (AVLNode *) node->right;
         if (left != nullptr and left->height >= currHeight) {

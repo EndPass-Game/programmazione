@@ -5,41 +5,32 @@
 #include "manager/level.hpp"
 #include "manager/display.hpp"
 #include "manager/input.hpp"
+#include "views/gameView.hpp"
 
-namespace manager {
-    Game *Game::instance_ = nullptr;
+namespace manager
+{
+    Game::Game()
+    {
+        // inizializza i managers
+        viewManager_ = new ViewManager();
+        inputManager_ = new Input(viewManager_);
+        displayManager_ = new Display(viewManager_);
 
-    Game::Game() {
-        // inizializza i managers 
-        levelInstance_ = new Level();
-        inputManager_ = new Input();
-        displayManager_ = new Display();
-
-        initscr(); // inizializza lo schermo di ncurses
-        noecho(); // impedisce la stampa a schermo del carattere di getch()
+        initscr();            // inizializza lo schermo di ncurses
+        noecho();             // impedisce la stampa a schermo del carattere di getch()
         keypad(stdscr, TRUE); // permette a wgetch() di prendere in input caratteri funzione
     }
 
-    Game::~Game() {
-        delete levelInstance_;
+    Game::~Game()
+    {
         delete inputManager_;
         delete displayManager_;
         endwin();
     }
-
-    // crea il singleton o restituisce l'oggetto statico
-    Game* Game::GetInstance() {
-        if(Game::instance_ == nullptr) {
-            Game::instance_ = new Game();
-        }
-        return Game::instance_;
-    }
-
-    Level *Game::getLevelManager() const {
-        return levelInstance_;
-    }
-
-    void Game::run() {
+    void Game::run()
+    {
+        views::GameView* g=new views::GameView(manager::kGameWindowsSize);
+        viewManager_->pushView(g);
         std::thread inputThread(&Input::run, inputManager_);
         inputThread.detach();
         std::thread displayThread(&Display::gameLoop, displayManager_);

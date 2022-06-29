@@ -3,11 +3,10 @@
 
 #include "manager/game.hpp"
 
+int main()
+{
+    srand((unsigned int)time(NULL));
 
-int main(){
-    srand((unsigned int) time(NULL));
-
-    manager::Game* gameInstance = manager::Game::GetInstance();
-    gameInstance->run();
-    delete gameInstance;
+    manager::Game gameInstance;
+    gameInstance.run();
 }
