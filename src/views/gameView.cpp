@@ -5,20 +5,28 @@ namespace views
 
     GameView::GameView(Position pos) : ResizableView(pos, manager::kGameWindowsSize) {}
 
-    void GameView::handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view)
+    void GameView::handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView)
     {
-        ResizableView::handleScreenBeforeRender(screen, view);
+        ResizableView::handleScreenBeforeRender(screen, view,changedView);
         if (quit)
         {
             view->popView();
+        }else if(pause){
+            PauseView* pauseView=new PauseView({0,0});
+            view->pushView(pauseView);
+            pause=false;
         }
     }
 
     void GameView::handleInput(char input)
     {
-        if (input == 'q')
-        {
-            quit = true;
+        switch(input){
+            case 'q':
+                quit=true;
+                break;
+            case 'p':
+                pause=true;
+                break;
         }
     }
 

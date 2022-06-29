@@ -27,7 +27,7 @@ namespace manager
         bool changed=screenSize.isChanged();
         bool tmpChangedView;
         do{
-            viewManager->last()->handleScreenBeforeRender(screenSize,viewManager);
+            viewManager->last()->handleScreenBeforeRender(screenSize,viewManager,changed);
             tmpChangedView=viewManager->isChangedView();
             changed|=tmpChangedView;
         }while(tmpChangedView and !viewManager->empty());

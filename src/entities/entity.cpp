@@ -19,7 +19,6 @@ bool Entity::canMove(int x, int y) const {
 }
 
 void Entity::move() {
-    std::lock_guard<std::mutex> lock(mutex_);
     int new_x = getPosition().riga, new_y = getPosition().colonna;
     bool isMoving = true;
     switch(this->direction_) {
@@ -48,7 +47,6 @@ void Entity::move() {
 }
 
 void Entity::setDirection(enums::Direction direction) {
-    std::lock_guard<std::mutex> lock(mutex_);
     direction_ = direction;
 }
 
@@ -59,7 +57,6 @@ bool Entity::isDead() const {
 void Entity::attack(Entity *entity) {}
 
 void Entity::applyDamage(int damage) {
-    std::lock_guard<std::mutex> lock(mutex_);
     life_ -= damage;
 }
 

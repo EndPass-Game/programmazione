@@ -8,7 +8,7 @@ namespace views
 {
     class ResizableView : public View
     {
-    private:
+    protected:
         //ricentra la finestra se la dimensione dello schermo cambia
         void recenterWindow(Size screen);
 
@@ -16,10 +16,12 @@ namespace views
         // override di quella di view
         // se la scherma è contenuta nella attuale fa il recenter
         // se no chiama handle screen to small
-        virtual void handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *viewManager);
+        virtual void handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *viewManager,bool changedView);
 
         ResizableView(Position pos, Size s);
 
         virtual void handleScreenToSmall();
+
+        virtual void render(bool force);
     };
 }; // namespace views

@@ -3,7 +3,7 @@
 namespace views
 {
 
-    void View::handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view) {}
+    void View::handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView) {}
 
     void View::handleInput(char input) {}
 

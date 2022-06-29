@@ -23,6 +23,12 @@ namespace manager
         return stackView.last();
     }
 
+    void ViewManager::clear(){
+        while(!empty()){
+            popView();
+        }
+    }
+
     bool ViewManager::isChangedView()
     {
         if (changedView)

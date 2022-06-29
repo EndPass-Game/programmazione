@@ -41,6 +41,8 @@ namespace manager
         bool isChangedView();
         // ritorna la view che viene visualizzata
         views::View *last();
+        // rimuove tutti gli elementi in pratica termina il programma
+        void clear();
     };
 
 }; // namespace manager

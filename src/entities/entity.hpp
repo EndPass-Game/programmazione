@@ -22,7 +22,6 @@ class Entity: public Displayable {
     enums::Direction direction_;
     
     // Permette un update thread safe 
-    std::mutex mutex_;
   public:
     Entity(int life, int attack);
     Entity(int life, int attack, Position current, char displayChar);
