@@ -1,3 +1,4 @@
+#pragma once
 #include "datastruct/vector.hpp"
 
 namespace datastruct {
@@ -8,7 +9,7 @@ class Stack {
   public:
     Stack(): data_(0){}
 
-    int isEmpty() const {
+    bool isEmpty() const {
         return data_.isEmpty();
     }
 

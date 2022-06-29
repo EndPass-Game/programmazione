@@ -1,5 +1,5 @@
-#include  <stddef.h>
 
+#include <stddef.h> // size_t
 
 namespace datastruct {
 
@@ -55,7 +55,7 @@ class Vector {
         return size_;
     }
 
-    size_t isEmpty() const {
+    bool isEmpty() const {
         return size_ == 0;
     }
 
@@ -115,7 +115,8 @@ class Vector {
     // il valore VAL in input per indici 0..SIZE-1.
     void assign(size_t size, T val) {
         resize(size);
-        for (int i = 0; i < size; i++) {
+        for (unsigned int i = 0; i < size; i++) {
+
             data_[i] = val;
         }
         size_ = size;

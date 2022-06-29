@@ -1,4 +1,6 @@
 #pragma once
+#include <stddef.h> // size_t
+#pragma once
 namespace datastruct {
 template<class T>
 class Queue {
