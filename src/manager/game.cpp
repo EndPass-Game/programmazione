@@ -5,7 +5,7 @@
 #include "manager/level.hpp"
 #include "manager/display.hpp"
 #include "manager/input.hpp"
-#include "views/gameView.hpp"
+#include "views/menuView.hpp"
 
 namespace manager
 {
@@ -29,8 +29,8 @@ namespace manager
     }
     void Game::run()
     {
-        views::GameView* g=new views::GameView(manager::kGameWindowsSize);
-        viewManager_->pushView(g);
+        views::MenuView* menu=new views::MenuView();
+        viewManager_->pushView(menu);
         std::thread inputThread(&Input::run, inputManager_);
         inputThread.detach();
         std::thread displayThread(&Display::gameLoop, displayManager_);

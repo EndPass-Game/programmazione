@@ -4,6 +4,7 @@
 #include "views/pauseView.hpp"
 #include "manager/viewManager.hpp"
 #include "manager/level.hpp"
+#include "views/gameView.hpp"
 
 namespace views
 {

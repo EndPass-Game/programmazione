@@ -3,9 +3,7 @@
 namespace views
 {
 
-    GameView::GameView(Position pos) : ResizableView(pos, manager::kGameWindowsSize) {
-
-    }
+    GameView::GameView(Position pos) : ResizableView(pos, manager::kGameWindowsSize) { }
 
     void GameView::handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView)
     {
