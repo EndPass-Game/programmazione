@@ -2,9 +2,9 @@
 
 namespace views
 {
-    MenuView::MenuView():ResizableView({0,0},kMenuSize_){
+    MenuView::MenuView():ResizableView({0,0},kMenuSize_){ }
 
-    }
+
     // fa il override di questa funzione da view
     bool MenuView::handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view, bool changedView){
         if(ResizableView::handleScreenBeforeRender(screen,view,changedView))
@@ -44,7 +44,12 @@ namespace views
         mvwprintw(window,6, (kMenuSize_.colonna -strlen(start))/2,start);
         char quit[]="Premere 'q' per abbandonare";
         mvwprintw(window, 8 ,(kMenuSize_.colonna -strlen(quit))/2,quit);
-        box(window,0,0);
         ResizableView::render(force);
+    }
+
+    void MenuView::handleScreenToSmall(manager::ViewManager* manager){
+        ScreenToSmallView* toSmall=new ScreenToSmallView(kMenuSize_);
+        manager->pushView(toSmall);
+
     }
 }; // namespace views

@@ -9,8 +9,6 @@ struct Position {
 
     bool operator!=(const Position& pos) const;
     bool operator==(const Position& pos) const;
-    bool operator<(const Position& pos) const;
-    bool operator<=(const Position& pos) const;
 
     Position operator+(const Position& pos) const;
     Position operator-(const Position& pos) const;

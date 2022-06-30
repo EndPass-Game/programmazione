@@ -39,7 +39,6 @@ namespace views
         mvwprintw(window,(manager::kGameWindowsSize.riga)/2, (manager::kGameWindowsSize.colonna -strlen(riprendere))/2,riprendere);
         char uscire[]="Q per uscire";
         mvwprintw(window,(manager::kGameWindowsSize.riga)/2+2, (manager::kGameWindowsSize.colonna -strlen(uscire))/2,uscire);
-        box(window,0,0);
         ResizableView::render(force);
     }
 

@@ -17,7 +17,7 @@ namespace views
     {
         if (changedView)
         {
-            if (screen.getCurrent() < winSize)
+            if (screen.getCurrent().colonna< winSize.colonna or screen.getCurrent().riga<winSize.riga)
             {
                 handleScreenToSmall(view);
                 return true;

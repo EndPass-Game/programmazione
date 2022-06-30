@@ -33,5 +33,7 @@ namespace views
         void render(bool force);
 
         void printMenu(bool force);
+
+        void handleScreenToSmall(manager::ViewManager* manager);
     };
 }; // namespace views

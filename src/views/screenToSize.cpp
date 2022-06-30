@@ -9,12 +9,12 @@ namespace views{
         }
     }
     void ScreenToSmallView::render(bool force){
-        wprintw(window,"Schermo troppo piccolo");
+        mvwprintw(window,0,0,"Schermo troppo piccolo");
         View::render(force);
     }
 
     bool ScreenToSmallView::handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView){
-        if(screen.getCurrent()<=minimumRequired_){
+        if(screen.getCurrent().colonna>=minimumRequired_.colonna and screen.getCurrent().riga>=minimumRequired_.riga){
             view->popView();
             return true;
         }
