@@ -1,5 +1,6 @@
 #pragma once
 
+#include "views/screenToSize.hpp"
 #include "views/resizableView.hpp"
 #include "views/pauseView.hpp"
 #include "manager/viewManager.hpp"
@@ -19,11 +20,12 @@ namespace views
     public:
         
         GameView(Position pos);
-        // fa il override di questa funzione da view
-        void handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView);
-        // fa il override di questa funzione da view
+        bool handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView);
+
         void handleInput(char input);
-        // fa il override di questa funzione da view
+
         void render(bool force);
+
+        void handleScreenToSmall(manager::ViewManager* manager);
     };
 }; // namespace views

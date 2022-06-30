@@ -25,12 +25,12 @@ Position Position::operator-(const Position& pos) const {
     return Position(riga - pos.riga, colonna - pos.colonna);
 }
 
-void Position::operator=(const Position& pos) {
+void Position::operator=(const Position& pos){
     riga = pos.riga;
     colonna = pos.colonna;
 }
 
-void Position::operator+=(const Position& pos) {
+void Position::operator+=(const Position& pos){
     riga += pos.riga;
     colonna += pos.colonna;
 }
@@ -38,4 +38,7 @@ void Position::operator+=(const Position& pos) {
 void Position::operator-=(const Position& pos) {
     riga -= pos.riga;
     colonna -= pos.colonna;
+}
+bool Position::operator<=(const Position& pos) const{
+    return *this<pos || *this==pos;
 }

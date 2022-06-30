@@ -13,22 +13,24 @@ namespace views
         mvwin(window, newRiga, newColonna);
     }
 
-    void ResizableView::handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView)
+    bool ResizableView::handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView)
     {
         if (changedView)
         {
             if (screen.getCurrent() < winSize)
             {
-                handleScreenToSmall();
+                handleScreenToSmall(view);
+                return true;
             }
             else
             {
                 recenterWindow(screen.getCurrent());
             }
         }
+        return false;
     }
 
-    void ResizableView::handleScreenToSmall() {}
+    void ResizableView::handleScreenToSmall(manager::ViewManager * manager) {}
 
     void ResizableView::render(bool forces){
         View::render(forces);

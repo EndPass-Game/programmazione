@@ -5,9 +5,10 @@ namespace views
 
     GameView::GameView(Position pos) : ResizableView(pos, manager::kGameWindowsSize) { }
 
-    void GameView::handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView)
+    bool GameView::handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView)
     {
-        ResizableView::handleScreenBeforeRender(screen, view,changedView);
+        if(ResizableView::handleScreenBeforeRender(screen, view,changedView))
+            return true;
         if (quit)
         {
             view->popView();
@@ -16,6 +17,7 @@ namespace views
             view->pushView(pauseView);
             pause=false;
         }
+        return false;
     }
 
     void GameView::handleInput(char input)
@@ -61,6 +63,14 @@ namespace views
         }
 
         ResizableView::render(force);
+    }
+
+    void GameView::handleScreenToSmall(manager::ViewManager* manager){
+        PauseView* pauseView=new PauseView({0,0});
+        manager->pushView(pauseView);
+        ScreenToSmallView* toSmall=new ScreenToSmallView(manager::kGameWindowsSize);
+        manager->pushView(toSmall);
+
     }
 
 }; // namespace views

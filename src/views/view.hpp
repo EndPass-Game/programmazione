@@ -25,7 +25,7 @@ namespace views
 
     public:
         // viene chiamata prima del rendere e questa è la funzione che può modificare la view manager
-        virtual void handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView);
+        virtual bool handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView);
         // gestisce gli input
         virtual void handleInput(char input);
         //la funzione che viene chiamata per aggiornare lo schermo e il forces obbliga a riprintare

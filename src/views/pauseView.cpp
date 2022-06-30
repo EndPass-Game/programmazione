@@ -5,9 +5,10 @@ namespace views
 
     PauseView::PauseView(Position pos) : ResizableView(pos, manager::kGameWindowsSize) {}
 
-    void PauseView::handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView)
+    bool PauseView::handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView)
     {
-        ResizableView::handleScreenBeforeRender(screen, view,changedView);
+        if(ResizableView::handleScreenBeforeRender(screen, view,changedView))
+            return true;
         if (quit)
         {
             view->clear();
@@ -15,6 +16,7 @@ namespace views
         {
             view->popView();
         }
+        return false;
     }
 
     void PauseView::handleInput(char input)
@@ -39,6 +41,11 @@ namespace views
         mvwprintw(window,(manager::kGameWindowsSize.riga)/2+2, (manager::kGameWindowsSize.colonna -strlen(uscire))/2,uscire);
         box(window,0,0);
         ResizableView::render(force);
+    }
+
+    void PauseView::handleScreenToSmall(manager::ViewManager* manager){
+        ScreenToSmallView* screenToSmall=new ScreenToSmallView(manager::kGameWindowsSize);
+        manager->pushView(screenToSmall);
     }
 
 }; // namespace views

@@ -18,7 +18,7 @@ namespace views
         const char *kAsciiArt_[4] = {
             "   ___  _  __ __   ___   _    ___   ___",
             "  / _/ / |/ //  \\ / o |.' \\ ,' _/ ,' _/",
-            " / _/ / || // o |/ _,'/ o /_\\ `. _\\ `.",
+            " / _/ / || // o |/ _,'/ o /_\\ `. _\\ `. ",
             "/___//_/|_//__,'/_/  /_n_//___,'/___,' "
         };
 
@@ -26,7 +26,7 @@ namespace views
     public :
         MenuView();
         // fa il override di questa funzione da view
-        void handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view, bool changedView);
+        bool handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view, bool changedView);
         // fa il override di questa funzione da view
         void handleInput(char input);
         // fa il override di questa funzione da view

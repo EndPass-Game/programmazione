@@ -6,8 +6,9 @@ namespace views
 
     }
     // fa il override di questa funzione da view
-    void MenuView::handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view, bool changedView){
-        ResizableView::handleScreenBeforeRender(screen,view,changedView);
+    bool MenuView::handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view, bool changedView){
+        if(ResizableView::handleScreenBeforeRender(screen,view,changedView))
+            return true;
         if(quit_) {
             view->clear();
         }else if(start_){
@@ -15,6 +16,7 @@ namespace views
             view->pushView(game);
             start_=false;
         }
+        return false;
     }
     // fa il override di questa funzione da view
     void MenuView::handleInput(char input){
