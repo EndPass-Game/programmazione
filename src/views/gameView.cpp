@@ -6,8 +6,8 @@ namespace views
     GameView::GameView(Position pos) : 
         ResizableView(pos, manager::kGameWindowsSize) {
             #include "gamestruct/logger.hpp" // DEBUG
-            Logger().log("GameView::GameView\n", "w");
-            Logger().log("kGameWindow size: %d %d\n", manager::kGameWindowsSize.riga, manager::kGameWindowsSize.colonna);
+            Logger("game.log", "w").log("GameView::GameView\n");
+            Logger().log("kGameWindow size: %d %d\n", manager::kGameWindowsSize.riga - 5, manager::kGameWindowsSize.colonna);
             levelManager = manager::Level(manager::kGameWindowsSize);
         }
 
@@ -52,6 +52,7 @@ namespace views
 
     void GameView::render(bool force)
     {
+        Logger().log("calling the renderer");
         levelManager.render(window, force);
         ResizableView::render(force);
     }

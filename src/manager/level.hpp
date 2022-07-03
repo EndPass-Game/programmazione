@@ -35,7 +35,7 @@ namespace manager {
       public:
         Level();
         Level(Size size);
-        ~Level() = default;
+        ~Level();
 
         Player *getPlayer();
         void addLevel();

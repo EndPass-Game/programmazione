@@ -8,20 +8,15 @@
 
 namespace level {
     Level::Level(Size size) {
-        #include "gamestruct/logger.hpp" // DEBUG
         player_ = new Player();
-        segments_ = datastruct::Vector<wall::Segment *>(0);
+        segments_ = datastruct::Vector<wall::Segment *>();
         entities_ = datastruct::Vector<Entity *>(0);
         levelSize_ = size; 
-        Logger().log("prima muri level::Level::Level(Size size)\n");
-        Logger().log("%d %d\n", levelSize_.riga, levelSize_.colonna);
         // creazione dei muri esterni
         segments_.push_back(new wall::Segment(Position(0, 0), enums::Direction::RIGHT, size.riga - 1));
-        // segments_.push_back(new wall::Segment(Position(size.riga, 0), enums::Direction::DOWN, size.colonna - 1));
-        // segments_.push_back(new wall::Segment(Position(size.riga, size.colonna), enums::Direction::LEFT, size.riga - 1));
-        // segments_.push_back(new wall::Segment(Position(0, size.colonna), enums::Direction::UP, size.colonna - 1));
-        Logger().log("dopo muri level::Level::Level(Size size)\n");
-
+        segments_.push_back(new wall::Segment(Position(size.riga, 0), enums::Direction::DOWN, size.colonna - 1));
+        segments_.push_back(new wall::Segment(Position(size.riga, size.colonna), enums::Direction::LEFT, size.riga - 1));
+        segments_.push_back(new wall::Segment(Position(0, size.colonna), enums::Direction::UP, size.colonna - 1));
         // TODO(ang): gestire anche la creazione dei segmenti intermedi 
 
     }

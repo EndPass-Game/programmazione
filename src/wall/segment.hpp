@@ -12,7 +12,7 @@ namespace wall {
     class Segment {
       private:
         // vettore dei muri mostrato a schermo
-        datastruct::Vector<Wall> walls_;
+        datastruct::Vector<Wall *> walls_;
         // posizione del segmento
         Position startPosition_; 
         enums::Direction direction_;
@@ -20,7 +20,7 @@ namespace wall {
       public: 
         // segmento vuoto, crea un segmento lungo 0, in posizione 0 di direzione nulla
         Segment(); 
-
+        ~Segment(); 
         // crea un segmento di lunghezza length, in posizione startPosition di direzione direction
         // Esempio: Segment(Position(0, 0), enums::Direction::RIGHT, 10)
         // crea un segmento di 10 muri in posizione (0, 0) e direzione a destra

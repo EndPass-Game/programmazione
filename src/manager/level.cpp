@@ -25,19 +25,17 @@ namespace manager
     }
 
     Level::Level(Size size) {
-        #include "gamestruct/logger.hpp"
-        Logger().log("Level::Level(Size size)\n");
         player_ = new Player();
         levelScreenSize_ = size;
-        Logger().log("da level manager: %d %d\n", size.riga, size.colonna);
-
-        Logger().log("before level Level::Level(Size size)\n");
         levels_.push_back(new level::Level(levelScreenSize_));
-        Logger().log("after level Level::Level(Size size)\n");
-
         currentLevelIndex_ = 0;
-        Logger().log("end Level::Level(Size size)\n");
+    }
 
+    Level::~Level() {
+        delete player_;
+        for (unsigned int i = 0; i < levels_.size(); i++) {
+            delete levels_[i];
+        }
     }
 
     Player *Level::getPlayer() {
