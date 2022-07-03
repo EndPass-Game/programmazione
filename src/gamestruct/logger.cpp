@@ -17,5 +17,7 @@ Logger::~Logger() {
 
 void Logger::log(const char *format, ...){
     va_list args;
+    va_start(args, format);
     vfprintf (fileStream_, format, args);
+    va_end(args);
 }
