@@ -128,5 +128,17 @@ class Vector {
         size_ = 0;
         data_ = new T[realSize_];
     }
+
+    void operator=(const Vector<T> &other) {
+        if (this == &other) return;
+        delete []data_;
+        size_ = other.size_;
+        realSize_ = other.realSize_;
+        data_ = new T[realSize_];
+        for (int i = 0; i < size_; i++) {
+            data_[i] = other.data_[i];
+        }
+        return;
+    }
 };
 }; // namespace datastruct
