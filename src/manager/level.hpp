@@ -15,24 +15,34 @@ Funzioni:
 */
 #pragma once
 
+#include <ncurses.h>
+
 #include "entities/enemy.hpp"
 #include "entities/player.hpp"
+#include "level/level.hpp"
+#include "datastruct/vector.hpp"
+#include "gamestruct/size.hpp"
 
 namespace manager {
     // Level manager: contiene tutte gli oggetti che vengono mostrati
     // nel gioco
-    struct Level {
+    class Level {
+      private: 
+        datastruct::Vector<level::Level *> levels_;
+        Player *player_;
+        Size levelScreenSize_;
+        int currentLevelIndex_;
       public:
         Level();
-        ~Level();
+        Level(Size size);
+        ~Level() = default;
 
-        // la classe del giocatore principale
-        Player *player;
+        Player *getPlayer();
+        void addLevel();
 
-        // TODO: dovrebbe essere sostituita da una struttura di dati
-        // che contenga ogni nemico, in modo simile sarebbe buono
-        // avere muri e artefatti
-        Enemy *enemy; 
-
+        // stampa a schermo il livello scelto, se non è presente tale livello (indice invalido)
+        // allora ritorna false, altrimenti true; 
+        bool loadLevel(int level);
+        void render(WINDOW *win, bool force);
     };
 }

@@ -1,5 +1,9 @@
 #include "gamestruct/position.hpp"
 
+Position::Position() :
+    riga(0),
+    colonna(0) {}
+
 Position::Position(int riga, int colonna) {
     this->riga = riga;
     this->colonna = colonna;

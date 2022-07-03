@@ -11,20 +11,43 @@ Funzioni:
 */
 #include "manager/level.hpp"
 
+#include <ncurses.h>
+
 #include "entities/player.hpp"
 #include "entities/enemy.hpp"
-
+#include "gamestruct/size.hpp"
 namespace manager
 {
-    Level::Level()
-    {
-        player = new Player();
-        enemy = new Enemy();
+    Level::Level() {
+        player_ = new Player();
+        levelScreenSize_ = Size(0, 0);
+        currentLevelIndex_ = -1; // -1 indica che non è stato ancora caricato nessun livello
     }
 
-    Level::~Level()
-    {
-        delete player;
-        delete enemy;
+    Level::Level(Size size) {
+        player_ = new Player();
+        levelScreenSize_ = size;
+        levels_.push_back(new level::Level(levelScreenSize_));
+        currentLevelIndex_ = 0;
+    }
+
+    Player *Level::getPlayer() {
+        return levels_[currentLevelIndex_]->getPlayer();
+    }
+
+    void Level::addLevel() {
+        levels_.push_back(new level::Level(levelScreenSize_));
+    }
+
+    bool Level::loadLevel(int level) {
+        if (level < 0 || level >= levels_.size()) {
+            return false;
+        }
+        currentLevelIndex_ = level;
+        return true;
+    }
+
+    void Level::render(WINDOW *win, bool force) {
+        levels_[currentLevelIndex_]->render(win, force);
     }
 }

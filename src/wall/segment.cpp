@@ -7,18 +7,18 @@
 namespace wall {
     Segment::Segment() {
         walls_.clear(); 
-        start_position_ = Position(0, 0);
+        startPosition_ = Position(0, 0);
         length_ = 0;
         direction_ = enums::Direction::NONE;
     }
 
-    Segment::Segment(Position start_position, enums::Direction direction, int length) {
-        start_position_ = start_position;
+    Segment::Segment(Position startPosition, enums::Direction direction, int length) {
+        startPosition_ = startPosition;
         direction_ = direction;
         length_ = length;
         walls_.resize(length_);
 
-        Position pos = start_position_;
+        Position pos = startPosition_;
 
         // scegliendo la direzione per creare tutti i muri:
         enums::WallType type = enums::WallType::EMPTY;
@@ -50,9 +50,18 @@ namespace wall {
         }
     }
 
-    void Segment::render(WINDOW *win) {
+    void Segment::render(WINDOW *win, bool force) {
         for (int i = 0; i < length_; i++) {
-            walls_[i].render(win);
+            walls_[i].render(win, force);
         }
+    }
+
+    bool Segment::hasCollided(Position pos) {
+        for (int i = 0; i < length_; i++) {
+            if (walls_[i].getPosition() == pos) {
+                return true;
+            }
+        }
+        return false; // non ha colpito nessuno dei muri
     }
 }; // namespace wall

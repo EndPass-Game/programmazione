@@ -1,9 +1,13 @@
 #include "views/gameView.hpp"
-
+#include "gamestruct/logger.hpp" // DEBUG
 namespace views
 {
 
-    GameView::GameView(Position pos) : ResizableView(pos, manager::kGameWindowsSize) { }
+    GameView::GameView(Position pos) : 
+        ResizableView(pos, manager::kGameWindowsSize),
+        levelManager(pos) {
+            Logger().log("GameView::GameView");
+        }
 
     bool GameView::handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView)
     {
@@ -30,26 +34,23 @@ namespace views
                 pause=true;
                 break;
             case 'w':
-                levelManager.player->setDirection(enums::Direction::UP);
+                levelManager.getPlayer()->setDirection(enums::Direction::UP);
                 break;
             case 'a':
-                levelManager.player->setDirection(enums::Direction::LEFT);
+                levelManager.getPlayer()->setDirection(enums::Direction::LEFT);
                 break;
             case 'd':
-                levelManager.player->setDirection(enums::Direction::RIGHT);
+                levelManager.getPlayer()->setDirection(enums::Direction::RIGHT);
                 break;
             case 's':
-                levelManager.player->setDirection(enums::Direction::DOWN);
+                levelManager.getPlayer()->setDirection(enums::Direction::DOWN);
                 break;
         }
     }
 
     void GameView::render(bool force)
     {
-        
-        levelManager.player->move();
-        levelManager.player->clearLast(window);
-        levelManager.player->render(window,force);
+        levelManager.render(window, force);
         mvwprintw(window, 0, 0, "#");
         for (int i = 0; i < manager::kGameWindowsSize.riga; i++)
         {

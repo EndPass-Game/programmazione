@@ -5,26 +5,25 @@
 #include "entities/player.hpp"
 #include "gamestruct/displayable.hpp"
 #include "gamestruct/size.hpp"
-#include "level/collider.hpp"
-#include "wall/wall.hpp"
+#include "wall/segment.hpp"
 
 namespace level {
     class Level {
       private: 
         Player *player_; 
-        datastruct::Vector<Wall *> walls_;
+        datastruct::Vector<wall::Segment *> segments_;
         datastruct::Vector<Entity *> entities_; 
         Size levelSize_; 
-        Collider *collider_;
       public: 
         // genera il livello con la size data (walls and entities) 
-        Level(Player *player, Size size);
+        Level(Size size);
         
         // genera il livello con una porta al livello precedente
-        Level(Player *player, Size size, Level *oldlevel);
+        Level(Size size, Level *oldlevel);
         ~Level();
 
+        Player *getPlayer();
         // applies all position changes (entities) 
-        void update();
+        void render(WINDOW *win, bool force);
     }; 
 }; // namespace map

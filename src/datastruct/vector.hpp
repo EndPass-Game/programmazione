@@ -1,4 +1,4 @@
-
+#pragma once
 #include <stddef.h> // size_t
 
 namespace datastruct {
