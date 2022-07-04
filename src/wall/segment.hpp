@@ -13,8 +13,8 @@ namespace wall {
       private:
         // vettore dei muri mostrato a schermo
         datastruct::Vector<Wall *> walls_;
-        // posizione del segmento
         Position startPosition_; 
+        Position endPosition_; 
         enums::Direction direction_;
         int length_;
       public: 
@@ -30,6 +30,6 @@ namespace wall {
         // usato per mostrare a schermo l'intero vettore dei muri presenti    
         void render(WINDOW *win, bool force);
 
-        bool hasCollided(Position pos);
+        bool isPositionInSegment(Position pos);
     }; // class segment
 }; // namespace wall

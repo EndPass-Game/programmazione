@@ -10,7 +10,7 @@ namespace enums {
     // LEFT = 3
     // RIGHT = 4
     // a cui sono associati dei valori numerici in caso di necessità di conversione
-    enum Direction {
+    enum class Direction {
         NONE = 0,
         UP = 1,
         DOWN = 2,

@@ -135,7 +135,7 @@ class Vector {
         size_ = other.size_;
         realSize_ = other.realSize_;
         data_ = new T[realSize_];
-        for (int i = 0; i < size_; i++) {
+        for (unsigned int i = 0; i < size_; i++) {
             data_[i] = other.data_[i];
         }
         return;

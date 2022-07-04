@@ -3,7 +3,7 @@
 namespace enums {
     // Tipologie di Wall esistenti
     // saranno usate per generare i muri
-    enum WallType {
+    enum class WallType {
         VERT = '|',
         HORIZ = '-',
         ANGLE = '+',

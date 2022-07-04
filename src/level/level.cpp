@@ -5,19 +5,22 @@
 #include "entities/player.hpp"
 #include "wall/segment.hpp"
 #include "enums/direction.hpp"
+#include "enums/collision.hpp"
 
 namespace level {
     Level::Level(Size size) {
         player_ = new Player();
         segments_ = datastruct::Vector<wall::Segment *>();
         entities_ = datastruct::Vector<Entity *>(0);
-        levelSize_ = size; 
         // creazione dei muri esterni
         using namespace enums; // Direction::RIGHT, Direction::LEFT, Direction::UP, Direction::DOWN
         segments_.push_back(new wall::Segment(Position(0, 0), Direction::RIGHT, size.colonna - 1));
         segments_.push_back(new wall::Segment(Position(0, size.colonna - 1), Direction::DOWN, size.riga - 1));
         segments_.push_back(new wall::Segment(Position(size.riga - 1, size.colonna - 1), Direction::LEFT, size.colonna - 1));
         segments_.push_back(new wall::Segment(Position(size.riga - 1, 0), Direction::UP, size.riga - 1));
+
+        // TODO(ang): rimuovere questo muro di prova che sto mettendo ora 
+        segments_.push_back(new wall::Segment(Position(0, size.colonna / 2), Direction::DOWN, size.riga / 2));
         // TODO(ang): gestire anche la creazione dei segmenti intermedi 
     }
 
@@ -40,6 +43,22 @@ namespace level {
         delete player_;
     }	
 
+    bool Level::isPositionEmpty(Position pos) {
+        return getCollisionObject(pos) == enums::CollisionObject::NONE;
+    }
+
+    enums::CollisionObject Level::getCollisionObject(Position pos) {
+        for (unsigned int i = 0; i < segments_.size(); i++) {
+            if (segments_[i]->isPositionInSegment(pos)) {
+                return enums::CollisionObject::WALL;
+            }
+        }
+
+        // TODO(simo): gestire altri oggetti di collisione
+        // es: entity, artefatti, ...
+        return enums::CollisionObject::NONE;
+    }
+
     Player *Level::getPlayer() {
         return player_;
     }
@@ -49,7 +68,6 @@ namespace level {
             segments_[i]->render(win, true);
         }
 
-        player_->move();
         player_->clearLast(win);
         player_->render(win, force);
         // TODO(ang): come fare a spostare gli entità?
