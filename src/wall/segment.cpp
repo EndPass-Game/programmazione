@@ -5,15 +5,13 @@
 #include "enums/wall_type.hpp"
 
 namespace wall {
-    Segment::Segment() {
+    Segment::Segment():startPosition_(0,0) {
         walls_.clear(); 
-        startPosition_ = Position(0, 0);
         length_ = 0;
         direction_ = enums::Direction::NONE;
     }
 
-    Segment::Segment(Position startPosition, enums::Direction direction, int length) {
-        startPosition_ = startPosition;
+    Segment::Segment(Position start_position, enums::Direction direction, int length):startPosition_(start_position) {
         direction_ = direction;
         length_ = length;
         walls_.resize(length_);
