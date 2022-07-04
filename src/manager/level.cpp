@@ -15,6 +15,7 @@ Funzioni:
 
 #include "entities/player.hpp"
 #include "entities/enemy.hpp"
+#include "enums/collision.hpp"
 #include "gamestruct/size.hpp"
 namespace manager
 {
@@ -45,8 +46,12 @@ namespace manager
         levels_.push_back(new level::Level(levelScreenSize_));
     }
 
+    enums::CollisionObject Level::getCollisionObject(Position pos) {
+        return levels_[currentLevelIndex_]->getCollisionObject(pos);
+    }
+
     bool Level::loadLevel(int level) {
-        if (level < 0 || level >= levels_.size()) {
+        if (level < 0 || level >= (int) levels_.size()) {
             return false;
         }
         currentLevelIndex_ = level;

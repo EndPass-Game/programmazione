@@ -5,10 +5,13 @@
 #include "enums/wall_type.hpp"
 
 namespace wall {
-    Segment::Segment() : startPosition_(0,0) {
+    Segment::Segment() : 
+        startPosition_(0,0),
+        endPosition_(0,0) {
         walls_.clear(); 
         length_ = 0;
         direction_ = enums::Direction::NONE;
+        
     }
 
     Segment::Segment(Position start_position, enums::Direction direction, int length) : startPosition_(start_position) {
@@ -47,6 +50,8 @@ namespace wall {
             walls_[i] = new Wall(pos, (char) type);
             pos += pos_adder;
         }
+        // pos è il prossimo muro da creare, quindi pos - pos_adder è la posizione dell'ultimo muro creato
+        endPosition_ = pos - pos_adder; 
     }
 
     Segment::~Segment() {
@@ -61,12 +66,17 @@ namespace wall {
         }
     }
 
-    bool Segment::hasCollided(Position pos) {
-        for (int i = 0; i < length_; i++) {
-            if (walls_[i]->getPosition() == pos) {
-                return true;
-            }
+    bool Segment::isPositionInSegment(Position pos) {
+        if (startPosition_.colonna == pos.colonna) {
+            int min = startPosition_.riga < endPosition_.riga ? startPosition_.riga : endPosition_.riga;
+            int max = startPosition_.riga > endPosition_.riga ? startPosition_.riga : endPosition_.riga;
+            return min <= pos.riga and pos.riga <= max;
+        } else if (startPosition_.riga == pos.riga) {
+            int min = startPosition_.colonna < endPosition_.colonna ? startPosition_.colonna : endPosition_.colonna;
+            int max = startPosition_.colonna > endPosition_.colonna ? startPosition_.colonna : endPosition_.colonna;
+            return min <= pos.colonna and pos.colonna <= max;
+        } else {
+            return false;
         }
-        return false; // non ha colpito nessuno dei muri
     }
 }; // namespace wall

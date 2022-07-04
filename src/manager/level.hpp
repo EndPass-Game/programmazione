@@ -17,8 +17,8 @@ Funzioni:
 
 #include <ncurses.h>
 
-#include "entities/enemy.hpp"
 #include "entities/player.hpp"
+#include "enums/collision.hpp"
 #include "level/level.hpp"
 #include "datastruct/vector.hpp"
 #include "gamestruct/size.hpp"
@@ -43,6 +43,9 @@ namespace manager {
         // stampa a schermo il livello scelto, se non è presente tale livello (indice invalido)
         // allora ritorna false, altrimenti true; 
         bool loadLevel(int level);
+
+        enums::CollisionObject getCollisionObject(Position pos);
+
         void render(WINDOW *win, bool force);
     };
 }

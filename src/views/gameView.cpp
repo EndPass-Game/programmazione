@@ -5,9 +5,6 @@ namespace views
 
     GameView::GameView(Position pos) : 
         ResizableView(pos, manager::kGameWindowsSize) {
-            #include "gamestruct/logger.hpp" // DEBUG
-            Logger("game.log", "w").log("GameView::GameView\n");
-            Logger().log("kGameWindow size: %d %d\n", manager::kGameWindowsSize.riga - 5, manager::kGameWindowsSize.colonna);
             levelManager_ = new manager::Level(manager::kGameWindowsSize);
     }
 
@@ -56,6 +53,8 @@ namespace views
 
     void GameView::render(bool force)
     {
+        // TODO(ang): function that has to handle all the creature moves
+        levelManager_->getPlayer()->move(levelManager_);
         levelManager_->render(window, force);
         ResizableView::render(force);
     }
