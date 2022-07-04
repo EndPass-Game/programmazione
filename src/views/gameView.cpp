@@ -54,10 +54,12 @@ namespace views
     {
         Logger().log("calling the renderer");
         levelManager.render(window, force);
+        Logger().log("after render call");
+
         ResizableView::render(force);
     }
 
-    void GameView::handleScreenToSmall(manager::ViewManager* manager){
+    void GameView::handleScreenToSmall(manager::ViewManager* manager) {
         PauseView* pauseView=new PauseView({0,0});
         manager->pushView(pauseView);
         ScreenToSmallView* toSmall=new ScreenToSmallView(manager::kGameWindowsSize);

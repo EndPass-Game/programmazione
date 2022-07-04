@@ -20,13 +20,11 @@ namespace manager
 {
     Level::Level() {
         player_ = new Player();
-        levelScreenSize_ = Size(0, 0);
         currentLevelIndex_ = -1; // -1 indica che non è stato ancora caricato nessun livello
     }
 
     Level::Level(Size size) {
         player_ = new Player();
-        levelScreenSize_ = size;
         levels_.push_back(new level::Level(levelScreenSize_));
         currentLevelIndex_ = 0;
     }
@@ -56,5 +54,7 @@ namespace manager
 
     void Level::render(WINDOW *win, bool force) {
         levels_[currentLevelIndex_]->render(win, force);
+
+        //TODO(ang): print player
     }
 }

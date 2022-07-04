@@ -36,7 +36,7 @@ namespace level {
         for (unsigned int i = 0; i < entities_.size(); i++) {
             delete entities_[i];
         }
-        
+         
         delete player_;
     }	
 
