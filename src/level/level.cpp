@@ -13,12 +13,12 @@ namespace level {
         entities_ = datastruct::Vector<Entity *>(0);
         levelSize_ = size; 
         // creazione dei muri esterni
-        segments_.push_back(new wall::Segment(Position(0, 0), enums::Direction::RIGHT, size.riga - 1));
-        segments_.push_back(new wall::Segment(Position(size.riga, 0), enums::Direction::DOWN, size.colonna - 1));
-        segments_.push_back(new wall::Segment(Position(size.riga, size.colonna), enums::Direction::LEFT, size.riga - 1));
-        segments_.push_back(new wall::Segment(Position(0, size.colonna), enums::Direction::UP, size.colonna - 1));
+        using namespace enums; // Direction::RIGHT, Direction::LEFT, Direction::UP, Direction::DOWN
+        segments_.push_back(new wall::Segment(Position(0, 0), Direction::RIGHT, size.colonna - 1));
+        segments_.push_back(new wall::Segment(Position(0, size.colonna - 1), Direction::DOWN, size.riga - 1));
+        segments_.push_back(new wall::Segment(Position(size.riga - 1, size.colonna - 1), Direction::LEFT, size.colonna - 1));
+        segments_.push_back(new wall::Segment(Position(size.riga - 1, 0), Direction::UP, size.riga - 1));
         // TODO(ang): gestire anche la creazione dei segmenti intermedi 
-
     }
 
     Level::Level(Size size, Level *oldlevel) : Level(size) {
@@ -46,7 +46,7 @@ namespace level {
 
     void Level::render(WINDOW *win, bool force) {
         for (unsigned int i = 0; i < segments_.size(); i++) {
-            segments_[i]->render(win, force);
+            segments_[i]->render(win, true);
         }
 
         player_->move();

@@ -8,8 +8,12 @@ namespace views
             #include "gamestruct/logger.hpp" // DEBUG
             Logger("game.log", "w").log("GameView::GameView\n");
             Logger().log("kGameWindow size: %d %d\n", manager::kGameWindowsSize.riga - 5, manager::kGameWindowsSize.colonna);
-            levelManager = manager::Level(manager::kGameWindowsSize);
-        }
+            levelManager_ = new manager::Level(manager::kGameWindowsSize);
+    }
+
+    GameView::~GameView() {
+        delete levelManager_;
+    }
 
     bool GameView::handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView)
     {
@@ -36,26 +40,23 @@ namespace views
                 pause=true;
                 break;
             case 'w':
-                levelManager.getPlayer()->setDirection(enums::Direction::UP);
+                levelManager_->getPlayer()->setDirection(enums::Direction::UP);
                 break;
             case 'a':
-                levelManager.getPlayer()->setDirection(enums::Direction::LEFT);
+                levelManager_->getPlayer()->setDirection(enums::Direction::LEFT);
                 break;
             case 'd':
-                levelManager.getPlayer()->setDirection(enums::Direction::RIGHT);
+                levelManager_->getPlayer()->setDirection(enums::Direction::RIGHT);
                 break;
             case 's':
-                levelManager.getPlayer()->setDirection(enums::Direction::DOWN);
+                levelManager_->getPlayer()->setDirection(enums::Direction::DOWN);
                 break;
         }
     }
 
     void GameView::render(bool force)
     {
-        Logger().log("calling the renderer");
-        levelManager.render(window, force);
-        Logger().log("after render call");
-
+        levelManager_->render(window, force);
         ResizableView::render(force);
     }
 

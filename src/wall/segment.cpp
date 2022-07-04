@@ -14,6 +14,7 @@ namespace wall {
     Segment::Segment(Position start_position, enums::Direction direction, int length) : startPosition_(start_position) {
         direction_ = direction;
         length_ = length;
+        // if (length_ <= 0 )
         walls_.resize(length_);
 
         Position pos = startPosition_;
@@ -40,7 +41,9 @@ namespace wall {
             default:
                 break;
         }
-        for (int i = 0; i < length_; i++) {
+        walls_[0] = new Wall(pos, (char) enums::WallType::ANGLE);
+        pos += pos_adder;
+        for (int i = 1; i < length_; i++) {
             walls_[i] = new Wall(pos, (char) type);
             pos += pos_adder;
         }

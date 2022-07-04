@@ -25,7 +25,7 @@ namespace manager
 
     Level::Level(Size size) {
         player_ = new Player();
-        levels_.push_back(new level::Level(levelScreenSize_));
+        levels_.push_back(new level::Level(size));
         currentLevelIndex_ = 0;
     }
 
@@ -41,6 +41,7 @@ namespace manager
     }
 
     void Level::addLevel() {
+        // TODO(ang): fix level screen size
         levels_.push_back(new level::Level(levelScreenSize_));
     }
 
@@ -54,7 +55,6 @@ namespace manager
 
     void Level::render(WINDOW *win, bool force) {
         levels_[currentLevelIndex_]->render(win, force);
-
         //TODO(ang): print player
     }
 }

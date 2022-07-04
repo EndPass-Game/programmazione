@@ -23,7 +23,8 @@ namespace wall {
         ~Segment(); 
         // crea un segmento di lunghezza length, in posizione startPosition di direzione direction
         // Esempio: Segment(Position(0, 0), enums::Direction::RIGHT, 10)
-        // crea un segmento di 10 muri in posizione (0, 0) e direzione a destra
+        // crea un segmento di 10 muri in posizione (0, 0) e direzione a destra che printata a schermo è
+        // +---------  
         Segment(Position start_position, enums::Direction direction, int length);
 
         // usato per mostrare a schermo l'intero vettore dei muri presenti    
