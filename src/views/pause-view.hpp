@@ -1,9 +1,9 @@
 #pragma once
 
 
-#include "views/resizableView.hpp"
-#include "manager/viewManager.hpp"
-#include "views/screenToSize.hpp"
+#include "views/resizable-view.hpp"
+#include "manager/view-manager.hpp"
+#include "views/screen-too-small.hpp"
 #include <cstring>
 
 namespace views

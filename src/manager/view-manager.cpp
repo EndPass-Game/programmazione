@@ -1,4 +1,10 @@
-#include "manager/viewManager.hpp"
+#include "manager/view-manager.hpp"
+
+#include "datastruct/stack.hpp"
+#include "views/view.hpp"
+
+// TODO(gio): fixa gli include di questo file, segui la filosofia: "includi quello che usi"
+// https://google.github.io/styleguide/cppguide.html#Include_What_You_Use
 
 namespace manager
 {

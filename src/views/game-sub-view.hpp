@@ -1,12 +1,13 @@
 #pragma once 
 
-#include "views/subView.hpp"
-#include "manager/viewManager.hpp"
+#include <ncurses.h>
+
+#include "views/sub-view.hpp"
+#include "manager/view-manager.hpp"
 #include "manager/level.hpp"
 
-
 namespace views {
-    class GameSubView:SubView{
+    class GameSubView: public SubView{
     protected:
         manager::Level *levelManager_;
     public:

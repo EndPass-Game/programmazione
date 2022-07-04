@@ -5,6 +5,8 @@
 #include "entities/player.hpp"
 #include "manager/game.hpp"
 #include "manager/level.hpp"
+#include "manager/view-manager.hpp"
+#include "views/view.hpp" // handleInput
 
 namespace manager
 {

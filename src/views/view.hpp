@@ -1,16 +1,12 @@
 #pragma once
 
-#include "ncurses.h"
+#include <ncurses.h>
+
+#include "manager/view-manager.fwd.h" // forward declaration, circular dependency
+
 #include "gamestruct/position.hpp"
 #include "gamestruct/size.hpp"
 #include "gamestruct/changeable.hpp"
-
-namespace views
-{
-    class View;
-};
-
-#include "manager/viewManager.hpp"
 
 namespace views
 {

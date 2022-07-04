@@ -11,7 +11,7 @@ Funzioni:
 #include <chrono>
 #include <thread>
 #include "gamestruct/logger.hpp"
-#include "manager/viewManager.hpp"
+#include "manager/view-manager.hpp"
 #include "gamestruct/size.hpp"
 #include "gamestruct/changeable.hpp"
 

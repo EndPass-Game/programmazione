@@ -7,7 +7,7 @@
 #pragma once
 
 #include "manager/level.hpp"
-#include "manager/viewManager.hpp"
+#include "manager/view-manager.hpp"
 
 namespace manager
 {

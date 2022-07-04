@@ -1,4 +1,4 @@
-#include "subView.hpp"
+#include "views/sub-view.hpp"
 
 namespace views
 {

@@ -1,14 +1,11 @@
 #pragma once
 
-#include "datastruct/stack.hpp"
 #include <mutex>
 
-namespace manager
-{
-    class ViewManager;
-};
+#include "views/view.fwd.h" // forward declaration, circular dependency
 
-#include "views/view.hpp"
+#include "datastruct/stack.hpp"
+#include "gamestruct/size.hpp"
 
 namespace manager
 {

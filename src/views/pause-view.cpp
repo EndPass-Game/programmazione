@@ -1,4 +1,7 @@
-#include "views/pauseView.hpp"
+#include "views/pause-view.hpp"
+
+// TODO(gio): fixa gli include di questo file, segui la filosofia: "includi quello che usi"
+// https://google.github.io/styleguide/cppguide.html#Include_What_You_Use
 
 namespace views
 {
@@ -43,7 +46,7 @@ namespace views
     }
 
     void PauseView::handleScreenToSmall(manager::ViewManager* manager){
-        ScreenToSmallView* screenToSmall=new ScreenToSmallView(manager::kGameWindowsSize);
+        ScreenTooSmallView* screenToSmall=new ScreenTooSmallView(manager::kGameWindowsSize);
         manager->pushView(screenToSmall);
     }
 

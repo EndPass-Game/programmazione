@@ -5,7 +5,7 @@
 #include "manager/level.hpp"
 #include "manager/display.hpp"
 #include "manager/input.hpp"
-#include "views/menuView.hpp"
+#include "views/menu-view.hpp"
 
 namespace manager
 {

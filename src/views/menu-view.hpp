@@ -1,8 +1,7 @@
 #pragma once
 
-#include "views/resizableView.hpp"
-#include <cstring>
-#include "views/gameView.hpp"
+#include "views/resizable-view.hpp"
+#include "views/game-view.hpp"
 
 
 namespace views

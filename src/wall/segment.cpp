@@ -2,7 +2,7 @@
 
 #include <ncurses.h>
 
-#include "enums/wall_type.hpp"
+#include "enums/wall-type.hpp"
 
 namespace wall {
     Segment::Segment() : 

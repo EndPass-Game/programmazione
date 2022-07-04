@@ -1,13 +1,13 @@
 #pragma once
 
-#include "views/screenToSize.hpp"
-#include "views/resizableView.hpp"
-#include "views/pauseView.hpp"
-#include "manager/viewManager.hpp"
+#include "views/screen-too-small.hpp"
+#include "views/resizable-view.hpp"
+#include "views/pause-view.hpp"
+#include "manager/view-manager.hpp"
 #include "manager/level.hpp"
-#include "views/gameView.hpp"
-#include "views/itemSubView.hpp"
-#include "views/gameSubView.hpp"
+#include "views/game-view.hpp"
+#include "views/item-sub-view.hpp"
+#include "views/game-sub-view.hpp"
 
 namespace views
 {

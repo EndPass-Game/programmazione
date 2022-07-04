@@ -1,23 +1,19 @@
 #pragma once
 #include "views/view.hpp"
 
-namespace views
-{
-    class ScreenToSmallView: public View
-    {
+namespace views {
+    class ScreenTooSmallView: public View {
     private:
-
-        Size minimumRequired_;
-        bool quit_=false;
+        Size minimumRequired_; // dimensioni minime richieste per la finestra
+        bool quit_ = false;
     public:
 
-        ScreenToSmallView(Size minimumRequired_);
+        ScreenTooSmallView(Size minimumRequired_);
 
         void handleInput(char input);
 
         void render(bool force);
 
         bool handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView);
-
     };
 }; // namespace views

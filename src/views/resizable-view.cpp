@@ -1,4 +1,4 @@
-#include "views/resizableView.hpp"
+#include "views/resizable-view.hpp"
 
 namespace views
 {

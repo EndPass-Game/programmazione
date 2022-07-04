@@ -1,4 +1,4 @@
-#include "views/gameSubView.hpp"
+#include "views/game-sub-view.hpp"
 
 namespace views
 {

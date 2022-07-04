@@ -1,5 +1,7 @@
-#include "views/itemSubView.hpp"
-#include "manager/viewManager.hpp"
+#include <ncurses.h> // WINDOW
+
+#include "views/item-sub-view.hpp"
+#include "manager/view-manager.hpp"
 
 namespace views
 {

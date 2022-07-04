@@ -1,4 +1,6 @@
-#include "views/menuView.hpp"
+#include <cstring>
+
+#include "views/menu-view.hpp"
 
 namespace views
 {
@@ -48,7 +50,7 @@ namespace views
     }
 
     void MenuView::handleScreenToSmall(manager::ViewManager* manager){
-        ScreenToSmallView* toSmall=new ScreenToSmallView(kMenuSize_);
+        ScreenTooSmallView* toSmall=new ScreenTooSmallView(kMenuSize_);
         manager->pushView(toSmall);
 
     }

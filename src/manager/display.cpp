@@ -7,7 +7,8 @@ Funzioni:
 */
 #include "manager/display.hpp"
 
-
+#include "manager/view-manager.hpp"
+#include "views/view.hpp"
 namespace manager
 {
 

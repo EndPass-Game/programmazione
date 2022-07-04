@@ -1,5 +1,10 @@
-#include "views/gameView.hpp"
+#include "views/game-view.hpp"
 #include "manager/level.hpp"
+
+
+// TODO(gio): fixa gli include di questo file, segui la filosofia: "includi quello che usi"
+// https://google.github.io/styleguide/cppguide.html#Include_What_You_Use
+
 namespace views
 {
 
@@ -55,7 +60,7 @@ namespace views
     void GameView::handleScreenToSmall(manager::ViewManager* manager) {
         PauseView* pauseView=new PauseView({0,0});
         manager->pushView(pauseView);
-        ScreenToSmallView* toSmall=new ScreenToSmallView(manager::kGameWindowsSize);
+        ScreenTooSmallView* toSmall=new ScreenTooSmallView(manager::kGameWindowsSize);
         manager->pushView(toSmall);
 
     }
