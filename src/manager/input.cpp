@@ -2,7 +2,6 @@
 
 #include <ncurses.h>
 
-#include "enums/game_state.hpp"
 #include "entities/player.hpp"
 #include "manager/game.hpp"
 #include "manager/level.hpp"

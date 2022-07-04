@@ -49,4 +49,4 @@ clean:
 
 # build and run the program
 run: main
-	$(BUILD_PATH)/$<
+	ASAN_OPTIONS="log_path=asan.log" $(BUILD_PATH)/$<

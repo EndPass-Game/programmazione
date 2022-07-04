@@ -15,11 +15,11 @@ namespace views
         // TODO: variabili per cunicare tra i due thread in un futuro andranno wrappate in una struct o classe mutex protected
         bool quit = false;
         bool pause = false;
-        manager::Level levelManager;
+        manager::Level *levelManager_;
 
     public:
-        
         GameView(Position pos);
+        ~GameView();
         bool handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView);
 
         void handleInput(char input);
