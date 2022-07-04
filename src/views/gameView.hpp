@@ -6,6 +6,8 @@
 #include "manager/viewManager.hpp"
 #include "manager/level.hpp"
 #include "views/gameView.hpp"
+#include "views/itemSubView.hpp"
+#include "views/gameSubView.hpp"
 
 namespace views
 {
@@ -15,8 +17,8 @@ namespace views
         // TODO: variabili per cunicare tra i due thread in un futuro andranno wrappate in una struct o classe mutex protected
         bool quit = false;
         bool pause = false;
-        manager::Level *levelManager_;
-
+        GameSubView * gameSubView_;
+        ItemSubView * itemSubView_;
     public:
         GameView(Position pos);
         ~GameView();
@@ -25,6 +27,9 @@ namespace views
         void handleInput(char input);
 
         void render(bool force);
+
+        void renderItem(bool force);
+        void renderGame(bool force);
 
         void handleScreenToSmall(manager::ViewManager* manager);
     };

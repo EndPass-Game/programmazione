@@ -5,11 +5,13 @@ namespace views
 
     GameView::GameView(Position pos) : 
         ResizableView(pos, manager::kGameWindowsSize) {
-            levelManager_ = new manager::Level(manager::kGameWindowsSize);
+        gameSubView_=new GameSubView(window);
+        itemSubView_ = new ItemSubView(window);
     }
 
     GameView::~GameView() {
-        delete levelManager_;
+        delete gameSubView_;
+        delete itemSubView_;
     }
 
     bool GameView::handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView)
@@ -36,17 +38,8 @@ namespace views
             case 'p':
                 pause=true;
                 break;
-            case 'w':
-                levelManager_->getPlayer()->setDirection(enums::Direction::UP);
-                break;
-            case 'a':
-                levelManager_->getPlayer()->setDirection(enums::Direction::LEFT);
-                break;
-            case 'd':
-                levelManager_->getPlayer()->setDirection(enums::Direction::RIGHT);
-                break;
-            case 's':
-                levelManager_->getPlayer()->setDirection(enums::Direction::DOWN);
+            default:
+                gameSubView_->handleInput(input);
                 break;
         }
     }
@@ -54,8 +47,8 @@ namespace views
     void GameView::render(bool force)
     {
         // TODO(ang): function that has to handle all the creature moves
-        levelManager_->getPlayer()->move(levelManager_);
-        levelManager_->render(window, force);
+        itemSubView_->render(force);
+        gameSubView_->render(force);
         ResizableView::render(force);
     }
 

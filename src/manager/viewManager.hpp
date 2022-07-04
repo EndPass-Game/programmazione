@@ -14,7 +14,9 @@ namespace manager
 {
 
     // la size della finersta
-    const Size kGameWindowsSize = {18, 60};
+    const Size kGameWindowsSize = {20, 60};
+    const Size kItemAreaSize = {3,kGameWindowsSize.colonna};
+    const Size kGameAreaSize = {kGameWindowsSize.riga-kItemAreaSize.riga, kGameWindowsSize.colonna};
 
     // Decide ogni quanti millisecondi avviene un update a schermo
     const int kSleepTime = 50;
