@@ -3,24 +3,24 @@
 #include "datastruct/vector.hpp"
 #include "gamestruct/size.hpp"
 #include "entities/player.hpp"
-#include "wall/segment.hpp"
+#include "level/wall-segment.hpp"
 #include "enums/direction.hpp"
 #include "enums/collision.hpp"
 
 namespace level {
     Level::Level(Size size) {
         player_ = new Player();
-        segments_ = datastruct::Vector<wall::Segment *>();
+        segments_ = datastruct::Vector<WallSegment *>();
         entities_ = datastruct::Vector<Entity *>(0);
         // creazione dei muri esterni
         using namespace enums; // Direction::RIGHT, Direction::LEFT, Direction::UP, Direction::DOWN
-        segments_.push_back(new wall::Segment(Position(0, 0), Direction::RIGHT, size.colonna - 1));
-        segments_.push_back(new wall::Segment(Position(0, size.colonna - 1), Direction::DOWN, size.riga - 1));
-        segments_.push_back(new wall::Segment(Position(size.riga - 1, size.colonna - 1), Direction::LEFT, size.colonna - 1));
-        segments_.push_back(new wall::Segment(Position(size.riga - 1, 0), Direction::UP, size.riga - 1));
+        segments_.push_back(new WallSegment(Position(0, 0), Direction::RIGHT, size.colonna - 1));
+        segments_.push_back(new WallSegment(Position(0, size.colonna - 1), Direction::DOWN, size.riga - 1));
+        segments_.push_back(new WallSegment(Position(size.riga - 1, size.colonna - 1), Direction::LEFT, size.colonna - 1));
+        segments_.push_back(new WallSegment(Position(size.riga - 1, 0), Direction::UP, size.riga - 1));
 
         // TODO(ang): rimuovere questo muro di prova che sto mettendo ora 
-        segments_.push_back(new wall::Segment(Position(0, size.colonna / 2), Direction::DOWN, size.riga / 2));
+        segments_.push_back(new WallSegment(Position(0, size.colonna / 2), Direction::DOWN, size.riga / 2));
         // TODO(ang): gestire anche la creazione dei segmenti intermedi 
     }
 

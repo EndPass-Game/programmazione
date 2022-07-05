@@ -6,6 +6,10 @@ namespace views
     {
         levelManager_=new manager::Level(manager::kGameAreaSize);
     }
+    GameSubView::~GameSubView() {
+        delete levelManager_;
+    }
+    
     void GameSubView::handleInput(char input)
     {
         switch (input)

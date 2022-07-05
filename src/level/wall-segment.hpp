@@ -2,34 +2,28 @@
 
 #include <ncurses.h>
 
-#include "wall/wall.hpp"
+#include "level/wall.hpp"
+#include "level/segment.hpp"
 #include "datastruct/vector.hpp"
 #include "gamestruct/position.hpp"
 #include "enums/direction.hpp"
 
-namespace wall {
+namespace level {
     // classe che rappresenta un segmento di muri
-    class Segment {
+    class WallSegment: public Segment {
       private:
         // vettore dei muri mostrato a schermo
         datastruct::Vector<Wall *> walls_;
-        Position startPosition_; 
-        Position endPosition_; 
-        enums::Direction direction_;
-        int length_;
       public: 
         // segmento vuoto, crea un segmento lungo 0, in posizione 0 di direzione nulla
-        Segment(); 
-        ~Segment(); 
+        WallSegment(); 
         // crea un segmento di lunghezza length, in posizione startPosition di direzione direction
         // Esempio: Segment(Position(0, 0), enums::Direction::RIGHT, 10)
         // crea un segmento di 10 muri in posizione (0, 0) e direzione a destra che printata a schermo è
         // +---------  
-        Segment(Position start_position, enums::Direction direction, int length);
+        WallSegment(Position start_position, enums::Direction direction, int length);
+        ~WallSegment(); 
 
-        // usato per mostrare a schermo l'intero vettore dei muri presenti    
         void render(WINDOW *win, bool force);
-
-        bool isPositionInSegment(Position pos);
-    }; // class segment
-}; // namespace wall
+    }; // class WallSegment
+}; // namespace level

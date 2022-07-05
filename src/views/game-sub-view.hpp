@@ -12,6 +12,7 @@ namespace views {
         manager::Level *levelManager_;
     public:
         GameSubView(WINDOW * win);
+        ~GameSubView();
         void render(bool force);
         void handleInput(char input);
     };

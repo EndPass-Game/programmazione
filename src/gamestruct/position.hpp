@@ -11,10 +11,12 @@ struct Position {
     bool operator!=(const Position& pos) const;
     bool operator==(const Position& pos) const;
 
+    Position operator*(int factor) const;
     Position operator+(const Position& pos) const;
     Position operator-(const Position& pos) const;
 
     void operator=(const Position& pos);
+    void operator*=(int factor);
     void operator+=(const Position& pos);
     void operator-=(const Position& pos);
 };
