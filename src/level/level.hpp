@@ -12,18 +12,18 @@ namespace level {
     // contenere tutti i oggetti utili per il singolo livello 
     class Level {
       private: 
-        Player *player_; // TODO(ang): invece del player, vorrei tenere posizione del player lastPlayerPosition_; 
+        Position lastPlayerPosition_={0,0};
+        Player *player_; 
         datastruct::Vector<WallSegment *> segments_;
         datastruct::Vector<Entity *> entities_; 
       public: 
         // genera il livello con la size data (walls and entities) 
-        Level(Size size);
+        Level(Size size,Player* player);
         
         // genera il livello con una porta al livello precedente
-        Level(Size size, Level *oldlevel);
+        Level(Size size, Level *oldlevel,Player * player);
         ~Level();
 
-        Player *getPlayer();
 
         // applies all position changes (entities) 
         void render(WINDOW *win, bool force);

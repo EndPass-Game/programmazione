@@ -26,24 +26,24 @@ namespace manager
 
     Level::Level(Size size) {
         player_ = new Player();
-        levels_.push_back(new level::Level(size));
+        levels_.push_back(new level::Level(size,player_));
         currentLevelIndex_ = 0;
     }
 
     Level::~Level() {
-        delete player_;
         for (unsigned int i = 0; i < levels_.size(); i++) {
             delete levels_[i];
         }
+        delete player_;
     }
 
     Player *Level::getPlayer() {
-        return levels_[currentLevelIndex_]->getPlayer();
+        return player_;
     }
 
     void Level::addLevel() {
         // TODO(ang): fix level screen size
-        levels_.push_back(new level::Level(levelScreenSize_));
+        levels_.push_back(new level::Level(levelScreenSize_,player_));
     }
 
     enums::CollisionObject Level::getCollisionObject(Position pos) {
@@ -60,6 +60,6 @@ namespace manager
 
     void Level::render(WINDOW *win, bool force) {
         levels_[currentLevelIndex_]->render(win, force);
-        //TODO(ang): print player
+        //TODO(ang): print player ( valuta se è meglio printarlo qui o in level/level io pensavo fosse meglio il level/level (gio))
     }
 }

@@ -8,8 +8,9 @@
 #include "enums/collision.hpp"
 
 namespace level {
-    Level::Level(Size size) {
-        player_ = new Player();
+    Level::Level(Size size,Player* player):player_(player) {
+        //TODO:(ang) muovere il player in lastPlayerPosition_ 
+        // (quando la stanza sarà nuova last player position conterrà il valore dell'entrata)
         segments_ = datastruct::Vector<WallSegment *>();
         entities_ = datastruct::Vector<Entity *>(0);
         // creazione dei muri esterni
@@ -24,7 +25,7 @@ namespace level {
         // TODO(ang): gestire anche la creazione dei segmenti intermedi 
     }
 
-    Level::Level(Size size, Level *oldlevel) : Level(size) {
+    Level::Level(Size size, Level *oldlevel,Player *player) : Level(size,player) {
         // TODO(ang): come fare a creare una porta?
         // 1. scegliere la posizione
         // 2. scegliere la direzione (verticale o orizzontale)
@@ -39,8 +40,6 @@ namespace level {
         for (unsigned int i = 0; i < entities_.size(); i++) {
             delete entities_[i];
         }
-         
-        delete player_;
     }	
 
     bool Level::isPositionEmpty(Position pos) {
@@ -59,13 +58,11 @@ namespace level {
         return enums::CollisionObject::NONE;
     }
 
-    Player *Level::getPlayer() {
-        return player_;
-    }
 
     void Level::render(WINDOW *win, bool force) {
+
         for (unsigned int i = 0; i < segments_.size(); i++) {
-            segments_[i]->render(win, true);
+            segments_[i]->render(win, force);
         }
 
         player_->clearLast(win);

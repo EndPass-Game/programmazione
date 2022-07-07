@@ -1,11 +1,11 @@
-#include <ncurses.h> // WINDOW
 
 #include "views/item-sub-view.hpp"
 #include "manager/view-manager.hpp"
 
 namespace views
 {
-    ItemSubView::ItemSubView(WINDOW *win) : SubView(win, {manager::kGameAreaSize.riga, 0}, manager::kItemAreaSize) {}
+    ItemSubView::ItemSubView(WINDOW *win,manager::Level *levelManager) : SubView(win, {manager::kGameAreaSize.riga, 0}, manager::kItemAreaSize) {
+    }
 
     void ItemSubView::render(bool force)
     {

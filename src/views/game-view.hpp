@@ -19,6 +19,7 @@ namespace views
         bool pause = false;
         GameSubView * gameSubView_;
         ItemSubView * itemSubView_;
+        manager::Level *levelManager_;
     public:
         GameView(Position pos);
         ~GameView();

@@ -15,7 +15,6 @@ namespace views
     void SubView::render(bool force)
     {
         if(force){
-            wclear(subWin_);
             touchwin(subWin_);
         }
         wsyncup(subWin_);

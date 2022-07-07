@@ -2,13 +2,10 @@
 
 namespace views
 {
-    GameSubView::GameSubView(WINDOW *win) : SubView(win, {0, 0}, manager::kGameAreaSize)
+    GameSubView::GameSubView(WINDOW *win,manager::Level *levelManager) :levelManager_(levelManager), SubView(win, {0, 0}, manager::kGameAreaSize)
     {
-        levelManager_=new manager::Level(manager::kGameAreaSize);
     }
-    GameSubView::~GameSubView() {
-        delete levelManager_;
-    }
+    
     
     void GameSubView::handleInput(char input)
     {
