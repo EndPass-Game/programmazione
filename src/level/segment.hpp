@@ -10,6 +10,7 @@
 namespace level {
     // classe astratta che rappresenta un qualunque segmento parallelo a 
     // un asse principale x,y
+    // inoltre i segmenti sono oggetto di collisione per oggetti o entità. e collidable permette ciò
     class Segment {
       protected:
         Position startPosition_; 

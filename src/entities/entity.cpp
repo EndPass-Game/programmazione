@@ -2,7 +2,8 @@
 
 #include "manager/level.hpp"
 #include "enums/direction.hpp"
-#include "enums/collision.hpp"
+#include "enums/collision-type.hpp"
+#include "level/collision-object.hpp"
 
 // TODO(simo): file di configurazione per i valori di default?? ha senso secondo te?? 
 // perché questi valori di default per displayable hardcodati così sono un pò brutti
@@ -40,17 +41,18 @@ void Entity::move(manager::Level *levelManager) {
     }
 
     if(isMoving) {
-        switch (levelManager->getCollisionObject(Position(new_x, new_y))) {
-            case enums::CollisionObject::WALL:
+        level::CollisionObject collisionObject = levelManager->getCollisionObject(Position{new_x, new_y});
+        switch (collisionObject.type) {
+            case enums::CollisionType::WALLSEGMENT:
                 break;
-            case enums::CollisionObject::ENTITY: 
+            case enums::CollisionType::ENTITY: 
                 // TODO(simo) può anche essere chiamato enemy invece di entity, obboh
                 // decidi te poi dopo!
                 break;
-            case enums::CollisionObject::ARTIFACT:
+            case enums::CollisionType::ARTIFACT:
                 // TODO(simo)
                 break;
-            case enums::CollisionObject::NONE:
+            case enums::CollisionType::NONE:
                 setPosition(Position(new_x, new_y));
                 break;
         }

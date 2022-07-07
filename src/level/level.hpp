@@ -3,9 +3,9 @@
 #include "datastruct/vector.hpp"
 #include "entities/entity.hpp"
 #include "entities/player.hpp"
-#include "enums/collision.hpp"
 #include "gamestruct/displayable.hpp"
 #include "gamestruct/size.hpp"
+#include "level/collision-object.hpp"
 #include "level/wall-segment.hpp"
 
 namespace level {
@@ -32,6 +32,6 @@ namespace level {
         bool isPositionEmpty(Position pos);
 
         // returns the collision object at the given position
-        enums::CollisionObject getCollisionObject(Position pos);
+        CollisionObject getCollisionObject(Position pos);
     }; 
 }; // namespace map
