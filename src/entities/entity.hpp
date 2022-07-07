@@ -29,9 +29,11 @@ class Entity: public Displayable {
     virtual void attack(Entity *target);
 
     // muove l'entità secondo la direzione impostata
-    void move(manager::Level *levelManager);
+    void move(manager::level *levelmanager);
 
     void applyDamage(int damage);
 
     void setDirection(enums::Direction direction);
+
+    virtual handleCollision(ms::CollisionObject collisio,enums::CollisionObject collision));
 };

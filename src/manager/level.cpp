@@ -62,4 +62,12 @@ namespace manager
         levels_[currentLevelIndex_]->render(win, force);
         //TODO(ang): print player ( valuta se è meglio printarlo qui o in level/level io pensavo fosse meglio il level/level (gio))
     }
+
+    void Level::move()
+    {
+        player_->move();
+        }f(indexLevel.changesizedeiLid){
+            if(indexLevel > )
+        }
+    }
 }

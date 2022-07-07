@@ -47,5 +47,7 @@ namespace manager {
         enums::CollisionObject getCollisionObject(Position pos);
 
         void render(WINDOW *win, bool force);
+
+        void move();
     };
 }

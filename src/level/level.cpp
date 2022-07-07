@@ -52,7 +52,7 @@ namespace level {
                 return enums::CollisionObject::WALL;
             }
         }
-
+        
         // TODO(simo): gestire altri oggetti di collisione
         // es: entity, artefatti, ...
         return enums::CollisionObject::NONE;

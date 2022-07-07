@@ -27,7 +27,7 @@ namespace views
     }
     void GameSubView::render(bool force)
     {
-        levelManager_->getPlayer()->move(levelManager_);
+        levelManager_->move();
         levelManager_->render(subWin_, force);
         SubView::render(force);
     }

@@ -31,4 +31,6 @@ class Player: public Entity {
 
     // TODO
     void pickup(); 
+    
+    void handleCollision(manager::Level *levelManager, enums::CollisionObject collisionObject);
 };
