@@ -1,3 +1,5 @@
 .replit
 .vscode/
 build/
+/*.log
+/*.log.[1-9]*
