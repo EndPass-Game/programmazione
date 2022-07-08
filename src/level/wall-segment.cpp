@@ -46,4 +46,9 @@ namespace level {
             walls_[i]->render(win, force);
         }
     }
+
+    enums::CollisionType WallSegment::getCollisionType() {
+        return enums::CollisionType::WALLSEGMENT;
+    }
+
 }; // namespace level

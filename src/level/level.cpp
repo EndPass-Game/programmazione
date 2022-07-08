@@ -50,7 +50,7 @@ namespace level {
     CollisionObject Level::getCollisionObject(Position pos) {
         for (unsigned int i = 0; i < segments_.size(); i++) {
             if (segments_[i]->isPositionInSegment(pos)) {
-                return CollisionObject(enums::CollisionType::WALLSEGMENT, (Collidable *) segments_[i]);
+                return CollisionObject(segments_[i]->getCollisionType(), (Collidable *) segments_[i]);
             }
         }
 

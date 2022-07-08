@@ -35,4 +35,6 @@ class Entity: public Displayable, public level::Collidable {
     void applyDamage(int damage);
 
     void setDirection(enums::Direction direction);
+
+    virtual enums::CollisionType getCollisionType() override;
 };

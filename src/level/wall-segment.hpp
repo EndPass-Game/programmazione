@@ -27,5 +27,6 @@ namespace level {
         ~WallSegment(); 
 
         void render(WINDOW *win, bool force);
+        virtual enums::CollisionType getCollisionType() override;
     }; // class WallSegment
 }; // namespace level

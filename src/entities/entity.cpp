@@ -78,3 +78,6 @@ void Entity::applyDamage(int damage) {
     life_ -= damage;
 }
 
+enums::CollisionType Entity::getCollisionType() {
+    return enums::CollisionType::ENTITY;
+}
