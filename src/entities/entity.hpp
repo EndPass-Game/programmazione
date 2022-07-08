@@ -8,10 +8,11 @@ deve tenere le vite, artefatti, posizione, e items
 #include "enums/direction.hpp"
 #include "gamestruct/displayable.hpp"
 #include "gamestruct/position.hpp"
+#include "level/collidable.hpp"
 // TODO: invece che ogni classe figlia erediti da questa
 // sarebbe buona cosa rendere questa classe una factory
 // che sforni entità, ognuna settata con certe specifiche
-class Entity: public Displayable {
+class Entity: public Displayable, public level::Collidable {
   protected:
     int life_;      // quantità di vita
     int attack_;    // danno fatto alle altre entità
@@ -34,4 +35,6 @@ class Entity: public Displayable {
     void applyDamage(int damage);
 
     void setDirection(enums::Direction direction);
+
+    virtual enums::CollisionType getCollisionType() override;
 };

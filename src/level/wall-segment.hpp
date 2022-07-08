@@ -4,13 +4,15 @@
 
 #include "level/wall.hpp"
 #include "level/segment.hpp"
+#include "level/collidable.hpp"
 #include "datastruct/vector.hpp"
 #include "gamestruct/position.hpp"
 #include "enums/direction.hpp"
 
 namespace level {
     // classe che rappresenta un segmento di muri
-    class WallSegment: public Segment {
+    // inoltre i segmenti di muri sono oggetto di collisione per oggetti o entità. e collidable permette ciò
+    class WallSegment: public Segment, public Collidable {
       private:
         // vettore dei muri mostrato a schermo
         datastruct::Vector<Wall *> walls_;
@@ -25,5 +27,6 @@ namespace level {
         ~WallSegment(); 
 
         void render(WINDOW *win, bool force);
+        virtual enums::CollisionType getCollisionType() override;
     }; // class WallSegment
 }; // namespace level

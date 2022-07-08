@@ -2,9 +2,9 @@
 
 namespace enums {
     // descrive l'oggetto con cui si è colliso 
-    enum class CollisionObject {
+    enum class CollisionType {
         NONE = 0,
-        WALL = 1,
+        WALLSEGMENT = 1,
         ENTITY = 2,
         ARTIFACT = 3,
         POWER = 4,

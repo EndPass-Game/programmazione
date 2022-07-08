@@ -5,7 +5,7 @@
 #include "entities/player.hpp"
 #include "level/wall-segment.hpp"
 #include "enums/direction.hpp"
-#include "enums/collision.hpp"
+#include "enums/collision-type.hpp"
 
 namespace level {
     Level::Level(Size size,Player* player):player_(player) {
@@ -43,19 +43,19 @@ namespace level {
     }	
 
     bool Level::isPositionEmpty(Position pos) {
-        return getCollisionObject(pos) == enums::CollisionObject::NONE;
+        return getCollision(pos) == nullptr;
     }
 
-    enums::CollisionObject Level::getCollisionObject(Position pos) {
+    Collidable *Level::getCollision(Position pos) {
         for (unsigned int i = 0; i < segments_.size(); i++) {
             if (segments_[i]->isPositionInSegment(pos)) {
-                return enums::CollisionObject::WALL;
+                return (Collidable *) segments_[i];
             }
         }
 
         // TODO(simo): gestire altri oggetti di collisione
         // es: entity, artefatti, ...
-        return enums::CollisionObject::NONE;
+        return nullptr;
     }
 
 
