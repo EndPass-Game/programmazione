@@ -18,7 +18,7 @@ Funzioni:
 #include <ncurses.h>
 
 #include "entities/player.hpp"
-#include "level/collision-object.hpp"
+#include "level/collidable.hpp"
 #include "level/level.hpp"
 #include "datastruct/vector.hpp"
 #include "gamestruct/size.hpp"
@@ -44,7 +44,7 @@ namespace manager {
         // allora ritorna false, altrimenti true; 
         bool loadLevel(int level);
 
-        level::CollisionObject getCollisionObject(Position pos);
+        level::Collidable *getCollision(Position pos);
 
         void render(WINDOW *win, bool force);
     };

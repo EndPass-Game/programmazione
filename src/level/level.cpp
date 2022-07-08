@@ -4,7 +4,6 @@
 #include "gamestruct/size.hpp"
 #include "entities/player.hpp"
 #include "level/wall-segment.hpp"
-#include "level/collision-object.hpp"
 #include "enums/direction.hpp"
 #include "enums/collision-type.hpp"
 
@@ -44,19 +43,19 @@ namespace level {
     }	
 
     bool Level::isPositionEmpty(Position pos) {
-        return getCollisionObject(pos).type == enums::CollisionType::NONE;
+        return getCollision(pos) == nullptr;
     }
 
-    CollisionObject Level::getCollisionObject(Position pos) {
+    Collidable *Level::getCollision(Position pos) {
         for (unsigned int i = 0; i < segments_.size(); i++) {
             if (segments_[i]->isPositionInSegment(pos)) {
-                return CollisionObject(segments_[i]->getCollisionType(), (Collidable *) segments_[i]);
+                return (Collidable *) segments_[i];
             }
         }
 
         // TODO(simo): gestire altri oggetti di collisione
         // es: entity, artefatti, ...
-        return CollisionObject(enums::CollisionType::NONE, nullptr);
+        return nullptr;
     }
 
 

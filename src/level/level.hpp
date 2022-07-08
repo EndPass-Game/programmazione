@@ -5,7 +5,7 @@
 #include "entities/player.hpp"
 #include "gamestruct/displayable.hpp"
 #include "gamestruct/size.hpp"
-#include "level/collision-object.hpp"
+#include "level/collidable.hpp"
 #include "level/wall-segment.hpp"
 
 namespace level {
@@ -32,6 +32,6 @@ namespace level {
         bool isPositionEmpty(Position pos);
 
         // returns the collision object at the given position
-        CollisionObject getCollisionObject(Position pos);
+        Collidable *getCollision(Position pos);
     }; 
 }; // namespace map
