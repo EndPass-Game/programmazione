@@ -29,6 +29,10 @@ namespace manager
         levels_.push_back(new level::Level(size));
         levelIdx_ = new StateWatcher<int>(0);
         levelScreenSize_ = size; // TODO: sostituire questo con size globale
+
+        // TODO(ang): gestire staccosa della creazione del livello tramite objectLoader??? 
+        // serve che il level manager implementi un gestore per caricare i livelli???
+        // e quindi questo diventi semplicemente un coso che sceglie randomicamente quale loader prendere???
     }
 
     Level::~Level() {

@@ -46,6 +46,17 @@ namespace level {
 
     }
 
+    Level::Level(Loader *loader) {
+        datastruct::Vector<WallSegment *> *segments = nullptr;
+        segments = loader->getLoadedWalls(); 
+        if (segments != nullptr) {
+            // TODO(ang): [level-loader]
+            // segment_ = *segments; 
+            delete segments;
+        }
+        // TODO(ang): altrimenti chiami i segmenti di default???
+    }
+
     Level::~Level() {
         for (unsigned int i = 0; i < segment_.size(); i++) {
             delete segment_[i];
