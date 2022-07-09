@@ -1,10 +1,14 @@
 #pragma once
+
+#include <ncurses.h>
+
 #include "level/collidable.hpp"
 #include "level/displayable-segment.hpp"
-
+#include "gamestruct/position.hpp"
+#include "enums/direction.hpp"
 namespace level{
 
-    class DoorSegment: public DisplayableSegment, public Collidable {
+    class DoorSegment: public DisplayableSegment {
     protected:
         int nextLevelIdx_; // -1 default per livello inesistente
         bool isOpen_=false;

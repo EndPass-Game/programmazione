@@ -2,6 +2,7 @@
 
 #include <ncurses.h>
 
+#include "level/collidable.hpp"
 #include "level/segment.hpp"
 #include "datastruct/vector.hpp"
 #include "gamestruct/position.hpp"
@@ -10,7 +11,7 @@
 
 namespace level {
     // classe che rappresenta un segmento di elementi visibili
-    class DisplayableSegment: public Segment {
+    class DisplayableSegment: public Segment, public Collidable {
       protected:
         // vettore dei oggetti mostrato a schermo
         datastruct::Vector<Displayable *> displayables_;
@@ -25,5 +26,10 @@ namespace level {
         virtual ~DisplayableSegment(); 
 
         virtual void render(WINDOW *win, bool force);
+
+        // pure virtual function che restituisce il tipo di collisione 
+        // previene la creazione di DisplayableSegment da sé, ma solo i suoi derivati
+        // che implementano questa funzione con il tipo di collisione appropriato
+        virtual enums::CollisionType getCollisionType() = 0; 
     }; // class DisplayableSegment
 }; // namespace level

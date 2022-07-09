@@ -3,14 +3,14 @@
 #include <ncurses.h>
 
 #include "enums/wall-type.hpp"
+#include "level/displayable-segment.hpp"
 
 namespace level {
     WallSegment::WallSegment() : 
         DisplayableSegment() {}
 
-    WallSegment::WallSegment(Position startPosition, enums::Direction direction, int length) {
-        WallSegment::DisplayableSegment(startPosition, direction, length);
-
+    WallSegment::WallSegment(Position startPosition, enums::Direction direction, int length):
+      DisplayableSegment(startPosition, direction, length) {
         char wallCharacter = _getWallCharacter(direction);
         for (unsigned int i = 0; i < displayables_.size(); i++) {
             if (displayables_[i]->getPosition() == startPosition) {

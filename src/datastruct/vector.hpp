@@ -24,13 +24,8 @@ class Vector {
     // versione del resize privata. Più veloce rispetto alla pubblica
     // in quanto non deve ricavare la nuova size.
     void resize(size_t size, size_t newRealSize) {
-        int endCopyIdx;
-        if (size < size_) {
-            endCopyIdx = size;
-            size_ = size; // lo spazio effettivamente usato è minore
-        } else {
-            endCopyIdx = size_;
-        }
+        int endCopyIdx = size < size_ ? size : size_; // minore fra i due
+        size_ = size; 
         T *new_space = new T[newRealSize];
         for (int i = 0; i < endCopyIdx; i++) {
             new_space[i] = data_[i];

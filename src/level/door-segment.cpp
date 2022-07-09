@@ -6,11 +6,11 @@ namespace level {
 
     DoorSegment::DoorSegment(Position start_position, 
       enums::Direction direction, 
-      int nextLevelIdx, 
       int length, 
-      bool isOpen): nextLevelIdx_(nextLevelIdx), isOpen_(isOpen) { 
-        DoorSegment::DisplayableSegment(start_position, direction, length); 
-
+      int nextLevelIdx, 
+      bool isOpen): 
+      DisplayableSegment(start_position, direction, length),
+      nextLevelIdx_(nextLevelIdx), isOpen_(isOpen) { 
         for (unsigned int i = 0; i < displayables_.size(); i++) {
             if (isOpen_) {
                 displayables_[i]->setDisplayChar((char) enums::WallType::DOOROPEN);
@@ -18,6 +18,10 @@ namespace level {
                 displayables_[i]->setDisplayChar((char) enums::WallType::DOORCLOSED);
             }
         }
+    }
+
+    bool DoorSegment::isDoorOpen() const {
+        return isOpen_;
     }
 
     enums::CollisionType DoorSegment::getCollisionType() {
