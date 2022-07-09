@@ -58,6 +58,9 @@ void Entity::move(manager::Level *levelManager) {
             case enums::CollisionType::NONE:
                 setPosition(Position(new_x, new_y));
                 break;
+            case enums::CollisionType::POWER:
+                // TODO(simo)
+                break;
         }
     }
     
