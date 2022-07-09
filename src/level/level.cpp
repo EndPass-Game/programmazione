@@ -8,9 +8,11 @@
 #include "enums/collision-type.hpp"
 
 namespace level {
-    Level::Level(Size size,Player* player):player_(player) {
-        //TODO:(ang) muovere il player in lastPlayerPosition_ 
+    Level::Level(Size size) {
+        //TODO(ang): mettere il giocatore davanti alla porta, o su punto di spawn prestabilito
         // (quando la stanza sarà nuova last player position conterrà il valore dell'entrata)
+        lastPlayerPosition_ = Position(1,1); 
+
         segments_ = datastruct::Vector<WallSegment *>();
         entities_ = datastruct::Vector<Entity *>(0);
         // creazione dei muri esterni
@@ -25,7 +27,7 @@ namespace level {
         // TODO(ang): gestire anche la creazione dei segmenti intermedi 
     }
 
-    Level::Level(Size size, Level *oldlevel,Player *player) : Level(size,player) {
+    Level::Level(Size size, Level *oldlevel) : Level(size) {
         // TODO(ang): come fare a creare una porta?
         // 1. scegliere la posizione
         // 2. scegliere la direzione (verticale o orizzontale)
@@ -41,6 +43,14 @@ namespace level {
             delete entities_[i];
         }
     }	
+
+    Position Level::getLastPlayerPosition() {
+        return lastPlayerPosition_;
+    }
+
+    void Level::setLastPlayerPosition(Position pos) {
+        lastPlayerPosition_ = pos;
+    }
 
     bool Level::isPositionEmpty(Position pos) {
         return getCollision(pos) == nullptr;
@@ -60,13 +70,10 @@ namespace level {
 
 
     void Level::render(WINDOW *win, bool force) {
-
         for (unsigned int i = 0; i < segments_.size(); i++) {
             segments_[i]->render(win, force);
         }
 
-        player_->clearLast(win);
-        player_->render(win, force);
         // TODO(ang): come fare a spostare gli entità?
         // 1. deve updatare questo oppure lo fa un render in un altro momento????
     }
