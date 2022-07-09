@@ -4,8 +4,10 @@
 #include "gamestruct/size.hpp"
 #include "entities/player.hpp"
 #include "level/wall-segment.hpp"
+#include "level/door-segment.hpp"
 #include "enums/direction.hpp"
 #include "enums/collision-type.hpp"
+
 
 namespace level {
     Level::Level(Size size) {
@@ -18,7 +20,8 @@ namespace level {
         // creazione dei muri esterni
         using namespace enums; // Direction::RIGHT, Direction::LEFT, Direction::UP, Direction::DOWN
         segments_.push_back(new WallSegment(Position(0, 0), Direction::RIGHT, size.colonna - 1));
-        segments_.push_back(new WallSegment(Position(0, size.colonna - 1), Direction::DOWN, size.riga - 1));
+        segments_.push_back(new DoorSegment(Position(0, size.colonna - 1), Direction::DOWN, 5,-1,false));
+        segments_.push_back(new WallSegment(Position(5, size.colonna - 1), Direction::DOWN, size.riga - 1));
         segments_.push_back(new WallSegment(Position(size.riga - 1, size.colonna - 1), Direction::LEFT, size.colonna - 1));
         segments_.push_back(new WallSegment(Position(size.riga - 1, 0), Direction::UP, size.riga - 1));
 

@@ -11,6 +11,15 @@ namespace level {
     WallSegment::WallSegment(Position startPosition, enums::Direction direction, int length) : 
       Segment(startPosition, direction, length) {
         // scegliendo la direzione per creare tutti i muri:
+        Position pos = startPosition_;
+        walls_.resize(length);
+        for (int i = 0; i < length_; i++) {
+            walls_[i] = new Wall(pos, chooseWallCharacter(direction,pos));
+            pos += posDirection_;
+        }
+    }
+
+    char WallSegment::chooseWallCharacter(enums::Direction direction,Position pos){
         enums::WallType type;
         switch (direction) {
             case enums::Direction::UP:
@@ -25,15 +34,12 @@ namespace level {
                 type = enums::WallType::EMPTY;
                 break;
         }
-        Position pos = startPosition_;
-        walls_.resize(length);
-        walls_[0] = new Wall(pos, (char) enums::WallType::ANGLE);
-        pos += posDirection_;
-        for (int i = 1; i < length_; i++) {
-            walls_[i] = new Wall(pos, (char) type);
-            pos += posDirection_;
+        if(pos==startPosition_){
+            return (char) enums::WallType::ANGLE;
         }
+        return (char) type;
     }
+
 
     WallSegment::~WallSegment() {
         for (int i = 0; i < length_; i++) {

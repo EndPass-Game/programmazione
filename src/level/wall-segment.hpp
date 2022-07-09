@@ -27,6 +27,7 @@ namespace level {
         ~WallSegment(); 
 
         void render(WINDOW *win, bool force);
-        virtual enums::CollisionType getCollisionType() override;
+        virtual enums::CollisionType getCollisionType();
+        virtual char chooseWallCharacter(enums::Direction direction,Position pos);
     }; // class WallSegment
 }; // namespace level
