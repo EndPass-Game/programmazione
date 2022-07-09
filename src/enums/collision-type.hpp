@@ -8,7 +8,6 @@ namespace enums {
         ENTITY = 2,
         ARTIFACT = 3,
         POWER = 4,
-        DOOR = 5,
-        DOORCLOSED = 6,
+        DOORSEGMENT = 5,
     };
 }; // namespace enums 

@@ -2,7 +2,6 @@
 
 #include <ncurses.h>
 
-#include "level/wall.hpp"
 #include "datastruct/vector.hpp"
 #include "gamestruct/position.hpp"
 #include "enums/direction.hpp"

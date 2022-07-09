@@ -10,6 +10,10 @@ Displayable::Displayable(Position current, char display_char) :
         position_=new StateWatcher<Position>(current);
     }
 
+void Displayable::setDisplayChar(char display_char) {
+    displayChar_ = display_char;
+}
+
 void Displayable::setPosition(Position new_position_) {
     position_->setCurrent(new_position_);
 }

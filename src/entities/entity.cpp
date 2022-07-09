@@ -46,7 +46,7 @@ void Entity::move(manager::Level *levelManager) {
         if (collision != nullptr) type = collision->getCollisionType(); 
 
         switch (type) {
-            case enums::CollisionType::DOOR:
+            case enums::CollisionType::DOORSEGMENT:
                 break;
             case enums::CollisionType::WALLSEGMENT:
                 break;

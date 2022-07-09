@@ -30,6 +30,7 @@ class Displayable {
 
     Position getPosition();
 
+    void setDisplayChar(char displayChar);
     
     void setPosition(Position newPosition);
 

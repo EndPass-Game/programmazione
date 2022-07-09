@@ -9,6 +9,7 @@ namespace enums {
         ANGLE = '+',
         DOORCLOSED = 'X',
         DOOROPEN = ' ',
-        EMPTY = ' '
+        EMPTY = ' ',
+        DEFAULT = 'O' // default for displayble segment
     };
 }; // namespace enums
