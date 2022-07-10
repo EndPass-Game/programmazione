@@ -47,6 +47,7 @@ void Entity::move(manager::Level *levelManager) {
 
         switch (type) {
             case enums::CollisionType::DOORSEGMENT:
+                _handleDoorCollision(levelManager, (level::DoorSegment*) collision);
                 break;
             case enums::CollisionType::WALLSEGMENT:
                 break;
@@ -88,4 +89,25 @@ void Entity::applyDamage(int damage) {
 
 enums::CollisionType Entity::getCollisionType() {
     return enums::CollisionType::ENTITY;
+}
+
+#include "gamestruct/logger.hpp"
+
+// TODO(ang): muovere a player, non vogliamo che entities si muovano per le porte (o sì?)
+void Entity::_handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door) {
+    Logger("game.log", "w").log("Entity::_handleDoorCollision\n");
+    if (door->getNextLevelIdx() == -1) {
+        Logger().log("Entity::_handleDoorCollision entrato if\n");
+        int nextLevelIdx = levelManager->addLevel();
+        Logger().log("Entity::_handleDoorCollision setting doora\n");
+        door->setNextLevelIdx(nextLevelIdx);
+    }
+    Logger().log("Entity::_handleDoorCollision end\n");
+
+    if (door->isDoorOpen()) {
+        Logger().log("Entity::_handleDoorCollision yes is door open \n");
+        levelManager->goToLevel(door->getNextLevelIdx());
+    } else {
+        door->openDoor(); // temporaneo
+    }
 }

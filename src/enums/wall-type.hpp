@@ -8,8 +8,8 @@ namespace enums {
         HORIZ = '-',
         ANGLE = '+',
         DOORCLOSED = 'X',
-        DOOROPEN = ' ',
+        DOOROPEN = 'O',
         EMPTY = ' ',
-        DEFAULT = 'O' // default for displayble segment
+        DEFAULT = 'D' // default for displayble segment
     };
 }; // namespace enums

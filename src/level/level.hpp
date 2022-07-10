@@ -20,7 +20,7 @@ namespace level {
         Level(Size size);
         
         // genera il livello con una porta al livello precedente
-        Level(Size size, Level *oldlevel);
+        Level(Size size, int oldLevelIdx);
         ~Level();
 
         // restituisce la posizione dell'ultimo player

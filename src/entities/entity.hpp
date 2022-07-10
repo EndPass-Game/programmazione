@@ -9,6 +9,7 @@ deve tenere le vite, artefatti, posizione, e items
 #include "gamestruct/displayable.hpp"
 #include "gamestruct/position.hpp"
 #include "level/collidable.hpp"
+#include "level/door-segment.hpp"
 // TODO: invece che ogni classe figlia erediti da questa
 // sarebbe buona cosa rendere questa classe una factory
 // che sforni entità, ognuna settata con certe specifiche
@@ -19,6 +20,8 @@ class Entity: public Displayable, public level::Collidable {
 
     // Contiene la direzione che dovrà essere intrapresa nel prossimo frame
     enums::Direction direction_;
+
+    virtual void _handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door);
   public:
     Entity();
     Entity(int life, int attack);

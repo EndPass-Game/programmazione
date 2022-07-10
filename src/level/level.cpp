@@ -17,6 +17,8 @@ namespace level {
 
         segment_ = datastruct::Vector<DisplayableSegment *>();
         // creazione dei muri esterni
+        // TODO(ang): creare una funzione per creare i muri esterni
+        // questo è temporaneo
         using namespace enums; // Direction::RIGHT, Direction::LEFT, Direction::UP, Direction::DOWN
         segment_.push_back((DisplayableSegment *) new WallSegment(
             Position(0, 0), Direction::RIGHT, size.colonna - 1));
@@ -28,17 +30,13 @@ namespace level {
             Position(size.riga - 1, size.colonna - 1), Direction::LEFT, size.colonna - 1));
         segment_.push_back((DisplayableSegment *) new WallSegment(
             Position(size.riga - 1, 0), Direction::UP, size.riga - 1));
-        // TODO(ang): rimuovere questo muro di prova che sto mettendo ora 
-        segment_.push_back((DisplayableSegment *) new WallSegment(
-            Position(0, size.colonna / 2), Direction::DOWN, size.riga / 2));
         // TODO(ang): gestire anche la creazione dei segmenti intermedi 
     }
 
-    Level::Level(Size size, Level *oldlevel) : Level(size) {
-        // TODO(ang): come fare a creare una porta?
-        // 1. scegliere la posizione
-        // 2. scegliere la direzione (verticale o orizzontale)
-        // 3. creare la porta (quanti caratteri? 1/ 2?)
+    Level::Level(Size size, int oldLevelIdx) : Level(size) {
+        segment_.push_back((DisplayableSegment *) new DoorSegment(
+            Position(5, 0), enums::Direction::RIGHT, 5, oldLevelIdx, false));
+
     }
 
     Level::~Level() {
