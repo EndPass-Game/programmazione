@@ -3,7 +3,7 @@
 #include <ncurses.h>
 
 #include "gamestruct/position.hpp"
-#include "gamestruct/changeable.hpp"
+#include "gamestruct/state-watcher.hpp"
 
 //TODO:bisogna poter includere questo file
 
@@ -16,7 +16,7 @@ class Displayable {
   protected:  
     // oggetto che contiene le ultime due posizioni dell'oggetto
     // e controlla quando cambia la posizione
-    Changeable<Position> *position_;
+    StateWatcher<Position> *position_;
 
     // la char che viene printata a video
     char displayChar_;

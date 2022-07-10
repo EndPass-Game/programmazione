@@ -8,7 +8,7 @@ namespace views
 
     PauseView::PauseView(Position pos) : ResizableView(pos, manager::kGameWindowsSize) {}
 
-    bool PauseView::handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView)
+    bool PauseView::handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view,bool changedView)
     {
         if(ResizableView::handleScreenBeforeRender(screen, view,changedView))
             return true;

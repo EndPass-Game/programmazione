@@ -2,12 +2,12 @@
 
 Displayable::Displayable() : 
     displayChar_(' ') {
-        position_ = new Changeable<Position>(Position(0, 0));
+        position_ = new StateWatcher<Position>(Position(0, 0));
 }
 
 Displayable::Displayable(Position current, char display_char) : 
     displayChar_(display_char) {
-        position_=new Changeable<Position>(current);
+        position_=new StateWatcher<Position>(current);
     }
 
 void Displayable::setPosition(Position new_position_) {

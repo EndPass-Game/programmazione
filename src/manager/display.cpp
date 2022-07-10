@@ -11,12 +11,12 @@ Funzioni:
 #include "views/view.hpp"
 namespace manager
 {
-
-    Display::Display(ViewManager *viewManager) : viewManager(viewManager),screenSize(getScreenSize()) {
-    }
+    Display::Display(ViewManager *viewManager) : 
+        viewManager(viewManager),
+        screenSize(getScreenSize()) {}
 
     Size Display::getScreenSize(){
-        return Size{LINES,COLS};
+        return Size{LINES, COLS};
     }
 
     void Display::updateScreenSize(){
@@ -25,12 +25,12 @@ namespace manager
 
     bool Display::checkUpdateView(){
         updateScreenSize();
-        bool changed=screenSize.isChanged();
+        bool changed = screenSize.isChanged();
         bool tmpChangedView;
         do{
-            viewManager->last()->handleScreenBeforeRender(screenSize,viewManager,changed);
-            tmpChangedView=viewManager->isChangedView();
-            changed|=tmpChangedView;
+            viewManager->last()->handleScreenBeforeRender(screenSize, viewManager, changed);
+            tmpChangedView = viewManager->isChangedView();
+            changed |= tmpChangedView;
         }while(tmpChangedView and !viewManager->empty());
 
         return changed;
@@ -40,7 +40,7 @@ namespace manager
     {
         while (!viewManager->empty())
         {
-            bool hasUpdated=checkUpdateView();
+            bool hasUpdated = checkUpdateView();
             if(!viewManager->empty()){
                 viewManager->last()->render(hasUpdated);
                 std::this_thread::sleep_for(std::chrono::milliseconds(kSleepTime));

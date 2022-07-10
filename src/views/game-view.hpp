@@ -23,7 +23,7 @@ namespace views
     public:
         GameView(Position pos);
         ~GameView();
-        bool handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView);
+        bool handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view,bool changedView);
 
         void handleInput(char input);
 

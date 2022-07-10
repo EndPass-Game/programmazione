@@ -21,7 +21,7 @@ namespace views
         delete itemSubView_;
     }
 
-    bool GameView::handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView)
+    bool GameView::handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view,bool changedView)
     {
         if(ResizableView::handleScreenBeforeRender(screen, view,changedView))
             return true;

@@ -13,7 +13,7 @@ namespace views
         mvwin(window, newRiga, newColonna);
     }
 
-    bool ResizableView::handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView)
+    bool ResizableView::handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view,bool changedView)
     {
         if (changedView)
         {

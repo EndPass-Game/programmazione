@@ -8,7 +8,7 @@ namespace views
 
 
     // fa il override di questa funzione da view
-    bool MenuView::handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view, bool changedView){
+    bool MenuView::handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view, bool changedView){
         if(ResizableView::handleScreenBeforeRender(screen,view,changedView))
             return true;
         if(quit_) {

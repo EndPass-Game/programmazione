@@ -6,7 +6,10 @@
 
 namespace views{
 
-    ScreenTooSmallView::ScreenTooSmallView(Size minScreen):View({0,0},{0,0}),minimumRequired_(minScreen){ }
+    ScreenTooSmallView::ScreenTooSmallView(Size minScreen):
+        View({0,0},{0,0}),
+        minimumRequired_(minScreen) {}
+
     void ScreenTooSmallView::handleInput(char input){
         if(input=='q'){
             quit_=true;
@@ -17,7 +20,7 @@ namespace views{
         View::render(force);
     }
 
-    bool ScreenTooSmallView::handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView){
+    bool ScreenTooSmallView::handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view, bool changedView){
         if(screen.getCurrent().colonna>=minimumRequired_.colonna and screen.getCurrent().riga>=minimumRequired_.riga){
             view->popView();
             return true;

@@ -9,7 +9,7 @@
 namespace views
 {
 
-    bool View::handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView) {return false;}
+    bool View::handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view,bool changedView) {return false;}
 
     void View::handleInput(char input) {}
 

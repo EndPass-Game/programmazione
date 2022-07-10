@@ -1,5 +1,7 @@
 #pragma once
 #include "views/view.hpp"
+#include "gamestruct/state-watcher.hpp"
+#include "manager/view-manager.hpp"
 
 namespace views {
     class ScreenTooSmallView: public View {
@@ -14,6 +16,6 @@ namespace views {
 
         void render(bool force);
 
-        bool handleScreenBeforeRender(Changeable<Size> &screen, manager::ViewManager *view,bool changedView);
+        bool handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view,bool changedView);
     };
 }; // namespace views

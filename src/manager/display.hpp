@@ -13,7 +13,7 @@ Funzioni:
 #include "gamestruct/logger.hpp"
 #include "manager/view-manager.hpp"
 #include "gamestruct/size.hpp"
-#include "gamestruct/changeable.hpp"
+#include "gamestruct/state-watcher.hpp"
 
 
 namespace manager
@@ -24,7 +24,7 @@ namespace manager
   private:
 
     ViewManager *viewManager;
-    Changeable<Size> screenSize;
+    StateWatcher<Size> screenSize;
     Size getScreenSize();
     // chiama l'handleScrennSize nella view corrente
     bool checkUpdateView();
