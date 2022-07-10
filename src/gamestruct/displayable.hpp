@@ -19,7 +19,7 @@ class Displayable {
     StateWatcher<Position> *position_;
 
     // la char che viene printata a video
-    char displayChar_;
+    StateWatcher<char> *displayChar_;
 
   public:
     Displayable();
@@ -30,6 +30,7 @@ class Displayable {
 
     Position getPosition();
 
+    char getDisplayChar();
     void setDisplayChar(char displayChar);
     
     void setPosition(Position newPosition);
