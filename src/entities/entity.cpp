@@ -55,7 +55,6 @@ void Entity::move(manager::Level *levelManager) {
                 // decidi te poi dopo!
                 break;
             case enums::CollisionType::ARTIFACT:
-                // TODO(simo)
                 setPosition(Position(new_x, new_y));
                 break;
             case enums::CollisionType::NONE:
