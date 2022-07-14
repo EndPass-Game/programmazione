@@ -8,6 +8,7 @@
 #include "level/wall-segment.hpp"
 #include "enums/collision-type.hpp"
 #include "collectables/artifact.hpp"
+#include "manager/level.hpp"
 
 
 namespace level {
@@ -36,7 +37,7 @@ namespace level {
             Position(size.riga - 1, 0), Direction::UP, size.riga - 1));
 
         //inserimento in mappa degli artefatti
-        artifacts_.push_back(new Artifact(1, Position(10,5)));
+        artifacts_.push_back(new Artifact(6, Position(10,5)));
     }
 
     Level::Level(Size size, int oldLevelIdx) : Level(size) {
@@ -67,8 +68,8 @@ namespace level {
         lastPlayerPosition_ = pos;
     }
 
-    bool Level::isPositionEmpty(Position pos) {
-        return getCollision(pos) == nullptr;
+    bool Level::isPositionEmpty(Position pos, manager::Level *LevelManager) {
+        return getCollision(pos, LevelManager) == nullptr;
     }
 
     Collidable *Level::getCollision(Position pos) {
@@ -80,6 +81,8 @@ namespace level {
         for (unsigned int i = 0; i<artifacts_.size(); i++){
             if(artifacts_[i]->getPosition() == pos){
                 Artifact *c = artifacts_[i];
+                Player *player=LevelManager->getPlayer();
+                player->setLife(player->getLife() + c->getLifeUpgrade());
                 artifacts_.remove(i);
                 return (Collidable *) c;
             }

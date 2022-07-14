@@ -16,9 +16,12 @@ class Artifact: public Displayable, public level::Collidable{
 		int lifeUpgrade_;
 		
 	public:
-		//costruttore che inizializza la variabile che definisce l'aumento di vità che darà l'artefatto e la sua pozizione
+		//costruttore che inizializza la variabile che definisce l'aumento di vità che darà l'artefatto e la sua posizione
 		Artifact(int lifeUpgrade_, Position posObj);	
 
+		int getLifeUpgrade();
+
+		//override del metodo virtuale per restituire il tipo di oggetto
 		virtual enums::CollisionType getCollisionType() override;
 		
 };

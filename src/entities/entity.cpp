@@ -41,7 +41,7 @@ void Entity::move(manager::Level *levelManager) {
     }
 
     if(isMoving) {
-        level::Collidable *collision = levelManager->getCollision(Position{new_x, new_y});
+        level::Collidable *collision = levelManager->getCollision(Position{new_x, new_y}, levelManager);
         enums::CollisionType type = enums::CollisionType::NONE; 
         if (collision != nullptr) type = collision->getCollisionType(); 
         switch (type) {
@@ -56,7 +56,6 @@ void Entity::move(manager::Level *levelManager) {
                 break;
             case enums::CollisionType::ARTIFACT:
                 // TODO(simo)
-                levelManager->getPlayer()->life_+=6;
                 setPosition(Position(new_x, new_y));
                 break;
             case enums::CollisionType::NONE:
@@ -90,6 +89,10 @@ void Entity::applyDamage(int damage) {
 
 int Entity::getLife(){
     return life_;
+}
+
+void Entity::setLife(int life_){
+    this->life_=life_;
 }
 
 enums::CollisionType Entity::getCollisionType() {

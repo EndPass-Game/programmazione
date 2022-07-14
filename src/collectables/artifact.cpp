@@ -16,6 +16,10 @@ Artifact::Artifact(int life, Position posObj):
         lifeUpgrade_ = life;
 }
 
+int Artifact::getLifeUpgrade(){
+    return this->lifeUpgrade_;
+}
+
 enums::CollisionType Artifact::getCollisionType() {
     return enums::CollisionType::ARTIFACT;
 }
