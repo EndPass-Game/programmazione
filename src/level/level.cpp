@@ -68,8 +68,8 @@ namespace level {
         lastPlayerPosition_ = pos;
     }
 
-    bool Level::isPositionEmpty(Position pos, manager::Level *LevelManager) {
-        return getCollision(pos, LevelManager) == nullptr;
+    bool Level::isPositionEmpty(Position pos) {
+        return getCollision(pos) == nullptr;
     }
 
     Collidable *Level::getCollision(Position pos) {
@@ -81,8 +81,6 @@ namespace level {
         for (unsigned int i = 0; i<artifacts_.size(); i++){
             if(artifacts_[i]->getPosition() == pos){
                 Artifact *c = artifacts_[i];
-                Player *player=LevelManager->getPlayer();
-                player->setLife(player->getLife() + c->getLifeUpgrade());
                 artifacts_.remove(i);
                 return (Collidable *) c;
             }

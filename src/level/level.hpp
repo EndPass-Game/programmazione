@@ -35,9 +35,9 @@ namespace level {
         void render(WINDOW *win, bool force);
 
         // returns true if the position is Empty, false otherwise
-        bool isPositionEmpty(Position pos, manager::Level *LevelManager);
+        bool isPositionEmpty(Position pos);
 
         // returns the collision object at the given position
-        Collidable *getCollision(Position pos, manager::Level *levelManager);
+        Collidable *getCollision(Position pos);
     }; 
 }; // namespace map
