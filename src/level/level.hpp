@@ -7,6 +7,7 @@
 #include "gamestruct/size.hpp"
 #include "level/collidable.hpp"
 #include "level/displayable-segment.hpp"
+#include "collectables/artifact.hpp"
 
 namespace level {
     // contenere tutti i oggetti utili per il singolo livello 
@@ -14,7 +15,8 @@ namespace level {
       private: 
         Position lastPlayerPosition_;
         datastruct::Vector<DisplayableSegment *> segment_;
-        datastruct::Vector<Entity *> entities_; 
+        datastruct::Vector<Entity *> entities_;
+        datastruct::Vector<Artifact *> artifacts_;
       public: 
         // genera il livello con la size data (walls and entities) 
         Level(Size size);

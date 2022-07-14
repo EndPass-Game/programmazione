@@ -6,12 +6,19 @@ fanno altre cose? ma non credo, non per ora
 */
 #pragma once
 
+#include "gamestruct/displayable.hpp"
+#include "gamestruct/position.hpp"
+#include "enums/direction.hpp"
+#include "entities/entity.hpp"
 
-class Artefatti{
-	public:
-			
-		
+class Artifact: public Displayable, public level::Collidable{
 	private:
+		int lifeUpgrade_;
+		
+	public:
+		//costruttore che inizializza la variabile che definisce l'aumento di vità che darà l'artefatto e la sua pozizione
+		Artifact(int lifeUpgrade_, Position posObj);	
 
-
+		virtual enums::CollisionType getCollisionType() override;
+		
 };

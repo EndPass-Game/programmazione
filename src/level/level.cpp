@@ -7,6 +7,7 @@
 #include "level/door-segment.hpp"
 #include "level/wall-segment.hpp"
 #include "enums/collision-type.hpp"
+#include "collectables/artifact.hpp"
 
 
 namespace level {
@@ -16,6 +17,9 @@ namespace level {
         lastPlayerPosition_ = Position(1,1); 
 
         segment_ = datastruct::Vector<DisplayableSegment *>();
+        entities_ = datastruct::Vector<Entity *>(0);
+        artifacts_ = datastruct::Vector<Artifact *>();
+
         // creazione dei muri esterni
         // TODO(ang): creare una funzione per creare i muri esterni
         // questo è temporaneo
@@ -30,7 +34,9 @@ namespace level {
             Position(size.riga - 1, size.colonna - 1), Direction::LEFT, size.colonna - 1));
         segment_.push_back((DisplayableSegment *) new WallSegment(
             Position(size.riga - 1, 0), Direction::UP, size.riga - 1));
-        // TODO(ang): gestire anche la creazione dei segmenti intermedi 
+
+        //inserimento in mappa degli artefatti
+        artifacts_.push_back(new Artifact(1, Position(10,5)));
     }
 
     Level::Level(Size size, int oldLevelIdx) : Level(size) {
@@ -46,6 +52,10 @@ namespace level {
 
         for (unsigned int i = 0; i < entities_.size(); i++) {
             delete entities_[i];
+        }
+
+        for (unsigned int i = 0; i < artifacts_.size(); i++) {
+            delete artifacts_[i];
         }
     }	
 
@@ -67,9 +77,16 @@ namespace level {
                 return (Collidable *) segment_[i];
             }
         }
+        for (unsigned int i = 0; i<artifacts_.size(); i++){
+            if(artifacts_[i]->getPosition() == pos){
+                Artifact *c = artifacts_[i];
+                artifacts_.remove(i);
+                return (Collidable *) c;
+            }
+        }
 
         // TODO(simo): gestire altri oggetti di collisione
-        // es: entity, artefatti, ...
+        // es: entity, ...
         return nullptr;
     }
 
@@ -78,6 +95,11 @@ namespace level {
         for (unsigned int i = 0; i < segment_.size(); i++) {
             segment_[i]->render(win, force);
         }
+        
+        for (unsigned int i = 0; i < artifacts_.size(); i++) {
+            artifacts_[i]->render(win, force);
+        }
+
         // TODO(ang): come fare a spostare gli entità?
         // 1. deve updatare questo oppure lo fa un render in un altro momento????
     }
