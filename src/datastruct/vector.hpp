@@ -58,6 +58,10 @@ class Vector {
         return data_[index];
     }
 
+    T &at(const int index) const {
+        return data_[index];
+    }
+
     // se il vettore è vuoto ritorna l'elemento del costruttore di default del tipo dato,
     // altrimenti ritorna l'ultimo elemento
     T back() const {
