@@ -11,7 +11,7 @@ namespace loader {
         datastruct::Vector<T *> *_loadedObjects;
       public: 
         LoadObject();
-        ~LoadObject();
+        virtual ~LoadObject();
         datastruct::Vector<T *> *getLoadedObjects();
         virtual void load(FILE *file) = 0; 
     };

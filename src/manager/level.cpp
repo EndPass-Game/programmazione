@@ -17,6 +17,7 @@ Funzioni:
 #include "entities/enemy.hpp"
 #include "level/collidable.hpp"
 #include "gamestruct/size.hpp"
+#include "loader/loader-handler.hpp"
 namespace manager
 {
     Level::Level() {
@@ -26,7 +27,9 @@ namespace manager
 
     Level::Level(Size size) {
         player_ = new Player();
-        levels_.push_back(new level::Level(size));
+
+        loader::LoaderHandler loader("assets/1.txt");
+        levels_.push_back(new level::Level(&loader));
         levelIdx_ = new StateWatcher<int>(0);
         levelScreenSize_ = size; // TODO: sostituire questo con size globale
 

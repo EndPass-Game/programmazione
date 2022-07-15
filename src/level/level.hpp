@@ -8,7 +8,7 @@
 #include "level/collidable.hpp"
 #include "level/displayable-segment.hpp"
 #include "collectables/artifact.hpp"
-#include "level/loader.hpp"
+#include "loader/loader-handler.hpp"
 
 namespace level {
     // contenere tutti i oggetti utili per il singolo livello 
@@ -24,7 +24,7 @@ namespace level {
         
         // genera il livello con una porta al livello precedente
         Level(Size size, int oldLevelIdx);
-        Level(Loader *loader); 
+        Level(loader::LoaderHandler *loader); 
         ~Level();
 
         // restituisce la posizione dell'ultimo player

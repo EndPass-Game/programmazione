@@ -11,6 +11,7 @@ namespace loader {
     // [carattere muro] ((int) pos.x, (int) pos.y) (int) direzione (int) lunghezza
     // [numero porta]
     // [carattere porta] ((int) pos.x, (int) pos.y) (int) direzione (int) lunghezza
+    // pos.x e pos.y del giocatore
     // [coordinate chiave]
     // una volta richiesto un oggetto, deve essere eliminato dal chiamante.
     struct LoaderHandler {
@@ -18,7 +19,7 @@ namespace loader {
         WallLoader *wallLoader;
         DoorLoader *doorLoader;
         PlayerPosLoader *playerPosLoader;
-        ArtifactLoader *artifactLoader;
+        // ArtifactLoader *artifactLoader; // TODO(ang): fix artifact bug!
         LoaderHandler(const char *filename);
         ~LoaderHandler();
     };

@@ -46,15 +46,36 @@ namespace level {
 
     }
 
-    Level::Level(Loader *loader) {
+    Level::Level(loader::LoaderHandler *loader) {
+        segment_ = datastruct::Vector<DisplayableSegment *>();
+
         datastruct::Vector<WallSegment *> *segments = nullptr;
-        segments = loader->getLoadedWalls(); 
+        segments = loader->wallLoader->getLoadedObjects(); 
         if (segments != nullptr) {
-            // TODO(ang): [level-loader]
-            // segment_ = *segments; 
+            for (unsigned int i = 0; i < segments->size(); i++) {
+                segment_.push_back((DisplayableSegment *) segments->at(i));
+            }
             delete segments;
         }
-        // TODO(ang): altrimenti chiami i segmenti di default???
+
+        datastruct::Vector<DoorSegment *> *doors = nullptr;
+        doors = loader->doorLoader->getLoadedObjects();
+        if (doors != nullptr) {
+            for (unsigned int i = 0; i < doors->size(); i++) {
+                segment_.push_back((DisplayableSegment *) doors->at(i));
+            }
+            delete doors;
+        }
+
+        datastruct::Vector<Position *> *playersPos = nullptr;
+        playersPos = loader->playerPosLoader->getLoadedObjects();
+        if (playersPos != nullptr) {
+            lastPlayerPosition_ = *playersPos->at(0); // only one player position is loaded
+            for (int i = 0; i < playersPos->size(); i++) {
+                delete playersPos->at(i);
+            }
+            delete playersPos;
+        }
     }
 
     Level::~Level() {

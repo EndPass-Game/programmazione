@@ -24,7 +24,7 @@ namespace loader {
         fclose(file);
         delete wallLoader;
         delete doorLoader;
-        delete artifactLoader;
+        // delete artifactLoader;
         delete playerPosLoader;
     }
 }; // namespace loader
