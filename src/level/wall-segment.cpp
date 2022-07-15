@@ -3,14 +3,25 @@
 #include <ncurses.h>
 
 #include "enums/wall-type.hpp"
+#include "level/displayable-segment.hpp"
 
 namespace level {
     WallSegment::WallSegment() : 
-        Segment() {}
+        DisplayableSegment() {}
 
-    WallSegment::WallSegment(Position startPosition, enums::Direction direction, int length) : 
-      Segment(startPosition, direction, length) {
-        // scegliendo la direzione per creare tutti i muri:
+    WallSegment::WallSegment(Position startPosition, enums::Direction direction, int length):
+      DisplayableSegment(startPosition, direction, length) {
+        char wallCharacter = _getWallCharacter(direction);
+        for (unsigned int i = 0; i < displayables_.size(); i++) {
+            if (displayables_[i]->getPosition() == startPosition) {
+                displayables_[i]->setDisplayChar((char) enums::WallType::ANGLE);
+            } else {
+                displayables_[i]->setDisplayChar(wallCharacter);
+            }
+        }
+    }
+
+    char WallSegment::_getWallCharacter(enums::Direction direction){
         enums::WallType type;
         switch (direction) {
             case enums::Direction::UP:
@@ -25,26 +36,7 @@ namespace level {
                 type = enums::WallType::EMPTY;
                 break;
         }
-        Position pos = startPosition_;
-        walls_.resize(length);
-        walls_[0] = new Wall(pos, (char) enums::WallType::ANGLE);
-        pos += posDirection_;
-        for (int i = 1; i < length_; i++) {
-            walls_[i] = new Wall(pos, (char) type);
-            pos += posDirection_;
-        }
-    }
-
-    WallSegment::~WallSegment() {
-        for (int i = 0; i < length_; i++) {
-            delete walls_[i];
-        }
-    }
-
-    void WallSegment::render(WINDOW *win, bool force) {
-        for (int i = 0; i < length_; i++) {
-            walls_[i]->render(win, force);
-        }
+        return (char) type;
     }
 
     enums::CollisionType WallSegment::getCollisionType() {

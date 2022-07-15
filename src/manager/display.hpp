@@ -10,7 +10,6 @@ Funzioni:
 #include <ncurses.h>
 #include <chrono>
 #include <thread>
-#include "gamestruct/logger.hpp"
 #include "manager/view-manager.hpp"
 #include "gamestruct/size.hpp"
 #include "gamestruct/state-watcher.hpp"

@@ -21,19 +21,21 @@ namespace manager
 {
     Level::Level() {
         player_ = new Player();
-        currentLevelIndex_ = -1; // -1 indica che non è stato ancora caricato nessun livello
+        levelIdx_ = new StateWatcher<int>(-1); // -1 indica che non è stato ancora caricato nessun livello
     }
 
     Level::Level(Size size) {
         player_ = new Player();
         levels_.push_back(new level::Level(size));
-        currentLevelIndex_ = 0;
+        levelIdx_ = new StateWatcher<int>(0);
+        levelScreenSize_ = size; // TODO: sostituire questo con size globale
     }
 
     Level::~Level() {
         for (unsigned int i = 0; i < levels_.size(); i++) {
             delete levels_[i];
         }
+        delete levelIdx_;
         delete player_;
     }
 
@@ -41,29 +43,35 @@ namespace manager
         return player_;
     }
 
-    void Level::addLevel() {
-        // TODO(ang): fix level screen size
-        levels_.push_back(new level::Level(levelScreenSize_));
+    int Level::addLevel() {
+        levels_.push_back(new level::Level(levelScreenSize_, levelIdx_->getCurrent()));
+        return (int) levels_.size() - 1;
     }
 
     level::Collidable *Level::getCollision(Position pos) {
-        return levels_[currentLevelIndex_]->getCollision(pos);
+        return levels_[levelIdx_->getCurrent()]->getCollision(pos);
     }
 
-    bool Level::loadLevel(int level) {
-        levels_[currentLevelIndex_]->setLastPlayerPosition(player_->getPosition());
-        if (level < 0 || level >= (int) levels_.size()) {
-            return false;
+    void Level::goToLevel(int levelIdx) {
+        levels_[levelIdx_->getCurrent()]->setLastPlayerPosition(player_->getPosition());
+        if (levelIdx < 0 || levelIdx >= (int) levels_.size()) {
+            return;
         }
-        currentLevelIndex_ = level;
-        player_->setPosition(levels_[currentLevelIndex_]->getLastPlayerPosition());
-        return true;
+        levelIdx_->setCurrent(levelIdx);
+        player_->setPosition(levels_[levelIdx_->getCurrent()]->getLastPlayerPosition());
+        return;
     }
 
     void Level::render(WINDOW *win, bool force) {
         player_->clearLast(win);
         player_->render(win, force);
-        levels_[currentLevelIndex_]->render(win, force);
+
+        if (levelIdx_->isChanged()) {
+            force = true;
+            // TODO(ang): clear screen
+        }
+
+        levels_[levelIdx_->getCurrent()]->render(win, force);
         // TODO(ang): print player ( valuta se è meglio printarlo qui o in level/level 
         // io pensavo fosse meglio il level/level (gio))
     }
