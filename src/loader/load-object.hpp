@@ -12,6 +12,9 @@ namespace loader {
       public: 
         LoadObject();
         virtual ~LoadObject();
+        
+        // WARNING: quando questa funzione è chiamata, l'onere di liberare la memoria occupata
+        // è lasciata al chiamante. 
         datastruct::Vector<T *> *getLoadedObjects();
         virtual void load(FILE *file) = 0; 
     };
@@ -27,14 +30,12 @@ namespace loader {
     LoadObject<T>::~LoadObject() {
         if (!_isTransferred) {
             for (unsigned int i = 0; i < _loadedObjects->size(); i++) {
-                delete (*_loadedObjects)[i];
+                delete _loadedObjects->at(i);
             }
             delete _loadedObjects;
         }
     }
 
-    // WARNING: quando questa funzione è chiamata, l'onere di liberare la memoria occupata
-    // è lasciata al chiamante. 
     template <typename T>
     datastruct::Vector<T *> *LoadObject<T>::getLoadedObjects() {
         if (!_isTransferred) {

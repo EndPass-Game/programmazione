@@ -43,7 +43,6 @@ namespace level {
     Level::Level(Size size, int oldLevelIdx) : Level(size) {
         segment_.push_back((DisplayableSegment *) new DoorSegment(
             Position(5, 0), enums::Direction::RIGHT, 5, oldLevelIdx, false));
-
     }
 
     Level::Level(loader::LoaderHandler *loader) {
@@ -61,22 +60,35 @@ namespace level {
         datastruct::Vector<DoorSegment *> *doors = nullptr;
         doors = loader->doorLoader->getLoadedObjects();
         if (doors != nullptr) {
+            numOfDoors_ = doors->size();
             for (unsigned int i = 0; i < doors->size(); i++) {
                 segment_.push_back((DisplayableSegment *) doors->at(i));
             }
             delete doors;
+        } else {
+            numOfDoors_ = 0;
         }
 
         datastruct::Vector<Position *> *playersPos = nullptr;
         playersPos = loader->playerPosLoader->getLoadedObjects();
         if (playersPos != nullptr) {
             lastPlayerPosition_ = *playersPos->at(0); // only one player position is loaded
-            for (int i = 0; i < playersPos->size(); i++) {
+            for (unsigned int i = 0; i < playersPos->size(); i++) {
                 delete playersPos->at(i);
             }
             delete playersPos;
         }
     }
+
+    Level::Level(loader::LoaderHandler *loader, int oldLevelIdx): Level(loader) {
+        int doorNumber = rand() % numOfDoors_;
+
+        // questa parte assume che le porte siano tutte nell'ultima parte del segmento: 
+        DoorSegment *chosenDoor = (DoorSegment *) segment_.at(segment_.size() - numOfDoors_ + doorNumber); 
+        chosenDoor->setNextLevelIdx(oldLevelIdx);
+        chosenDoor->openDoor(); 
+    }
+
 
     Level::~Level() {
         for (unsigned int i = 0; i < segment_.size(); i++) {

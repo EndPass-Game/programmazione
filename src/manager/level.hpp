@@ -23,7 +23,7 @@ Funzioni:
 #include "datastruct/vector.hpp"
 #include "gamestruct/size.hpp"
 #include "gamestruct/state-watcher.hpp"
-
+#include "loader/directory-loader.hpp"
 namespace manager {
     // Level manager: contiene tutte gli oggetti che vengono mostrati
     // nel gioco
@@ -33,6 +33,7 @@ namespace manager {
         Player *player_;
         Size levelScreenSize_;
         StateWatcher<int> *levelIdx_;
+        loader::DirectoryLoader *dirLoader_; 
       public:
         Level();
         Level(Size size);

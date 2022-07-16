@@ -1,7 +1,8 @@
 #include "loader/loaders.hpp"
 
-#include "enums/direction.hpp"
+#include <iostream> // cerr
 
+#include "enums/direction.hpp"
 namespace loader {
 
     void WallLoader::load(FILE *file) {
@@ -14,13 +15,24 @@ namespace loader {
             int length;
             fscanf(file, "%d %d %d %d\n" , &startPosition.riga, &startPosition.colonna, &direction , &length);
             level::WallSegment *wall = new level::WallSegment(startPosition, (enums::Direction)direction, length);
-            (*this->_loadedObjects)[i] = wall;
+            this->_loadedObjects->at(i) = wall;
         }
     }
 
     void DoorLoader::load(FILE *file) {
         int numeroPorte;
         fscanf(file, "%d", &numeroPorte);
+
+        // se il numero delle porte è minore di 2, si dovrebbe fare distinzione fra le porte iniziali (con sola entrata) 
+        // e le porte con entrata e uscite, con l'attuale impolementazione delle porte non si possiede 
+        // questa astrazione.
+        // per evitare questo problema poniamo l'INVARIANTE che tutti i livelli debbano avere almeno 2 porte
+        // in modo da avere sempre una entrata o un uscita (oppure più uscite nel caso) 
+        if (numeroPorte < 2) {
+            std::cerr << "Errore: il numero di porte deve essere maggiore di 1" << std::endl;
+            exit(1); 
+        }
+
         this->_loadedObjects->resize(numeroPorte);
         for(int i = 0; i < numeroPorte; i++) {
             int direction;
@@ -28,16 +40,16 @@ namespace loader {
             int length;
             fscanf(file, "%d %d %d %d\n" , &startPosition.riga, &startPosition.colonna , &direction , &length);
             level::DoorSegment *door = new level::DoorSegment(startPosition, (enums::Direction)direction, length);
-            (*this->_loadedObjects)[i] = door;
+            this->_loadedObjects->at(i) = door;
         }
     };
 
     void PlayerPosLoader::load(FILE *file) {
-        int numeroPosizioni = 1;
-        this->_loadedObjects->resize(numeroPosizioni);
+        const int kNumeroPosizioni = 1;
+        this->_loadedObjects->resize(kNumeroPosizioni);
         Position *pos = new Position();
         fscanf(file, "%d %d\n", &pos->riga, &pos->colonna);
-        (*this->_loadedObjects)[0] = pos;
+        this->_loadedObjects->at(0) = pos;
     };
 
 
@@ -50,7 +62,7 @@ namespace loader {
             Position startPosition;
             fscanf(file, "%d %d %d\n" , &startPosition.riga, &startPosition.colonna, &artifactHealth);
             Artifact *artifact = new Artifact(/* // TODO(simo|ang): startPosition*/);
-            (*this->_loadedObjects)[i] = artifact;
+            this->_loadedObjects->at(i) = artifact;
         }
     };
 

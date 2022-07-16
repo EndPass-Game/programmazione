@@ -3,12 +3,20 @@
 #include "datastruct/vector.hpp"
 
 namespace loader {
-    // questa classe carica la directory degli assets
-    // ? serve???? TODO(team): decidere se serve sta cosa
-    class AssetsLoader {
+    // questa classe carica tutti i file txt come assets di LIVELLO 
+    // ossia in grado di generare un livello di gioco
+    // all'interno di una directory 
+    class DirectoryLoader {
       private:
-        datastruct::Vector<char *> objectFiles_;
+        datastruct::Vector<char *> fileNames_;
+
+        bool _isExtensionValid(const char *filename, const char *extension);
       public:
-        AssetsLoader(const char *directory = "assets/");
-    }
+        // loads all valid files in the directory
+        // assumes directory has the "/", only LINUX compatible.
+        DirectoryLoader(const char *directory = "assets/");
+        ~DirectoryLoader();
+
+        const char *getRandomFileName();
+    };
 }; // namespace loader

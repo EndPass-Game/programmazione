@@ -16,8 +16,9 @@ namespace level {
       private: 
         Position lastPlayerPosition_;
         datastruct::Vector<DisplayableSegment *> segment_;
-        datastruct::Vector<Entity *> entities_;
         datastruct::Vector<Artifact *> artifacts_;
+        datastruct::Vector<Entity *> entities_; 
+        int numOfDoors_; // numero di porte nel livello
       public: 
         // genera il livello con la size data (walls and entities) 
         Level(Size size);
@@ -25,6 +26,7 @@ namespace level {
         // genera il livello con una porta al livello precedente
         Level(Size size, int oldLevelIdx);
         Level(loader::LoaderHandler *loader); 
+        Level(loader::LoaderHandler *loader, int oldLevelIdx); 
         ~Level();
 
         // restituisce la posizione dell'ultimo player

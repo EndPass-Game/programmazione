@@ -11,20 +11,20 @@ namespace loader {
         wallLoader = new WallLoader();
         doorLoader = new DoorLoader();
         playerPosLoader = new PlayerPosLoader();
-        // artifactLoader = new ArtifactLoader();
+        artifactLoader = new ArtifactLoader();
         // TODO(ang): uncomment when the artifact is ready
 
         wallLoader->load(file);
         doorLoader->load(file);
         playerPosLoader->load(file);
-        // artifactLoader->load(file);
+        artifactLoader->load(file);
     }
     
     LoaderHandler::~LoaderHandler() {
         fclose(file);
         delete wallLoader;
         delete doorLoader;
-        // delete artifactLoader;
         delete playerPosLoader;
+        delete artifactLoader;
     }
 }; // namespace loader
