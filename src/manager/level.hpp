@@ -31,17 +31,15 @@ namespace manager {
       private: 
         datastruct::Vector<level::Level *> levels_;
         Player *player_;
-        Size levelScreenSize_;
         StateWatcher<int> *levelIdx_;
         loader::DirectoryLoader *dirLoader_; 
       public:
         Level();
-        Level(Size size);
         ~Level();
 
         Player *getPlayer();
 
-        // returns the created level index
+        // @returns l'index del livello creato
         int addLevel();
 
         // stampa a schermo il livello scelto, se non è presente tale livello (indice invalido)

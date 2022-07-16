@@ -24,14 +24,10 @@ namespace manager
         player_ = new Player();
         levelIdx_ = new StateWatcher<int>(-1); // -1 indica che non è stato ancora caricato nessun livello
         dirLoader_ = new loader::DirectoryLoader();
-    }
 
-    Level::Level(Size size): Level() {
         int newLevelIdx = addLevel();
         levelIdx_->setCurrent(newLevelIdx);
         goToLevel(newLevelIdx); 
-
-        levelScreenSize_ = size; // TODO: sostituire questo con size globale
     }
 
     Level::~Level() {

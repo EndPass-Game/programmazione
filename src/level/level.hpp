@@ -20,11 +20,6 @@ namespace level {
         datastruct::Vector<Entity *> entities_; 
         int numOfDoors_; // numero di porte nel livello
       public: 
-        // genera il livello con la size data (walls and entities) 
-        Level(Size size);
-        
-        // genera il livello con una porta al livello precedente
-        Level(Size size, int oldLevelIdx);
         Level(loader::LoaderHandler *loader); 
         Level(loader::LoaderHandler *loader, int oldLevelIdx); 
         ~Level();

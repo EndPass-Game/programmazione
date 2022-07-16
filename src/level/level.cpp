@@ -12,39 +12,6 @@
 
 
 namespace level {
-    Level::Level(Size size) {
-        //TODO(ang): mettere il giocatore davanti alla porta, o su punto di spawn prestabilito
-        // (quando la stanza sarà nuova last player position conterrà il valore dell'entrata)
-        lastPlayerPosition_ = Position(1,1); 
-
-        segment_ = datastruct::Vector<DisplayableSegment *>();
-        entities_ = datastruct::Vector<Entity *>(0);
-        artifacts_ = datastruct::Vector<Artifact *>();
-
-        // creazione dei muri esterni
-        // TODO(ang): creare una funzione per creare i muri esterni
-        // questo è temporaneo
-        using namespace enums; // Direction::RIGHT, Direction::LEFT, Direction::UP, Direction::DOWN
-        segment_.push_back((DisplayableSegment *) new WallSegment(
-            Position(0, 0), Direction::RIGHT, size.colonna - 1));
-        segment_.push_back((DisplayableSegment *) new DoorSegment(
-            Position(0, size.colonna - 1), Direction::DOWN, 5));
-        segment_.push_back((DisplayableSegment *) new WallSegment(
-            Position(5, size.colonna - 1), Direction::DOWN, size.riga - 6));
-        segment_.push_back((DisplayableSegment *) new WallSegment(
-            Position(size.riga - 1, size.colonna - 1), Direction::LEFT, size.colonna - 1));
-        segment_.push_back((DisplayableSegment *) new WallSegment(
-            Position(size.riga - 1, 0), Direction::UP, size.riga - 1));
-
-        //inserimento in mappa degli artefatti
-        artifacts_.push_back(new Artifact(6, Position(10,5)));
-    }
-
-    Level::Level(Size size, int oldLevelIdx) : Level(size) {
-        segment_.push_back((DisplayableSegment *) new DoorSegment(
-            Position(5, 0), enums::Direction::RIGHT, 5, oldLevelIdx, false));
-    }
-
     Level::Level(loader::LoaderHandler *loader) {
         segment_ = datastruct::Vector<DisplayableSegment *>();
 
