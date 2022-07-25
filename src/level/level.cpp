@@ -7,7 +7,8 @@
 #include "level/door-segment.hpp"
 #include "level/wall-segment.hpp"
 #include "enums/collision-type.hpp"
-
+#include "manager/level.hpp"
+#include "collectables/power.hpp"
 
 namespace level {
     Level::Level(Size size) {
@@ -16,6 +17,9 @@ namespace level {
         lastPlayerPosition_ = Position(1,1); 
 
         segment_ = datastruct::Vector<DisplayableSegment *>();
+        entities_ = datastruct::Vector<Entity *>(0);
+        powers_ = datastruct::Vector<Power *>();
+
         // creazione dei muri esterni
         // TODO(ang): creare una funzione per creare i muri esterni
         // questo è temporaneo
@@ -30,12 +34,12 @@ namespace level {
             Position(size.riga - 1, size.colonna - 1), Direction::LEFT, size.colonna - 1));
         segment_.push_back((DisplayableSegment *) new WallSegment(
             Position(size.riga - 1, 0), Direction::UP, size.riga - 1));
-        // TODO(ang): gestire anche la creazione dei segmenti intermedi 
+        powers_.push_back(new Power(Position(7,15)));
     }
 
     Level::Level(Size size, int oldLevelIdx) : Level(size) {
         segment_.push_back((DisplayableSegment *) new DoorSegment(
-            Position(5, 0), enums::Direction::RIGHT, 5, oldLevelIdx, false));
+            Position(5, 0), enums::Direction::RIGHT, 5, oldLevelIdx, true));
 
     }
 
@@ -67,6 +71,13 @@ namespace level {
                 return (Collidable *) segment_[i];
             }
         }
+        for (unsigned int i = 0; i<powers_.size(); i++){
+            if(powers_[i]->getPosition() == pos){
+                Power *c = powers_[i];
+                powers_.remove(i);
+                return (Collidable *) c;
+            }
+        }
 
         // TODO(simo): gestire altri oggetti di collisione
         // es: entity, artefatti, ...
@@ -78,6 +89,10 @@ namespace level {
         for (unsigned int i = 0; i < segment_.size(); i++) {
             segment_[i]->render(win, force);
         }
+        for (unsigned int i = 0; i < powers_.size(); i++) {
+            powers_[i]->render(win, force);
+        }
+
         // TODO(ang): come fare a spostare gli entità?
         // 1. deve updatare questo oppure lo fa un render in un altro momento????
     }
