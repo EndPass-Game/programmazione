@@ -94,7 +94,7 @@ int Entity::getLife(){
 }
 
 void Entity::setLife(int life){
-    this->life=life;
+    this->life_=life;
 }
 
 enums::CollisionType Entity::getCollisionType() {
