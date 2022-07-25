@@ -9,11 +9,14 @@
 #include "enums/collision-type.hpp"
 #include "collectables/artifact.hpp"
 #include "manager/level.hpp"
+#include "collectables/power.hpp"
 
 namespace level {
     Level::Level(loader::LoaderHandler *loader) {
         segment_ = datastruct::Vector<DisplayableSegment *>();
         artifacts_ = datastruct::Vector<Artifact *>();
+        entities_ = datastruct::Vector<Entity *>(0);
+        powers_ = datastruct::Vector<Power *>();
 
         datastruct::Vector<WallSegment *> *segments = nullptr;
         segments = loader->wallLoader->getLoadedObjects(); 
@@ -54,10 +57,9 @@ namespace level {
             }
             delete artifacts;
         }
-    }
 
-    Level::Level(loader::LoaderHandler *loader, int oldLevelIdx): Level(loader) {
-        int doorNumber = rand() % numOfDoors_;
+        powers_.push_back(new Power(Position(7,15)));
+    }
 
         // questa parte assume che le porte siano tutte nell'ultima parte del segmento: 
         DoorSegment *chosenDoor = (DoorSegment *) segment_.at(segment_.size() - numOfDoors_ + doorNumber); 
@@ -105,6 +107,13 @@ namespace level {
                 return (Collidable *) c;
             }
         }
+        for (unsigned int i = 0; i<powers_.size(); i++){
+            if(powers_[i]->getPosition() == pos){
+                Power *c = powers_[i];
+                powers_.remove(i);
+                return (Collidable *) c;
+            }
+        }
 
         // TODO(simo): gestire altri oggetti di collisione
         // es: entity, ...
@@ -119,6 +128,9 @@ namespace level {
         
         for (unsigned int i = 0; i < artifacts_.size(); i++) {
             artifacts_[i]->render(win, force);
+        }
+        for (unsigned int i = 0; i < powers_.size(); i++) {
+            powers_[i]->render(win, force);
         }
 
         // TODO(ang): come fare a spostare gli entità?

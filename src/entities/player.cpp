@@ -21,9 +21,23 @@ Altro
 Player::Player(): 
     Entity(12, 3, // TODO: gestire queste costanti hardcoded in un file di setting
     {1, 1}, /* position di spawn */ 
-    'P') /* charattere mostrato su schermo */ {}
+    'P') /* charattere mostrato su schermo */ {
+        powers_=0;
+}
 // TODO
 void Player::attack() {}
 
 // TODO
 void Player::pickup() {}
+
+void Player::addPower(){
+    this->powers_++;
+}
+
+void Player::removePower(){
+    this->powers_--;
+}
+
+int Player::getPowers(){
+    return powers_;
+}
