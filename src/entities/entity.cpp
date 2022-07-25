@@ -88,17 +88,6 @@ void Entity::applyDamage(int damage) {
     life_ -= damage;
 }
 
-<<<<<<< Updated upstream
-=======
-int Entity::getLife(){
-    return life_;
-}
-
-void Entity::setLife(int life){
-    this->life_=life;
-}
-
->>>>>>> Stashed changes
 enums::CollisionType Entity::getCollisionType() {
     return enums::CollisionType::ENTITY;
 }

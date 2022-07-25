@@ -7,11 +7,7 @@
 #include "gamestruct/size.hpp"
 #include "level/collidable.hpp"
 #include "level/displayable-segment.hpp"
-<<<<<<< Updated upstream
-=======
-#include "collectables/artifact.hpp"
 #include "collectables/power.hpp"
->>>>>>> Stashed changes
 
 namespace level {
     // contenere tutti i oggetti utili per il singolo livello 
@@ -19,13 +15,8 @@ namespace level {
       private: 
         Position lastPlayerPosition_;
         datastruct::Vector<DisplayableSegment *> segment_;
-<<<<<<< Updated upstream
-        datastruct::Vector<Entity *> entities_; 
-=======
         datastruct::Vector<Entity *> entities_;
-        datastruct::Vector<Artifact *> artifacts_;
         datastruct::Vector<Power *> powers_;
->>>>>>> Stashed changes
       public: 
         // genera il livello con la size data (walls and entities) 
         Level(Size size);

@@ -31,9 +31,6 @@ class Player: public Entity {
     void attack();
 
     // TODO
-<<<<<<< Updated upstream
-    void pickup(); 
-=======
     void pickup();
 
     void addPower();
@@ -41,5 +38,4 @@ class Player: public Entity {
     void removePower();
     
     int getPowers();
->>>>>>> Stashed changes
 };
