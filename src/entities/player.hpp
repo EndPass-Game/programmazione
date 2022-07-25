@@ -21,6 +21,7 @@ Altro
 class Player: public Entity {
   private:
     // TODO inventario
+    int powers_;
   public:
     Player();
 
@@ -30,5 +31,15 @@ class Player: public Entity {
     void attack();
 
     // TODO
+<<<<<<< Updated upstream
     void pickup(); 
+=======
+    void pickup();
+
+    void addPower();
+
+    void removePower();
+    
+    int getPowers();
+>>>>>>> Stashed changes
 };

@@ -7,7 +7,13 @@
 #include "level/door-segment.hpp"
 #include "level/wall-segment.hpp"
 #include "enums/collision-type.hpp"
+<<<<<<< Updated upstream
 
+=======
+#include "collectables/artifact.hpp"
+#include "manager/level.hpp"
+#include "collectables/power.hpp"
+>>>>>>> Stashed changes
 
 namespace level {
     Level::Level(Size size) {
@@ -16,6 +22,13 @@ namespace level {
         lastPlayerPosition_ = Position(1,1); 
 
         segment_ = datastruct::Vector<DisplayableSegment *>();
+<<<<<<< Updated upstream
+=======
+        entities_ = datastruct::Vector<Entity *>(0);
+        artifacts_ = datastruct::Vector<Artifact *>();
+        powers_ = datastruct::Vector<Power *>();
+
+>>>>>>> Stashed changes
         // creazione dei muri esterni
         // TODO(ang): creare una funzione per creare i muri esterni
         // questo è temporaneo
@@ -30,7 +43,15 @@ namespace level {
             Position(size.riga - 1, size.colonna - 1), Direction::LEFT, size.colonna - 1));
         segment_.push_back((DisplayableSegment *) new WallSegment(
             Position(size.riga - 1, 0), Direction::UP, size.riga - 1));
+<<<<<<< Updated upstream
         // TODO(ang): gestire anche la creazione dei segmenti intermedi 
+=======
+
+        //inserimento in mappa degli artefatti
+        artifacts_.push_back(new Artifact(6, Position(10,5)));
+
+        powers_.push_back(new Power(Position(7,15)));
+>>>>>>> Stashed changes
     }
 
     Level::Level(Size size, int oldLevelIdx) : Level(size) {
@@ -67,6 +88,23 @@ namespace level {
                 return (Collidable *) segment_[i];
             }
         }
+<<<<<<< Updated upstream
+=======
+        for (unsigned int i = 0; i<artifacts_.size(); i++){
+            if(artifacts_[i]->getPosition() == pos){
+                Artifact *c = artifacts_[i];
+                artifacts_.remove(i);
+                return (Collidable *) c;
+            }
+        }
+        for (unsigned int i = 0; i<powers_.size(); i++){
+            if(powers_[i]->getPosition() == pos){
+                Power *c = powers_[i];
+                powers_.remove(i);
+                return (Collidable *) c;
+            }
+        }
+>>>>>>> Stashed changes
 
         // TODO(simo): gestire altri oggetti di collisione
         // es: entity, artefatti, ...
@@ -78,6 +116,18 @@ namespace level {
         for (unsigned int i = 0; i < segment_.size(); i++) {
             segment_[i]->render(win, force);
         }
+<<<<<<< Updated upstream
+=======
+        
+        for (unsigned int i = 0; i < artifacts_.size(); i++) {
+            artifacts_[i]->render(win, force);
+        }
+
+        for (unsigned int i = 0; i < powers_.size(); i++) {
+            powers_[i]->render(win, force);
+        }
+
+>>>>>>> Stashed changes
         // TODO(ang): come fare a spostare gli entità?
         // 1. deve updatare questo oppure lo fa un render in un altro momento????
     }

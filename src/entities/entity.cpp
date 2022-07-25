@@ -62,7 +62,8 @@ void Entity::move(manager::Level *levelManager) {
                 setPosition(Position(new_x, new_y));
                 break;
             case enums::CollisionType::POWER:
-                // TODO(simo)
+                levelManager->getPlayer()->addPower();
+                setPosition(Position(new_x, new_y));
                 break;
         }
     }
@@ -87,6 +88,17 @@ void Entity::applyDamage(int damage) {
     life_ -= damage;
 }
 
+<<<<<<< Updated upstream
+=======
+int Entity::getLife(){
+    return life_;
+}
+
+void Entity::setLife(int life){
+    this->life_=life;
+}
+
+>>>>>>> Stashed changes
 enums::CollisionType Entity::getCollisionType() {
     return enums::CollisionType::ENTITY;
 }
@@ -108,6 +120,9 @@ void Entity::_handleDoorCollision(manager::Level *levelManager, level::DoorSegme
         Logger().log("Entity::_handleDoorCollision yes is door open \n");
         levelManager->goToLevel(door->getNextLevelIdx());
     } else {
-        door->openDoor(); // temporaneo
+        if(levelManager->getPlayer()->getPowers()>0){
+            levelManager->getPlayer()->removePower();
+            door->openDoor(); // temporaneo
+        }
     }
 }
