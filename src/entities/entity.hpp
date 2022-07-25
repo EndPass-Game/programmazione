@@ -41,7 +41,7 @@ class Entity: public Displayable, public level::Collidable {
 
     int getLife();
 
-    void setLife(int life_);
+    void setLife(int life);
 
     virtual enums::CollisionType getCollisionType() override;
 };

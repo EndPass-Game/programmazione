@@ -78,7 +78,7 @@ namespace level {
                 return (Collidable *) segment_[i];
             }
         }
-        for (unsigned int i = 0; i<artifacts_.size(); i++){
+        for (unsigned int i = 0; i < artifacts_.size(); i++){
             if(artifacts_[i]->getPosition() == pos){
                 Artifact *c = artifacts_[i];
                 artifacts_.remove(i);

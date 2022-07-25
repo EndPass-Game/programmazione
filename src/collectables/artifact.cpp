@@ -7,9 +7,6 @@
 #include "enums/direction.hpp"
 #include "entities/entity.hpp"
 
-/*
-aumentano la vita
-*/
 
 Artifact::Artifact(int life, Position posObj):
     Displayable(posObj, 'A'){
