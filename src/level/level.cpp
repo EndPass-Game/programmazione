@@ -10,41 +10,61 @@
 #include "collectables/artifact.hpp"
 #include "manager/level.hpp"
 
-
 namespace level {
-    Level::Level(Size size) {
-        //TODO(ang): mettere il giocatore davanti alla porta, o su punto di spawn prestabilito
-        // (quando la stanza sarà nuova last player position conterrà il valore dell'entrata)
-        lastPlayerPosition_ = Position(1,1); 
-
+    Level::Level(loader::LoaderHandler *loader) {
         segment_ = datastruct::Vector<DisplayableSegment *>();
-        entities_ = datastruct::Vector<Entity *>(0);
         artifacts_ = datastruct::Vector<Artifact *>();
 
-        // creazione dei muri esterni
-        // TODO(ang): creare una funzione per creare i muri esterni
-        // questo è temporaneo
-        using namespace enums; // Direction::RIGHT, Direction::LEFT, Direction::UP, Direction::DOWN
-        segment_.push_back((DisplayableSegment *) new WallSegment(
-            Position(0, 0), Direction::RIGHT, size.colonna - 1));
-        segment_.push_back((DisplayableSegment *) new DoorSegment(
-            Position(0, size.colonna - 1), Direction::DOWN, 5));
-        segment_.push_back((DisplayableSegment *) new WallSegment(
-            Position(5, size.colonna - 1), Direction::DOWN, size.riga - 6));
-        segment_.push_back((DisplayableSegment *) new WallSegment(
-            Position(size.riga - 1, size.colonna - 1), Direction::LEFT, size.colonna - 1));
-        segment_.push_back((DisplayableSegment *) new WallSegment(
-            Position(size.riga - 1, 0), Direction::UP, size.riga - 1));
+        datastruct::Vector<WallSegment *> *segments = nullptr;
+        segments = loader->wallLoader->getLoadedObjects(); 
+        if (segments != nullptr) {
+            for (unsigned int i = 0; i < segments->size(); i++) {
+                segment_.push_back((DisplayableSegment *) segments->at(i));
+            }
+            delete segments;
+        }
 
-        //inserimento in mappa degli artefatti
-        artifacts_.push_back(new Artifact(6, Position(10,5)));
+        datastruct::Vector<DoorSegment *> *doors = nullptr;
+        doors = loader->doorLoader->getLoadedObjects();
+        if (doors != nullptr) {
+            numOfDoors_ = doors->size();
+            for (unsigned int i = 0; i < doors->size(); i++) {
+                segment_.push_back((DisplayableSegment *) doors->at(i));
+            }
+            delete doors;
+        } else {
+            numOfDoors_ = 0;
+        }
+
+        datastruct::Vector<Position *> *playersPos = nullptr;
+        playersPos = loader->playerPosLoader->getLoadedObjects();
+        if (playersPos != nullptr) {
+            lastPlayerPosition_ = *playersPos->at(0); // only one player position is loaded
+            for (unsigned int i = 0; i < playersPos->size(); i++) {
+                delete playersPos->at(i);
+            }
+            delete playersPos;
+        }
+
+        datastruct::Vector<Artifact *> *artifacts = nullptr;
+        artifacts = loader->artifactLoader->getLoadedObjects();
+        if (artifacts != nullptr) {
+            for (unsigned int i = 0; i < artifacts->size(); i++) {
+                artifacts_.push_back(artifacts->at(i));
+            }
+            delete artifacts;
+        }
     }
 
-    Level::Level(Size size, int oldLevelIdx) : Level(size) {
-        segment_.push_back((DisplayableSegment *) new DoorSegment(
-            Position(5, 0), enums::Direction::RIGHT, 5, oldLevelIdx, false));
+    Level::Level(loader::LoaderHandler *loader, int oldLevelIdx): Level(loader) {
+        int doorNumber = rand() % numOfDoors_;
 
+        // questa parte assume che le porte siano tutte nell'ultima parte del segmento: 
+        DoorSegment *chosenDoor = (DoorSegment *) segment_.at(segment_.size() - numOfDoors_ + doorNumber); 
+        chosenDoor->setNextLevelIdx(oldLevelIdx);
+        chosenDoor->openDoor(); 
     }
+
 
     Level::~Level() {
         for (unsigned int i = 0; i < segment_.size(); i++) {

@@ -17,18 +17,17 @@ Funzioni:
 #include "entities/enemy.hpp"
 #include "level/collidable.hpp"
 #include "gamestruct/size.hpp"
+#include "loader/loader-handler.hpp"
 namespace manager
 {
     Level::Level() {
         player_ = new Player();
         levelIdx_ = new StateWatcher<int>(-1); // -1 indica che non è stato ancora caricato nessun livello
-    }
+        dirLoader_ = new loader::DirectoryLoader();
 
-    Level::Level(Size size) {
-        player_ = new Player();
-        levels_.push_back(new level::Level(size));
-        levelIdx_ = new StateWatcher<int>(0);
-        levelScreenSize_ = size; // TODO: sostituire questo con size globale
+        int newLevelIdx = addLevel();
+        levelIdx_->setCurrent(newLevelIdx);
+        goToLevel(newLevelIdx); 
     }
 
     Level::~Level() {
@@ -37,6 +36,7 @@ namespace manager
         }
         delete levelIdx_;
         delete player_;
+        delete dirLoader_;
     }
 
     Player *Level::getPlayer() {
@@ -44,7 +44,14 @@ namespace manager
     }
 
     int Level::addLevel() {
-        levels_.push_back(new level::Level(levelScreenSize_, levelIdx_->getCurrent()));
+        const char *levelToLoadName = dirLoader_->getRandomFileName();
+        loader::LoaderHandler loader(levelToLoadName);
+
+        if (levelIdx_->getCurrent() == -1) {
+            levels_.push_back(new level::Level(&loader));
+        } else {
+            levels_.push_back(new level::Level(&loader, levelIdx_->getCurrent()));
+        }
         return (int) levels_.size() - 1;
     }
 
@@ -53,10 +60,10 @@ namespace manager
     }
 
     void Level::goToLevel(int levelIdx) {
-        levels_[levelIdx_->getCurrent()]->setLastPlayerPosition(player_->getPosition());
         if (levelIdx < 0 || levelIdx >= (int) levels_.size()) {
             return;
         }
+        levels_[levelIdx_->getCurrent()]->setLastPlayerPosition(player_->getPosition());
         levelIdx_->setCurrent(levelIdx);
         player_->setPosition(levels_[levelIdx_->getCurrent()]->getLastPlayerPosition());
         return;

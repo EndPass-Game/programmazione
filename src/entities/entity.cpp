@@ -55,10 +55,11 @@ void Entity::move(manager::Level *levelManager) {
                 // TODO(simo) può anche essere chiamato enemy invece di entity, obboh
                 // decidi te poi dopo!
                 break;
-            case enums::CollisionType::ARTIFACT:
+            case enums::CollisionType::ARTIFACT: // TODO(simo): da spostare in Player
                 art = dynamic_cast<Artifact *>(collision);
                 levelManager->getPlayer()->setLife(levelManager->getPlayer()->getLife() + art->getLifeUpgrade());
                 setPosition(Position(new_x, new_y));
+                delete art;  
                 break;
             case enums::CollisionType::NONE:
                 setPosition(Position(new_x, new_y));

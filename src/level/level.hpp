@@ -8,6 +8,7 @@
 #include "level/collidable.hpp"
 #include "level/displayable-segment.hpp"
 #include "collectables/artifact.hpp"
+#include "loader/loader-handler.hpp"
 
 namespace level {
     // contenere tutti i oggetti utili per il singolo livello 
@@ -15,14 +16,12 @@ namespace level {
       private: 
         Position lastPlayerPosition_;
         datastruct::Vector<DisplayableSegment *> segment_;
-        datastruct::Vector<Entity *> entities_;
         datastruct::Vector<Artifact *> artifacts_;
+        datastruct::Vector<Entity *> entities_; 
+        int numOfDoors_; // numero di porte nel livello
       public: 
-        // genera il livello con la size data (walls and entities) 
-        Level(Size size);
-        
-        // genera il livello con una porta al livello precedente
-        Level(Size size, int oldLevelIdx);
+        Level(loader::LoaderHandler *loader); 
+        Level(loader::LoaderHandler *loader, int oldLevelIdx); 
         ~Level();
 
         // restituisce la posizione dell'ultimo player
@@ -30,6 +29,7 @@ namespace level {
         
         // setta la posizione dell'ultimo player
         void setLastPlayerPosition(Position pos);
+
 
         // applies all position changes (entities) 
         void render(WINDOW *win, bool force);
