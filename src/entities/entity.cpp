@@ -44,7 +44,7 @@ void Entity::move(manager::Level *levelManager) {
         level::Collidable *collision = levelManager->getCollision(Position{new_x, new_y});
         enums::CollisionType type = enums::CollisionType::NONE; 
         if (collision != nullptr) type = collision->getCollisionType(); 
-
+        Artifact *art;
         switch (type) {
             case enums::CollisionType::DOORSEGMENT:
                 _handleDoorCollision(levelManager, (level::DoorSegment*) collision);
@@ -56,7 +56,9 @@ void Entity::move(manager::Level *levelManager) {
                 // decidi te poi dopo!
                 break;
             case enums::CollisionType::ARTIFACT:
-                // TODO(simo)
+                art = dynamic_cast<Artifact *>(collision);
+                levelManager->getPlayer()->setLife(levelManager->getPlayer()->getLife() + art->getLifeUpgrade());
+                setPosition(Position(new_x, new_y));
                 break;
             case enums::CollisionType::NONE:
                 setPosition(Position(new_x, new_y));
@@ -85,6 +87,14 @@ void Entity::attack(Entity *entity) {
 
 void Entity::applyDamage(int damage) {
     life_ -= damage;
+}
+
+int Entity::getLife(){
+    return life_;
+}
+
+void Entity::setLife(int life){
+    this->life_=life;
 }
 
 enums::CollisionType Entity::getCollisionType() {

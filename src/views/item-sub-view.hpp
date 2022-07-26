@@ -5,6 +5,8 @@
 
 namespace views {
     class ItemSubView:SubView{
+    private:
+        manager::Level *levelManager_;
     public:
         ItemSubView(WINDOW * win,manager::Level *levelManager);
 

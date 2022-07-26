@@ -30,5 +30,5 @@ class Player: public Entity {
     void attack();
 
     // TODO
-    void pickup(); 
+    void pickup();
 };
