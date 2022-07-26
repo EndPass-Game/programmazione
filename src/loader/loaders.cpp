@@ -61,7 +61,7 @@ namespace loader {
             int artifactHealth;
             Position startPosition;
             fscanf(file, "%d %d %d\n" , &startPosition.riga, &startPosition.colonna, &artifactHealth);
-            Artifact *artifact = new Artifact(/* // TODO(simo|ang): startPosition*/);
+            Artifact *artifact = new Artifact(artifactHealth, startPosition);
             this->_loadedObjects->at(i) = artifact;
         }
     };

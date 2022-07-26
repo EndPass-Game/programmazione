@@ -23,12 +23,13 @@ namespace loader {
     // 0 0 4 59
     // 5 59 2 11
     // 16 59 3 59
-    // 16 0 1 11
+    // 16 0 1 12
     // 2
     // 0 59 2 5
     // 0 0 2 5
     // 1 1
-    // 0 0 0
+    // 1
+    // 3 3 3
     struct LoaderHandler {
         FILE *file;
         WallLoader *wallLoader;

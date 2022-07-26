@@ -21,7 +21,6 @@ namespace loader {
 
     class ArtifactLoader: public LoadObject<Artifact> {
       public:
-        ArtifactLoader(): LoadObject<Artifact>() {};
         void load(FILE *file) override;
     };
 

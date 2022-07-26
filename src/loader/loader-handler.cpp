@@ -12,7 +12,6 @@ namespace loader {
         doorLoader = new DoorLoader();
         playerPosLoader = new PlayerPosLoader();
         artifactLoader = new ArtifactLoader();
-        // TODO(ang): uncomment when the artifact is ready
 
         wallLoader->load(file);
         doorLoader->load(file);

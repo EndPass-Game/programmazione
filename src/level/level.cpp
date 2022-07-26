@@ -10,10 +10,10 @@
 #include "collectables/artifact.hpp"
 #include "manager/level.hpp"
 
-
 namespace level {
     Level::Level(loader::LoaderHandler *loader) {
         segment_ = datastruct::Vector<DisplayableSegment *>();
+        artifacts_ = datastruct::Vector<Artifact *>();
 
         datastruct::Vector<WallSegment *> *segments = nullptr;
         segments = loader->wallLoader->getLoadedObjects(); 
@@ -44,6 +44,15 @@ namespace level {
                 delete playersPos->at(i);
             }
             delete playersPos;
+        }
+
+        datastruct::Vector<Artifact *> *artifacts = nullptr;
+        artifacts = loader->artifactLoader->getLoadedObjects();
+        if (artifacts != nullptr) {
+            for (unsigned int i = 0; i < artifacts->size(); i++) {
+                artifacts_.push_back(artifacts->at(i));
+            }
+            delete artifacts;
         }
     }
 
