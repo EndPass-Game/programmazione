@@ -36,6 +36,7 @@ namespace loader {
         DoorLoader *doorLoader;
         PlayerPosLoader *playerPosLoader;
         ArtifactLoader *artifactLoader;
+        PowerLoader *powerLoader;
         LoaderHandler(const char *filename);
         ~LoaderHandler();
     };

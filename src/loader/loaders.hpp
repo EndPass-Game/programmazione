@@ -3,6 +3,7 @@
 #include <cstdlib> 
 
 #include "collectables/artifact.hpp"
+#include "collectables/Power.hpp"
 #include "level/door-segment.hpp"
 #include "level/wall-segment.hpp"
 #include "loader/load-object.hpp"
@@ -25,6 +26,11 @@ namespace loader {
     };
 
     class PlayerPosLoader: public LoadObject<Position> {
+      public:
+        void load(FILE *file) override;
+    };
+
+    class PowerLoader : public LoadObject<Power>{
       public:
         void load(FILE *file) override;
     };

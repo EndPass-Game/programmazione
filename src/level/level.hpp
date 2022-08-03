@@ -9,6 +9,7 @@
 #include "level/displayable-segment.hpp"
 #include "collectables/artifact.hpp"
 #include "loader/loader-handler.hpp"
+#include "collectables/power.hpp"
 
 namespace level {
     // contenere tutti i oggetti utili per il singolo livello 
@@ -17,8 +18,10 @@ namespace level {
         Position lastPlayerPosition_;
         datastruct::Vector<DisplayableSegment *> segment_;
         datastruct::Vector<Artifact *> artifacts_;
+        datastruct::Vector<Power *> powers_;
         datastruct::Vector<Entity *> entities_; 
         int numOfDoors_; // numero di porte nel livello
+        
       public: 
         Level(loader::LoaderHandler *loader); 
         Level(loader::LoaderHandler *loader, int oldLevelIdx); 

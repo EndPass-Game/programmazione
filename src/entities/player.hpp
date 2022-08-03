@@ -21,6 +21,7 @@ Altro
 class Player: public Entity {
   private:
     // TODO inventario
+    int powers_;
   public:
     Player();
 
@@ -31,4 +32,10 @@ class Player: public Entity {
 
     // TODO
     void pickup();
+
+    void addPower();
+
+    void removePower();
+    
+    int getPowers();
 };
