@@ -7,7 +7,6 @@
 #include "level/door-segment.hpp"
 #include "level/wall-segment.hpp"
 #include "enums/collision-type.hpp"
-#include "collectables/artifact.hpp"
 #include "manager/level.hpp"
 #include "collectables/power.hpp"
 
