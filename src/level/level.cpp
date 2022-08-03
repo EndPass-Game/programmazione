@@ -53,11 +53,18 @@ namespace level {
         if (artifacts != nullptr) {
             for (unsigned int i = 0; i < artifacts->size(); i++) {
                 artifacts_.push_back(artifacts->at(i));
-            }
+                }
             delete artifacts;
         }
 
-        powers_.push_back(new Power(Position(7,15)));
+        datastruct::Vector<Power *> *powers = nullptr;
+        powers = loader->powerLoader->getLoadedObjects();
+        if (powers != nullptr) {
+            for (unsigned int i = 0; i < powers->size(); i++) {
+                powers_.push_back(powers->at(i));
+            }
+            delete powers;
+        }
     }
 
     Level::Level(loader::LoaderHandler *loader, int oldLevelIdx): Level(loader) {
@@ -65,7 +72,7 @@ namespace level {
         // questa parte assume che le porte siano tutte nell'ultima parte del segmento: 
         DoorSegment *chosenDoor = (DoorSegment *) segment_.at(segment_.size() - numOfDoors_ + doorNumber); 
         chosenDoor->setNextLevelIdx(oldLevelIdx);
-        chosenDoor->openDoor(); 
+            chosenDoor->openDoor(); 
     }
 
     Level::~Level() {
@@ -136,7 +143,7 @@ namespace level {
         for (unsigned int i = 0; i < powers_.size(); i++) {
             powers_[i]->render(win, force);
         }
-
+    
         // TODO(ang): come fare a spostare gli entità?
         // 1. deve updatare questo oppure lo fa un render in un altro momento????
     }

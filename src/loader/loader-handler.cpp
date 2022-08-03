@@ -12,11 +12,13 @@ namespace loader {
         doorLoader = new DoorLoader();
         playerPosLoader = new PlayerPosLoader();
         artifactLoader = new ArtifactLoader();
+        powerLoader = new PowerLoader();
 
         wallLoader->load(file);
         doorLoader->load(file);
         playerPosLoader->load(file);
         artifactLoader->load(file);
+        powerLoader->load(file);
     }
     
     LoaderHandler::~LoaderHandler() {
@@ -25,5 +27,6 @@ namespace loader {
         delete doorLoader;
         delete playerPosLoader;
         delete artifactLoader;
+        delete powerLoader;
     }
 }; // namespace loader
