@@ -69,7 +69,6 @@ void Entity::move(manager::Level *levelManager) {
                 setPosition(Position(new_x, new_y));
                 break;
         }
-        delete collision;
     }
     
     this->direction_ = enums::Direction::NONE;
