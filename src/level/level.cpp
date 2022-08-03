@@ -19,7 +19,7 @@ namespace level {
         powers_ = datastruct::Vector<Power *>();
 
         datastruct::Vector<WallSegment *> *segments = nullptr;
-        segments = loader->wallLoader->getLoadedObjects(); 
+        segments = loader->wallLoader->getLoadedObjects();
         if (segments != nullptr) {
             for (unsigned int i = 0; i < segments->size(); i++) {
                 segment_.push_back((DisplayableSegment *) segments->at(i));
@@ -61,12 +61,13 @@ namespace level {
         powers_.push_back(new Power(Position(7,15)));
     }
 
+    Level::Level(loader::LoaderHandler *loader, int oldLevelIdx): Level(loader) {
+        int doorNumber = rand() % numOfDoors_;
         // questa parte assume che le porte siano tutte nell'ultima parte del segmento: 
         DoorSegment *chosenDoor = (DoorSegment *) segment_.at(segment_.size() - numOfDoors_ + doorNumber); 
         chosenDoor->setNextLevelIdx(oldLevelIdx);
         chosenDoor->openDoor(); 
     }
-
 
     Level::~Level() {
         for (unsigned int i = 0; i < segment_.size(); i++) {
@@ -79,6 +80,10 @@ namespace level {
 
         for (unsigned int i = 0; i < artifacts_.size(); i++) {
             delete artifacts_[i];
+        }
+
+        for (unsigned int i = 0; i < powers_.size(); i++){
+            delete powers_[i];
         }
     }	
 
