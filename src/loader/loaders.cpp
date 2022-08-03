@@ -13,8 +13,9 @@ namespace loader {
             int direction;
             Position startPosition;
             int length;
-            fscanf(file, "%d %d %d %d\n" , &startPosition.riga, &startPosition.colonna, &direction , &length);
-            level::WallSegment *wall = new level::WallSegment(startPosition, (enums::Direction)direction, length);
+            int angleType;
+            fscanf(file, "%d %d %d %d %d\n" , &startPosition.riga, &startPosition.colonna, &direction , &length,&angleType);
+            level::WallSegment *wall = new level::WallSegment(startPosition, (enums::Direction)direction, length,(enums::WallAngleType) angleType);
             this->_loadedObjects->at(i) = wall;
         }
     }

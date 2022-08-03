@@ -9,16 +9,24 @@ namespace level {
     WallSegment::WallSegment() : 
         DisplayableSegment() {}
 
-    WallSegment::WallSegment(Position startPosition, enums::Direction direction, int length):
-      DisplayableSegment(startPosition, direction, length) {
+    WallSegment::WallSegment(Position startPosition, enums::Direction direction, int length,enums::WallAngleType angleType):
+      DisplayableSegment(startPosition, direction, length),angleType(angleType) {
         char wallCharacter = _getWallCharacter(direction);
         for (unsigned int i = 0; i < displayables_.size(); i++) {
-            if (displayables_[i]->getPosition() == startPosition) {
+            if (_isAngle(i)) {
                 displayables_[i]->setDisplayChar((char) enums::WallType::ANGLE);
             } else {
                 displayables_[i]->setDisplayChar(wallCharacter);
             }
         }
+    }
+
+    bool WallSegment::_isAngle(int positionOffset){
+        if((positionOffset==0 && (angleType==enums::WallAngleType::BOTH ||angleType==enums::WallAngleType::START)) 
+        || (positionOffset==length_-1 && (angleType==enums::WallAngleType::BOTH ||angleType==enums::WallAngleType::END)))
+            return true;
+        else
+            return false;
     }
 
     char WallSegment::_getWallCharacter(enums::Direction direction){
