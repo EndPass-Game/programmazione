@@ -6,12 +6,10 @@
 #include "entities/entity.hpp"
 
 class Power: public Displayable, public level::Collidable{
-	private:
-		
 	public:
 		//costruttore che inizializza la variabile che definisce l'aumento di vità che darà l'artefatto e la sua posizione
 		Power(Position posObj);	
-
+        virtual ~Power() = default;
 		//override del metodo virtuale per restituire il tipo di oggetto
 		virtual enums::CollisionType getCollisionType() override;
 		

@@ -12,7 +12,10 @@ namespace loader {
     // [numero di porte]
     // pos.x pos.y direzione lunghezza
     // pos.x e pos.y del giocatore
+    // [numero di artefatti]
     // pos.x e pos.y e vita del artefatto
+    // [numero di poteri]
+    // pos.x e pos.y del potere
     // una volta richiesto un oggetto, deve essere eliminato dal chiamante.
     // 
     // WARNING: Se il file è mal configurato, o non esiste proprio ci sarà un errore di runtime 

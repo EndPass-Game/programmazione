@@ -59,7 +59,7 @@ void Entity::move(manager::Level *levelManager) {
                 art = dynamic_cast<Artifact *>(collision);
                 levelManager->getPlayer()->setLife(levelManager->getPlayer()->getLife() + art->getLifeUpgrade());
                 setPosition(Position(new_x, new_y));
-                delete art;  
+                delete art;
                 break;
             case enums::CollisionType::NONE:
                 setPosition(Position(new_x, new_y));
@@ -67,6 +67,7 @@ void Entity::move(manager::Level *levelManager) {
             case enums::CollisionType::POWER:
                 levelManager->getPlayer()->addPower();
                 setPosition(Position(new_x, new_y));
+                delete (Power *) collision;
                 break;
         }
     }

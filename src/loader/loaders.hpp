@@ -3,7 +3,7 @@
 #include <cstdlib> 
 
 #include "collectables/artifact.hpp"
-#include "collectables/Power.hpp"
+#include "collectables/power.hpp"
 #include "level/door-segment.hpp"
 #include "level/wall-segment.hpp"
 #include "loader/load-object.hpp"

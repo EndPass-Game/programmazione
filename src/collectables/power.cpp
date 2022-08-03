@@ -9,7 +9,7 @@
 
 
 Power::Power(Position posObj):
-    Displayable(posObj, 'C'){}
+    Displayable(posObj, 'C') {}
 
 
 

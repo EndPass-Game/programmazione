@@ -72,7 +72,7 @@ namespace loader {
         this->_loadedObjects->resize(numeroPoteri);
         for(int i = 0; i < numeroPoteri; i++) {
             Position startPosition;
-            fscanf(file, "%d %d %d\n" , &startPosition.riga, &startPosition.colonna);
+            fscanf(file, "%d %d\n" , &startPosition.riga, &startPosition.colonna);
             Power *power = new Power(startPosition);
             this->_loadedObjects->at(i) = power;
         }

@@ -53,7 +53,7 @@ namespace level {
         if (artifacts != nullptr) {
             for (unsigned int i = 0; i < artifacts->size(); i++) {
                 artifacts_.push_back(artifacts->at(i));
-                }
+            }
             delete artifacts;
         }
 
@@ -72,7 +72,7 @@ namespace level {
         // questa parte assume che le porte siano tutte nell'ultima parte del segmento: 
         DoorSegment *chosenDoor = (DoorSegment *) segment_.at(segment_.size() - numOfDoors_ + doorNumber); 
         chosenDoor->setNextLevelIdx(oldLevelIdx);
-            chosenDoor->openDoor(); 
+        chosenDoor->openDoor();
     }
 
     Level::~Level() {
@@ -111,14 +111,14 @@ namespace level {
                 return (Collidable *) segment_[i];
             }
         }
-        for (unsigned int i = 0; i < artifacts_.size(); i++){
+        for (unsigned int i = 0; i < artifacts_.size(); i++) {
             if(artifacts_[i]->getPosition() == pos){
                 Artifact *c = artifacts_[i];
                 artifacts_.remove(i);
                 return (Collidable *) c;
             }
         }
-        for (unsigned int i = 0; i<powers_.size(); i++){
+        for (unsigned int i = 0; i < powers_.size(); i++) {
             if(powers_[i]->getPosition() == pos){
                 Power *c = powers_[i];
                 powers_.remove(i);
