@@ -8,7 +8,7 @@ namespace loader {
     // Carica TUTTI gli oggetti di un livello di gioco da un file di testo   
     // struttura del file: 
     // [numero di muri]
-    // pos.x pos.y direzione lunghezza
+    // pos.x pos.y direzione lunghezza tipo di angolo
     // [numero di porte]
     // pos.x pos.y direzione lunghezza
     // pos.x e pos.y del giocatore
