@@ -75,28 +75,6 @@ namespace level {
         chosenDoor->openDoor();
     }
 
-    Level::~Level() {
-        for (unsigned int i = 0; i < segment_.size(); i++) {
-            delete segment_[i];
-        }
-
-        for (unsigned int i = 0; i < entities_.size(); i++) {
-            delete entities_[i];
-        }
-
-        for (unsigned int i = 0; i < artifacts_.size(); i++) {
-            delete artifacts_[i];
-        }
-
-        for (unsigned int i = 0; i < powers_.size(); i++){
-            delete powers_[i];
-        }
-    }	
-
-    Position Level::getLastPlayerPosition() {
-        return lastPlayerPosition_;
-    }
-
     void Level::setLastPlayerPosition(Position pos) {
         lastPlayerPosition_ = pos;
     }
