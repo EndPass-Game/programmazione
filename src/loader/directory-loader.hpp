@@ -12,11 +12,14 @@ namespace loader {
 
         bool _isExtensionValid(const char *filename, const char *extension);
       public:
-        // loads all valid files in the directory
-        // assumes directory has the "/", only LINUX compatible.
+        // carica tutti i nomi validi di una directory
+        // assume che il separatore di directory sia "/", solo compatibile con LINUX.
         DirectoryLoader(const char *directory = "assets/");
         ~DirectoryLoader();
 
         const char *getRandomFileName();
+
+        // ritorna tutti i filenames all'interno di fileNames_ terminati da '\0'
+        char[] getAllFilenames();
     };
 }; // namespace loader

@@ -37,6 +37,15 @@ namespace loader {
         int index = rand() % fileNames_.size();
         return fileNames_[index];
     }
+
+    char []DirectoryLoader::getAllFilenames() {
+        char allFilenames[] = new (char *)[fileNames_.size() + 1];
+        for (unsigned int i = 0; i < fileNames_.size(); i++) {
+            allFilenames[i] = fileNames_[i];
+        }
+        allFilenames[fileNames_.size()] = '\0';
+        return allFilenames;
+    }
     
     bool DirectoryLoader::_isExtensionValid(const char *filename, const char *extension) {
         int len = strlen(filename);
