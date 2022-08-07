@@ -131,7 +131,6 @@ namespace level {
         return nullptr;
     }
 
-
     void Level::render(WINDOW *win, bool force) {
         for (unsigned int i = 0; i < segment_.size(); i++) {
             segment_[i]->render(win, force);
@@ -146,5 +145,17 @@ namespace level {
     
         // TODO(ang): come fare a spostare gli entità?
         // 1. deve updatare questo oppure lo fa un render in un altro momento????
+    }
+
+    void Level::clear(WINDOW *win) {
+        for (unsigned int i = 0; i < segment_.size(); i++) {
+            segment_[i]->clear(win);
+        }
+        for (unsigned int i = 0; i < artifacts_.size(); i++) {
+            artifacts_[i]->clear(win);
+        }
+        for (unsigned int i = 0; i < powers_.size(); i++) {
+            powers_[i]->clear(win);
+        }
     }
 }; // namespace level

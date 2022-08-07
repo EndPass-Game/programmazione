@@ -33,14 +33,17 @@ namespace level {
         // setta la posizione dell'ultimo player
         void setLastPlayerPosition(Position pos);
 
-
-        // applies all position changes (entities) 
+        // @brief renderizza il contenuto del livello
+        // @param force se true rirenderizza anche quelli non modificati
         void render(WINDOW *win, bool force);
 
-        // returns true if the position is Empty, false otherwise
+        // cancella tutto quanto printato su schermo 
+        void clear(WINDOW *win);
+
+        // @returns true se la posizione è vuota, false altrimenti
         bool isPositionEmpty(Position pos);
 
-        // returns the collision object at the given position
+        // @returns l'oggetto di collisione alla data posizione
         Collidable *getCollision(Position pos);
     }; 
 }; // namespace map

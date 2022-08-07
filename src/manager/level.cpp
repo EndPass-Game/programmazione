@@ -70,13 +70,13 @@ namespace manager
     }
 
     void Level::render(WINDOW *win, bool force) {
-        player_->clearLast(win);
-        player_->render(win, force);
-
         if (levelIdx_->isChanged()) {
             force = true;
-            // TODO(ang): clear screen
+            levels_[levelIdx_->getLast()]->clear(win);
         }
+
+        player_->clearLast(win);
+        player_->render(win, force);
 
         levels_[levelIdx_->getCurrent()]->render(win, force);
         // TODO(ang): print player ( valuta se è meglio printarlo qui o in level/level 

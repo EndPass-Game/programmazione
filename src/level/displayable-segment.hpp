@@ -26,6 +26,7 @@ namespace level {
         virtual ~DisplayableSegment(); 
 
         virtual void render(WINDOW *win, bool force);
+        virtual void clear(WINDOW *win); 
 
         // pure virtual function che restituisce il tipo di collisione 
         // previene la creazione di DisplayableSegment da sé, ma solo i suoi derivati
