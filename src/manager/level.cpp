@@ -76,6 +76,8 @@ namespace manager
         if (levelIdx_->isChanged()) {
             force = true;
             // TODO(ang): clear screen
+
+            levelIdx_->setCurrent(levelIdx_->getCurrent()); // FIX PG-34
         }
 
         levels_[levelIdx_->getCurrent()]->render(win, force);
