@@ -17,8 +17,8 @@ namespace level {
       private: 
         Position lastPlayerPosition_;
         datastruct::Vector<DisplayableSegment *> segment_;
-        datastruct::Vector<Artifact *> artifacts_;
-        datastruct::Vector<Power *> powers_;
+        datastruct::Vector<collectables::Artifact *> artifacts_;
+        datastruct::Vector<collectables::Power *> powers_;
         datastruct::Vector<Entity *> entities_; 
         int numOfDoors_; // numero di porte nel livello
         

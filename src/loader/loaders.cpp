@@ -62,7 +62,7 @@ namespace loader {
             int artifactHealth;
             Position startPosition;
             fscanf(file, "%d %d %d\n" , &startPosition.riga, &startPosition.colonna, &artifactHealth);
-            Artifact *artifact = new Artifact(artifactHealth, startPosition);
+            collectables::Artifact *artifact = new collectables::Artifact(artifactHealth, startPosition);
             this->_loadedObjects->at(i) = artifact;
         }
     };
@@ -74,7 +74,7 @@ namespace loader {
         for(int i = 0; i < numeroPoteri; i++) {
             Position startPosition;
             fscanf(file, "%d %d\n" , &startPosition.riga, &startPosition.colonna);
-            Power *power = new Power(startPosition);
+            collectables::Power *power = new collectables::Power(startPosition);
             this->_loadedObjects->at(i) = power;
         }
     };

@@ -20,7 +20,7 @@ namespace loader {
         void load(FILE *file) override;
     };
 
-    class ArtifactLoader: public LoadObject<Artifact> {
+    class ArtifactLoader: public LoadObject<collectables::Artifact> {
       public:
         void load(FILE *file) override;
     };
@@ -30,7 +30,7 @@ namespace loader {
         void load(FILE *file) override;
     };
 
-    class PowerLoader : public LoadObject<Power>{
+    class PowerLoader : public LoadObject<collectables::Power>{
       public:
         void load(FILE *file) override;
     };
