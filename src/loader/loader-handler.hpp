@@ -3,7 +3,11 @@
 #include "datastruct/vector.hpp"
 #include "level/wall-segment.hpp"
 #include "level/door-segment.hpp"
-#include "loader/loaders.hpp" // WallLoader, DoorLoader, ArtifactLoader, PlayerPosLoader
+#include "loader/objects/power.hpp"
+#include "loader/objects/wall-segment.hpp"
+#include "loader/objects/door-segment.hpp"
+#include "loader/objects/player-position.hpp"
+#include "loader/objects/artifact.hpp"
 namespace loader {
     // Carica TUTTI gli oggetti di un livello di gioco da un file di testo   
     // struttura del file: 
@@ -35,11 +39,11 @@ namespace loader {
     // 3 3 3
     struct LoaderHandler {
         FILE *file;
-        WallLoader *wallLoader;
-        DoorLoader *doorLoader;
-        PlayerPosLoader *playerPosLoader;
-        ArtifactLoader *artifactLoader;
-        PowerLoader *powerLoader;
+        WallSegment *wallLoader;
+        DoorSegment *doorLoader;
+        PlayerPosition *playerPosLoader;
+        Artifact *artifactLoader;
+        Power *powerLoader;
         LoaderHandler(const char *filename);
         ~LoaderHandler();
     };
