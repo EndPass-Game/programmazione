@@ -23,7 +23,7 @@ class Vector {
 
     // versione del resize privata. Più veloce rispetto alla pubblica
     // in quanto non deve ricavare la nuova size.
-    void resize(size_t size, size_t newRealSize) {
+    void _resize(size_t size, size_t newRealSize) {
         int endCopyIdx = size < size_ ? size : size_; // minore fra i due
         size_ = size; 
         T *new_space = new T[newRealSize];
@@ -34,6 +34,15 @@ class Vector {
         data_ = new_space;
         realSize_ = newRealSize;
     }
+
+    void _copyFrom(const Vector<T> &other) {
+        size_ = other.size_;
+        realSize_ = other.realSize_;
+        data_ = new T[realSize_];
+        for (unsigned int i = 0; i < size_; i++) {
+            data_[i] = other.data_[i];
+        }
+    }
   public:
     Vector(size_t size) {
         size_ = 0;
@@ -42,6 +51,11 @@ class Vector {
     }
 
     Vector(): Vector(0) {}
+
+    Vector(const Vector<T> &other) {
+        this->_copyFrom(other);
+    }
+
     ~Vector() {
         delete []data_;
     }
@@ -72,7 +86,7 @@ class Vector {
     // push con doubling-halving
     void push_back(T element) {
         if (size_ == realSize_) {
-            resize(size_, realSize_ * 2);
+            _resize(size_, realSize_ * 2);
         }
 
         data_[size_] = element;
@@ -84,7 +98,7 @@ class Vector {
     T pop_back() {
         if (isEmpty()) return T();
         if (size_ == realSize_ / 4) {
-            resize(size_, realSize_ / 2);
+            _resize(size_, realSize_ / 2);
         }
         size_ -= 1;
         return data_[size_];
@@ -95,7 +109,7 @@ class Vector {
     T remove(size_t index) {
         if (index >= size_ or index < 0) return T();
         if (size_ == realSize_ / 4) {
-            resize(size_, realSize_ / 2);
+            _resize(size_, realSize_ / 2);
         }
         T element = data_[index];
         size_ -= 1;
@@ -107,7 +121,7 @@ class Vector {
     // tutti il resto degli elementi sono ricopiati
     void resize(size_t size) {
         size_t newRealSize = _getHigherPowerOfTwo(size);
-        resize(size, newRealSize);
+        _resize(size, newRealSize);
     }
 
     // ridimensiona l'array per poter contenere SIZE elementi e assegna 
@@ -127,17 +141,15 @@ class Vector {
         size_ = 0;
         data_ = new T[realSize_];
     }
+    bool operator==(const Vector<T> &other) = delete;
 
-    void operator=(const Vector<T> &other) {
-        if (this == &other) return;
+    Vector<T> &operator=(const Vector<T> &other) {
+        if (this == &other) return *this;
+
         delete []data_;
-        size_ = other.size_;
-        realSize_ = other.realSize_;
-        data_ = new T[realSize_];
-        for (unsigned int i = 0; i < size_; i++) {
-            data_[i] = other.data_[i];
-        }
-        return;
+        this->_copyFrom(other);
+
+        return *this;
     }
 };
 }; // namespace datastruct
