@@ -45,7 +45,7 @@ namespace manager {
         // stampa a schermo il livello scelto, se non è presente tale livello (indice invalido)
         // allora ritorna false, altrimenti true; 
         void goToLevel(int level);
-
+        
         level::Collidable *getCollision(Position pos);
 
         void render(WINDOW *win, bool force);
