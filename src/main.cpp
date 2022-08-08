@@ -3,13 +3,15 @@
 
 #include "gamestruct/logger.hpp"
 #include "manager/game.hpp"
-int main() {
-    srand((unsigned int) time(NULL));
+#include "loader/level-provider.hpp"
+
+int main()
+{
+    Logger logger("START", "game.log", "w");
+    srand((unsigned int)time(NULL));
+
+    loader::LevelProvider::getInstance().loadLevels();
 
     manager::Game gameInstance;
-
-    Logger logger("START", "game.log", "w");
-    logger.info("Game created, starting game...");
-
     gameInstance.run();
 }

@@ -9,7 +9,7 @@
 
 namespace manager {
 
-    Game::Game() {
+    Game::Game() : logger_("GAME") {
         logger_.info("Initializing main objects of the game");
         viewManager_ = new ViewManager();
         inputManager_ = new Input(viewManager_);
@@ -22,12 +22,15 @@ namespace manager {
     }
 
     Game::~Game() {
+        delete viewManager_;
         delete inputManager_;
         delete displayManager_;
         endwin();
     }
 
     void Game::run() {
+        logger_.info("Game created, starting game...");
+
         views::MenuView *menu = new views::MenuView();
         viewManager_->pushView(menu);
 

@@ -18,52 +18,47 @@ namespace level {
         powers_ = datastruct::Vector<collectables::Power *>();
 
         datastruct::Vector<WallSegment *> *segments = nullptr;
-        segments = loader->wallLoader->getLoadedObjects();
+        segments = loader->wallLoader.getLoadedObjects();
         if (segments != nullptr) {
             for (unsigned int i = 0; i < segments->size(); i++) {
                 segment_.push_back((DisplayableSegment *) segments->at(i));
             }
-            delete segments;
         }
 
         datastruct::Vector<DoorSegment *> *doors = nullptr;
-        doors = loader->doorLoader->getLoadedObjects();
+        doors = loader->doorLoader.getLoadedObjects();
         if (doors != nullptr) {
             numOfDoors_ = doors->size();
             for (unsigned int i = 0; i < doors->size(); i++) {
                 segment_.push_back((DisplayableSegment *) doors->at(i));
             }
-            delete doors;
         } else {
             numOfDoors_ = 0;
         }
 
         datastruct::Vector<Position *> *playersPos = nullptr;
-        playersPos = loader->playerPosLoader->getLoadedObjects();
+        playersPos = loader->playerPosLoader.getLoadedObjects();
         if (playersPos != nullptr) {
             lastPlayerPosition_ = *playersPos->at(0);  // only one player position is loaded
             for (unsigned int i = 0; i < playersPos->size(); i++) {
                 delete playersPos->at(i);
             }
-            delete playersPos;
         }
 
         datastruct::Vector<collectables::Artifact *> *artifacts = nullptr;
-        artifacts = loader->artifactLoader->getLoadedObjects();
+        artifacts = loader->artifactLoader.getLoadedObjects();
         if (artifacts != nullptr) {
             for (unsigned int i = 0; i < artifacts->size(); i++) {
                 artifacts_.push_back(artifacts->at(i));
             }
-            delete artifacts;
         }
 
         datastruct::Vector<collectables::Power *> *powers = nullptr;
-        powers = loader->powerLoader->getLoadedObjects();
+        powers = loader->powerLoader.getLoadedObjects();
         if (powers != nullptr) {
             for (unsigned int i = 0; i < powers->size(); i++) {
                 powers_.push_back(powers->at(i));
             }
-            delete powers;
         }
     }
 

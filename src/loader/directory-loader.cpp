@@ -1,16 +1,18 @@
 #include "directory-loader.hpp"
 
-#include <cstdio>  // remove me after debug
 #include <cstdlib>
 #include <cstring>
 #include <dirent.h>  // per lettura delle directory, utilizzata nel corso di architettura
 
 namespace loader {
 
-    DirectoryLoader::DirectoryLoader(const char *dirname) {
+    DirectoryLoader::DirectoryLoader(const char *dirname) : logger_("loader::DirectoryLoader") {
+        logger_.info("Loading files from %s", dirname);
+
         DIR *dir = opendir(dirname);
         if (dir == NULL) {
-            printf("Directory %s not found\n", dirname);
+            logger_.error("Could not open directory %s", dirname);
+            logger_.info("Exiting...");
             exit(1);
         }
         const char *allowedExtension = ".txt";
@@ -38,6 +40,10 @@ namespace loader {
         return fileNames_[index];
     }
 
+    datastruct::Vector<char *> DirectoryLoader::getFileNames() {
+        return fileNames_;
+    }
+    
     bool DirectoryLoader::_isExtensionValid(const char *filename, const char *extension) {
         int len = strlen(filename);
         int extLen = strlen(extension);

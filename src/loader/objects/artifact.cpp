@@ -4,6 +4,8 @@
 
 namespace loader {
     void Artifact::load(FILE *file) {
+        LoadObject::resetTransferred();
+
         int numeroArtefatti;
         fscanf(file, "%d", &numeroArtefatti);
         this->_loadedObjects->resize(numeroArtefatti);

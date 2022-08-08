@@ -17,7 +17,7 @@ namespace manager {
 
       public:
         ViewManager();
-        ~ViewManager();
+        ~ViewManager() = default;
         // cambia la view che viene visualizzata
         void pushView(views::View *v);
         // toglie una View e l'elimina

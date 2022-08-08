@@ -4,6 +4,8 @@
 
 namespace loader {
     void Power::load(FILE *file) {
+        LoadObject::resetTransferred();
+
         int numeroPoteri;
         fscanf(file, "%d", &numeroPoteri);
         this->_loadedObjects->resize(numeroPoteri);

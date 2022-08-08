@@ -39,12 +39,14 @@ namespace loader {
     // 3 3 3
     struct LoaderHandler {
         FILE *file;
-        WallSegment *wallLoader;
-        DoorSegment *doorLoader;
-        PlayerPosition *playerPosLoader;
-        Artifact *artifactLoader;
-        Power *powerLoader;
+        WallSegment wallLoader;
+        DoorSegment doorLoader;
+        PlayerPosition playerPosLoader;
+        Artifact artifactLoader;
+        Power powerLoader;
         LoaderHandler(const char *filename);
         ~LoaderHandler();
+
+        void load();
     };
 };  // namespace loader
