@@ -25,16 +25,20 @@ Player::Player():
         powers_=0;
 }
 // TODO
-void Player::attack() {}
+void Player::attack() {
+    logger_.info("attacking");
+}
 
 // TODO
 void Player::pickup() {}
 
 void Player::addPower(){
+    logger_.info("picked up power");
     this->powers_++;
 }
 
 void Player::removePower(){
+    logger_.info("used power");
     this->powers_--;
 }
 
