@@ -4,7 +4,7 @@
 
 namespace views
 {
-    MenuView::MenuView():ResizableView({0,0},kMenuSize_){ }
+    MenuView::MenuView():ResizableView({0,0},kMenuSize_),name_("MenuView"){ }
 
 
     // fa il override di questa funzione da view
@@ -54,4 +54,10 @@ namespace views
         manager->pushView(toSmall);
 
     }
+
+    const char* MenuView::getName(){
+        return name_;
+    }
+
+   
 }; // namespace views

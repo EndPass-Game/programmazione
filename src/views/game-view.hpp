@@ -20,6 +20,7 @@ namespace views
         GameSubView * gameSubView_;
         ItemSubView * itemSubView_;
         manager::Level *levelManager_;
+        const char* name_ = "GameView";
     public:
         GameView(Position pos);
         ~GameView();
@@ -33,5 +34,7 @@ namespace views
         void renderGame(bool force);
 
         void handleScreenToSmall(manager::ViewManager* manager);
+        
+        const char* getName();
     };
 }; // namespace views

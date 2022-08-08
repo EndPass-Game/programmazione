@@ -9,7 +9,8 @@ class Logger{
     FILE *fileStream_; // usato per scrivere nel file di log
     const char *loggerName_; // nome del l'oggetto da loggare
 
-    void _log(const char *format, ...); 
+    void _log(const char *format, va_list args);  
+    void _headerLog(const char* head,const char *format, va_list args);
   public:
     Logger(const char *loggerName, const char *filename = "game.log", const char *mode = "a");
     ~Logger();

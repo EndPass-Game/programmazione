@@ -21,41 +21,44 @@ Logger::~Logger() {
     fclose(fileStream_);
 }
 
-void Logger::_log(const char *format, ...) {
-    va_list args;
-    va_start(args, format);
+void Logger::_log(const char *format, va_list args) {
     vfprintf(fileStream_, format, args);
-    va_end(args);
     fprintf(fileStream_, "\n");
+}
+
+void Logger::_headerLog(const char *head, const char *format, va_list args) {
+    loggerMutex.lock();
+    fprintf(fileStream_, "%s %s: ",head,loggerName_);
+    _log(format, args);
     loggerMutex.unlock();
 }
 
 void Logger::debug(const char *format, ...) {
 #ifdef DEBUG
-    loggerMutex.lock();
-    fprintf(fileStream_, "[DEBUG] %s: ", loggerName_);
     va_list args;
-    _log(format, args);
+    va_start(args, format);
+    _headerLog("[DEBUG]",format, args);
+    va_end(args);
 #endif
 }
 
 void Logger::info(const char *format, ...){
-    loggerMutex.lock();
-    fprintf(fileStream_, "[INFO] %s: ", loggerName_);
     va_list args;
-    _log(format, args);
+    va_start(args, format);
+    _headerLog("[INFO]",format, args);
+    va_end(args);
 }   
 
 void Logger::warning(const char *format, ...){
-    loggerMutex.lock();
-    fprintf(fileStream_, "[WARNING] %s: ", loggerName_);
     va_list args;
-    _log(format, args);
+    va_start(args, format);
+    _headerLog("[WARNING]",format, args);
+    va_end(args);
 }
 
 void Logger::error(const char *format, ...){
-    loggerMutex.lock();
-    fprintf(fileStream_, "[ERROR] %s: ", loggerName_);
     va_list args;
-    _log(format, args);
+    va_start(args, format);
+    _headerLog("[ERROR]",format, args);
+    va_end(args);
 }

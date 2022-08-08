@@ -8,6 +8,7 @@ namespace views {
     private:
         Size minimumRequired_; // dimensioni minime richieste per la finestra
         bool quit_ = false;
+        const char* name_="ScreenTooSmallView\0";
     public:
 
         ScreenTooSmallView(Size minimumRequired_);
@@ -17,5 +18,7 @@ namespace views {
         void render(bool force);
 
         bool handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view,bool changedView);
+
+        const char* getName();
     };
 }; // namespace views
