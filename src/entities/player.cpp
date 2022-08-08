@@ -41,3 +41,11 @@ void Player::removePower(){
 int Player::getPowers(){
     return powers_;
 }
+
+int Player::getScore(){
+    return score_;
+}
+
+void Player::incrementScore(int increment){
+    score_+=increment;
+}

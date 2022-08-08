@@ -9,7 +9,11 @@ namespace views
 
     void ItemSubView::render(bool force)
     {
-        mvwprintw(subWin_,1,1,"vita: %d  ",levelManager_->getPlayer()->getLife());
+        Player* player=levelManager_->getPlayer();
+        box(subWin_,0,0),
+        mvwprintw(subWin_,1,2,"  vita: %5d",player->getLife());
+        mvwprintw(subWin_,2,2,"powers: %5d",player->getPowers());
+        mvwprintw(subWin_,3,2," score: %5d",player->getScore());
         SubView::render(force);
     }
 

@@ -59,6 +59,7 @@ void Entity::move(manager::Level *levelManager) {
                 art = dynamic_cast<Artifact *>(collision);
                 levelManager->getPlayer()->setLife(levelManager->getPlayer()->getLife() + art->getLifeUpgrade());
                 setPosition(Position(new_x, new_y));
+                levelManager->getPlayer()->incrementScore(2);
                 delete art;
                 break;
             case enums::CollisionType::NONE:
@@ -67,6 +68,7 @@ void Entity::move(manager::Level *levelManager) {
             case enums::CollisionType::POWER:
                 levelManager->getPlayer()->addPower();
                 setPosition(Position(new_x, new_y));
+                levelManager->getPlayer()->incrementScore(5);
                 delete (Power *) collision;
                 break;
         }
@@ -124,6 +126,7 @@ void Entity::_handleDoorCollision(manager::Level *levelManager, level::DoorSegme
         if(levelManager->getPlayer()->getPowers()>0){
             levelManager->getPlayer()->removePower();
             door->openDoor(); // temporaneo
+            levelManager->getPlayer()->incrementScore(10);
         }
     }
 }
