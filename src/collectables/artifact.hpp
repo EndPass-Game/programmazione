@@ -11,6 +11,8 @@ fanno altre cose? ma non credo, non per ora
 #include "enums/direction.hpp"
 #include "entities/entity.hpp"
 
+namespace collectables {
+
 class Artifact: public Displayable, public level::Collidable{
 	private:
 		int lifeUpgrade_;
@@ -25,3 +27,5 @@ class Artifact: public Displayable, public level::Collidable{
 		virtual enums::CollisionType getCollisionType() override;
 		
 };
+
+} // namespace collectables

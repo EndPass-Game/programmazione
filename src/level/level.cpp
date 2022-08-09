@@ -13,9 +13,9 @@
 namespace level {
     Level::Level(loader::LoaderHandler *loader) {
         segment_ = datastruct::Vector<DisplayableSegment *>();
-        artifacts_ = datastruct::Vector<Artifact *>();
+        artifacts_ = datastruct::Vector<collectables::Artifact *>();
         entities_ = datastruct::Vector<Entity *>(0);
-        powers_ = datastruct::Vector<Power *>();
+        powers_ = datastruct::Vector<collectables::Power *>();
 
         datastruct::Vector<WallSegment *> *segments = nullptr;
         segments = loader->wallLoader->getLoadedObjects();
@@ -48,7 +48,7 @@ namespace level {
             delete playersPos;
         }
 
-        datastruct::Vector<Artifact *> *artifacts = nullptr;
+        datastruct::Vector<collectables::Artifact *> *artifacts = nullptr;
         artifacts = loader->artifactLoader->getLoadedObjects();
         if (artifacts != nullptr) {
             for (unsigned int i = 0; i < artifacts->size(); i++) {
@@ -57,7 +57,7 @@ namespace level {
             delete artifacts;
         }
 
-        datastruct::Vector<Power *> *powers = nullptr;
+        datastruct::Vector<collectables::Power *> *powers = nullptr;
         powers = loader->powerLoader->getLoadedObjects();
         if (powers != nullptr) {
             for (unsigned int i = 0; i < powers->size(); i++) {
@@ -115,14 +115,14 @@ namespace level {
         }
         for (unsigned int i = 0; i < artifacts_.size(); i++) {
             if(artifacts_[i]->getPosition() == pos){
-                Artifact *c = artifacts_[i];
+                collectables::Artifact *c = artifacts_[i];
                 artifacts_.remove(i);
                 return (Collidable *) c;
             }
         }
         for (unsigned int i = 0; i < powers_.size(); i++) {
             if(powers_[i]->getPosition() == pos){
-                Power *c = powers_[i];
+                collectables::Power *c = powers_[i];
                 powers_.remove(i);
                 return (Collidable *) c;
             }
