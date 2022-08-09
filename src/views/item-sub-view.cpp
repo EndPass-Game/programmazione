@@ -9,8 +9,8 @@ namespace views
 
     void ItemSubView::render(bool force)
     {
-        mvwprintw(subWin_,1,1,"vita: %d  ",levelManager_->getPlayer()->getLife());
         SubView::render(force);
+        mvwprintw(subWin_,1,1,"vita: %d  ",levelManager_->getPlayer()->getLife());
     }
 
 }; // namespace views

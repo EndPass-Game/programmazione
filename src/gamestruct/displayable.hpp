@@ -38,7 +38,9 @@ class Displayable {
     // Se la posizione è stata aggiornata mette al posto del carattere un carattere vuoto
     void clearLast(WINDOW* win);
 
+    // printa un carattere vuoto nella propria posizione
+    void clear(WINDOW* win);
+
     // Se la posizione è stata modificata riprinta il carattere nella posizione corrente
     void render(WINDOW* win,bool forced=false);
-
 };

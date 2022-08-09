@@ -33,4 +33,9 @@ namespace views
         wrefresh(window);
     }
 
+    const char* View::getName()
+    {
+        return name_;
+    }
+
 }; // namespace views

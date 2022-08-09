@@ -1,9 +1,14 @@
 #include "gamestruct/logger.hpp"
 
-#include <cstdarg> // va_list 
 #include <cstdlib>
+#include <mutex>
 
-Logger::Logger(const char* filename, const char *mode) {
+// mutex per evitare che due thread scrivano contemporaneamente nel file di log
+std::mutex loggerMutex; 
+
+
+Logger::Logger(const char *loggerName, const char *filename, const char *mode) {
+    loggerName_ = loggerName;
     fileStream_ = fopen(filename, mode);    
     if (fileStream_ == nullptr) {
         fprintf(stderr, "Impossibile aprire il file %s per il log\n", filename);
@@ -15,9 +20,45 @@ Logger::~Logger() {
     fclose(fileStream_);
 }
 
-void Logger::log(const char *format, ...){
+void Logger::_log(const char *format, va_list args) {
+    vfprintf(fileStream_, format, args);
+    fprintf(fileStream_, "\n");
+}
+
+void Logger::_headerLog(const char *head, const char *format, va_list args) {
+    loggerMutex.lock();
+    fprintf(fileStream_, "%s %s: ", head, loggerName_);
+    _log(format, args);
+    fflush(fileStream_); // così printa senza aspettare che il file venga chiuso
+    loggerMutex.unlock();
+}
+
+void Logger::debug(const char *format, ...) {
+#ifdef DEBUG
     va_list args;
     va_start(args, format);
-    vfprintf (fileStream_, format, args);
+    _headerLog("[DEBUG]", format, args);
+    va_end(args);
+#endif
+}
+
+void Logger::info(const char *format, ...) {
+    va_list args;
+    va_start(args, format);
+    _headerLog("[INFO]", format, args);
+    va_end(args);
+}   
+
+void Logger::warning(const char *format, ...) {
+    va_list args;
+    va_start(args, format);
+    _headerLog("[WARNING]", format, args);
+    va_end(args);
+}
+
+void Logger::error(const char *format, ...) {
+    va_list args;
+    va_start(args, format);
+    _headerLog("[ERROR]", format, args);
     va_end(args);
 }

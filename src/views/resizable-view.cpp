@@ -2,7 +2,7 @@
 
 namespace views
 {
-    ResizableView::ResizableView(Position pos, Size s) : View(pos, s)
+    ResizableView::ResizableView(Position pos, Size s) : View(pos, s),name_("ResizableView")
     {
     }
 
@@ -34,6 +34,10 @@ namespace views
 
     void ResizableView::render(bool forces){
         View::render(forces);
+    }
+
+    const char* ResizableView::getName(){
+        return name_;
     }
 
 }; // namespace views

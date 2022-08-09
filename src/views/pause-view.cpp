@@ -6,7 +6,7 @@
 namespace views
 {
 
-    PauseView::PauseView(Position pos) : ResizableView(pos, manager::kGameWindowsSize) {}
+    PauseView::PauseView(Position pos) : ResizableView(pos, manager::kGameWindowsSize),name_("PauseView") {}
 
     bool PauseView::handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view,bool changedView)
     {
@@ -48,6 +48,10 @@ namespace views
     void PauseView::handleScreenToSmall(manager::ViewManager* manager){
         ScreenTooSmallView* screenToSmall=new ScreenTooSmallView(manager::kGameWindowsSize);
         manager->pushView(screenToSmall);
+    }
+
+    const char* PauseView::getName(){
+        return name_;
     }
 
 }; // namespace views

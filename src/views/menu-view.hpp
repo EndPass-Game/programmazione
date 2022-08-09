@@ -21,6 +21,7 @@ namespace views
             "/___//_/|_//__,'/_/  /_n_//___,'/___,' "
         };
 
+        const char* name_ = "PauseView";
 
     public :
         MenuView();
@@ -37,5 +38,7 @@ namespace views
         void printMenu(bool force);
 
         void handleScreenToSmall(manager::ViewManager* manager);
+
+        const char* getName();
     };
 }; // namespace views
