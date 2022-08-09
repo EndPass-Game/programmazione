@@ -9,11 +9,13 @@ Funzioni:
 
 #include "manager/view-manager.hpp"
 #include "views/view.hpp"
+
 namespace manager
 {
     Display::Display(ViewManager *viewManager) : 
         viewManager(viewManager),
-        screenSize(getScreenSize()) {}
+        screenSize(getScreenSize()) {
+        }
 
     Size Display::getScreenSize(){
         return Size{LINES, COLS};
@@ -26,13 +28,18 @@ namespace manager
     bool Display::checkUpdateView(){
         updateScreenSize();
         bool changed = screenSize.isChanged();
+        if(changed){
+            logger_.info("Screen size changed %d %d", screenSize.getCurrent().riga, screenSize.getCurrent().colonna);
+        }
         bool tmpChangedView;
         do{
             viewManager->last()->handleScreenBeforeRender(screenSize, viewManager, changed);
             tmpChangedView = viewManager->isChangedView();
             changed |= tmpChangedView;
+            if(tmpChangedView and !viewManager->empty()){
+                logger_.info("Changed view %s",(const char*) viewManager->last()->getName());
+            }
         }while(tmpChangedView and !viewManager->empty());
-
         return changed;
     }
 

@@ -5,6 +5,7 @@
 #include "entities/player.hpp"
 #include "gamestruct/displayable.hpp"
 #include "gamestruct/size.hpp"
+#include "gamestruct/logger.hpp"
 #include "level/collidable.hpp"
 #include "level/displayable-segment.hpp"
 #include "collectables/artifact.hpp"
@@ -22,6 +23,7 @@ namespace level {
         datastruct::Vector<Entity *> entities_; 
         int numOfDoors_; // numero di porte nel livello
         
+        Logger logger_ = Logger("level::Level");
       public: 
         Level(loader::LoaderHandler *loader); 
         Level(loader::LoaderHandler *loader, int oldLevelIdx); 

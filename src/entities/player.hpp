@@ -17,11 +17,14 @@ Altro
 #pragma once
 
 #include "entities/entity.hpp"
+#include "gamestruct/logger.hpp"
+
 // Player: classe che contiene il personaggio
 class Player: public Entity {
   private:
     // TODO inventario
     int powers_;
+    Logger logger_ = Logger("player");
   public:
     Player();
 

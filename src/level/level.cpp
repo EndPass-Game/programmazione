@@ -68,6 +68,8 @@ namespace level {
     }
 
     Level::Level(loader::LoaderHandler *loader, int oldLevelIdx): Level(loader) {
+        logger_.debug("creating level pointing to leveldIdx: %d", oldLevelIdx);
+
         int doorNumber = rand() % numOfDoors_;
         // questa parte assume che le porte siano tutte nell'ultima parte del segmento: 
         DoorSegment *chosenDoor = (DoorSegment *) segment_.at(segment_.size() - numOfDoors_ + doorNumber); 

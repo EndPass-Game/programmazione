@@ -13,7 +13,7 @@ namespace views
     private:
         bool quit = false;
         bool returnToGame=false;
-
+        const char* name_ = "Pause";
     public:
         PauseView(Position pos);
 
@@ -28,5 +28,8 @@ namespace views
         void render(bool force);
         
         void handleScreenToSmall(manager::ViewManager* manager);
+        
+        const char* getName();
+        
     };
 }; // namespace views
