@@ -6,25 +6,17 @@
 // TODO(gio): fixa gli include di questo file, segui la filosofia: "includi quello che usi"
 // https://google.github.io/styleguide/cppguide.html#Include_What_You_Use
 
-namespace views
-{
+namespace views {
 
-    bool View::handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view,bool changedView) {return false;}
-
-    void View::handleInput(char input) {}
-
-    View::View(Position pos, Size size) : winSize(size), winPosition(pos)
-    {
+    View::View(Position pos, Size size): winSize(size), winPosition(pos) {
         window = newwin(size.riga, size.colonna, pos.riga, pos.colonna);
     }
 
-    View::~View()
-    {
+    View::~View() {
         delwin(window);
     }
 
-    void View::render(bool force)
-    {
+    void View::render(bool force) {
         if (force)
         {
             clear();
