@@ -1,6 +1,7 @@
 CC = g++
-CFLAGS =  -Wall -g -fsanitize=address,undefined
-LINKER_FLAG = -lstdc++ -pthread -lncurses
+CFLAGS = -Wall -Werror -g -fsanitize=address,undefined
+DEBUG = -DDEBUG
+LDFLAGS = -lstdc++ -pthread -lncurses -lasan
 
 BUILD_PATH = ./build
 TESTS_PATH = ./tests
@@ -15,7 +16,7 @@ TESTS = $(shell find $(TESTS_PATH)/ -type f ! -name "test-template.cpp")
 
 #build command
 main:  $(OBJS) 
-	$(CC) $(CFLAGS) $(INCLUDE_SRC) $^ $(LINKER_FLAG)  -o $(BUILD_PATH)/$@
+	$(CC) $(CFLAGS) $(INCLUDE_SRC) $^ $(LDFLAGS)  -o $(BUILD_PATH)/$@
 
 
 
@@ -26,7 +27,7 @@ tests: $(filter-out %main.o, $(OBJS))
 	do																					\
 		echo "Compilando il file : $${file}";											\
 		$(CC) $(CFLAGS) $(INCLUDE_SRC) -c $${file} -o "$${file%.cpp}.o";							\
-		$(CC) $(CFLAGS) $(INCLUDE_SRC) $^ "$${file%.cpp}.o" $(LINKER_FLAG) -o ./out; 	\
+		$(CC) $(CFLAGS) $(INCLUDE_SRC) $^ "$${file%.cpp}.o" $(LDFLAGS) -o ./out; 	\
 		./out;																			\
 		rm $${file%.cpp}.o;																\
 	done
@@ -34,7 +35,7 @@ tests: $(filter-out %main.o, $(OBJS))
 
 $(OBJS): $(BUILD_PATH)/%.o : %.cpp 
 	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) $(INCLUDE_SRC) $< -c -o $@
+	$(CC) $(CFLAGS) $(DEBUG) $(INCLUDE_SRC) $< -c -o $@
 
 
 # delete prev build and build

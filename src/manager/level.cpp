@@ -46,6 +46,8 @@ namespace manager
     }
 
     int Level::addLevel() {
+        logger_.info("Adding new level");
+
         const char *levelToLoadName = dirLoader_->getRandomFileName();
         loader::LoaderHandler loader(levelToLoadName);
 
@@ -62,6 +64,8 @@ namespace manager
     }
 
     void Level::goToLevel(int levelIdx) {
+        logger_.info("Loading level with index: %d", levelIdx);
+
         if (levelIdx < 0 || levelIdx >= (int) levels_.size()) {
             return;
         }
@@ -72,13 +76,13 @@ namespace manager
     }
 
     void Level::render(WINDOW *win, bool force) {
-        player_->clearLast(win);
-        player_->render(win, force);
-
         if (levelIdx_->isChanged()) {
             force = true;
-            // TODO(ang): clear screen
+            levels_[levelIdx_->getLast()]->clear(win);
         }
+
+        player_->clearLast(win);
+        player_->render(win, force);
 
         levels_[levelIdx_->getCurrent()]->render(win, force);
         // TODO(ang): print player ( valuta se è meglio printarlo qui o in level/level 

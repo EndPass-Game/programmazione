@@ -23,6 +23,7 @@ Funzioni:
 #include "datastruct/vector.hpp"
 #include "gamestruct/size.hpp"
 #include "gamestruct/state-watcher.hpp"
+#include "gamestruct/logger.hpp"
 #include "loader/directory-loader.hpp"
 #include "gamestruct/log-queue.hpp"
 #include "manager/manager-settings.hpp"
@@ -37,6 +38,8 @@ namespace manager {
         StateWatcher<int> *levelIdx_;
         loader::DirectoryLoader *dirLoader_; 
         LogQueue *logQueue_;
+        Logger logger_ = Logger("manager::Level");
+
       public:
         Level();
         ~Level();
@@ -49,7 +52,7 @@ namespace manager {
         // stampa a schermo il livello scelto, se non è presente tale livello (indice invalido)
         // allora ritorna false, altrimenti true; 
         void goToLevel(int level);
-
+        
         level::Collidable *getCollision(Position pos);
 
         LogQueue* getLogQueue();

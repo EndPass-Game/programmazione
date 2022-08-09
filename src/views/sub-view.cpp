@@ -16,6 +16,7 @@ namespace views
     {
         if(force){
             touchwin(subWin_);
+            wclear(subWin_);
         }
         wsyncup(subWin_);
     }

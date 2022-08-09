@@ -44,7 +44,7 @@ void Entity::move(manager::Level *levelManager) {
         level::Collidable *collision = levelManager->getCollision(Position{new_x, new_y});
         enums::CollisionType type = enums::CollisionType::NONE; 
         if (collision != nullptr) type = collision->getCollisionType(); 
-        Artifact *art;
+        collectables::Artifact *art;
         switch (type) {
             case enums::CollisionType::DOORSEGMENT:
                 _handleDoorCollision(levelManager, (level::DoorSegment*) collision);
@@ -56,7 +56,7 @@ void Entity::move(manager::Level *levelManager) {
                 // decidi te poi dopo!
                 break;
             case enums::CollisionType::ARTIFACT: // TODO(simo): da spostare in Player
-                art = dynamic_cast<Artifact *>(collision);
+                art = dynamic_cast<collectables::Artifact *>(collision);
                 levelManager->getPlayer()->setLife(levelManager->getPlayer()->getLife() + art->getLifeUpgrade());
                 setPosition(Position(new_x, new_y));
                 levelManager->getPlayer()->incrementScore(2);
@@ -71,7 +71,8 @@ void Entity::move(manager::Level *levelManager) {
                 setPosition(Position(new_x, new_y));
                 levelManager->getPlayer()->incrementScore(5);
                 levelManager->getLogQueue()->add("Hai raccolto un potere!Puoi sbloccare  una porta!");
-                delete (Power *) collision;
+
+                delete (collectables::Power *) collision;
                 break;
         }
     }
@@ -108,25 +109,21 @@ enums::CollisionType Entity::getCollisionType() {
     return enums::CollisionType::ENTITY;
 }
 
-#include "gamestruct/logger.hpp"
-
 // TODO(ang): muovere a player, non vogliamo che entities si muovano per le porte (o sì?)
 void Entity::_handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door) {
-    Logger("game.log", "w").log("Entity::_handleDoorCollision\n");
+    logger_.info("collided with door");
     if (door->getNextLevelIdx() == -1) {
-        Logger().log("Entity::_handleDoorCollision entrato if\n");
         int nextLevelIdx = levelManager->addLevel();
-        Logger().log("Entity::_handleDoorCollision setting doora\n");
         door->setNextLevelIdx(nextLevelIdx);
     }
-    Logger().log("Entity::_handleDoorCollision end\n");
 
     if (door->isDoorOpen()) {
-        Logger().log("Entity::_handleDoorCollision yes is door open \n");
+        logger_.info("moving to level with idx %d", door->getNextLevelIdx());
         levelManager->goToLevel(door->getNextLevelIdx());
         levelManager->getLogQueue()->add("Hai cambiato livello!");
     } else {
-        if(levelManager->getPlayer()->getPowers()>0){
+        if(levelManager->getPlayer()->getPowers() > 0){
+            logger_.info("opening door with idx %d", door->getNextLevelIdx());
             levelManager->getPlayer()->removePower();
             door->openDoor(); // temporaneo
             levelManager->getPlayer()->incrementScore(10);

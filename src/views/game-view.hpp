@@ -22,6 +22,7 @@ namespace views
         ItemSubView * itemSubView_;
         LogSubView * logSubView_;
         manager::Level *levelManager_;
+        const char* name_ = "GameView";
     public:
         GameView(Position pos);
         ~GameView();
@@ -33,5 +34,7 @@ namespace views
 
 
         void handleScreenToSmall(manager::ViewManager* manager);
+        
+        const char* getName();
     };
 }; // namespace views

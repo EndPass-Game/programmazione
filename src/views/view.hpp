@@ -17,14 +17,20 @@ namespace views
         WINDOW *window;
         Size winSize;
         Position winPosition;
+        const char* name_ = "View";
 
     public:
-        // viene chiamata prima del rendere e questa è la funzione che può modificare la view manager
-        virtual bool handleScreenBeforeRender(StateWatcher<Size> &screen, 
-            manager::ViewManager *view, bool changedView);
+        // viene chiamata prima del render, modifica la view manager a seconda delle
+        // necessità
+        virtual bool handleScreenBeforeRender(
+            StateWatcher<Size> &screen, 
+            manager::ViewManager *view, 
+            bool changedView
+        ) = 0;
 
-        // gestisce gli input
-        virtual void handleInput(char input);
+        // funzione astratta: ogni classe figlia avrà una propria funzione 
+        // per gestire gli input, che possono essere diverse ad ogni view.
+        virtual void handleInput(char input) = 0;
 
         // la funzione che viene chiamata per aggiornare lo schermo e il forces obbliga a riprintare
         virtual void render(bool forces);
@@ -33,5 +39,7 @@ namespace views
         View(Position pos, Size size);
         // delete the window
         virtual ~View();
-    };
+
+        virtual const char* getName();
+    }; 
 }; // namespace views

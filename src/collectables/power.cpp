@@ -7,6 +7,7 @@
 #include "enums/direction.hpp"
 #include "entities/entity.hpp"
 
+namespace collectables {
 
 Power::Power(Position posObj):
     Displayable(posObj, 'C') {}
@@ -16,3 +17,5 @@ Power::Power(Position posObj):
 enums::CollisionType Power::getCollisionType() {
     return enums::CollisionType::POWER;
 }
+        
+} // namespace collectables

@@ -9,7 +9,7 @@ namespace views
 {
 
     GameView::GameView(Position pos): 
-      ResizableView(pos, manager::kGameWindowsSize) {
+      ResizableView(pos, manager::kGameWindowsSize),name_("GameView") {
         levelManager_ = new manager::Level();
         gameSubView_ = new GameSubView(window,levelManager_);
         itemSubView_  =  new ItemSubView(window,levelManager_);
@@ -68,4 +68,7 @@ namespace views
 
     }
 
+    const char* GameView::getName() {
+        return name_;
+    }
 }; // namespace views

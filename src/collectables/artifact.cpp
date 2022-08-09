@@ -7,6 +7,7 @@
 #include "enums/direction.hpp"
 #include "entities/entity.hpp"
 
+namespace collectables {
 
 Artifact::Artifact(int life, Position posObj):
     Displayable(posObj, 'A'){
@@ -21,4 +22,4 @@ enums::CollisionType Artifact::getCollisionType() {
     return enums::CollisionType::ARTIFACT;
 }
     
-    
+} // namespace collectables

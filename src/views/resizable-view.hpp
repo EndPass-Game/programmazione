@@ -13,6 +13,7 @@ namespace views
     protected:
         //ricentra la finestra se la dimensione dello schermo cambia
         void recenterWindow(Size screen);
+        const char* name_ = "ResizableView";
 
     public:
         // override di quella di view
@@ -23,8 +24,10 @@ namespace views
 
         ResizableView(Position pos, Size s);
 
-        virtual void handleScreenToSmall(manager::ViewManager *manager);
+        virtual void handleScreenToSmall(manager::ViewManager *manager) = 0;
 
         virtual void render(bool force);
+
+        virtual const char* getName();
     };
 }; // namespace views
