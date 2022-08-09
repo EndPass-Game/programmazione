@@ -44,6 +44,8 @@ namespace manager
     }
 
     int Level::addLevel() {
+        logger_.info("Adding new level");
+
         const char *levelToLoadName = dirLoader_->getRandomFileName();
         loader::LoaderHandler loader(levelToLoadName);
 
@@ -60,6 +62,8 @@ namespace manager
     }
 
     void Level::goToLevel(int levelIdx) {
+        logger_.info("Loading level with index: %d", levelIdx);
+
         if (levelIdx < 0 || levelIdx >= (int) levels_.size()) {
             return;
         }

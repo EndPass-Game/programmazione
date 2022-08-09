@@ -11,7 +11,7 @@ int main()
     manager::Game gameInstance;
 
     Logger logger("START", "game.log", "w");
-    logger.debug("Game created, starting game...");
+    logger.info("Game created, starting game...");
 
     gameInstance.run();
 }

@@ -23,7 +23,7 @@ namespace level {
         datastruct::Vector<Entity *> entities_; 
         int numOfDoors_; // numero di porte nel livello
         
-        Logger logger_ = Logger("level::LEVEL");
+        Logger logger_ = Logger("level::Level");
       public: 
         Level(loader::LoaderHandler *loader); 
         Level(loader::LoaderHandler *loader, int oldLevelIdx); 
