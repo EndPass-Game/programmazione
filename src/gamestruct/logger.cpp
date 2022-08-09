@@ -1,6 +1,5 @@
 #include "gamestruct/logger.hpp"
 
-#include <cstdarg> // va_list 
 #include <cstdlib>
 #include <mutex>
 
@@ -28,7 +27,7 @@ void Logger::_log(const char *format, va_list args) {
 
 void Logger::_headerLog(const char *head, const char *format, va_list args) {
     loggerMutex.lock();
-    fprintf(fileStream_, "%s %s: ",head,loggerName_);
+    fprintf(fileStream_, "%s %s: ", head, loggerName_);
     _log(format, args);
     loggerMutex.unlock();
 }
@@ -37,28 +36,28 @@ void Logger::debug(const char *format, ...) {
 #ifdef DEBUG
     va_list args;
     va_start(args, format);
-    _headerLog("[DEBUG]",format, args);
+    _headerLog("[DEBUG]", format, args);
     va_end(args);
 #endif
 }
 
-void Logger::info(const char *format, ...){
+void Logger::info(const char *format, ...) {
     va_list args;
     va_start(args, format);
-    _headerLog("[INFO]",format, args);
+    _headerLog("[INFO]", format, args);
     va_end(args);
 }   
 
-void Logger::warning(const char *format, ...){
+void Logger::warning(const char *format, ...) {
     va_list args;
     va_start(args, format);
-    _headerLog("[WARNING]",format, args);
+    _headerLog("[WARNING]", format, args);
     va_end(args);
 }
 
-void Logger::error(const char *format, ...){
+void Logger::error(const char *format, ...) {
     va_list args;
     va_start(args, format);
-    _headerLog("[ERROR]",format, args);
+    _headerLog("[ERROR]", format, args);
     va_end(args);
 }

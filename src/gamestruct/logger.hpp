@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdio.h>
+#include <cstdarg> // va_list 
 #include <mutex>
 // questa classe contiene i metodi che permettono di registrare tutte le azioni avvenute nel gioco all'interno del file di log
 
