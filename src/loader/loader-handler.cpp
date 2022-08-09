@@ -8,11 +8,11 @@ namespace loader {
             exit(1);
         }
 
-        wallLoader = new WallLoader();
-        doorLoader = new DoorLoader();
-        playerPosLoader = new PlayerPosLoader();
-        artifactLoader = new ArtifactLoader();
-        powerLoader = new PowerLoader();
+        wallLoader = new WallSegment();
+        doorLoader = new DoorSegment();
+        playerPosLoader = new PlayerPosition();
+        artifactLoader = new Artifact();
+        powerLoader = new Power();
 
         wallLoader->load(file);
         doorLoader->load(file);
