@@ -3,8 +3,8 @@
 #include "datastruct/vector.hpp"
 
 namespace stringUtility{
-    char* copyString(char* str);
-    char* copyString(char* str,int lenght);
+    char* copyString(char const* str);
+    char* copyString(char const* str,int lenght);
     char* repeatChar(int len, char charater);
-    datastruct::Vector<char*> splitByLen(char* str, int len);
+    datastruct::Vector<char*> splitByLen(char const* str, int len);
 };

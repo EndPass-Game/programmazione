@@ -60,7 +60,7 @@ void Entity::move(manager::Level *levelManager) {
                 levelManager->getPlayer()->setLife(levelManager->getPlayer()->getLife() + art->getLifeUpgrade());
                 setPosition(Position(new_x, new_y));
                 levelManager->getPlayer()->incrementScore(2);
-                levelManager->getLogQueue()->add("Hai raccolto un artefatto, aumenta la  vita!");
+                levelManager->getLogQueue()->addEvent("Hai raccolto un artefatto, aumenta la  vita!");
                 delete art;
                 break;
             case enums::CollisionType::NONE:
@@ -70,7 +70,7 @@ void Entity::move(manager::Level *levelManager) {
                 levelManager->getPlayer()->addPower();
                 setPosition(Position(new_x, new_y));
                 levelManager->getPlayer()->incrementScore(5);
-                levelManager->getLogQueue()->add("Hai raccolto un potere!Puoi sbloccare  una porta!");
+                levelManager->getLogQueue()->addEvent("Hai raccolto un potere!Puoi sbloccare  una porta!");
 
                 delete (collectables::Power *) collision;
                 break;
@@ -120,16 +120,16 @@ void Entity::_handleDoorCollision(manager::Level *levelManager, level::DoorSegme
     if (door->isDoorOpen()) {
         logger_.info("moving to level with idx %d", door->getNextLevelIdx());
         levelManager->goToLevel(door->getNextLevelIdx());
-        levelManager->getLogQueue()->add("Hai cambiato livello!");
+        levelManager->getLogQueue()->addEvent("Hai cambiato livello!");
     } else {
         if(levelManager->getPlayer()->getPowers() > 0){
             logger_.info("opening door with idx %d", door->getNextLevelIdx());
             levelManager->getPlayer()->removePower();
             door->openDoor(); // temporaneo
             levelManager->getPlayer()->incrementScore(10);
-            levelManager->getLogQueue()->add("nuovo livello");
+            levelManager->getLogQueue()->addEvent("nuovo livello");
         }else{
-            levelManager->getLogQueue()->add("la porta è chiusa");
+            levelManager->getLogQueue()->addEvent("la porta è chiusa");
         }
     }
 }

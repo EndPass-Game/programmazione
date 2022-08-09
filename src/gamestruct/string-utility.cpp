@@ -1,7 +1,7 @@
 #include "gamestruct/string-utility.hpp"
 
 namespace stringUtility{
-    char* copyString(char* str,int length){
+    char* copyString(char const* str,int length){
         char* newString = new char[length + 1];
         for(int i = 0; i < length; i++){
             newString[i] = str[i];
@@ -9,7 +9,7 @@ namespace stringUtility{
         newString[length] = '\0';
         return newString;
     }
-    char* copyString(char* str){
+    char* copyString(char const* str){
         return copyString(str, strlen(str));
     }
     char* repeatChar(int len,char charater){
@@ -20,7 +20,9 @@ namespace stringUtility{
         newString[len] = '\0';
         return newString;
     }
-    datastruct::Vector<char*> splitByLen(char* str, int len){
+
+
+    datastruct::Vector<char*> splitByLen(char const* str, int len){
         datastruct::Vector<char*> result;
         int strLen = strlen(str);
         for(int i = 0; i < strLen; i += len){

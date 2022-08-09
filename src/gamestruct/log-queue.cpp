@@ -12,13 +12,13 @@ LogQueue::~LogQueue(){
     delete this->log;
     delete this->eventQueue;
 }
-
-void LogQueue::add(Event event) {
+// 
+void LogQueue::addEvent(char const* event) {
     datastruct::Vector<char*> splitted = stringUtility::splitByLen(event, this->lengthLine_);  
     for(size_t i = 0; i < splitted.size(); i++){
         eventQueue->push((Event)splitted[i]);
     }
-    while(eventQueue->size() > this->maximumLines_){
+    while(((int)eventQueue->size()) > this->maximumLines_){
         delete[] eventQueue->pop();
     }
 }

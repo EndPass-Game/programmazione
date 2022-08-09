@@ -16,6 +16,6 @@ private:
 public:
     LogQueue(int lenghtLine_, int maximumLines_,Size paddingTopLeft);
     ~LogQueue();
-    void add(Event event);
+    void addEvent(char const* event);
     void render(WINDOW* win,bool force);
 };
