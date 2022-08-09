@@ -24,7 +24,7 @@ namespace views
 
         ResizableView(Position pos, Size s);
 
-        virtual void handleScreenToSmall(manager::ViewManager *manager);
+        virtual void handleScreenToSmall(manager::ViewManager *manager) = 0;
 
         virtual void render(bool force);
 

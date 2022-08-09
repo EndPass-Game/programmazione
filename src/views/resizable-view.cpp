@@ -30,8 +30,6 @@ namespace views
         return false;
     }
 
-    void ResizableView::handleScreenToSmall(manager::ViewManager * manager) {}
-
     void ResizableView::render(bool forces){
         View::render(forces);
     }
