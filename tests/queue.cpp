@@ -21,6 +21,25 @@ namespace test {
         }
     }
 
+    void accessElement(){
+        Queue<int> v;
+        for (int i = 0; i < 10; i++) {
+            v.push(i);
+        }
+        for (int i = 0; i < 10; i++) {
+            assert(v[i] ==i);
+        }
+        for (int i = 0; i < 5; i++) {
+            v.pop();
+        }
+        for (int i = 0; i < 5; i++) {
+            v.push(i+10);
+        }
+        for (int i = 0; i < 10; i++) {
+            assert(v[i] == i+5);
+        }
+    }
+
     void alternate_push_and_pop() {
         // questo è per verificare che la queue ciclica funzioni
         int counter = 0;
@@ -47,6 +66,7 @@ namespace test {
 functionMETA func_table[] = {
     {test::basic_push_and_pop, "basic_push_and_pop"},
     {test::alternate_push_and_pop, "alternate_push_and_pop"},
+    {test::accessElement, "accessElement"},
 };
 
 int main() {

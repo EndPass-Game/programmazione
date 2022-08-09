@@ -14,8 +14,8 @@ namespace views
 
     void LogSubView::render(bool force)
     {
-        box(subWin_, 0, 0);
-        mvwprintw(subwin_,1,2,"Log:");
+        box(subWin_,0,0);
+        levelManager_->getLogQueue()->render(subWin_, force);
         SubView::render(force);
     }
 

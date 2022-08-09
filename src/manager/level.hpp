@@ -24,6 +24,9 @@ Funzioni:
 #include "gamestruct/size.hpp"
 #include "gamestruct/state-watcher.hpp"
 #include "loader/directory-loader.hpp"
+#include "gamestruct/log-queue.hpp"
+#include "manager/manager-settings.hpp"
+
 namespace manager {
     // Level manager: contiene tutte gli oggetti che vengono mostrati
     // nel gioco
@@ -33,6 +36,7 @@ namespace manager {
         Player *player_;
         StateWatcher<int> *levelIdx_;
         loader::DirectoryLoader *dirLoader_; 
+        LogQueue *logQueue_;
       public:
         Level();
         ~Level();
@@ -47,6 +51,8 @@ namespace manager {
         void goToLevel(int level);
 
         level::Collidable *getCollision(Position pos);
+
+        LogQueue* getLogQueue();
 
         void render(WINDOW *win, bool force);
     };

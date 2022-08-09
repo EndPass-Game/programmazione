@@ -65,6 +65,13 @@ class Queue {
         if (end_ == realSize_) end_ -= realSize_;
     }
 
+    T& last(){
+        return data_[end_ - 1];
+    }
+    T& first(){
+        return data_[start_];
+    }
+
     T pop() {
         if (isEmpty()) return T();
 
@@ -77,6 +84,13 @@ class Queue {
         size_ -= 1;
         if (start_ == realSize_) start_ -= realSize_;
         return element;
+    }
+
+    T &operator [](const int index) const {
+        return data_[(start_ + index) % realSize_]; 
+    }
+    T &at(const int index) const {
+        return data_[(start_ + index) % realSize_]; 
     }
 };
 } // namespace datastruct

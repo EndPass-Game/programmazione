@@ -27,7 +27,7 @@ namespace views
     {
         if (force)
         {
-            clear();
+            erase();
             touchwin(window);
         }
         wrefresh(window);
