@@ -31,4 +31,10 @@ namespace level {
             displayables_[i]->render(win, force);
         }
     }
+
+    void DisplayableSegment::clear(WINDOW *win) {
+        for (int i = 0; i < length_; i++) {
+            displayables_[i]->clear(win);
+        }
+    }
 }; // namespace level

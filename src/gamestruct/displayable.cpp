@@ -24,8 +24,12 @@ void Displayable::setPosition(Position new_position_) {
 
 void Displayable::clearLast(WINDOW *win) {
     if (position_->isChanged() or displayChar_->isChanged()) {
-        mvwprintw(win, position_->getLast().riga, position_->getLast().colonna, " ");
+        this->clear(win);
     }
+}
+
+void Displayable::clear(WINDOW *win) {
+    mvwprintw(win, position_->getLast().riga, position_->getLast().colonna, " ");
 }
 
 Position Displayable::getPosition(){
