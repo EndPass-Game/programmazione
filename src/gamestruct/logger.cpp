@@ -29,6 +29,7 @@ void Logger::_headerLog(const char *head, const char *format, va_list args) {
     loggerMutex.lock();
     fprintf(fileStream_, "%s %s: ", head, loggerName_);
     _log(format, args);
+    fflush(fileStream_); // così printa senza aspettare che il file venga chiuso
     loggerMutex.unlock();
 }
 
