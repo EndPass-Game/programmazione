@@ -8,7 +8,7 @@ namespace views {
     private:
         Size minimumRequired_; // dimensioni minime richieste per la finestra
         bool quit_ = false;
-        const char* name_="ScreenTooSmallView\0";
+        const char* name_ = "ScreenTooSmallView";
     public:
 
         ScreenTooSmallView(Size minimumRequired_);

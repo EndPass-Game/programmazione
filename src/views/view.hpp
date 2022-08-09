@@ -17,7 +17,7 @@ namespace views
         WINDOW *window;
         Size winSize;
         Position winPosition;
-        const char* name_="View\0";
+        const char* name_ = "View";
 
     public:
         // viene chiamata prima del rendere e questa è la funzione che può modificare la view manager

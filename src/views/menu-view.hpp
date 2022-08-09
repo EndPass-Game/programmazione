@@ -21,7 +21,7 @@ namespace views
             "/___//_/|_//__,'/_/  /_n_//___,'/___,' "
         };
 
-        const char* name_="PauseView";
+        const char* name_ = "PauseView";
 
     public :
         MenuView();
