@@ -8,6 +8,7 @@
 #include "views/game-view.hpp"
 #include "views/item-sub-view.hpp"
 #include "views/game-sub-view.hpp"
+#include "views/log-sub-view.hpp"
 
 namespace views
 {
@@ -19,6 +20,7 @@ namespace views
         bool pause = false;
         GameSubView * gameSubView_;
         ItemSubView * itemSubView_;
+        LogSubView * logSubView_;
         manager::Level *levelManager_;
         const char* name_ = "GameView";
     public:
@@ -30,8 +32,6 @@ namespace views
 
         void render(bool force);
 
-        void renderItem(bool force);
-        void renderGame(bool force);
 
         void handleScreenToSmall(manager::ViewManager* manager);
         

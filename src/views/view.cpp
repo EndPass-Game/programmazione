@@ -19,7 +19,7 @@ namespace views {
     void View::render(bool force) {
         if (force)
         {
-            clear();
+            erase();
             touchwin(window);
         }
         wrefresh(window);

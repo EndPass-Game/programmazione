@@ -24,8 +24,10 @@ class Player: public Entity {
   private:
     // TODO inventario
     int powers_;
+    int score_=0;
     Logger logger_ = Logger("player");
-  public:
+
+public:
     Player();
 
     // funzione che sarà chiamata dall'input del giocatore
@@ -41,4 +43,8 @@ class Player: public Entity {
     void removePower();
     
     int getPowers();
+
+    int getScore();
+
+    void incrementScore(int increment);
 };

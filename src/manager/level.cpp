@@ -24,6 +24,7 @@ namespace manager
         player_ = new Player();
         levelIdx_ = new StateWatcher<int>(-1); // -1 indica che non è stato ancora caricato nessun livello
         dirLoader_ = new loader::DirectoryLoader();
+        logQueue_ = new LogQueue(manager::kLogAreaSize.colonna-2,manager::kLogAreaSize.riga-2,manager::kPaddingLogArea);
 
         int newLevelIdx = addLevel();
         levelIdx_->setCurrent(newLevelIdx);
@@ -37,6 +38,7 @@ namespace manager
         delete levelIdx_;
         delete player_;
         delete dirLoader_;
+        delete logQueue_;
     }
 
     Player *Level::getPlayer() {
@@ -86,5 +88,9 @@ namespace manager
         levels_[levelIdx_->getCurrent()]->render(win, force);
         // TODO(ang): print player ( valuta se è meglio printarlo qui o in level/level 
         // io pensavo fosse meglio il level/level (gio))
+    }
+
+    LogQueue* Level::getLogQueue() {
+        return logQueue_;
     }
 }

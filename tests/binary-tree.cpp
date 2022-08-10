@@ -16,7 +16,7 @@ namespace test {
         }
 
         int *array = h.asArray();
-        for (int i = 0; i < h.getSize(); i++) {
+        for (size_t i = 0; i < h.getSize(); i++) {
             assert(array[i] == (int) i);
         }
         assert(h.max() == 99);

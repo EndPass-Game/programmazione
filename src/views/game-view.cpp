@@ -13,12 +13,14 @@ namespace views
         levelManager_ = new manager::Level();
         gameSubView_ = new GameSubView(window,levelManager_);
         itemSubView_  =  new ItemSubView(window,levelManager_);
+        logSubView_ = new LogSubView(window,levelManager_);
     }
 
     GameView::~GameView() {
         delete levelManager_;
         delete gameSubView_;
         delete itemSubView_;
+        delete logSubView_;
     }
 
     bool GameView::handleScreenBeforeRender(StateWatcher<Size> &screen, 
@@ -52,6 +54,7 @@ namespace views
 
     void GameView::render(bool force) {
         // TODO(ang): function that has to handle all the creature moves
+        logSubView_->render(force);
         itemSubView_->render(force);
         gameSubView_->render(force);
         ResizableView::render(force);
