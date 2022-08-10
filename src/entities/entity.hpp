@@ -33,9 +33,6 @@ class Entity: public Displayable, public level::Collidable {
     // sarà definita a seconda del metodo d'attacco dell'entità
     virtual void attack(Entity *target);
 
-    // muove l'entità secondo la direzione impostata
-    void move(manager::Level *levelManager);
-
     void applyDamage(int damage);
 
     void setDirection(enums::Direction direction);

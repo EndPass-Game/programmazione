@@ -16,8 +16,13 @@ Altro
 */
 #pragma once
 
+#include "enums/direction.hpp"
 #include "entities/entity.hpp"
+#include "gamestruct/displayable.hpp"
+#include "gamestruct/position.hpp"
 #include "gamestruct/logger.hpp"
+#include "level/collidable.hpp"
+#include "level/door-segment.hpp"
 
 // Player: classe che contiene il personaggio
 class Player: public Entity {
@@ -41,4 +46,7 @@ class Player: public Entity {
     void removePower();
     
     int getPowers();
+
+    // muove il player secondo la direzione impostata
+    void move(manager::Level *levelManager);
 };

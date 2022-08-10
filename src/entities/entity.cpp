@@ -19,62 +19,6 @@ Entity::Entity(int life, int attack, Position current, char displayChar):
     attack_(attack),
     direction_(enums::Direction::NONE) {}
 
-void Entity::move(manager::Level *levelManager) {
-    int new_x = getPosition().riga, new_y = getPosition().colonna;
-    bool isMoving = true;
-    switch(this->direction_) {
-        case enums::Direction::UP:
-            new_x -= 1;
-            break;
-        case enums::Direction::RIGHT:
-            new_y += 1;
-            break;
-        case enums::Direction::LEFT:
-            new_y -= 1;
-            break;
-        case enums::Direction::DOWN:
-            new_x += 1;
-            break;
-        case enums::Direction::NONE:
-            isMoving = false;
-            break;
-    }
-
-    if(isMoving) {
-        level::Collidable *collision = levelManager->getCollision(Position{new_x, new_y});
-        enums::CollisionType type = enums::CollisionType::NONE; 
-        if (collision != nullptr) type = collision->getCollisionType(); 
-        collectables::Artifact *art;
-        switch (type) {
-            case enums::CollisionType::DOORSEGMENT:
-                _handleDoorCollision(levelManager, (level::DoorSegment*) collision);
-                break;
-            case enums::CollisionType::WALLSEGMENT:
-                break;
-            case enums::CollisionType::ENTITY: 
-                // TODO(simo) può anche essere chiamato enemy invece di entity, obboh
-                // decidi te poi dopo!
-                break;
-            case enums::CollisionType::ARTIFACT: // TODO(simo): da spostare in Player
-                art = dynamic_cast<collectables::Artifact *>(collision);
-                levelManager->getPlayer()->setLife(levelManager->getPlayer()->getLife() + art->getLifeUpgrade());
-                setPosition(Position(new_x, new_y));
-                delete art;
-                break;
-            case enums::CollisionType::NONE:
-                setPosition(Position(new_x, new_y));
-                break;
-            case enums::CollisionType::POWER:
-                levelManager->getPlayer()->addPower();
-                setPosition(Position(new_x, new_y));
-                delete (collectables::Power *) collision;
-                break;
-        }
-    }
-    
-    this->direction_ = enums::Direction::NONE;
-}
-
 void Entity::setDirection(enums::Direction direction) {
     direction_ = direction;
 }
