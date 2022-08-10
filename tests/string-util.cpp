@@ -13,8 +13,8 @@ struct functionMETA {
 
 namespace test {
     void copyString() {
-        char* str = "Hello World";
-        char* str1=stringUtility::copyString(str);
+        char const* str = "Hello World";
+        char const* str1=stringUtility::copyString(str);
         assert(strcmp(str,str1)==0); // TODO: Non riesce a darmi un ❌, mi sa che deve essere sovrascritto, un wrapper ad assert?
         delete[] str1;
         str1=stringUtility::copyString(str,5);
@@ -23,17 +23,17 @@ namespace test {
         delete[] str1;
     }
     void repeatChar() {
-        char* str = "aaaaaaaaaa";
-        char* str1=stringUtility::repeatChar(10,'a');
+        char const* str = "aaaaaaaaaa";
+        char const* str1=stringUtility::repeatChar(10,'a');
         assert(strcmp(str,str1)==0); // TODO: Non riesce a darmi un ❌, mi sa che deve essere sovrascritto, un wrapper ad assert?
         delete[] str1;
     }
     void splitString() {
-        char* str = "abcdefghijklmnopqrstuvwxyz";
-        char* array[6]= {"abcde","fghij","klmno","pqrst","uvwxy","z"};
+        char const* str = "abcdefghijklmnopqrstuvwxyz";
+        char const* array[6]= {"abcde","fghij","klmno","pqrst","uvwxy","z"};
         datastruct::Vector<char*> vec=stringUtility::splitByLen(str,5);
         assert(vec.size()==6); 
-        for(int i=0;i<vec.size();i++){
+        for(size_t i=0;i<vec.size();i++){
             assert(strcmp(array[i],vec[i])==0);
             delete[] vec[i];
         }
