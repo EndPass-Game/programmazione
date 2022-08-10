@@ -77,6 +77,7 @@ namespace manager
         if (levelIdx_->isChanged()) {
             force = true;
             levels_[levelIdx_->getLast()]->clear(win);
+            levelIdx_->setCurrent(levelIdx_->getCurrent()); // FIX PG-34
         }
 
         player_->clearLast(win);
