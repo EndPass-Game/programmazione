@@ -24,7 +24,7 @@ namespace manager
         player_ = new Player();
         levelIdx_ = new StateWatcher<int>(-1); // -1 indica che non è stato ancora caricato nessun livello
         dirLoader_ = new loader::DirectoryLoader();
-        logQueue_ = new LogQueue(manager::kLogAreaSize.colonna-2,manager::kLogAreaSize.riga-2,{1,1});
+        logQueue_ = new LogQueue(manager::kLogAreaSize.colonna-2,manager::kLogAreaSize.riga-2,manager::kPaddingLogArea);
 
         int newLevelIdx = addLevel();
         levelIdx_->setCurrent(newLevelIdx);

@@ -65,10 +65,11 @@ class Queue {
         if (end_ == realSize_) end_ -= realSize_;
     }
 
-    T& last(){
+    T &last(){
         return data_[end_ - 1];
     }
-    T& first(){
+
+    T &first(){
         return data_[start_];
     }
 

@@ -1,52 +1,61 @@
 #include "gamestruct/displayable-string.hpp"
 
-DisplayableString::DisplayableString(Position current, char *str){
+DisplayableString::DisplayableString(Position current, char *str)
+{
     position_ = new StateWatcher<Position>(current);
     string_ = stringUtility::copyString(str);
-    clearString_ = stringUtility::repeatChar(strlen(str),' '); 
+    clearString_ = stringUtility::repeatChar(strlen(str), ' ');
 }
 
-DisplayableString::~DisplayableString(){
+DisplayableString::~DisplayableString()
+{
     delete position_;
     delete[] string_;
     delete[] clearString_;
 }
 
-Position DisplayableString::getPosition(){
+Position DisplayableString::getPosition()
+{
     return position_->getCurrent();
 }
 
-char *DisplayableString::getDisplayString(){
+char *DisplayableString::getDisplayString()
+{
     return string_;
 }
-void DisplayableString::setDisplayString(char *displayChar){
+
+void DisplayableString::setDisplayString(char *displayChar)
+{
     delete[] string_;
     string_ = stringUtility::copyString(displayChar);
 }
 
-void DisplayableString::setPosition(Position newPosition){
+void DisplayableString::setPosition(Position newPosition)
+{
     position_->setCurrent(newPosition);
 }
 
-// Se la posizione è stata aggiornata mette al posto del carattere un carattere vuoto
-void DisplayableString::clearCurrent(WINDOW *win){
+void DisplayableString::clearCurrent(WINDOW *win)
+{
     mvwprintw(win, position_->getCurrent().riga, position_->getCurrent().colonna, "%s", clearString_);
 }
 
-void DisplayableString::clearLast(WINDOW *win){
-    if(position_->isChanged() or position_->isFirstValue()){
+void DisplayableString::clearLast(WINDOW *win)
+{
+    if (position_->isChanged() or position_->isFirstValue())
+    {
         mvwprintw(win, position_->getLast().riga, position_->getLast().colonna, "%s", clearString_);
-
     }
 }
 
-// Se la posizione è stata modificata riprinta il carattere nella posizione corrente
-void DisplayableString::render(WINDOW *win, bool forced){
-    if(forced){
+void DisplayableString::render(WINDOW *win, bool forced)
+{
+    if (forced)
+    {
         Position current = position_->getCurrent();
-        mvwprintw(win, 
-            current.riga, 
-            current.colonna, 
-            "%s", string_);
+        mvwprintw(win,
+                  current.riga,
+                  current.colonna,
+                  "%s", string_);
     }
 }
