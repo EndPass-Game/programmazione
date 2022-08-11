@@ -11,7 +11,15 @@ LogQueue::LogQueue(int lengthLine_, int maximumLines_, Size paddingTopLeft)
 
 LogQueue::~LogQueue()
 {
+    while(!this->log->isEmpty())
+    {
+        delete this->log->pop();
+    }
     delete this->log;
+    while(!this->eventQueue->isEmpty())
+    {
+        delete[] this->eventQueue->pop();
+    }
     delete this->eventQueue;
 }
 
