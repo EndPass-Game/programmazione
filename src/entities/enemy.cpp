@@ -1,27 +1,25 @@
 #include "entities/enemy.hpp"
 
-#include <stdlib.h>
 #include <mutex>
+#include <stdlib.h>
 
-#include "gamestruct/position.hpp"
-#include "enums/direction.hpp"
 #include "entities/entity.hpp"
+#include "enums/direction.hpp"
+#include "gamestruct/position.hpp"
 
-Enemy::Enemy(): 
-    Entity(12, 3, // TODO: gestire queste costanti hardcoded in un file di setting
-    {4, 4}, /* position di spawn */ 
-    'E') {}
+Enemy::Enemy()
+    : Entity(12, 3,  // TODO: gestire queste costanti hardcoded in un file di setting
+             {4, 4}, /* position di spawn */
+             'E') {}
 
-Enemy::Enemy(Position spawnPos): 
-    Entity(12, 3,
-    spawnPos,
-    'E') {}
+Enemy::Enemy(Position spawnPos)
+    : Entity(12, 3, spawnPos, 'E') {}
 
 // TODO: fare vagabondare il nemico in modo più intelligente
 void Enemy::wander() {
     // std::lock_guard<std::mutex> lock(mutex_); // FIXME: il mutex bugga il gioco qui
     int direction = rand() % 5;
-    switch(direction) {
+    switch (direction) {
         case 0:
             this->setDirection(enums::Direction::UP);
             break;

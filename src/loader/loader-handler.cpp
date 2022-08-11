@@ -20,7 +20,7 @@ namespace loader {
         artifactLoader->load(file);
         powerLoader->load(file);
     }
-    
+
     LoaderHandler::~LoaderHandler() {
         fclose(file);
         delete wallLoader;
@@ -29,4 +29,4 @@ namespace loader {
         delete artifactLoader;
         delete powerLoader;
     }
-}; // namespace loader
+};  // namespace loader

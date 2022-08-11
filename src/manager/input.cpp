@@ -6,22 +6,19 @@
 #include "manager/game.hpp"
 #include "manager/level.hpp"
 #include "manager/view-manager.hpp"
-#include "views/view.hpp" // handleInput
+#include "views/view.hpp"  // handleInput
 
-namespace manager
-{
-    Input::Input(ViewManager *manager) : viewManager(manager) {}
+namespace manager {
+    Input::Input(ViewManager *manager)
+        : viewManager(manager) {}
 
-    void Input::run()
-    {
+    void Input::run() {
         timeout(300);
-        while (!viewManager->empty())
-        {
+        while (!viewManager->empty()) {
             int current_input = getch();
-            if (current_input != -1)
-            {
+            if (current_input != -1) {
                 viewManager->last()->handleInput(current_input);
             }
         }
     }
-} // namespace manager
+}  // namespace manager

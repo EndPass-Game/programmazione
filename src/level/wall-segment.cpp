@@ -6,11 +6,11 @@
 #include "level/displayable-segment.hpp"
 
 namespace level {
-    WallSegment::WallSegment() : 
-        DisplayableSegment() {}
+    WallSegment::WallSegment()
+        : DisplayableSegment() {}
 
-    WallSegment::WallSegment(Position startPosition, enums::Direction direction, int length,enums::WallAngleType angleType):
-      DisplayableSegment(startPosition, direction, length),angleType(angleType) {
+    WallSegment::WallSegment(Position startPosition, enums::Direction direction, int length, enums::WallAngleType angleType)
+        : DisplayableSegment(startPosition, direction, length), angleType(angleType) {
         char wallCharacter = _getWallCharacter(direction);
         for (unsigned int i = 0; i < displayables_.size(); i++) {
             if (_isAngle(i)) {
@@ -21,15 +21,14 @@ namespace level {
         }
     }
 
-    bool WallSegment::_isAngle(int positionOffset){
-        if((positionOffset==0 && (angleType==enums::WallAngleType::BOTH ||angleType==enums::WallAngleType::START)) 
-        || (positionOffset==length_-1 && (angleType==enums::WallAngleType::BOTH ||angleType==enums::WallAngleType::END)))
+    bool WallSegment::_isAngle(int positionOffset) {
+        if ((positionOffset == 0 && (angleType == enums::WallAngleType::BOTH || angleType == enums::WallAngleType::START)) || (positionOffset == length_ - 1 && (angleType == enums::WallAngleType::BOTH || angleType == enums::WallAngleType::END)))
             return true;
         else
             return false;
     }
 
-    char WallSegment::_getWallCharacter(enums::Direction direction){
+    char WallSegment::_getWallCharacter(enums::Direction direction) {
         enums::WallType type;
         switch (direction) {
             case enums::Direction::UP:
@@ -51,4 +50,4 @@ namespace level {
         return enums::CollisionType::WALLSEGMENT;
     }
 
-}; // namespace level
+};  // namespace level

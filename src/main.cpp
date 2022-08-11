@@ -1,12 +1,10 @@
-#include <time.h>
 #include <stdlib.h>
+#include <time.h>
 
-#include "manager/game.hpp"
 #include "gamestruct/logger.hpp"
-int main()
-{
-    srand((unsigned int)time(NULL));
-
+#include "manager/game.hpp"
+int main() {
+    srand((unsigned int) time(NULL));
 
     manager::Game gameInstance;
 

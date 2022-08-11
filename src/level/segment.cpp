@@ -3,18 +3,18 @@
 #include <ncurses.h>
 
 namespace level {
-    Segment::Segment() : 
-        startPosition_(0,0),
-        endPosition_(0,0) {
+    Segment::Segment()
+        : startPosition_(0, 0),
+          endPosition_(0, 0) {
         length_ = 0;
-        posDirection_ = Position(0, 0); // 0,0 per direzione invalida
+        posDirection_ = Position(0, 0);  // 0,0 per direzione invalida
     }
 
-    Segment::Segment(Position startPosition, enums::Direction direction, int length) : 
-        startPosition_(startPosition) {
+    Segment::Segment(Position startPosition, enums::Direction direction, int length)
+        : startPosition_(startPosition) {
         length_ = length;
         if (length_ <= 0 || direction == enums::Direction::NONE) {
-            length_ = 1; // default value per valori non validi, corrisponde a singolo muro nella posizione startPosition_
+            length_ = 1;  // default value per valori non validi, corrisponde a singolo muro nella posizione startPosition_
         }
         Position pos = startPosition_;
         switch (direction) {
@@ -38,7 +38,7 @@ namespace level {
         endPosition_ = pos + posDirection_ * (length_ - 1);
     }
 
-    Segment::~Segment() = default; 
+    Segment::~Segment() = default;
 
     bool Segment::isPositionInSegment(Position pos) {
         if (startPosition_.colonna == pos.colonna) {
@@ -53,4 +53,4 @@ namespace level {
             return false;
         }
     }
-}; // namespace level
+};  // namespace level

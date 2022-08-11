@@ -6,13 +6,12 @@
 // si può settare subito il suo ultimo valore, o se si lascia indefinito
 // si potrà verificare che è il primo valore che lì'oggetto riceve da isFirstVal
 template <class T>
-class StateWatcher
-{
-private:
+class StateWatcher {
+  private:
     // Contiene il valore che aveva current prima di essere stato settato
     T last_;
 
-    // Contiene il valore che è stato settato per ultimo 
+    // Contiene il valore che è stato settato per ultimo
     T current_;
 
     // È true solo se last_ non ha un valore, cioè quando l'oggetto è
@@ -23,7 +22,7 @@ private:
     // mutex per mantenere l'oggetto thread safe
     std::mutex mutex;
 
-public:
+  public:
     // Questo costruttore inizializza solo il valore corrente
     // essendo che il valore vecchio è indefinito per nostra
     // isChange()=false, ma isFirstVal()=true
@@ -40,28 +39,29 @@ public:
     // ma solo il corrente
     bool isFirstValue();
 
-    //ritorna true se l'oggetto è stato cambiato
+    // ritorna true se l'oggetto è stato cambiato
     bool isChanged();
 
-    //cambia il valore corrente dell'oggetto 
-    //e cambia l'ultimo valore che l'oggetto ha avuto
+    // cambia il valore corrente dell'oggetto
+    // e cambia l'ultimo valore che l'oggetto ha avuto
     void setCurrent(T newVal);
 
-    //ritorna penultimo valore preso da setCurrent
+    // ritorna penultimo valore preso da setCurrent
     T getLast();
 
-    //ritorna l'ultimo valore preso da setCurrent
+    // ritorna l'ultimo valore preso da setCurrent
     T getCurrent();
 };
 
 template <class T>
-StateWatcher<T>::StateWatcher(T current) : last_(current), current_(current), firstValue_(true) {}
+StateWatcher<T>::StateWatcher(T current)
+    : last_(current), current_(current), firstValue_(true) {}
 template <class T>
-StateWatcher<T>::StateWatcher(T last, T current) : last_(last), current_(current), firstValue_(false) {}
+StateWatcher<T>::StateWatcher(T last, T current)
+    : last_(last), current_(current), firstValue_(false) {}
 
 template <class T>
-void StateWatcher<T>::setCurrent(T newVal)
-{
+void StateWatcher<T>::setCurrent(T newVal) {
     std::lock_guard<std::mutex> lock(mutex);
     firstValue_ = false;
     last_ = current_;
@@ -69,29 +69,25 @@ void StateWatcher<T>::setCurrent(T newVal)
 }
 
 template <class T>
-bool StateWatcher<T>::isChanged()
-{
+bool StateWatcher<T>::isChanged() {
     std::lock_guard<std::mutex> lock(mutex);
     return last_ != current_;
 }
 
 template <class T>
-bool StateWatcher<T>::isFirstValue()
-{
+bool StateWatcher<T>::isFirstValue() {
     std::lock_guard<std::mutex> lock(mutex);
     return firstValue_;
 }
 
 template <class T>
-T StateWatcher<T>::getLast()
-{
+T StateWatcher<T>::getLast() {
     std::lock_guard<std::mutex> lock(mutex);
     return last_;
 }
 
 template <class T>
-T StateWatcher<T>::getCurrent()
-{
+T StateWatcher<T>::getCurrent() {
     std::lock_guard<std::mutex> lock(mutex);
     return current_;
 }

@@ -1,7 +1,7 @@
 /*
 Dati:
-1. vite 
-2. posizione 
+1. vite
+2. posizione
 3. danno
 
 Funzioni
@@ -20,14 +20,14 @@ Altro
 #include "gamestruct/logger.hpp"
 
 // Player: classe che contiene il personaggio
-class Player: public Entity {
+class Player : public Entity {
   private:
     // TODO inventario
     int powers_;
-    int score_=0;
+    int score_ = 0;
     Logger logger_ = Logger("player");
 
-public:
+  public:
     Player();
 
     // funzione che sarà chiamata dall'input del giocatore
@@ -41,7 +41,7 @@ public:
     void addPower();
 
     void removePower();
-    
+
     int getPowers();
 
     int getScore();

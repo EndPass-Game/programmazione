@@ -2,32 +2,34 @@
 #include "datastruct/vector.hpp"
 
 namespace datastruct {
-template<class T>
-class Stack {
-  private:
-    Vector<T> data_;
-  public:
-    Stack(): data_(0){}
+    template <class T>
+    class Stack {
+      private:
+        Vector<T> data_;
 
-    bool isEmpty() const {
-        return data_.isEmpty();
-    }
+      public:
+        Stack()
+            : data_(0) {}
 
-    T top() const {
-        return data_.back();
-    }
+        bool isEmpty() const {
+            return data_.isEmpty();
+        }
 
-    void push(T element) {
-        data_.push_back(element);
-    }
+        T top() const {
+            return data_.back();
+        }
 
-    T last() {
-      int last=data_.size()-1;
-      return data_[last];
-    }
+        void push(T element) {
+            data_.push_back(element);
+        }
 
-    T pop() {
-        return data_.pop_back();
-    }
-};
-} // namespace datastruct
+        T last() {
+            int last = data_.size() - 1;
+            return data_[last];
+        }
+
+        T pop() {
+            return data_.pop_back();
+        }
+    };
+}  // namespace datastruct

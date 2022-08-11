@@ -9,19 +9,14 @@
 #include "manager/level.hpp"
 #include "manager/view-manager.hpp"
 
-namespace manager
-{
-  class Input
-  {
-  private:
+namespace manager {
+    class Input {
+      private:
+        ViewManager *viewManager;
 
-    ViewManager *viewManager;
-
-  public:
-
-    Input(ViewManager *viewManager);
-    //funzione che viene eseguita finché rimangono elementi nel viewmanager
-    void run();
-
-  };
-}
+      public:
+        Input(ViewManager *viewManager);
+        // funzione che viene eseguita finché rimangono elementi nel viewmanager
+        void run();
+    };
+}  // namespace manager

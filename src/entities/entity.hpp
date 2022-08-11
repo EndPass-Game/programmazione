@@ -2,27 +2,26 @@
 /*
 deve tenere le vite, artefatti, posizione, e items
 */
-#include "manager/level.fwd.h" // circlular import
-
-#include "enums/direction.hpp"
 #include "enums/direction.hpp"
 #include "gamestruct/displayable.hpp"
-#include "gamestruct/position.hpp"
 #include "gamestruct/logger.hpp"
+#include "gamestruct/position.hpp"
 #include "level/collidable.hpp"
 #include "level/door-segment.hpp"
+#include "manager/level.fwd.h"  // circlular import
 // TODO: invece che ogni classe figlia erediti da questa
 // sarebbe buona cosa rendere questa classe una factory
 // che sforni entità, ognuna settata con certe specifiche
-class Entity: public Displayable, public level::Collidable {
+class Entity : public Displayable, public level::Collidable {
   protected:
-    int life_;      // quantità di vita
-    int attack_;    // danno fatto alle altre entità
+    int life_;    // quantità di vita
+    int attack_;  // danno fatto alle altre entità
 
     // Contiene la direzione che dovrà essere intrapresa nel prossimo frame
     enums::Direction direction_;
     Logger logger_ = Logger("Entity");
     virtual void _handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door);
+
   public:
     Entity();
     Entity(int life, int attack);

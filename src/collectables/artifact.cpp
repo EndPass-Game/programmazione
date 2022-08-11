@@ -1,25 +1,25 @@
 #include "collectables/artifact.hpp"
 
-#include <stdlib.h>
 #include <mutex>
+#include <stdlib.h>
 
-#include "gamestruct/position.hpp"
-#include "enums/direction.hpp"
 #include "entities/entity.hpp"
+#include "enums/direction.hpp"
+#include "gamestruct/position.hpp"
 
 namespace collectables {
 
-Artifact::Artifact(int life, Position posObj):
-    Displayable(posObj, 'A'){
+    Artifact::Artifact(int life, Position posObj)
+        : Displayable(posObj, 'A') {
         lifeUpgrade_ = life;
-}
+    }
 
-int Artifact::getLifeUpgrade(){
-    return this->lifeUpgrade_;
-}
+    int Artifact::getLifeUpgrade() {
+        return this->lifeUpgrade_;
+    }
 
-enums::CollisionType Artifact::getCollisionType() {
-    return enums::CollisionType::ARTIFACT;
-}
-    
-} // namespace collectables
+    enums::CollisionType Artifact::getCollisionType() {
+        return enums::CollisionType::ARTIFACT;
+    }
+
+}  // namespace collectables

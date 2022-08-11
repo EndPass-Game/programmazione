@@ -17,4 +17,4 @@ namespace enums {
         LEFT = 3,
         RIGHT = 4
     };
-}
+}  // namespace enums
