@@ -1,10 +1,10 @@
-#include <iostream>
-#include <assert.h>
-
 #include "datastruct/binary-tree.hpp"
+
+#include <assert.h>
+#include <iostream>
 using namespace datastruct;
 struct functionMETA {
-    void (*funcPtr) ();
+    void (*funcPtr)();
     const char *funcName;
 };
 
@@ -20,12 +20,11 @@ namespace test {
             assert(array[i] == (int) i);
         }
         assert(h.max() == 99);
-        delete []array;
+        delete[] array;
     }
 
-    
-    // fa due deletion, uno che testa il caso in cui ci siano entrambi i figli, l'altro 
-    // nel caso in cui ci sia solo un figlio 
+    // fa due deletion, uno che testa il caso in cui ci siano entrambi i figli, l'altro
+    // nel caso in cui ci sia solo un figlio
     void delete_root() {
         BinaryTree<int> h;
         h.insert(2);
@@ -35,13 +34,13 @@ namespace test {
         ALBERO ATTUALE:
              2
             / \
-           1   3  
+           1   3
         */
         h.remove(2);
         /*
              1
               \
-               3  
+               3
         */
         int test_array[] = {1, 3};
         int *out = h.asArray();
@@ -83,19 +82,18 @@ namespace test {
         }
     }
 
-    void run(void (*f) (), const char *name) {
-        std::cout << "Testando la funzione: " << name  << " --- ";
+    void run(void (*f)(), const char *name) {
+        std::cout << "Testando la funzione: " << name << " --- ";
         f();
         std::cout << "Ok! ✔️" << std::endl;
     }
-}
+}  // namespace test
 
 functionMETA func_table[] = {
     {test::insertion, "insertion"},
     {test::delete_root, "delete_root"},
     {test::correct_size, "correct_size"},
 };
-
 
 int main() {
     int n_tests = sizeof(func_table) / sizeof(functionMETA);

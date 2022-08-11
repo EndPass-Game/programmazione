@@ -9,7 +9,8 @@
 
 namespace manager {
 
-    Game::Game() : logger_("GAME") {
+    Game::Game()
+        : logger_("GAME") {
         logger_.info("Initializing main objects of the game");
         viewManager_ = new ViewManager();
         inputManager_ = new Input(viewManager_);

@@ -1,10 +1,10 @@
-#pragma once 
+#pragma once
 
-#include "enums/direction.hpp"
 #include "datastruct/vector.hpp"
+#include "enums/direction.hpp"
 #include "gamestruct/logger.hpp"
-#include "loader/loader-handler.hpp"
 #include "level/level.hpp"
+#include "loader/loader-handler.hpp"
 
 namespace loader {
     class LevelProvider {
@@ -13,12 +13,12 @@ namespace loader {
         datastruct::Vector<LoaderHandler *> loadedLevels_;
 
         Logger logger_;
+
       public:
         // @retuns l'istanza singleton
         static LevelProvider &getInstance();
 
         static void init(const char *directory = "assets/");
-
 
         LevelProvider(const LevelProvider &other) = delete;
         LevelProvider &operator=(const LevelProvider &other) = delete;
@@ -31,6 +31,6 @@ namespace loader {
 
         // @param levelIdx l'indice del livello di arrivo, -1 default per dire che non c'è nessun livello
         // @returns un livello con una porta nella direzione desiderata
-        level::Level* getLevel(enums::Direction wantedDirection, int levelIdx = -1);
+        level::Level *getLevel(enums::Direction wantedDirection, int levelIdx = -1);
     };
-} // namespace loader
+}  // namespace loader

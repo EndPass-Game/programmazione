@@ -7,15 +7,16 @@
 namespace loader {
 
     LevelProvider &LevelProvider::getInstance() {
-        /* Avere una variabile locale statica che rappresenta l'istanza univoca. 
-        * in quanto è statico, c'è solo un'istanza di questa variabile. È anche
-        * inizializzato quando questa funzione viene chiamata.
-        */
+        /* Avere una variabile locale statica che rappresenta l'istanza univoca.
+         * in quanto è statico, c'è solo un'istanza di questa variabile. È anche
+         * inizializzato quando questa funzione viene chiamata.
+         */
         static LevelProvider theInstance;
         return theInstance;
     }
 
-    LevelProvider::LevelProvider(const char *directory) : logger_("loader::LevelProvider") {
+    LevelProvider::LevelProvider(const char *directory)
+        : logger_("loader::LevelProvider") {
         DirectoryLoader loader(directory);
         datastruct::Vector<char *> fileNames = loader.getFileNames();
         for (unsigned int i = 0; i < fileNames.size(); i++) {
@@ -41,10 +42,10 @@ namespace loader {
     }
 
     level::Level *LevelProvider::getLevel(enums::Direction wantedDirection, int levelIdx) {
-        // TODO(ang): il random è solamente temporaneo 
+        // TODO(ang): il random è solamente temporaneo
         int random = rand() % loadedLevels_.size();
 
-        level::Level *level; 
+        level::Level *level;
         if (levelIdx == -1) {
             level = new level::Level(loadedLevels_[random]);
         } else {
@@ -53,9 +54,9 @@ namespace loader {
 
         // ricarica una nuova copia delle informazioni per essere consumata
         // alla prossima chiamata
-        loadedLevels_[random]->load(); 
+        loadedLevels_[random]->load();
 
-        // TODO: utilizzare la direzione voluta per scegliere il livello 
+        // TODO: utilizzare la direzione voluta per scegliere il livello
         // Level *level = new Level();
         // level->setWantedDirection(wantedDirection);
         // level->setWallSegment(fileNames_[rand() % fileNames_.size()].wallLoader);
@@ -66,4 +67,4 @@ namespace loader {
         return level;
     }
 
-} // namespace loader
+}  // namespace loader

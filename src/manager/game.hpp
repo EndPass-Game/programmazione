@@ -13,7 +13,7 @@ namespace manager {
         Input *inputManager_;
 
         Logger logger_;
-        
+
       public:
         Game();
         ~Game();
