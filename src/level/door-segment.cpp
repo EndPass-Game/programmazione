@@ -1,16 +1,14 @@
 #include "level/door-segment.hpp"
+
 #include "enums/wall-type.hpp"
 namespace level {
-    DoorSegment::DoorSegment() : 
-        DisplayableSegment() {}
+    DoorSegment::DoorSegment()
+        : DisplayableSegment() {}
 
-    DoorSegment::DoorSegment(Position start_position, 
-      enums::Direction direction, 
-      int length, 
-      int nextLevelIdx, 
-      bool isOpen): 
-      DisplayableSegment(start_position, direction, length),
-      nextLevelIdx_(nextLevelIdx), isOpen_(isOpen) { 
+    DoorSegment::DoorSegment(Position start_position, enums::Direction direction, int length, int nextLevelIdx, bool isOpen)
+        : DisplayableSegment(start_position, direction, length),
+          nextLevelIdx_(nextLevelIdx),
+          isOpen_(isOpen) {
         if (isOpen_) {
             _setDisplayChar((char) enums::WallType::DOOROPEN);
         } else {
@@ -49,4 +47,4 @@ namespace level {
             displayables_[i]->setDisplayChar(ch);
         }
     }
-}; // namespace level
+};  // namespace level

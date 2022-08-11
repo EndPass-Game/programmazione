@@ -2,23 +2,20 @@
 
 #include <mutex>
 
-#include "views/view.fwd.h" // forward declaration, circular dependency
-#include "manager/manager-settings.hpp"
-
 #include "datastruct/stack.hpp"
 #include "gamestruct/size.hpp"
+#include "manager/manager-settings.hpp"
+#include "views/view.fwd.h"  // forward declaration, circular dependency
 
-namespace manager
-{
+namespace manager {
 
     // tiene uno stack con le finestre attive, e l'ultima è quella che viene visualizzata
-    class ViewManager
-    {
-    private:
+    class ViewManager {
+      private:
         datastruct::Stack<views::View *> stackView;
         bool changedView = false;
 
-    public:
+      public:
         ViewManager();
         ~ViewManager();
         // cambia la view che viene visualizzata
@@ -34,4 +31,4 @@ namespace manager
         void clear();
     };
 
-}; // namespace manager
+};  // namespace manager

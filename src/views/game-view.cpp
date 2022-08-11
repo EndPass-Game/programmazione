@@ -1,19 +1,18 @@
 #include "views/game-view.hpp"
-#include "manager/level.hpp"
 
+#include "manager/level.hpp"
 
 // TODO(gio): fixa gli include di questo file, segui la filosofia: "includi quello che usi"
 // https://google.github.io/styleguide/cppguide.html#Include_What_You_Use
 
-namespace views
-{
+namespace views {
 
-    GameView::GameView(Position pos): 
-      ResizableView(pos, manager::kGameWindowsSize),name_("GameView") {
+    GameView::GameView(Position pos)
+        : ResizableView(pos, manager::kGameWindowsSize), name_("GameView") {
         levelManager_ = new manager::Level();
-        gameSubView_ = new GameSubView(window,levelManager_);
-        itemSubView_  =  new ItemSubView(window,levelManager_);
-        logSubView_ = new LogSubView(window,levelManager_);
+        gameSubView_ = new GameSubView(window, levelManager_);
+        itemSubView_ = new ItemSubView(window, levelManager_);
+        logSubView_ = new LogSubView(window, levelManager_);
     }
 
     GameView::~GameView() {
@@ -23,28 +22,27 @@ namespace views
         delete logSubView_;
     }
 
-    bool GameView::handleScreenBeforeRender(StateWatcher<Size> &screen, 
-      manager::ViewManager *view, bool changedView) {
-        if(ResizableView::handleScreenBeforeRender(screen, view,changedView))
+    bool GameView::handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view, bool changedView) {
+        if (ResizableView::handleScreenBeforeRender(screen, view, changedView))
             return true;
 
         if (quit) {
             view->popView();
         } else if (pause) {
-            PauseView* pauseView = new PauseView({0,0});
+            PauseView *pauseView = new PauseView({0, 0});
             view->pushView(pauseView);
-            pause=false;
+            pause = false;
         }
         return false;
     }
 
     void GameView::handleInput(char input) {
-        switch(input){
+        switch (input) {
             case 'q':
-                quit=true;
+                quit = true;
                 break;
             case 'p':
-                pause=true;
+                pause = true;
                 break;
             default:
                 gameSubView_->handleInput(input);
@@ -60,15 +58,14 @@ namespace views
         ResizableView::render(force);
     }
 
-    void GameView::handleScreenToSmall(manager::ViewManager* manager) {
-        PauseView* pauseView = new PauseView({0,0});
+    void GameView::handleScreenToSmall(manager::ViewManager *manager) {
+        PauseView *pauseView = new PauseView({0, 0});
         manager->pushView(pauseView);
-        ScreenTooSmallView* toSmall = new ScreenTooSmallView(manager::kGameWindowsSize);
+        ScreenTooSmallView *toSmall = new ScreenTooSmallView(manager::kGameWindowsSize);
         manager->pushView(toSmall);
-
     }
 
-    const char* GameView::getName() {
+    const char *GameView::getName() {
         return name_;
     }
-}; // namespace views
+};  // namespace views

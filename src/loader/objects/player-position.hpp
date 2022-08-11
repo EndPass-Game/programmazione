@@ -1,14 +1,14 @@
-#pragma once 
+#pragma once
 
 #include <cstdlib>
 
+#include "gamestruct/position.hpp"
 #include "level/wall-segment.hpp"
 #include "loader/load-object.hpp"
-#include "gamestruct/position.hpp"
 
 namespace loader {
-    class PlayerPosition: public LoadObject<Position> {
+    class PlayerPosition : public LoadObject<Position> {
       public:
         void load(FILE *file) override;
     };
-} // namespace loader
+}  // namespace loader

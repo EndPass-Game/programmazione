@@ -10,7 +10,7 @@
 // Dovrebbe essere sostituito da un sistema per gestire ogni
 // possibile nemico. (quindi un manager)
 // oppure una factory per costruire il nemico specifico
-class Enemy: public Entity {
+class Enemy : public Entity {
   public:
     Enemy();
     Enemy(Position spawnPos);

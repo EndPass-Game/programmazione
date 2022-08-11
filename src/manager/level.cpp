@@ -13,22 +13,21 @@ Funzioni:
 
 #include <ncurses.h>
 
-#include "entities/player.hpp"
 #include "entities/enemy.hpp"
-#include "level/collidable.hpp"
+#include "entities/player.hpp"
 #include "gamestruct/size.hpp"
+#include "level/collidable.hpp"
 #include "loader/loader-handler.hpp"
-namespace manager
-{
+namespace manager {
     Level::Level() {
         player_ = new Player();
-        levelIdx_ = new StateWatcher<int>(-1); // -1 indica che non è stato ancora caricato nessun livello
+        levelIdx_ = new StateWatcher<int>(-1);  // -1 indica che non è stato ancora caricato nessun livello
         dirLoader_ = new loader::DirectoryLoader();
-        logQueue_ = new LogQueue(manager::kLogAreaSize.colonna-2,manager::kLogAreaSize.riga-2,manager::kPaddingLogArea);
+        logQueue_ = new LogQueue(manager::kLogAreaSize.colonna - 2, manager::kLogAreaSize.riga - 2, manager::kPaddingLogArea);
 
         int newLevelIdx = addLevel();
         levelIdx_->setCurrent(newLevelIdx);
-        goToLevel(newLevelIdx); 
+        goToLevel(newLevelIdx);
     }
 
     Level::~Level() {
@@ -79,18 +78,18 @@ namespace manager
         if (levelIdx_->isChanged()) {
             force = true;
             levels_[levelIdx_->getLast()]->clear(win);
-            levelIdx_->setCurrent(levelIdx_->getCurrent()); // FIX PG-34
+            levelIdx_->setCurrent(levelIdx_->getCurrent());  // FIX PG-34
         }
 
         player_->clearLast(win);
         player_->render(win, force);
 
         levels_[levelIdx_->getCurrent()]->render(win, force);
-        // TODO(ang): print player ( valuta se è meglio printarlo qui o in level/level 
+        // TODO(ang): print player ( valuta se è meglio printarlo qui o in level/level
         // io pensavo fosse meglio il level/level (gio))
     }
 
-    LogQueue* Level::getLogQueue() {
+    LogQueue *Level::getLogQueue() {
         return logQueue_;
     }
-}
+}  // namespace manager

@@ -10,49 +10,46 @@ Funzioni:
 #include "manager/view-manager.hpp"
 #include "views/view.hpp"
 
-namespace manager
-{
-    Display::Display(ViewManager *viewManager) : 
-        viewManager(viewManager),
-        screenSize(getScreenSize()) {
-        }
+namespace manager {
+    Display::Display(ViewManager *viewManager)
+        : viewManager(viewManager),
+          screenSize(getScreenSize()) {
+    }
 
-    Size Display::getScreenSize(){
+    Size Display::getScreenSize() {
         return Size{LINES, COLS};
     }
 
-    void Display::updateScreenSize(){
+    void Display::updateScreenSize() {
         screenSize.setCurrent(getScreenSize());
     }
 
-    bool Display::checkUpdateView(){
+    bool Display::checkUpdateView() {
         updateScreenSize();
         bool changed = screenSize.isChanged();
-        if(changed){
+        if (changed) {
             logger_.info("Screen size changed %d %d", screenSize.getCurrent().riga, screenSize.getCurrent().colonna);
         }
         bool tmpChangedView;
-        do{
+        do {
             viewManager->last()->handleScreenBeforeRender(screenSize, viewManager, changed);
             tmpChangedView = viewManager->isChangedView();
             changed |= tmpChangedView;
-            if(tmpChangedView and !viewManager->empty()){
-                logger_.info("Changed view %s",(const char*) viewManager->last()->getName());
+            if (tmpChangedView and !viewManager->empty()) {
+                logger_.info("Changed view %s", (const char *) viewManager->last()->getName());
             }
-        }while(tmpChangedView and !viewManager->empty());
+        } while (tmpChangedView and !viewManager->empty());
         return changed;
     }
 
-    void Display::gameLoop()
-    {
-        while (!viewManager->empty())
-        {
+    void Display::gameLoop() {
+        while (!viewManager->empty()) {
             bool hasUpdated = checkUpdateView();
-            if(!viewManager->empty()){
+            if (!viewManager->empty()) {
                 viewManager->last()->render(hasUpdated);
                 std::this_thread::sleep_for(std::chrono::milliseconds(kSleepTime));
             }
         }
     }
 
-} // namespace manager
+}  // namespace manager

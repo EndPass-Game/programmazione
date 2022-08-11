@@ -2,9 +2,9 @@
 
 #include <thread>
 
-#include "manager/level.hpp"
 #include "manager/display.hpp"
 #include "manager/input.hpp"
+#include "manager/level.hpp"
 #include "views/menu-view.hpp"
 
 namespace manager {
@@ -15,9 +15,9 @@ namespace manager {
         inputManager_ = new Input(viewManager_);
         displayManager_ = new Display(viewManager_);
 
-        initscr();            // inizializza lo schermo di ncurses
-        noecho();             // impedisce la stampa a schermo del carattere di getch()
-        keypad(stdscr, TRUE); // permette a wgetch() di prendere in input caratteri funzione
+        initscr();             // inizializza lo schermo di ncurses
+        noecho();              // impedisce la stampa a schermo del carattere di getch()
+        keypad(stdscr, TRUE);  // permette a wgetch() di prendere in input caratteri funzione
         logger_.info("object initialized");
     }
 
@@ -39,4 +39,4 @@ namespace manager {
         std::thread displayThread(&Display::gameLoop, displayManager_);
         displayThread.join();
     }
-}
+}  // namespace manager

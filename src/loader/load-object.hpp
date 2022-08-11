@@ -1,4 +1,4 @@
-#pragma once 
+#pragma once
 
 #include "datastruct/vector.hpp"
 
@@ -7,18 +7,18 @@ namespace loader {
     template <typename T>
     class LoadObject {
       protected:
-        bool _isTransferred; 
+        bool _isTransferred;
         datastruct::Vector<T *> *_loadedObjects;
-      public: 
+
+      public:
         LoadObject();
         virtual ~LoadObject();
-        
-        // WARNING: quando questa funzione è chiamata, l'onere di liberare la memoria occupata
-        // è lasciata al chiamante. 
-        datastruct::Vector<T *> *getLoadedObjects();
-        virtual void load(FILE *file) = 0; 
-    };
 
+        // WARNING: quando questa funzione è chiamata, l'onere di liberare la memoria occupata
+        // è lasciata al chiamante.
+        datastruct::Vector<T *> *getLoadedObjects();
+        virtual void load(FILE *file) = 0;
+    };
 
     template <typename T>
     LoadObject<T>::LoadObject() {
@@ -45,4 +45,4 @@ namespace loader {
             return nullptr;
         }
     }
-}; // namespace loader
+};  // namespace loader
