@@ -20,6 +20,7 @@ namespace loader {
         struct dirent *entry;
         while ((entry = readdir(dir)) != NULL) {
             if (_isExtensionValid(entry->d_name, allowedExtension)) {
+                logger_.debug("Loaded file: %s", fileName);
                 char *fileName = new char[strlen(dirname) + strlen(entry->d_name) + 1];
                 strcpy(fileName, dirname);
                 strcat(fileName, entry->d_name);  // la null char finale è copiata, non serve metterlo.
