@@ -22,6 +22,7 @@ Altro
 #include "enums/collision-type.hpp"
 #include "level/collidable.hpp"
 
+
 Player::Player(): 
     Entity(12, 3, // TODO: gestire queste costanti hardcoded in un file di setting
     {1, 1}, /* position di spawn */ 
@@ -50,58 +51,46 @@ int Player::getPowers(){
     return powers_;
 }
 
-void Player::move(manager::Level *levelManager) {
-    int new_x = getPosition().riga, new_y = getPosition().colonna;
-    bool isMoving = true;
-    switch(this->direction_) {
-        case enums::Direction::UP:
-            new_x -= 1;
-            break;
-        case enums::Direction::RIGHT:
-            new_y += 1;
-            break;
-        case enums::Direction::LEFT:
-            new_y -= 1;
-            break;
-        case enums::Direction::DOWN:
-            new_x += 1;
-            break;
-        case enums::Direction::NONE:
-            isMoving = false;
-            break;
+void Player::_handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door, Position pos) {
+    logger_.info("collided with door");
+    if (door->getNextLevelIdx() == -1) {
+        int nextLevelIdx = levelManager->addLevel();
+        door->setNextLevelIdx(nextLevelIdx);
     }
 
-    if(isMoving) {
-        level::Collidable *collision = levelManager->getCollision(Position{new_x, new_y});
-        enums::CollisionType type = enums::CollisionType::NONE; 
-        if (collision != nullptr) type = collision->getCollisionType(); 
-        collectables::Artifact *art;
-        switch (type) {
-            case enums::CollisionType::DOORSEGMENT:
-                _handleDoorCollision(levelManager, (level::DoorSegment*) collision);
-                break;
-            case enums::CollisionType::WALLSEGMENT:
-                break;
-            case enums::CollisionType::ENTITY: 
-                // TODO(simo) può anche essere chiamato enemy invece di entity, obboh
-                // decidi te poi dopo!
-                break;
-            case enums::CollisionType::ARTIFACT: // TODO(simo): da spostare in Player
-                art = dynamic_cast<collectables::Artifact *>(collision);
-                levelManager->getPlayer()->setLife(levelManager->getPlayer()->getLife() + art->getLifeUpgrade());
-                setPosition(Position(new_x, new_y));
-                delete art;
-                break;
-            case enums::CollisionType::NONE:
-                setPosition(Position(new_x, new_y));
-                break;
-            case enums::CollisionType::POWER:
-                levelManager->getPlayer()->addPower();
-                setPosition(Position(new_x, new_y));
-                delete (collectables::Power *) collision;
-                break;
+    if (door->isDoorOpen()) {
+        logger_.info("moving to level with idx %d", door->getNextLevelIdx());
+        levelManager->goToLevel(door->getNextLevelIdx());
+    } else {
+        if(levelManager->getPlayer()->getPowers() > 0){
+            logger_.info("opening door with idx %d", door->getNextLevelIdx());
+            levelManager->getPlayer()->removePower();
+            door->openDoor(); // temporaneo
         }
     }
+}
+
+void Player::_handleWallCollision(manager::Level *levelManager, level::WallSegment *wall, Position pos){
+
+}
+
+void Player::_handleEntityCollision(manager::Level *levelManager, Entity *entity, Position pos){
     
-    this->direction_ = enums::Direction::NONE;
+}
+
+void Player::_handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact, Position pos){
+    collectables::Artifact *art;
+    art = dynamic_cast<collectables::Artifact *>(artifact);
+    levelManager->getPlayer()->setLife(levelManager->getPlayer()->getLife() + art->getLifeUpgrade());
+    levelManager->getPlayer()->setPosition(pos);
+    delete art;
+}
+
+void Player::_handlePowerCollision(manager::Level *levelManager, collectables::Power *power, Position pos){
+    levelManager->getPlayer()->addPower();
+    levelManager->getPlayer()->setPosition(pos);
+}
+
+void Player::_handleNoneCollision(manager::Level *levelManager, Position pos){
+    levelManager->getPlayer()->setPosition(pos);
 }

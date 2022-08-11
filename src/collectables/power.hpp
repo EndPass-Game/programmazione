@@ -2,8 +2,7 @@
 
 #include "gamestruct/displayable.hpp"
 #include "gamestruct/position.hpp"
-#include "enums/direction.hpp"
-#include "entities/entity.hpp"
+#include "level/collidable.hpp"
 
 namespace collectables {
 

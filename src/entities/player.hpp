@@ -16,20 +16,30 @@ Altro
 */
 #pragma once
 
-#include "enums/direction.hpp"
 #include "entities/entity.hpp"
+#include "gamestruct/logger.hpp"
+
+#include "enums/direction.hpp"
 #include "gamestruct/displayable.hpp"
 #include "gamestruct/position.hpp"
 #include "gamestruct/logger.hpp"
 #include "level/collidable.hpp"
 #include "level/door-segment.hpp"
-
+#include "level/wall-segment.hpp"
+#include "collectables/artifact.hpp"
+#include "collectables/power.hpp"
 // Player: classe che contiene il personaggio
 class Player: public Entity {
   private:
     // TODO inventario
     int powers_;
     Logger logger_ = Logger("player");
+    virtual void _handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door, Position pos);
+    virtual void _handleWallCollision(manager::Level *levelManager, level::WallSegment *wall, Position pos);
+    virtual void _handleEntityCollision(manager::Level *levelManager, Entity *entity, Position pos);
+    virtual void _handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact, Position pos);
+    virtual void _handlePowerCollision(manager::Level *levelManager, collectables::Power *power, Position pos);
+    virtual void _handleNoneCollision(manager::Level *levelManager, Position pos);
   public:
     Player();
 
@@ -46,7 +56,4 @@ class Player: public Entity {
     void removePower();
     
     int getPowers();
-
-    // muove il player secondo la direzione impostata
-    void move(manager::Level *levelManager);
 };

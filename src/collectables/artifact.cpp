@@ -4,8 +4,6 @@
 #include <mutex>
 
 #include "gamestruct/position.hpp"
-#include "enums/direction.hpp"
-#include "entities/entity.hpp"
 
 namespace collectables {
 
