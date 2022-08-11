@@ -1,16 +1,17 @@
-#include <iostream>
-#include <chrono>
-#include <assert.h>
-
 #include "datastruct/avl-tree.hpp"
+
+#include <assert.h>
+#include <chrono>
+#include <iostream>
+
 #include "datastruct/binary-tree.hpp"
 using namespace datastruct;
 struct functionMETA {
-    void (*funcPtr) ();
+    void (*funcPtr)();
     const char *funcName;
 };
 
-// Questo non è un test, è solo un test per vedere in modo pratico la differenza di 
+// Questo non è un test, è solo un test per vedere in modo pratico la differenza di
 // efficienza fra i due algoritmi.
 void time_benchmarch() {
     BinaryTree<int> bt;
@@ -21,9 +22,8 @@ void time_benchmarch() {
     for (int i = 0; i < test_size; i++) {
         bt.insert(i);
     }
- 
-    auto end = std::chrono::steady_clock::now();
 
+    auto end = std::chrono::steady_clock::now();
 
     auto start2 = std::chrono::steady_clock::now();
     for (int i = 0; i < test_size; i++) {
@@ -31,16 +31,15 @@ void time_benchmarch() {
     }
     auto end2 = std::chrono::steady_clock::now();
     std::cout << std::endl;
-    std::cout << "Binary-tree: insertion of " << test_size 
-        << " consecutive numbers, elapsed time in microseconds: "
-        << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()
-        << " µs" << std::endl;
+    std::cout << "Binary-tree: insertion of " << test_size
+              << " consecutive numbers, elapsed time in microseconds: "
+              << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()
+              << " µs" << std::endl;
 
-    std::cout << "AVL-tree: insertion of " << test_size 
-        << " consecutive numbers, elapsed time in microseconds: "
-        << std::chrono::duration_cast<std::chrono::microseconds>(end2 - start2).count()
-        << " µs" << std::endl;
-    
+    std::cout << "AVL-tree: insertion of " << test_size
+              << " consecutive numbers, elapsed time in microseconds: "
+              << std::chrono::duration_cast<std::chrono::microseconds>(end2 - start2).count()
+              << " µs" << std::endl;
 
     auto start3 = std::chrono::steady_clock::now();
     for (int i = 0; i < test_size; i++) {
@@ -48,25 +47,22 @@ void time_benchmarch() {
     }
     auto end3 = std::chrono::steady_clock::now();
 
-
     auto start4 = std::chrono::steady_clock::now();
     for (int i = 0; i < test_size; i++) {
         avl.remove(i);
     }
     auto end4 = std::chrono::steady_clock::now();
 
-
     std::cout << std::endl;
-    std::cout << "Binary-tree: deletion of " << test_size 
-        << " consecutive numbers (always head), elapsed time in microseconds: "
-        << std::chrono::duration_cast<std::chrono::microseconds>(end3 - start3).count()
-        << " µs" << std::endl;
+    std::cout << "Binary-tree: deletion of " << test_size
+              << " consecutive numbers (always head), elapsed time in microseconds: "
+              << std::chrono::duration_cast<std::chrono::microseconds>(end3 - start3).count()
+              << " µs" << std::endl;
 
-    std::cout << "AVL-tree: deletion of " << test_size 
-        << " consecutive numbers, elapsed time in microseconds: "
-        << std::chrono::duration_cast<std::chrono::microseconds>(end4 - start4).count()
-        << " µs" << std::endl;
-
+    std::cout << "AVL-tree: deletion of " << test_size
+              << " consecutive numbers, elapsed time in microseconds: "
+              << std::chrono::duration_cast<std::chrono::microseconds>(end4 - start4).count()
+              << " µs" << std::endl;
 
     for (int i = 0; i < test_size; i++) {
         bt.insert(i);
@@ -78,12 +74,11 @@ void time_benchmarch() {
     }
     auto end5 = std::chrono::steady_clock::now();
 
-
     std::cout << std::endl;
-    std::cout << "Binary-tree: deletion of " << test_size 
-        << " consecutive numbers (always tail), elapsed time in microseconds: "
-        << std::chrono::duration_cast<std::chrono::microseconds>(end5 - start5).count()
-        << " µs" << std::endl;
+    std::cout << "Binary-tree: deletion of " << test_size
+              << " consecutive numbers (always tail), elapsed time in microseconds: "
+              << std::chrono::duration_cast<std::chrono::microseconds>(end5 - start5).count()
+              << " µs" << std::endl;
 }
 
 namespace test {
@@ -98,12 +93,11 @@ namespace test {
             assert(array[i] == (int) i);
         }
         assert(h.max() == 99);
-        delete []array;
+        delete[] array;
     }
 
-    
-    // fa due deletion, uno che testa il caso in cui ci siano entrambi i figli, l'altro 
-    // nel caso in cui ci sia solo un figlio 
+    // fa due deletion, uno che testa il caso in cui ci siano entrambi i figli, l'altro
+    // nel caso in cui ci sia solo un figlio
     void delete_root() {
         AVLTree<int> h;
         h.insert(1);
@@ -113,13 +107,13 @@ namespace test {
         ALBERO ATTUALE:
              2
             / \
-           1   3  
+           1   3
         */
         h.remove(2);
         /*
              1
               \
-               3  
+               3
         */
         int test_array[] = {1, 3};
         int *out = h.asArray();
@@ -161,12 +155,12 @@ namespace test {
         }
     }
 
-    void run(void (*f) (), const char *name) {
-        std::cout << "Testando la funzione: " << name  << " --- ";
+    void run(void (*f)(), const char *name) {
+        std::cout << "Testando la funzione: " << name << " --- ";
         f();
         std::cout << "Ok! ✔️" << std::endl;
     }
-}
+}  // namespace test
 
 functionMETA func_table[] = {
     {test::insertion, "insertion"},
@@ -174,7 +168,6 @@ functionMETA func_table[] = {
     {test::correct_size, "correct_size"},
     {time_benchmarch, "time_benchmarch"},
 };
-
 
 int main() {
     int n_tests = sizeof(func_table) / sizeof(functionMETA);

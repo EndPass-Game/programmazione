@@ -1,11 +1,11 @@
-#include <iostream>
-#include <cassert>
-
 #include "datastruct/vector.hpp"
+
+#include <cassert>
+#include <iostream>
 
 using namespace datastruct;
 struct functionMETA {
-    void (*funcPtr) ();
+    void (*funcPtr)();
     const char *funcName;
 };
 
@@ -19,7 +19,6 @@ namespace test {
         for (int i = 19; i >= 0; i--) {
             assert(v.pop_back() == i);
         }
-
     }
 
     void empty_pop_remove() {
@@ -53,13 +52,13 @@ namespace test {
     void resize_assign() {
         Vector<int> v;
         const int test_size = 20;
-        v.assign(test_size, 1); 
+        v.assign(test_size, 1);
         for (int i = 0; i < test_size; i++) {
-            assert(v[i] == 1); 
+            assert(v[i] == 1);
         }
         v.resize(test_size * 2);
         for (int i = 0; i < test_size; i++) {
-            assert(v[i] == 1); 
+            assert(v[i] == 1);
         }
 
         v.resize(test_size / 2);
@@ -70,12 +69,12 @@ namespace test {
 
     // Wrappa una funzione di test per mostrare l'output di una funzione
     // se gli assert dentro la funzione di test sono corretti, da input a schermo
-    void run(void (*f) (), const char *name) {
-        std::cout << "Testando la funzione: " << name  << " --- ";
+    void run(void (*f)(), const char *name) {
+        std::cout << "Testando la funzione: " << name << " --- ";
         f();
         std::cout << "Ok! ✔️" << std::endl;
     }
-} 
+}  // namespace test
 
 functionMETA func_table[] = {
     {test::basic_push_and_pop, "basic_push_and_pop"},

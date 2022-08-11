@@ -1,0 +1,39 @@
+name: C/C++ formatter
+
+on:
+  pull_request:
+      branches: [ master ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Fetch the repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        ref: ${{ github.head_ref }}
+          
+    - name: Install clang-format
+      run: sudo apt-get install clang-format
+
+    - name: List clang version 
+      run: clang-format -version
+
+    - name: Run linter check
+      id: linting
+      run: clang-format -style=file --dry-run -Werror $(find ./src -name '*.cpp') $(find ./src -name '*.hpp')
+      continue-on-error: true
+
+    - name: Run formatter on fail
+      if: steps.linting.outcome != 'success'
+      run: clang-format -style=file -i --verbose $(find . -name '*.cpp') $(find . -name '*.hpp')
+
+    - name: Commit and Push files on fail
+      if: steps.linting.outcome != 'success'
+      run: |
+        git config --local user.name "endpass-formatter"
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git add *
+        git commit --amend --no-edit
+        git push -f
