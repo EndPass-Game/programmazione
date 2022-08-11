@@ -6,6 +6,8 @@
 
 namespace loader {
     void DoorSegment::load(FILE *file) {
+        LoadObject::resetTransferred();
+
         int numeroPorte;
         fscanf(file, "%d", &numeroPorte);
 

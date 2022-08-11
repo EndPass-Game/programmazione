@@ -2,6 +2,8 @@
 
 namespace loader {
     void WallSegment::load(FILE *file) {
+        LoadObject::resetTransferred();
+
         int numeroMuri;
         fscanf(file, "%d", &numeroMuri);
         this->_loadedObjects->resize(numeroMuri);

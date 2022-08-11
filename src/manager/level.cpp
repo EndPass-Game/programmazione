@@ -13,16 +13,14 @@ Funzioni:
 
 #include <ncurses.h>
 
-#include "entities/enemy.hpp"
-#include "entities/player.hpp"
-#include "gamestruct/size.hpp"
-#include "level/collidable.hpp"
-#include "loader/loader-handler.hpp"
+#include "enums/direction.hpp"
+#include "loader/level-provider.hpp"
+
 namespace manager {
+
     Level::Level() {
         player_ = new Player();
         levelIdx_ = new StateWatcher<int>(-1);  // -1 indica che non è stato ancora caricato nessun livello
-        dirLoader_ = new loader::DirectoryLoader();
         logQueue_ = new LogQueue(manager::kLogAreaSize.colonna - 2, manager::kLogAreaSize.riga - 2, manager::kPaddingLogArea);
 
         int newLevelIdx = addLevel();
@@ -36,7 +34,6 @@ namespace manager {
         }
         delete levelIdx_;
         delete player_;
-        delete dirLoader_;
         delete logQueue_;
     }
 
@@ -47,13 +44,14 @@ namespace manager {
     int Level::addLevel() {
         logger_.info("Adding new level");
 
-        const char *levelToLoadName = dirLoader_->getRandomFileName();
-        loader::LoaderHandler loader(levelToLoadName);
+        loader::LevelProvider &levelProvider = loader::LevelProvider::getInstance();
 
         if (levelIdx_->getCurrent() == -1) {
-            levels_.push_back(new level::Level(&loader));
+            // TODO(ang): fix the direction later
+            levels_.push_back(levelProvider.getLevel(enums::Direction::UP));
         } else {
-            levels_.push_back(new level::Level(&loader, levelIdx_->getCurrent()));
+            // TODO(ang): fix the direction later
+            levels_.push_back(levelProvider.getLevel(enums::Direction::UP, levelIdx_->getCurrent()));
         }
         return (int) levels_.size() - 1;
     }

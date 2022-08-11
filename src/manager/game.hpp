@@ -11,7 +11,8 @@ namespace manager {
         ViewManager *viewManager_;
         Display *displayManager_;
         Input *inputManager_;
-        Logger logger_ = Logger("MAIN GAME");
+
+        Logger logger_;
 
       public:
         Game();
