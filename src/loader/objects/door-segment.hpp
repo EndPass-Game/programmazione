@@ -1,4 +1,4 @@
-#pragma once 
+#pragma once
 
 #include <cstdlib>
 
@@ -6,8 +6,8 @@
 #include "loader/load-object.hpp"
 
 namespace loader {
-    class DoorSegment: public LoadObject<level::DoorSegment> {
+    class DoorSegment : public LoadObject<level::DoorSegment> {
       public:
         void load(FILE *file) override;
     };
-} // namespace loader
+}  // namespace loader

@@ -1,15 +1,17 @@
-#pragma once 
-#include "views/sub-view.hpp"
+#pragma once
+#include <ncurses.h>  // WINDOW
+
 #include "manager/level.hpp"
-#include <ncurses.h> // WINDOW
+#include "views/sub-view.hpp"
 
 namespace views {
-    class LogSubView:SubView{
-    private:
+    class LogSubView : SubView {
+      private:
         manager::Level *levelManager_;
-    public:
-        LogSubView(WINDOW * win,manager::Level *levelManager);
+
+      public:
+        LogSubView(WINDOW *win, manager::Level *levelManager);
 
         void render(bool force);
     };
-}; // namespace views
+};  // namespace views

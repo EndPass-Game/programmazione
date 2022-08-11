@@ -17,26 +17,26 @@ Funzioni:
 
 #include <ncurses.h>
 
-#include "entities/player.hpp"
-#include "level/collidable.hpp"
-#include "level/level.hpp"
 #include "datastruct/vector.hpp"
+#include "entities/player.hpp"
+#include "gamestruct/log-queue.hpp"
+#include "gamestruct/logger.hpp"
 #include "gamestruct/size.hpp"
 #include "gamestruct/state-watcher.hpp"
-#include "gamestruct/logger.hpp"
+#include "level/collidable.hpp"
+#include "level/level.hpp"
 #include "loader/directory-loader.hpp"
-#include "gamestruct/log-queue.hpp"
 #include "manager/manager-settings.hpp"
 
 namespace manager {
     // Level manager: contiene tutte gli oggetti che vengono mostrati
     // nel gioco
     class Level {
-      private: 
+      private:
         datastruct::Vector<level::Level *> levels_;
         Player *player_;
         StateWatcher<int> *levelIdx_;
-        loader::DirectoryLoader *dirLoader_; 
+        loader::DirectoryLoader *dirLoader_;
         LogQueue *logQueue_;
         Logger logger_ = Logger("manager::Level");
 
@@ -50,13 +50,13 @@ namespace manager {
         int addLevel();
 
         // stampa a schermo il livello scelto, se non è presente tale livello (indice invalido)
-        // allora ritorna false, altrimenti true; 
+        // allora ritorna false, altrimenti true;
         void goToLevel(int level);
-        
+
         level::Collidable *getCollision(Position pos);
 
-        LogQueue* getLogQueue();
+        LogQueue *getLogQueue();
 
         void render(WINDOW *win, bool force);
     };
-}
+}  // namespace manager

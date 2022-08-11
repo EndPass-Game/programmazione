@@ -8,4 +8,4 @@ namespace loader {
         fscanf(file, "%d %d\n", &pos->riga, &pos->colonna);
         this->_loadedObjects->at(0) = pos;
     };
-} // namespace loader
+}  // namespace loader

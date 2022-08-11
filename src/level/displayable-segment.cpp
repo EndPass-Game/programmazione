@@ -6,11 +6,11 @@
 #include "gamestruct/displayable.hpp"
 
 namespace level {
-    DisplayableSegment::DisplayableSegment() : 
-        Segment() {}
+    DisplayableSegment::DisplayableSegment()
+        : Segment() {}
 
-    DisplayableSegment::DisplayableSegment(Position startPosition, enums::Direction direction, int length) : 
-      Segment(startPosition, direction, length) {
+    DisplayableSegment::DisplayableSegment(Position startPosition, enums::Direction direction, int length)
+        : Segment(startPosition, direction, length) {
         // scegliendo la direzione per creare tutti i muri:
         Position pos = startPosition_;
         displayables_.resize(length);
@@ -37,4 +37,4 @@ namespace level {
             displayables_[i]->clear(win);
         }
     }
-}; // namespace level
+};  // namespace level

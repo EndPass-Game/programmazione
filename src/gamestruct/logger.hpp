@@ -1,17 +1,18 @@
 #pragma once
 
-#include <stdio.h>
-#include <cstdarg> // va_list 
+#include <cstdarg>  // va_list
 #include <mutex>
+#include <stdio.h>
 // questa classe contiene i metodi che permettono di registrare tutte le azioni avvenute nel gioco all'interno del file di log
 
-class Logger{
+class Logger {
   private:
-    FILE *fileStream_; // usato per scrivere nel file di log
-    const char *loggerName_; // nome del l'oggetto da loggare
+    FILE *fileStream_;        // usato per scrivere nel file di log
+    const char *loggerName_;  // nome del l'oggetto da loggare
 
-    void _log(const char *format, va_list args);  
-    void _headerLog(const char* head,const char *format, va_list args);
+    void _log(const char *format, va_list args);
+    void _headerLog(const char *head, const char *format, va_list args);
+
   public:
     Logger(const char *loggerName, const char *filename = "game.log", const char *mode = "a");
     ~Logger();

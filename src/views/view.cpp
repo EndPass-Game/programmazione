@@ -8,7 +8,8 @@
 
 namespace views {
 
-    View::View(Position pos, Size size): winSize(size), winPosition(pos) {
+    View::View(Position pos, Size size)
+        : winSize(size), winPosition(pos) {
         window = newwin(size.riga, size.colonna, pos.riga, pos.colonna);
     }
 
@@ -17,17 +18,15 @@ namespace views {
     }
 
     void View::render(bool force) {
-        if (force)
-        {
+        if (force) {
             erase();
             touchwin(window);
         }
         wrefresh(window);
     }
 
-    const char* View::getName()
-    {
+    const char *View::getName() {
         return name_;
     }
 
-}; // namespace views
+};  // namespace views

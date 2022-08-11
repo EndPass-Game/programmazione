@@ -18,45 +18,40 @@ Altro
 
 #include "entities/entity.hpp"
 
-Player::Player() : Entity(12, 3,  // TODO: gestire queste costanti hardcoded in un file di setting
-                          {1, 1}, /* position di spawn */
-                          'P')    /* charattere mostrato su schermo */
+Player::Player()
+    : Entity(12, 3,  // TODO: gestire queste costanti hardcoded in un file di setting
+             {1, 1}, /* position di spawn */
+             'P')    /* charattere mostrato su schermo */
 {
     powers_ = 0;
     score_ = 0;
 }
 // TODO
-void Player::attack()
-{
+void Player::attack() {
     logger_.info("attacking");
 }
 
 // TODO
 void Player::pickup() {}
 
-void Player::addPower()
-{
+void Player::addPower() {
     logger_.info("picked up power");
     this->powers_++;
 }
 
-void Player::removePower()
-{
+void Player::removePower() {
     logger_.info("used power");
     this->powers_--;
 }
 
-int Player::getPowers()
-{
+int Player::getPowers() {
     return powers_;
 }
 
-int Player::getScore()
-{
+int Player::getScore() {
     return score_;
 }
 
-void Player::incrementScore(int increment)
-{
+void Player::incrementScore(int increment) {
     score_ += increment;
 }

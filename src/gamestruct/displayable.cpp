@@ -1,17 +1,17 @@
 #include "gamestruct/displayable.hpp"
 
 Displayable::Displayable() {
-        position_ = new StateWatcher<Position>(Position(0, 0));
-        displayChar_ = new StateWatcher<char>(' ');
+    position_ = new StateWatcher<Position>(Position(0, 0));
+    displayChar_ = new StateWatcher<char>(' ');
 }
 
 Displayable::Displayable(Position current, char display_char) {
-        position_ = new StateWatcher<Position>(current);
-        displayChar_ = new StateWatcher<char>(display_char);
-    }
+    position_ = new StateWatcher<Position>(current);
+    displayChar_ = new StateWatcher<char>(display_char);
+}
 
 char Displayable::getDisplayChar() {
-        return displayChar_->getCurrent();
+    return displayChar_->getCurrent();
 }
 
 void Displayable::setDisplayChar(char display_char) {
@@ -32,29 +32,25 @@ void Displayable::clear(WINDOW *win) {
     mvwprintw(win, position_->getLast().riga, position_->getLast().colonna, " ");
 }
 
-Position Displayable::getPosition(){
+Position Displayable::getPosition() {
     return position_->getCurrent();
 }
 
-void Displayable::render(WINDOW *win,bool forced) {
-
+void Displayable::render(WINDOW *win, bool forced) {
     if (position_->isChanged() or position_->isFirstValue()) {
         setPosition(position_->getCurrent());
-        forced=true;
+        forced = true;
     }
     if (displayChar_->isChanged() or displayChar_->isFirstValue()) {
         setDisplayChar(displayChar_->getCurrent());
-        forced=true;
+        forced = true;
     }
-    
-    if(forced){
-        mvwprintw(win, 
-            position_->getCurrent().riga, 
-            position_->getCurrent().colonna, 
-            "%c", displayChar_->getCurrent());
+
+    if (forced) {
+        mvwprintw(win, position_->getCurrent().riga, position_->getCurrent().colonna, "%c", displayChar_->getCurrent());
     }
 }
-Displayable::~Displayable(){
+Displayable::~Displayable() {
     delete position_;
     delete displayChar_;
 }
