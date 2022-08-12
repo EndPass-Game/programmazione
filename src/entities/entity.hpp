@@ -2,6 +2,8 @@
 /*
 deve tenere le vite, artefatti, posizione, e items
 */
+#include "collectables/artifact.hpp"
+#include "collectables/power.hpp"
 #include "enums/direction.hpp"
 #include "gamestruct/displayable.hpp"
 #include "gamestruct/logger.hpp"
@@ -9,8 +11,6 @@ deve tenere le vite, artefatti, posizione, e items
 #include "level/collidable.hpp"
 #include "level/door-segment.hpp"
 #include "level/wall-segment.hpp"
-#include "collectables/artifact.hpp"
-#include "collectables/power.hpp"
 #include "manager/level.fwd.h"  // circlular import
 // TODO: invece che ogni classe figlia erediti da questa
 // sarebbe buona cosa rendere questa classe una factory
@@ -29,6 +29,7 @@ class Entity : public Displayable, public level::Collidable {
     virtual void _handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact, Position pos);
     virtual void _handlePowerCollision(manager::Level *levelManager, collectables::Power *power, Position pos);
     virtual void _handleNoneCollision(manager::Level *levelManager, Position pos);
+
   public:
     Entity();
     Entity(int life, int attack);
@@ -51,6 +52,4 @@ class Entity : public Displayable, public level::Collidable {
     void setLife(int life);
 
     virtual enums::CollisionType getCollisionType() override;
-
-    
 };

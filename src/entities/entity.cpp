@@ -42,22 +42,22 @@ void Entity::move(manager::Level *levelManager) {
     if (isMoving) {
         level::Collidable *collision = levelManager->getCollision(Position{new_x, new_y});
         enums::CollisionType type = enums::CollisionType::NONE;
-        if (collision != nullptr) type = collision->getCollisionType(); 
+        if (collision != nullptr) type = collision->getCollisionType();
         switch (type) {
             case enums::CollisionType::DOORSEGMENT:
-                _handleDoorCollision(levelManager, (level::DoorSegment*) collision, Position(new_x, new_y));
+                _handleDoorCollision(levelManager, (level::DoorSegment *) collision, Position(new_x, new_y));
                 break;
             case enums::CollisionType::WALLSEGMENT:
-                _handleWallCollision(levelManager, (level::WallSegment*) collision, Position(new_x, new_y));
+                _handleWallCollision(levelManager, (level::WallSegment *) collision, Position(new_x, new_y));
                 break;
-            case enums::CollisionType::ENTITY: 
-                _handleEntityCollision(levelManager, (Entity*) collision, Position(new_x, new_y));
+            case enums::CollisionType::ENTITY:
+                _handleEntityCollision(levelManager, (Entity *) collision, Position(new_x, new_y));
                 break;
             case enums::CollisionType::ARTIFACT:
-                _handleArtifactCollision(levelManager, (collectables::Artifact*) collision, Position(new_x, new_y));
+                _handleArtifactCollision(levelManager, (collectables::Artifact *) collision, Position(new_x, new_y));
                 break;
             case enums::CollisionType::POWER:
-                _handlePowerCollision(levelManager, (collectables::Power*) collision, Position(new_x, new_y));
+                _handlePowerCollision(levelManager, (collectables::Power *) collision, Position(new_x, new_y));
                 delete (collectables::Power *) collision;
                 break;
             case enums::CollisionType::NONE:
@@ -99,25 +99,19 @@ enums::CollisionType Entity::getCollisionType() {
 }
 
 void Entity::_handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door, Position pos) {
-    
 }
 
-void Entity::_handleWallCollision(manager::Level *levelManager, level::WallSegment *wall, Position pos){
-
+void Entity::_handleWallCollision(manager::Level *levelManager, level::WallSegment *wall, Position pos) {
 }
 
-void Entity::_handleEntityCollision(manager::Level *levelManager, Entity *entity, Position pos){
-    
+void Entity::_handleEntityCollision(manager::Level *levelManager, Entity *entity, Position pos) {
 }
 
-void Entity::_handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact, Position pos){
-
+void Entity::_handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact, Position pos) {
 }
 
-void Entity::_handlePowerCollision(manager::Level *levelManager, collectables::Power *power, Position pos){
-
+void Entity::_handlePowerCollision(manager::Level *levelManager, collectables::Power *power, Position pos) {
 }
 
-void Entity::_handleNoneCollision(manager::Level *levelManager, Position pos){
-
+void Entity::_handleNoneCollision(manager::Level *levelManager, Position pos) {
 }

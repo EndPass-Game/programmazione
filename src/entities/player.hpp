@@ -16,18 +16,16 @@ Altro
 */
 #pragma once
 
+#include "collectables/artifact.hpp"
+#include "collectables/power.hpp"
 #include "entities/entity.hpp"
-#include "gamestruct/logger.hpp"
-
 #include "enums/direction.hpp"
 #include "gamestruct/displayable.hpp"
-#include "gamestruct/position.hpp"
 #include "gamestruct/logger.hpp"
+#include "gamestruct/position.hpp"
 #include "level/collidable.hpp"
 #include "level/door-segment.hpp"
 #include "level/wall-segment.hpp"
-#include "collectables/artifact.hpp"
-#include "collectables/power.hpp"
 // Player: classe che contiene il personaggio
 class Player : public Entity {
   private:
@@ -41,6 +39,7 @@ class Player : public Entity {
     virtual void _handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact, Position pos);
     virtual void _handlePowerCollision(manager::Level *levelManager, collectables::Power *power, Position pos);
     virtual void _handleNoneCollision(manager::Level *levelManager, Position pos);
+
   public:
     Player();
 
