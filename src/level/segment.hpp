@@ -7,9 +7,7 @@
 #include "gamestruct/position.hpp"
 
 namespace level {
-    // classe astratta che rappresenta un qualunque segmento parallelo a
-    // un asse principale x,y
-    // inoltre i segmenti sono oggetto di collisione per oggetti o entità. e collidable permette ciò
+    // classe che rappresenta un qualunque segmento parallelo a un asse principale x,y
     class Segment {
       protected:
         Position startPosition_;
@@ -23,6 +21,7 @@ namespace level {
 
       public:
         Segment();
+        Segment(const Segment &segment);
         Segment(Position start_position, enums::Direction direction, int length);
         virtual ~Segment();
 

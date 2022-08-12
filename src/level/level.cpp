@@ -4,7 +4,6 @@
 #include "datastruct/vector.hpp"
 #include "entities/player.hpp"
 #include "enums/collision-type.hpp"
-#include "enums/direction.hpp"
 #include "gamestruct/size.hpp"
 #include "level/door-segment.hpp"
 #include "level/wall-segment.hpp"
@@ -62,13 +61,28 @@ namespace level {
         }
     }
 
-    Level::Level(loader::LoaderHandler *loader, int oldLevelIdx)
+    Level::Level(loader::LoaderHandler *loader, enums::Direction direction, int oldLevelIdx)
         : Level(loader) {
         logger_.debug("creating level pointing to leveldIdx: %d", oldLevelIdx);
 
-        int doorNumber = rand() % numOfDoors_;
+        DoorSegment *chosenDoor = nullptr;
+
         // questa parte assume che le porte siano tutte nell'ultima parte del segmento:
-        DoorSegment *chosenDoor = (DoorSegment *) segment_.at(segment_.size() - numOfDoors_ + doorNumber);
+        for (unsigned int i = segment_.size() - numOfDoors_; i < segment_.size(); i++) {
+            DoorSegment *door = (DoorSegment *) segment_.at(i);
+            if (door->getFacingDir() == direction) {
+                chosenDoor = door;
+                break;
+            }
+        }
+
+        if (chosenDoor == nullptr) {
+            logger_.warning("no door found for direction %d", direction);
+            logger_.info("choosing random door");
+            int doorNumber = rand() % numOfDoors_;
+            chosenDoor = (DoorSegment *) segment_.at(segment_.size() - numOfDoors_ + doorNumber);
+        }
+
         chosenDoor->setNextLevelIdx(oldLevelIdx);
         chosenDoor->openDoor();
     }

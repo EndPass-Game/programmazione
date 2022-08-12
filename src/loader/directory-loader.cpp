@@ -6,7 +6,8 @@
 
 namespace loader {
 
-    DirectoryLoader::DirectoryLoader(const char *dirname) : logger_("loader::DirectoryLoader") {
+    DirectoryLoader::DirectoryLoader(const char *dirname)
+        : logger_("loader::DirectoryLoader") {
         logger_.info("Loading files from %s", dirname);
 
         DIR *dir = opendir(dirname);
@@ -24,7 +25,7 @@ namespace loader {
                 strcpy(fileName, dirname);
                 strcat(fileName, entry->d_name);  // la null char finale è copiata, non serve metterlo.
                 fileNames_.push_back(fileName);
-                
+
                 logger_.debug("Found file: %s", fileName);
             }
         }
@@ -45,7 +46,7 @@ namespace loader {
     datastruct::Vector<char *> DirectoryLoader::getFileNames() {
         return fileNames_;
     }
-    
+
     bool DirectoryLoader::_isExtensionValid(const char *filename, const char *extension) {
         int len = strlen(filename);
         int extLen = strlen(extension);

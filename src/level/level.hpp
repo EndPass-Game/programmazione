@@ -5,6 +5,7 @@
 #include "datastruct/vector.hpp"
 #include "entities/entity.hpp"
 #include "entities/player.hpp"
+#include "enums/direction.hpp"
 #include "gamestruct/displayable.hpp"
 #include "gamestruct/logger.hpp"
 #include "gamestruct/size.hpp"
@@ -27,7 +28,8 @@ namespace level {
 
       public:
         Level(loader::LoaderHandler *loader);
-        Level(loader::LoaderHandler *loader, int oldLevelIdx);
+        Level(loader::LoaderHandler *loader, enums::Direction direction, int oldLevelIdx);
+
         ~Level();
 
         // restituisce la posizione dell'ultimo player
