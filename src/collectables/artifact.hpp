@@ -6,8 +6,6 @@ fanno altre cose? ma non credo, non per ora
 */
 #pragma once
 
-#include "entities/entity.hpp"
-#include "enums/direction.hpp"
 #include "gamestruct/displayable.hpp"
 #include "gamestruct/position.hpp"
 #include "level/collidable.hpp"
