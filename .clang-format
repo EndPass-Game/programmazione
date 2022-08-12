@@ -1,0 +1,34 @@
+BasedOnStyle: Google
+Standard: Cpp11
+IndentWidth: 4
+TabWidth: 4
+AccessModifierOffset: -2
+AlignAfterOpenBracket: BlockIndent
+NamespaceIndentation: All
+BreakBeforeBraces: Attach
+EmptyLineBeforeAccessModifier: Always
+ColumnLimit: 0
+DerivePointerAlignment: false
+PointerAlignment: Right
+IndentCaseLabels: true
+
+SpacesInLineCommentPrefix: 
+  Minimum: 1
+  Maximum: 1
+
+AlignConsecutiveDeclarations: false
+SpaceBeforeCtorInitializerColon: true
+SpaceBeforeInheritanceColon: true 
+
+BreakConstructorInitializers: BeforeColon
+BreakInheritanceList: BeforeColon
+
+AllowShortFunctionsOnASingleLine: Empty
+SpaceAfterCStyleCast: true 
+
+IncludeBlocks: Regroup
+IncludeCategories: 
+  - Regex: ^<.*?>$
+    Priority: 3
+  - Regex: ^".*?"$
+    Priority: 2

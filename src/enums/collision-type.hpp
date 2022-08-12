@@ -1,7 +1,7 @@
-#pragma once 
+#pragma once
 
 namespace enums {
-    // descrive l'oggetto con cui si è colliso 
+    // descrive l'oggetto con cui si è colliso
     enum class CollisionType {
         NONE = 0,
         WALLSEGMENT = 1,
@@ -10,4 +10,4 @@ namespace enums {
         POWER = 4,
         DOORSEGMENT = 5,
     };
-}; // namespace enums 
+};  // namespace enums

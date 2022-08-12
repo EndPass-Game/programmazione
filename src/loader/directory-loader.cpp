@@ -1,27 +1,32 @@
 #include "directory-loader.hpp"
 
-#include <cstring> 
-#include <dirent.h> // per lettura delle directory, utilizzata nel corso di architettura
-#include <cstdlib> 
-#include <cstdio> // remove me after debug
+#include <cstdlib>
+#include <cstring>
+#include <dirent.h>  // per lettura delle directory, utilizzata nel corso di architettura
 
 namespace loader {
 
-    DirectoryLoader::DirectoryLoader(const char *dirname) {
+    DirectoryLoader::DirectoryLoader(const char *dirname)
+        : logger_("loader::DirectoryLoader") {
+        logger_.info("Loading files from %s", dirname);
+
         DIR *dir = opendir(dirname);
         if (dir == NULL) {
-            printf("Directory %s not found\n", dirname);
+            logger_.error("Could not open directory %s", dirname);
+            logger_.info("Exiting...");
             exit(1);
         }
-        const char *allowedExtension = ".txt"; 
+        const char *allowedExtension = ".txt";
 
         struct dirent *entry;
         while ((entry = readdir(dir)) != NULL) {
             if (_isExtensionValid(entry->d_name, allowedExtension)) {
                 char *fileName = new char[strlen(dirname) + strlen(entry->d_name) + 1];
                 strcpy(fileName, dirname);
-                strcat(fileName, entry->d_name); // la null char finale è copiata, non serve metterlo. 
+                strcat(fileName, entry->d_name);  // la null char finale è copiata, non serve metterlo.
                 fileNames_.push_back(fileName);
+
+                logger_.debug("Found file: %s", fileName);
             }
         }
         closedir(dir);
@@ -37,7 +42,11 @@ namespace loader {
         int index = rand() % fileNames_.size();
         return fileNames_[index];
     }
-    
+
+    datastruct::Vector<char *> DirectoryLoader::getFileNames() {
+        return fileNames_;
+    }
+
     bool DirectoryLoader::_isExtensionValid(const char *filename, const char *extension) {
         int len = strlen(filename);
         int extLen = strlen(extension);
@@ -51,4 +60,4 @@ namespace loader {
         }
         return true;
     }
-}; // namespace loader 
+};  // namespace loader

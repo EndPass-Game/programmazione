@@ -1,7 +1,7 @@
 /*
 Dati:
-1. vite 
-2. posizione 
+1. vite
+2. posizione
 3. danno
 
 Funzioni
@@ -29,10 +29,11 @@ Altro
 #include "collectables/artifact.hpp"
 #include "collectables/power.hpp"
 // Player: classe che contiene il personaggio
-class Player: public Entity {
+class Player : public Entity {
   private:
     // TODO inventario
     int powers_;
+    int score_ = 0;
     Logger logger_ = Logger("player");
     virtual void _handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door, Position pos);
     virtual void _handleWallCollision(manager::Level *levelManager, level::WallSegment *wall, Position pos);
@@ -54,6 +55,10 @@ class Player: public Entity {
     void addPower();
 
     void removePower();
-    
+
     int getPowers();
+
+    int getScore();
+
+    void incrementScore(int increment);
 };

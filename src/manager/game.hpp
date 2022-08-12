@@ -1,18 +1,19 @@
 #pragma once
 
+#include "gamestruct/logger.hpp"
 #include "manager/display.hpp"
 #include "manager/input.hpp"
 #include "manager/level.hpp"
-#include "gamestruct/logger.hpp"
 
 namespace manager {
-    class Game{
+    class Game {
       private:
         ViewManager *viewManager_;
         Display *displayManager_;
         Input *inputManager_;
-        Logger logger_ = Logger("MAIN GAME");
-        
+
+        Logger logger_;
+
       public:
         Game();
         ~Game();
@@ -20,4 +21,4 @@ namespace manager {
         // Crea i thread e gestisce i menu prima e dopo il gioco
         void run();
     };
-}; // namespace manager
+};  // namespace manager

@@ -10,6 +10,7 @@ SRC = ./src
 INCLUDE_SRC = $(addprefix -I, $(SRC))
 
 sources = $(shell find $(SRC)/ -type f -name '*.cpp')
+headers = $(shell find $(SRC)/ -type f -name '*.hpp')
 OBJS_NO_BUILD_PATH := $(patsubst %.cpp, %.o, $(sources))
 OBJS = $(addprefix $(BUILD_PATH)/, $(OBJS_NO_BUILD_PATH))
 TESTS = $(shell find $(TESTS_PATH)/ -type f ! -name "test-template.cpp")
@@ -18,7 +19,9 @@ TESTS = $(shell find $(TESTS_PATH)/ -type f ! -name "test-template.cpp")
 main:  $(OBJS) 
 	$(CC) $(CFLAGS) $(INCLUDE_SRC) $^ $(LDFLAGS)  -o $(BUILD_PATH)/$@
 
-
+# format command 
+format:
+	clang-format -style=file -i --verbose $(sources) $(headers)
 
 .PHONY: tests
 # make tests TESTS="tests/binary-tree.cpp" # esempio per fare un solo test

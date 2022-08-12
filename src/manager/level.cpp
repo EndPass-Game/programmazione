@@ -13,21 +13,19 @@ Funzioni:
 
 #include <ncurses.h>
 
-#include "entities/player.hpp"
-#include "entities/enemy.hpp"
-#include "level/collidable.hpp"
-#include "gamestruct/size.hpp"
-#include "loader/loader-handler.hpp"
-namespace manager
-{
+#include "enums/direction.hpp"
+#include "loader/level-provider.hpp"
+
+namespace manager {
+
     Level::Level() {
         player_ = new Player();
-        levelIdx_ = new StateWatcher<int>(-1); // -1 indica che non è stato ancora caricato nessun livello
-        dirLoader_ = new loader::DirectoryLoader();
+        levelIdx_ = new StateWatcher<int>(-1);  // -1 indica che non è stato ancora caricato nessun livello
+        logQueue_ = new LogQueue(manager::kLogAreaSize.colonna - 2, manager::kLogAreaSize.riga - 2, manager::kPaddingLogArea);
 
         int newLevelIdx = addLevel();
         levelIdx_->setCurrent(newLevelIdx);
-        goToLevel(newLevelIdx); 
+        goToLevel(newLevelIdx);
     }
 
     Level::~Level() {
@@ -36,7 +34,7 @@ namespace manager
         }
         delete levelIdx_;
         delete player_;
-        delete dirLoader_;
+        delete logQueue_;
     }
 
     Player *Level::getPlayer() {
@@ -46,13 +44,14 @@ namespace manager
     int Level::addLevel() {
         logger_.info("Adding new level");
 
-        const char *levelToLoadName = dirLoader_->getRandomFileName();
-        loader::LoaderHandler loader(levelToLoadName);
+        loader::LevelProvider &levelProvider = loader::LevelProvider::getInstance();
 
         if (levelIdx_->getCurrent() == -1) {
-            levels_.push_back(new level::Level(&loader));
+            // TODO(ang): fix the direction later
+            levels_.push_back(levelProvider.getLevel(enums::Direction::UP));
         } else {
-            levels_.push_back(new level::Level(&loader, levelIdx_->getCurrent()));
+            // TODO(ang): fix the direction later
+            levels_.push_back(levelProvider.getLevel(enums::Direction::UP, levelIdx_->getCurrent()));
         }
         return (int) levels_.size() - 1;
     }
@@ -77,14 +76,18 @@ namespace manager
         if (levelIdx_->isChanged()) {
             force = true;
             levels_[levelIdx_->getLast()]->clear(win);
-            levelIdx_->setCurrent(levelIdx_->getCurrent()); // FIX PG-34
+            levelIdx_->setCurrent(levelIdx_->getCurrent());  // FIX PG-34
         }
 
         player_->clearLast(win);
         player_->render(win, force);
 
         levels_[levelIdx_->getCurrent()]->render(win, force);
-        // TODO(ang): print player ( valuta se è meglio printarlo qui o in level/level 
+        // TODO(ang): print player ( valuta se è meglio printarlo qui o in level/level
         // io pensavo fosse meglio il level/level (gio))
     }
-}
+
+    LogQueue *Level::getLogQueue() {
+        return logQueue_;
+    }
+}  // namespace manager

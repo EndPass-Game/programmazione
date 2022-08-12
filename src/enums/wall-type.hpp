@@ -10,6 +10,6 @@ namespace enums {
         DOORCLOSED = 'X',
         DOOROPEN = 'O',
         EMPTY = ' ',
-        DEFAULT = 'D' // default for displayble segment
+        DEFAULT = 'D'  // default for displayble segment
     };
-}; // namespace enums
+};  // namespace enums

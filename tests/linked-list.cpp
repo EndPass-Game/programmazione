@@ -1,11 +1,11 @@
-#include <iostream>
-#include <assert.h>
-
 #include "datastruct/linked-list.hpp"
+
+#include <assert.h>
+#include <iostream>
 
 using namespace datastruct;
 struct functionMETA {
-    void (*funcPtr) ();
+    void (*funcPtr)();
     const char *funcName;
 };
 
@@ -45,7 +45,7 @@ namespace test {
             l.pop_front();
         }
     }
-    
+
     void size_is_correct() {
         LinkedList<int> l;
         const int test_size = 50;
@@ -65,12 +65,12 @@ namespace test {
         assert(l.back() == int());
     }
 
-    void run(void (*f) (), const char *name) {
-        std::cout << "Testando la funzione: " << name  << " --- ";
+    void run(void (*f)(), const char *name) {
+        std::cout << "Testando la funzione: " << name << " --- ";
         f();
         std::cout << "Ok! ✔️" << std::endl;
     }
-}
+}  // namespace test
 
 functionMETA func_table[] = {
     {test::push_front, "push_front"},
@@ -79,7 +79,6 @@ functionMETA func_table[] = {
     {test::size_is_correct, "size_is_correct"},
     {test::default_value, "default_value"},
 };
-
 
 int main() {
     int n_tests = sizeof(func_table) / sizeof(functionMETA);

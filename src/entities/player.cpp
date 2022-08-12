@@ -1,7 +1,7 @@
 /*
 Dati:
-1. vite 
-2. posizione 
+1. vite
+2. posizione
 3. danno
 
 Funzioni
@@ -23,11 +23,13 @@ Altro
 #include "level/collidable.hpp"
 
 
-Player::Player(): 
-    Entity(12, 3, // TODO: gestire queste costanti hardcoded in un file di setting
-    {1, 1}, /* position di spawn */ 
-    'P') /* charattere mostrato su schermo */ {
-        powers_=0;
+Player::Player()
+    : Entity(12, 3,  // TODO: gestire queste costanti hardcoded in un file di setting
+             {1, 1}, /* position di spawn */
+             'P')    /* charattere mostrato su schermo */
+{
+    powers_ = 0;
+    score_ = 0;
 }
 // TODO
 void Player::attack() {
@@ -37,17 +39,17 @@ void Player::attack() {
 // TODO
 void Player::pickup() {}
 
-void Player::addPower(){
+void Player::addPower() {
     logger_.info("picked up power");
     this->powers_++;
 }
 
-void Player::removePower(){
+void Player::removePower() {
     logger_.info("used power");
     this->powers_--;
 }
 
-int Player::getPowers(){
+int Player::getPowers() {
     return powers_;
 }
 
@@ -93,4 +95,11 @@ void Player::_handlePowerCollision(manager::Level *levelManager, collectables::P
 
 void Player::_handleNoneCollision(manager::Level *levelManager, Position pos){
     levelManager->getPlayer()->setPosition(pos);
+}
+int Player::getScore() {
+    return score_;
+}
+
+void Player::incrementScore(int increment) {
+    score_ += increment;
 }

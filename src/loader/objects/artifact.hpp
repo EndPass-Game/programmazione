@@ -1,4 +1,4 @@
-#pragma once 
+#pragma once
 
 #include <cstdlib>
 
@@ -6,8 +6,8 @@
 #include "loader/load-object.hpp"
 
 namespace loader {
-    class Artifact: public LoadObject<collectables::Artifact> {
+    class Artifact : public LoadObject<collectables::Artifact> {
       public:
         void load(FILE *file) override;
     };
-} // namespace loader
+}  // namespace loader

@@ -4,12 +4,11 @@
 #include <mutex>
 
 // mutex per evitare che due thread scrivano contemporaneamente nel file di log
-std::mutex loggerMutex; 
-
+std::mutex loggerMutex;
 
 Logger::Logger(const char *loggerName, const char *filename, const char *mode) {
     loggerName_ = loggerName;
-    fileStream_ = fopen(filename, mode);    
+    fileStream_ = fopen(filename, mode);
     if (fileStream_ == nullptr) {
         fprintf(stderr, "Impossibile aprire il file %s per il log\n", filename);
         exit(1);
@@ -29,7 +28,7 @@ void Logger::_headerLog(const char *head, const char *format, va_list args) {
     loggerMutex.lock();
     fprintf(fileStream_, "%s %s: ", head, loggerName_);
     _log(format, args);
-    fflush(fileStream_); // così printa senza aspettare che il file venga chiuso
+    fflush(fileStream_);  // così printa senza aspettare che il file venga chiuso
     loggerMutex.unlock();
 }
 
@@ -47,7 +46,7 @@ void Logger::info(const char *format, ...) {
     va_start(args, format);
     _headerLog("[INFO]", format, args);
     va_end(args);
-}   
+}
 
 void Logger::warning(const char *format, ...) {
     va_list args;

@@ -2,35 +2,22 @@
 
 #include <mutex>
 
-#include "views/view.fwd.h" // forward declaration, circular dependency
-
 #include "datastruct/stack.hpp"
 #include "gamestruct/size.hpp"
+#include "manager/manager-settings.hpp"
+#include "views/view.fwd.h"  // forward declaration, circular dependency
 
-namespace manager
-{
-
-    // la size della finersta
-    const Size kGameWindowsSize = {20, 60};
-    const Size kItemAreaSize = {3,kGameWindowsSize.colonna};
-    const Size kGameAreaSize = {kGameWindowsSize.riga-kItemAreaSize.riga, kGameWindowsSize.colonna};
-
-    // Decide ogni quanti millisecondi avviene un update a schermo
-    const int kSleepTime = 50;
-
-    // Descrive ogni quanti frame si può muovere un nemico
-    const int kObjectTimer = 10;
+namespace manager {
 
     // tiene uno stack con le finestre attive, e l'ultima è quella che viene visualizzata
-    class ViewManager
-    {
-    private:
+    class ViewManager {
+      private:
         datastruct::Stack<views::View *> stackView;
         bool changedView = false;
 
-    public:
+      public:
         ViewManager();
-        ~ViewManager();
+        ~ViewManager() = default;
         // cambia la view che viene visualizzata
         void pushView(views::View *v);
         // toglie una View e l'elimina
@@ -44,4 +31,4 @@ namespace manager
         void clear();
     };
 
-}; // namespace manager
+};  // namespace manager

@@ -1,29 +1,27 @@
 #include "entities/entity.hpp"
 
-#include "manager/level.hpp"
-#include "enums/direction.hpp"
 #include "enums/collision-type.hpp"
+#include "enums/direction.hpp"
 #include "level/collidable.hpp"
+#include "manager/level.hpp"
 
-
-// TODO(simo): file di configurazione per i valori di default?? ha senso secondo te?? 
 // perché questi valori di default per displayable hardcodati così sono un pò brutti
-Entity::Entity(int life, int attack): 
-    Displayable(Position{1,1}, 'E'), 
-    life_(life),
-    attack_(attack),
-    direction_(enums::Direction::NONE) {}
+Entity::Entity(int life, int attack)
+    : Displayable(Position{1, 1}, 'E'),
+      life_(life),
+      attack_(attack),
+      direction_(enums::Direction::NONE) {}
 
-Entity::Entity(int life, int attack, Position current, char displayChar): 
-    Displayable(current, displayChar), 
-    life_(life),
-    attack_(attack),
-    direction_(enums::Direction::NONE) {}
+Entity::Entity(int life, int attack, Position current, char displayChar)
+    : Displayable(current, displayChar),
+      life_(life),
+      attack_(attack),
+      direction_(enums::Direction::NONE) {}
 
 void Entity::move(manager::Level *levelManager) {
     int new_x = getPosition().riga, new_y = getPosition().colonna;
     bool isMoving = true;
-    switch(this->direction_) {
+    switch (this->direction_) {
         case enums::Direction::UP:
             new_x -= 1;
             break;
@@ -41,7 +39,7 @@ void Entity::move(manager::Level *levelManager) {
             break;
     }
 
-    if(isMoving) {
+    if (isMoving) {
         level::Collidable *collision = levelManager->getCollision(Position{new_x, new_y});
         enums::CollisionType type = enums::CollisionType::NONE;
         if (collision != nullptr) type = collision->getCollisionType(); 
@@ -67,7 +65,7 @@ void Entity::move(manager::Level *levelManager) {
                 break;
         }
     }
-    
+
     this->direction_ = enums::Direction::NONE;
 }
 
@@ -88,12 +86,12 @@ void Entity::applyDamage(int damage) {
     life_ -= damage;
 }
 
-int Entity::getLife(){
+int Entity::getLife() {
     return life_;
 }
 
-void Entity::setLife(int life){
-    this->life_=life;
+void Entity::setLife(int life) {
+    this->life_ = life;
 }
 
 enums::CollisionType Entity::getCollisionType() {
