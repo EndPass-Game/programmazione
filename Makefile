@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -Wall -Werror -g -fsanitize=address,undefined
+CFLAGS = -Wall -Werror -g -fsanitize=address,undefined -Wno-format-security
 DEBUG = -DDEBUG
 LDFLAGS = -lstdc++ -pthread -lncurses -lasan
 
