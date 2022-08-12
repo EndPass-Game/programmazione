@@ -24,7 +24,6 @@ namespace loader {
         void _displatchHandler(LoaderHandler *handler);
         datastruct::Vector<LoaderHandler *> *_getLevelVector(enums::Direction direction);
 
-
       public:
         // @retuns l'istanza singleton
         static LevelProvider &getInstance();
