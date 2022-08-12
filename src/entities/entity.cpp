@@ -113,8 +113,6 @@ enums::CollisionType Entity::getCollisionType() {
 void Entity::_handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door) {
     logger_.info("collided with door");
     if (door->getNextLevelIdx() == -1) {
-        logger_.debug("facing direction is %d", door->getFacingDir());
-
         int nextLevelIdx = levelManager->addLevel(door->getFacingDir());
         door->setNextLevelIdx(nextLevelIdx);
     }

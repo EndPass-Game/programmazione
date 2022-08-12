@@ -58,7 +58,7 @@ namespace loader {
         if (levelVector->size() == 0) {
             logger_.warning(
                 "No levels found for direction %d "
-                "from all available levels",
+                " choosing from all available levels",
                 oppositeDirection
             );
             levelVector = &loadedLevels_;
@@ -70,7 +70,7 @@ namespace loader {
         if (levelIdx == -1) {
             level = new level::Level(levelVector->at(random));
         } else {
-            level = new level::Level(levelVector->at(random), direction, levelIdx);
+            level = new level::Level(levelVector->at(random), oppositeDirection, levelIdx);
         }
 
         // ricarica una nuova copia delle informazioni per essere consumata

@@ -3,11 +3,11 @@
 #include <iostream>
 
 #include "enums/direction.hpp"
-#include "gamestruct/position.hpp"
 #include "level/segment.hpp"
 namespace loader {
     DoorSegment::DoorSegment()
-        : LoadObject<level::DoorSegment>() {
+        : LoadObject<level::DoorSegment>(),
+          playerPositions_() {
         _resetMetaData();
     }
 
@@ -55,20 +55,23 @@ namespace loader {
             exit(1);
         }
 
-        this->loadedObjects_->resize(numeroPorte);
+        loadedObjects_->resize(numeroPorte);
+        playerPositions_.resize(numeroPorte);
         for (int i = 0; i < numeroPorte; i++) {
             int direction;
-            Position startPosition;
+            Position startPos;
             int length;
             int facingDir;
-            fscanf(file, "%d %d %d %d %d\n", &startPosition.riga, &startPosition.colonna, &direction, &length, &facingDir);
+            Position playerPos;
+            fscanf(file, "%d %d %d %d %d %d %d\n", &startPos.riga, &startPos.colonna, &direction, &length, &facingDir, &playerPos.riga, &playerPos.colonna);
             level::DoorSegment *door = new level::DoorSegment(
-                level::Segment(startPosition, (enums::Direction) direction, length),
+                level::Segment(startPos, (enums::Direction) direction, length),
                 (enums::Direction) facingDir
             );
             _setMetaData((enums::Direction) facingDir);
 
             this->loadedObjects_->at(i) = door;
+            playerPositions_.at(i) = playerPos;
         }
     };
 
@@ -87,4 +90,9 @@ namespace loader {
     bool DoorSegment::hasWestDoor() const {
         return hasWestDoor_;
     }
+
+    datastruct::Vector<Position> DoorSegment::getPlayerPositions() const {
+        return playerPositions_;
+    }
+
 }  // namespace loader

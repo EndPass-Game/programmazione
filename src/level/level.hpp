@@ -22,6 +22,7 @@ namespace level {
         datastruct::Vector<collectables::Artifact *> artifacts_;
         datastruct::Vector<collectables::Power *> powers_;
         datastruct::Vector<Entity *> entities_;
+        datastruct::Vector<Position> playerPositions_;
         int numOfDoors_;  // numero di porte nel livello
 
         Logger logger_ = Logger("level::Level");

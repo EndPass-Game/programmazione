@@ -10,12 +10,14 @@
 #include "manager/level.hpp"
 
 namespace level {
-    Level::Level(loader::LoaderHandler *loader) {
-        segment_ = datastruct::Vector<DisplayableSegment *>();
-        artifacts_ = datastruct::Vector<collectables::Artifact *>();
-        entities_ = datastruct::Vector<Entity *>(0);
-        powers_ = datastruct::Vector<collectables::Power *>();
-
+    Level::Level(loader::LoaderHandler *loader)
+        : lastPlayerPosition_(1, 1),
+          segment_(),
+          artifacts_(),
+          powers_(),
+          entities_(),
+          playerPositions_(),
+          numOfDoors_(0) {
         datastruct::Vector<WallSegment *> *segments = nullptr;
         segments = loader->wallLoader.getLoadedObjects();
         if (segments != nullptr) {
@@ -31,18 +33,12 @@ namespace level {
             for (unsigned int i = 0; i < doors->size(); i++) {
                 segment_.push_back((DisplayableSegment *) doors->at(i));
             }
-        } else {
-            numOfDoors_ = 0;
         }
 
-        datastruct::Vector<Position *> *playersPos = nullptr;
-        playersPos = loader->playerPosLoader.getLoadedObjects();
-        if (playersPos != nullptr) {
-            lastPlayerPosition_ = *playersPos->at(0);  // only one player position is loaded
-            for (unsigned int i = 0; i < playersPos->size(); i++) {
-                delete playersPos->at(i);
-            }
-        }
+        // avremmo una invalid-read se playerPositions_.size() == 0, ma questo non dovrebbe mai
+        // succedere per checks in loader::LoaderHandler (in particolare quello sulle porte)
+        playerPositions_ = loader->doorLoader.getPlayerPositions();
+        lastPlayerPosition_ = playerPositions_.at(0);
 
         datastruct::Vector<collectables::Artifact *> *artifacts = nullptr;
         artifacts = loader->artifactLoader.getLoadedObjects();
@@ -72,6 +68,7 @@ namespace level {
             DoorSegment *door = (DoorSegment *) segment_.at(i);
             if (door->getFacingDir() == direction) {
                 chosenDoor = door;
+                lastPlayerPosition_ = playerPositions_[i - (segment_.size() - numOfDoors_)];
                 break;
             }
         }
@@ -81,6 +78,7 @@ namespace level {
             logger_.info("choosing random door");
             int doorNumber = rand() % numOfDoors_;
             chosenDoor = (DoorSegment *) segment_.at(segment_.size() - numOfDoors_ + doorNumber);
+            lastPlayerPosition_ = playerPositions_[doorNumber];
         }
 
         chosenDoor->setNextLevelIdx(oldLevelIdx);

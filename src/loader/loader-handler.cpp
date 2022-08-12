@@ -4,7 +4,6 @@ namespace loader {
     LoaderHandler::LoaderHandler(const char *filename)
         : wallLoader(),
           doorLoader(),
-          playerPosLoader(),
           artifactLoader(),
           powerLoader() {
         file = fopen(filename, "r");
@@ -22,7 +21,6 @@ namespace loader {
         rewind(file);  // resetta il file descriptor all'inizio del file
         wallLoader.load(file);
         doorLoader.load(file);
-        playerPosLoader.load(file);
         artifactLoader.load(file);
         powerLoader.load(file);
     }

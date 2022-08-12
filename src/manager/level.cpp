@@ -27,6 +27,7 @@ namespace manager {
 
         int newLevelIdx = addLevel();
         levelIdx_->setCurrent(newLevelIdx);
+        player_->setPosition(levels_[newLevelIdx]->getLastPlayerPosition());
         goToLevel(newLevelIdx);
     }
 
@@ -53,7 +54,7 @@ namespace manager {
         } else {
             levels_.push_back(levelProvider.getLevel(direction, levelIdx_->getCurrent()));
         }
-        
+
         return (int) levels_.size() - 1;
     }
 
