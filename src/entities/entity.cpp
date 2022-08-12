@@ -5,7 +5,6 @@
 #include "level/collidable.hpp"
 #include "manager/level.hpp"
 
-// TODO(simo): file di configurazione per i valori di default?? ha senso secondo te??
 // perché questi valori di default per displayable hardcodati così sono un pò brutti
 Entity::Entity(int life, int attack)
     : Displayable(Position{1, 1}, 'E'),
@@ -44,35 +43,25 @@ void Entity::move(manager::Level *levelManager) {
         level::Collidable *collision = levelManager->getCollision(Position{new_x, new_y});
         enums::CollisionType type = enums::CollisionType::NONE;
         if (collision != nullptr) type = collision->getCollisionType();
-        collectables::Artifact *art;
         switch (type) {
             case enums::CollisionType::DOORSEGMENT:
-                _handleDoorCollision(levelManager, (level::DoorSegment *) collision);
+                _handleDoorCollision(levelManager, (level::DoorSegment *) collision, Position(new_x, new_y));
                 break;
             case enums::CollisionType::WALLSEGMENT:
+                _handleWallCollision(levelManager, (level::WallSegment *) collision, Position(new_x, new_y));
                 break;
             case enums::CollisionType::ENTITY:
-                // TODO(simo) può anche essere chiamato enemy invece di entity, obboh
-                // decidi te poi dopo!
+                _handleEntityCollision(levelManager, (Entity *) collision, Position(new_x, new_y));
                 break;
-            case enums::CollisionType::ARTIFACT:  // TODO(simo): da spostare in Player
-                art = dynamic_cast<collectables::Artifact *>(collision);
-                levelManager->getPlayer()->setLife(levelManager->getPlayer()->getLife() + art->getLifeUpgrade());
-                setPosition(Position(new_x, new_y));
-                levelManager->getPlayer()->incrementScore(2);
-                levelManager->getLogQueue()->addEvent("Hai raccolto un artefatto, aumenta la  vita!");
-                delete art;
-                break;
-            case enums::CollisionType::NONE:
-                setPosition(Position(new_x, new_y));
+            case enums::CollisionType::ARTIFACT:
+                _handleArtifactCollision(levelManager, (collectables::Artifact *) collision, Position(new_x, new_y));
                 break;
             case enums::CollisionType::POWER:
-                levelManager->getPlayer()->addPower();
-                setPosition(Position(new_x, new_y));
-                levelManager->getPlayer()->incrementScore(5);
-                levelManager->getLogQueue()->addEvent("Hai raccolto un potere!Puoi sbloccare  una porta!");
-
+                _handlePowerCollision(levelManager, (collectables::Power *) collision, Position(new_x, new_y));
                 delete (collectables::Power *) collision;
+                break;
+            case enums::CollisionType::NONE:
+                _handleNoneCollision(levelManager, Position(new_x, new_y));
                 break;
         }
     }
@@ -109,27 +98,20 @@ enums::CollisionType Entity::getCollisionType() {
     return enums::CollisionType::ENTITY;
 }
 
-// TODO(ang): muovere a player, non vogliamo che entities si muovano per le porte (o sì?)
-void Entity::_handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door) {
-    logger_.info("collided with door");
-    if (door->getNextLevelIdx() == -1) {
-        int nextLevelIdx = levelManager->addLevel(door->getFacingDir());
-        door->setNextLevelIdx(nextLevelIdx);
-    }
+void Entity::_handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door, Position pos) {
+}
 
-    if (door->isDoorOpen()) {
-        logger_.info("moving to level with idx %d", door->getNextLevelIdx());
-        levelManager->goToLevel(door->getNextLevelIdx());
-        levelManager->getLogQueue()->addEvent("Hai cambiato livello!");
-    } else {
-        if (levelManager->getPlayer()->getPowers() > 0) {
-            logger_.info("opening door with idx %d", door->getNextLevelIdx());
-            levelManager->getPlayer()->removePower();
-            door->openDoor();  // temporaneo
-            levelManager->getPlayer()->incrementScore(10);
-            levelManager->getLogQueue()->addEvent("nuovo livello");
-        } else {
-            levelManager->getLogQueue()->addEvent("la porta è chiusa");
-        }
-    }
+void Entity::_handleWallCollision(manager::Level *levelManager, level::WallSegment *wall, Position pos) {
+}
+
+void Entity::_handleEntityCollision(manager::Level *levelManager, Entity *entity, Position pos) {
+}
+
+void Entity::_handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact, Position pos) {
+}
+
+void Entity::_handlePowerCollision(manager::Level *levelManager, collectables::Power *power, Position pos) {
+}
+
+void Entity::_handleNoneCollision(manager::Level *levelManager, Position pos) {
 }
