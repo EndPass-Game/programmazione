@@ -1,0 +1,21 @@
+name: C/C++ lint
+
+on:
+  push:
+  pull_request:
+      branches: [ master ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: install clang-format
+      run: sudo apt-get install clang-format
+
+    - name: list clang version 
+      run: clang-format -version
+
+    - name: run linter
+      run: clang-format -style=file --dry-run -Werror $(find ./src -name '*.cpp') $(find ./src -name '*.hpp')
