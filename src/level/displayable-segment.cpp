@@ -39,4 +39,19 @@ namespace level {
             displayables_[i]->clear(win);
         }
     }
+
+    DisplayableSegment &DisplayableSegment::operator=(const DisplayableSegment &other) {
+        if (this == &other) {
+            return *this;
+        }
+        
+        startPosition_ = other.startPosition_;
+        posDirection_ = other.posDirection_;
+        length_ = other.length_;
+        displayables_.resize(length_);
+        for (int i = 0; i < length_; i++) {
+            displayables_[i] = new Displayable(*other.displayables_[i]);
+        }
+        return *this;
+    }
 };  // namespace level

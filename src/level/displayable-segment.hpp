@@ -36,5 +36,7 @@ namespace level {
         // previene la creazione di DisplayableSegment da sé, ma solo i suoi derivati
         // che implementano questa funzione con il tipo di collisione appropriato
         virtual enums::CollisionType getCollisionType() = 0;
-    };  // class DisplayableSegment
-};      // namespace level
+
+        DisplayableSegment &operator=(const DisplayableSegment &other);
+    };  
+};  // namespace level

@@ -82,7 +82,6 @@ void Player::_handleArtifactCollision(manager::Level *levelManager, collectables
     art = dynamic_cast<collectables::Artifact *>(artifact);
     levelManager->getPlayer()->setLife(levelManager->getPlayer()->getLife() + art->getLifeUpgrade());
     levelManager->getPlayer()->setPosition(pos);
-    delete art;
 }
 
 void Player::_handlePowerCollision(manager::Level *levelManager, collectables::Power *power, Position pos) {

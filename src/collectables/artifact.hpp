@@ -18,7 +18,7 @@ namespace collectables {
 
       public:
         // costruttore che inizializza la variabile che definisce l'aumento di vità che darà l'artefatto e la sua posizione
-        Artifact(int lifeUpgrade_, Position posObj);
+        Artifact(int lifeUpgrade_ = 0, Position posObj = Position(1, 1));
         virtual ~Artifact() = default;
         int getLifeUpgrade();
 

@@ -1,5 +1,5 @@
 #include "gamestruct/displayable.hpp"
-
+#include "gamestruct/logger.hpp"
 Displayable::Displayable() {
     position_ = new StateWatcher<Position>(Position(0, 0));
     displayChar_ = new StateWatcher<char>(' ');
@@ -10,7 +10,12 @@ Displayable::Displayable(Position current, char display_char) {
     displayChar_ = new StateWatcher<char>(display_char);
 }
 
-char Displayable::getDisplayChar() {
+Displayable::Displayable(const Displayable &other) {
+    position_ = new StateWatcher<Position>(other.getPosition());
+    displayChar_ = new StateWatcher<char>(other.getDisplayChar());
+}
+
+char Displayable::getDisplayChar() const {
     return displayChar_->getCurrent();
 }
 
@@ -32,7 +37,7 @@ void Displayable::clear(WINDOW *win) {
     mvwprintw(win, position_->getLast().riga, position_->getLast().colonna, " ");
 }
 
-Position Displayable::getPosition() {
+Position Displayable::getPosition() const {
     return position_->getCurrent();
 }
 
@@ -50,7 +55,18 @@ void Displayable::render(WINDOW *win, bool forced) {
         mvwprintw(win, position_->getCurrent().riga, position_->getCurrent().colonna, "%c", displayChar_->getCurrent());
     }
 }
+
 Displayable::~Displayable() {
     delete position_;
     delete displayChar_;
+}
+
+Displayable &Displayable::operator=(const Displayable &other) {
+    if (this != &other) {
+        delete position_;
+        delete displayChar_;
+        position_ = new StateWatcher<Position>(other.getPosition());
+        displayChar_ = new StateWatcher<char>(other.getDisplayChar());
+    }
+    return *this;
 }

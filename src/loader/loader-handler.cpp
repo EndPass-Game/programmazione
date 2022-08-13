@@ -18,7 +18,6 @@ namespace loader {
     }
 
     void LoaderHandler::load() {
-        rewind(file);  // resetta il file descriptor all'inizio del file
         wallLoader.load(file);
         doorLoader.load(file);
         artifactLoader.load(file);

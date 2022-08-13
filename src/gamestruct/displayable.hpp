@@ -22,14 +22,15 @@ class Displayable {
 
   public:
     Displayable();
-    // construttore che inizializza l'oggetto changable e display char
     Displayable(Position current, char displayChar);
+    Displayable(const Displayable &other);
+
     // elimina i pointer
     ~Displayable();
 
-    Position getPosition();
+    Position getPosition() const;
 
-    char getDisplayChar();
+    char getDisplayChar() const;
     void setDisplayChar(char displayChar);
 
     void setPosition(Position newPosition);
@@ -42,4 +43,6 @@ class Displayable {
 
     // Se la posizione è stata modificata riprinta il carattere nella posizione corrente
     void render(WINDOW *win, bool forced = false);
+
+    Displayable &operator=(const Displayable &other);
 };

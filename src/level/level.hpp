@@ -6,24 +6,26 @@
 #include "entities/entity.hpp"
 #include "entities/player.hpp"
 #include "enums/direction.hpp"
-#include "gamestruct/displayable.hpp"
 #include "gamestruct/logger.hpp"
-#include "gamestruct/size.hpp"
 #include "level/collidable.hpp"
 #include "level/displayable-segment.hpp"
+#include "level/door-segment.hpp"
+#include "level/wall-segment.hpp"
 #include "loader/loader-handler.hpp"
 
 namespace level {
     // contenere tutti i oggetti utili per il singolo livello
     class Level {
       private:
+        datastruct::Vector<WallSegment> wallSegments_;
+        datastruct::Vector<DoorSegment> doorSegments_;
+
         Position lastPlayerPosition_;
         datastruct::Vector<DisplayableSegment *> segment_;
-        datastruct::Vector<collectables::Artifact *> artifacts_;
-        datastruct::Vector<collectables::Power *> powers_;
         datastruct::Vector<Entity *> entities_;
+        datastruct::Vector<collectables::Artifact> artifacts_;
+        datastruct::Vector<collectables::Power> powers_;
         datastruct::Vector<Position> playerPositions_;
-        int numOfDoors_;  // numero di porte nel livello
 
         Logger logger_ = Logger("level::Level");
 
@@ -31,7 +33,7 @@ namespace level {
         Level(loader::LoaderHandler *loader);
         Level(loader::LoaderHandler *loader, enums::Direction direction, int oldLevelIdx);
 
-        ~Level();
+        ~Level() = default;
 
         // restituisce la posizione dell'ultimo player
         Position getLastPlayerPosition();

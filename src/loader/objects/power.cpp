@@ -4,16 +4,14 @@
 
 namespace loader {
     void Power::load(FILE *file) {
-        LoadObject::resetTransferred();
-
         int numeroPoteri;
         fscanf(file, "%d", &numeroPoteri);
-        this->loadedObjects_->resize(numeroPoteri);
+        loadedObjects_.resize(numeroPoteri);
         for (int i = 0; i < numeroPoteri; i++) {
             Position startPosition;
             fscanf(file, "%d %d\n", &startPosition.riga, &startPosition.colonna);
-            collectables::Power *power = new collectables::Power(startPosition);
-            this->loadedObjects_->at(i) = power;
+            collectables::Power power = collectables::Power(startPosition);
+            loadedObjects_[i] = power;
         }
     };
 }  // namespace loader

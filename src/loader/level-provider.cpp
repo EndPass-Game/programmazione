@@ -73,9 +73,6 @@ namespace loader {
             level = new level::Level(levelVector->at(random), oppositeDirection, levelIdx);
         }
 
-        // ricarica una nuova copia delle informazioni per essere consumata
-        // alla prossima chiamata
-        levelVector->at(random)->load();
         return level;
     }
 
@@ -137,7 +134,7 @@ namespace loader {
                 break;
             default:
                 logger_.warning("_getLevelVector called with direction = NONE");
-                levelVector = &withNorthDoor_;
+                levelVector = &loadedLevels_;
                 break;
         }
         return levelVector;

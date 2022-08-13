@@ -38,8 +38,7 @@ namespace loader {
     }
 
     void DoorSegment::load(FILE *file) {
-        LoadObject::resetTransferred();
-        _resetMetaData();
+        _resetMetaData();  // TODO(ang): metadata vedere se togliere sta parte se non necessaria
 
         int numeroPorte;
         fscanf(file, "%d", &numeroPorte);
@@ -55,7 +54,7 @@ namespace loader {
             exit(1);
         }
 
-        loadedObjects_->resize(numeroPorte);
+        loadedObjects_.resize(numeroPorte);
         playerPositions_.resize(numeroPorte);
         for (int i = 0; i < numeroPorte; i++) {
             int direction;
@@ -64,14 +63,14 @@ namespace loader {
             int facingDir;
             Position playerPos;
             fscanf(file, "%d %d %d %d %d %d %d\n", &startPos.riga, &startPos.colonna, &direction, &length, &facingDir, &playerPos.riga, &playerPos.colonna);
-            level::DoorSegment *door = new level::DoorSegment(
+            level::DoorSegment door = level::DoorSegment(
                 level::Segment(startPos, (enums::Direction) direction, length),
                 (enums::Direction) facingDir
             );
             _setMetaData((enums::Direction) facingDir);
 
-            this->loadedObjects_->at(i) = door;
-            playerPositions_.at(i) = playerPos;
+            loadedObjects_[i] = door;
+            playerPositions_[i] = playerPos;
         }
     };
 
