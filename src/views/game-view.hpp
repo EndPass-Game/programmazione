@@ -4,10 +4,10 @@
 #include "manager/view-manager.hpp"
 #include "views/game-sub-view.hpp"
 #include "views/game-view.hpp"
+#include "views/help-view.hpp"
 #include "views/item-sub-view.hpp"
 #include "views/log-sub-view.hpp"
 #include "views/pause-view.hpp"
-#include "views/help-view.hpp"
 #include "views/resizable-view.hpp"
 #include "views/screen-too-small.hpp"
 

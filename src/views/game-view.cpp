@@ -32,11 +32,10 @@ namespace views {
             PauseView *pauseView = new PauseView({0, 0});
             view->pushView(pauseView);
             pause_ = false;
-        }else if(help_){
+        } else if (help_) {
             HelpView *helpView = new HelpView({0, 0});
             view->pushView(helpView);
             help_ = false;
-
         }
         return false;
     }
