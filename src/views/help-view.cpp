@@ -29,7 +29,7 @@ namespace views {
     }
 
     void HelpView::render(bool force) {
-        if(force){
+        if (force) {
             struct KeyDescription {
                 char key;
                 char const *message;

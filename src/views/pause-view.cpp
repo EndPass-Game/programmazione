@@ -32,7 +32,7 @@ namespace views {
     }
 
     void PauseView::render(bool force) {
-        if(force){
+        if (force) {
             char pausa[] = "PAUSA";
             mvwprintw(window, (manager::kGameWindowsSize.riga) / 2 - 3, (manager::kGameWindowsSize.colonna - strlen(pausa)) / 2, pausa);
             char riprendere[] = "Premere la <Space> per riprendere.";
