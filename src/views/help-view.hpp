@@ -17,17 +17,14 @@ namespace views {
       public:
         HelpView(Position pos);
 
-        // fa il override di questa funzione da view
-        bool handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view, bool changedView);
+        bool handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view, bool changedView) override;
 
-        // fa il override di questa funzione da view
-        void handleInput(char input);
+        void handleInput(char input) override;
 
-        // fa il override di questa funzione da view
-        void render(bool force);
+        void render(bool force) override;
 
-        void handleScreenToSmall(manager::ViewManager *manager);
+        void handleScreenToSmall(manager::ViewManager *manager) override;
 
-        const char *getName();
+        const char *getName() override;
     };
 };  // namespace views
