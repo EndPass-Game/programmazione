@@ -23,9 +23,10 @@ namespace views {
     void MenuView::handleInput(char input) {
         switch (input) {
             case 'q':
+            case 'Q':
                 quit_ = true;
                 break;
-            case '\n':
+            case ' ':
                 start_ = true;
                 break;
         }
@@ -40,9 +41,9 @@ namespace views {
     // fa il override di questa funzione da view
     void MenuView::render(bool force) {
         printMenu(force);
-        char start[] = "Premere <Invio> per incominciare";
+        char start[] = "Premere <Space> per incominciare";
         mvwprintw(window, 6, (kMenuSize_.colonna - strlen(start)) / 2, start);
-        char quit[] = "Premere 'q' per abbandonare";
+        char quit[] = "Premere <Q> per abbandonare";
         mvwprintw(window, 8, (kMenuSize_.colonna - strlen(quit)) / 2, quit);
         ResizableView::render(force);
     }

@@ -1,0 +1,33 @@
+
+#pragma once
+
+#include <cstring>
+
+#include "manager/view-manager.hpp"
+#include "views/resizable-view.hpp"
+#include "views/screen-too-small.hpp"
+
+namespace views {
+    class HelpView : public ResizableView {
+      private:
+        bool quit = false;
+        bool returnToGame = false;
+        const char *name_ = "Pause";
+
+      public:
+        HelpView(Position pos);
+
+        // fa il override di questa funzione da view
+        bool handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view, bool changedView);
+
+        // fa il override di questa funzione da view
+        void handleInput(char input);
+
+        // fa il override di questa funzione da view
+        void render(bool force);
+
+        void handleScreenToSmall(manager::ViewManager *manager);
+
+        const char *getName();
+    };
+};  // namespace views

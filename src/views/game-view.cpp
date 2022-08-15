@@ -26,12 +26,17 @@ namespace views {
         if (ResizableView::handleScreenBeforeRender(screen, view, changedView))
             return true;
 
-        if (quit) {
+        if (quit_) {
             view->popView();
-        } else if (pause) {
+        } else if (pause_) {
             PauseView *pauseView = new PauseView({0, 0});
             view->pushView(pauseView);
-            pause = false;
+            pause_ = false;
+        }else if(help_){
+            HelpView *helpView = new HelpView({0, 0});
+            view->pushView(helpView);
+            help_ = false;
+
         }
         return false;
     }
@@ -39,10 +44,13 @@ namespace views {
     void GameView::handleInput(char input) {
         switch (input) {
             case 'q':
-                quit = true;
+                quit_ = true;
                 break;
             case 'p':
-                pause = true;
+                pause_ = true;
+                break;
+            case 'h':
+                help_ = true;
                 break;
             default:
                 gameSubView_->handleInput(input);
