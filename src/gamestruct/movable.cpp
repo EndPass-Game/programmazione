@@ -18,14 +18,6 @@ Position Movable::getNextPosition() const {
     return nextPosition_;
 }
 
-void Movable::computeNextState() {
-    if (direction_ != enums::Direction::NONE) {
-        lastNotNullDirection_ = direction_;
-    }
-    nextPosition_ = _computeNextPosition(direction_); 
-    direction_ = enums::Direction::NONE;
-}
-
 Position Movable::_computeNextPosition(enums::Direction direction) {
     int newRiga = Displayable::getPosition().riga;
     int newColonna = Displayable::getPosition().colonna;

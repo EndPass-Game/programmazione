@@ -29,8 +29,4 @@ public:
 
     // getter per l'ultima direzione non nulla
     enums::Direction getLastNotNullDirection() const; 
-
-    // aggiorna a seconda della `direction_` la posizione e
-    // l'ultima direzione non nulla
-    void computeNextState(); 
 };

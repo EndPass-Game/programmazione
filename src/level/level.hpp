@@ -50,7 +50,7 @@ namespace level {
         bool isPositionEmpty(Position pos);
 
         void addBullet(weapon::Bullet *bullet);
-        void moveBullets();
+        void renderBullets(WINDOW *win);
         // @returns l'oggetto di collisione alla data posizione
         Collidable *getCollision(Position pos);
     };

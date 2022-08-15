@@ -64,9 +64,20 @@ namespace manager {
     }
 
     void Level::playerShoot() {
-        logger_.info("firing a bullet");
-        weapon::Bullet *bullet = new weapon::Bullet(player_->getNextPosition(), player_->getLastNotNullDirection());
-        levels_[levelIdx_->getCurrent()]->addBullet(bullet);
+        logger_.info("player firing a bullet");
+        Position bulletPosition = player_->getNextPosition();
+        level::Collidable *collision = getCollision(bulletPosition);
+
+        // BUG: a volte quando il player va troppo veloce, prendere la sua prossima
+        // posizione non è ancora sufficiente per non cancellarlo dallo schermo
+
+        // TODO(simo): check per vedere la collisione istantanea, cioè gestisci questo
+        // caso ad esempio fare danno subito, perché il bullet va a controllare se
+        // la cella in cui vuole andare colpisce qualcosa
+        if (collision == nullptr) {
+            weapon::Bullet *bullet = new weapon::Bullet(bulletPosition, player_->getLastNotNullDirection());
+            levels_[levelIdx_->getCurrent()]->addBullet(bullet);
+        }
     }
 
     void Level::goToLevel(int levelIdx) {

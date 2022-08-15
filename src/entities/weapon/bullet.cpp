@@ -1,12 +1,12 @@
 #include "entities/weapon/bullet.hpp"
-
+#include "gamestruct/logger.hpp"
 namespace weapon {
 
     Bullet::Bullet(Position position, enums::Direction direction, int damage)
         : Movable(position, '.'),
           damage_{1} {
-            Movable::setDirection(direction);
-        }
+        Movable::setDirection(direction);
+    }
 
     bool Bullet::hasHit() {
         return false;
@@ -17,8 +17,8 @@ namespace weapon {
     }
 
     void Bullet::move() {
-        Movable::computeNextState();
         setPosition(nextPosition_);
+        nextPosition_ = Movable::_computeNextPosition(direction_); 
     }
 
 }  // namespace weapon
