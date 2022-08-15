@@ -66,6 +66,8 @@ namespace manager {
     void Level::playerShoot() {
         logger_.info("player firing a bullet");
         Position bulletPosition = player_->getNextPosition();
+        logger_.debug("next position: %d, %d", bulletPosition.colonna, bulletPosition.riga);
+        logger_.debug("curr position: %d, %d", player_->getPosition().colonna, player_->getPosition().riga);
         level::Collidable *collision = getCollision(bulletPosition);
 
         // BUG: a volte quando il player va troppo veloce, prendere la sua prossima
@@ -100,6 +102,7 @@ namespace manager {
             levelIdx_->setCurrent(levelIdx_->getCurrent());  // FIX PG-34
         }
 
+        player_->move(this);
         player_->clearLast(win);
         player_->render(win, force);
 

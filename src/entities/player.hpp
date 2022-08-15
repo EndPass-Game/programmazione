@@ -58,5 +58,7 @@ class Player : public Entity {
 
     int getScore();
 
+    void setPosition(Position pos);
+
     void incrementScore(int increment);
 };

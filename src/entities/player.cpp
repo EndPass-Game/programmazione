@@ -40,6 +40,11 @@ void Player::addPower() {
     this->powers_++;
 }
 
+void Player::setPosition(Position pos) {
+    Displayable::setPosition(pos);
+    nextPosition_ = Movable::_computeNextPosition(lastNotNullDirection_);
+}
+
 void Player::removePower() {
     logger_.info("used power");
     this->powers_--;
