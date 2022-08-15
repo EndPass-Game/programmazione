@@ -1,4 +1,5 @@
 #include "entities/weapon/bullet.hpp"
+
 #include "gamestruct/logger.hpp"
 namespace weapon {
 
@@ -18,7 +19,7 @@ namespace weapon {
 
     void Bullet::move() {
         setPosition(nextPosition_);
-        nextPosition_ = Movable::_computeNextPosition(direction_); 
+        nextPosition_ = Movable::_computeNextPosition(direction_);
     }
 
 }  // namespace weapon

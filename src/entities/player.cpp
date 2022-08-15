@@ -23,11 +23,11 @@ Altro
 #include "manager/level.hpp"
 
 Player::Player()
-    : Entity(12, 3,  // vita e attacco
-             {1, 1}, // position di spawn
-             'P'),   // charattere mostrato su schermo
-        powers_(0),
-        score_(0),
+    : Entity(12, 3,   // vita e attacco
+             {1, 1},  // position di spawn
+             'P'),    // charattere mostrato su schermo
+      powers_(0),
+      score_(0),
       logger_("player") {}
 
 // TODO(simo)

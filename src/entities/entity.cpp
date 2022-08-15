@@ -21,7 +21,7 @@ void Entity::move(manager::Level *levelManager) {
         return;
     }
     lastNotNullDirection_ = direction_;
-    nextPosition_ = _computeNextPosition(direction_); 
+    nextPosition_ = _computeNextPosition(direction_);
     direction_ = enums::Direction::NONE;
 
     level::Collidable *collision = levelManager->getCollision(nextPosition_);
@@ -47,7 +47,7 @@ void Entity::move(manager::Level *levelManager) {
             _handleNoneCollision(levelManager);
             break;
     }
-    nextPosition_ = _computeNextPosition(lastNotNullDirection_); 
+    nextPosition_ = _computeNextPosition(lastNotNullDirection_);
 }
 
 bool Entity::isDead() const {

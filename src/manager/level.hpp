@@ -56,7 +56,7 @@ namespace manager {
         void goToLevel(int level);
 
         level::Collidable *getCollision(Position pos);
-        void playerShoot(); 
+        void playerShoot();
 
         LogQueue *getLogQueue();
 

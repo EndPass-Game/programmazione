@@ -5,12 +5,12 @@
 #include "datastruct/vector.hpp"
 #include "entities/entity.hpp"
 #include "entities/player.hpp"
+#include "entities/weapon/bullet.hpp"
 #include "enums/direction.hpp"
 #include "gamestruct/logger.hpp"
 #include "level/collidable.hpp"
 #include "level/displayable-segment.hpp"
 #include "loader/loader-handler.hpp"
-#include "entities/weapon/bullet.hpp"
 
 namespace level {
     // contenere tutti i oggetti utili per il singolo livello

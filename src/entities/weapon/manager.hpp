@@ -16,7 +16,7 @@ namespace weapon {
         ~Manager();
 
         // muove tutti i proiettili
-        void move(); 
+        void move();
 
         // @brief aggiunge un proiettile al manager
         void createBullet(Position position, enums::Direction direction);

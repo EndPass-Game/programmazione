@@ -207,7 +207,7 @@ namespace level {
             powers_[i]->clear(win);
         }
         for (unsigned int i = 0; i < bullets_.size(); i++) {
-            // TODO: possibile bug che il proiettile resti bloccato nel punto in cui 
+            // TODO: possibile bug che il proiettile resti bloccato nel punto in cui
             // abbiamo lasciato il livello?? è un bug??
             bullets_[i]->clear(win);
         }

@@ -13,9 +13,9 @@ Funzioni:
 
 #include <ncurses.h>
 
+#include "entities/weapon/bullet.hpp"
 #include "enums/direction.hpp"
 #include "loader/level-provider.hpp"
-#include "entities/weapon/bullet.hpp"
 
 namespace manager {
 

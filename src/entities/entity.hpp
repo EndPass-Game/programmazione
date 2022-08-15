@@ -3,13 +3,12 @@
 #include "collectables/artifact.hpp"
 #include "collectables/power.hpp"
 #include "enums/direction.hpp"
+#include "gamestruct/movable.hpp"
 #include "gamestruct/position.hpp"
 #include "level/collidable.hpp"
 #include "level/door-segment.hpp"
 #include "level/wall-segment.hpp"
 #include "manager/level.fwd.h"  // circlular import
-#include "gamestruct/movable.hpp"
-
 
 // TODO: invece che ogni classe figlia erediti da questa
 // sarebbe buona cosa rendere questa classe una factory
@@ -25,7 +24,7 @@ class Entity : public Movable, public level::Collidable {
     virtual void _handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact);
     virtual void _handlePowerCollision(manager::Level *levelManager, collectables::Power *power);
     virtual void _handleNoneCollision(manager::Level *levelManager);
- 
+
   public:
     Entity();
     Entity(int life, int attack);
@@ -33,7 +32,7 @@ class Entity : public Movable, public level::Collidable {
     virtual ~Entity() = default;
     bool isDead() const;
 
-    // metodo virtuale che sarà definita a 
+    // metodo virtuale che sarà definita a
     // seconda del metodo d'attacco dell'entità
     virtual void attack(Entity *target);
 

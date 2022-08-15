@@ -1,12 +1,12 @@
-#pragma once 
+#pragma once
 
+#include "enums/direction.hpp"
 #include "gamestruct/displayable.hpp"
 #include "gamestruct/position.hpp"
-#include "enums/direction.hpp"
 
 // rappresenta un oggetto che si può muovere mostrabile a schermo
 class Movable : public Displayable {
-protected:
+  protected:
     Position nextPosition_;
     enums::Direction lastNotNullDirection_;
 
@@ -17,9 +17,9 @@ protected:
     // calcola la posizione nel prossimo frame
     Position _computeNextPosition(enums::Direction direction);
 
-public:
+  public:
     Movable(Position current, char displayChar);  // costruttore
-    virtual ~Movable() = default; 
+    virtual ~Movable() = default;
 
     // setter della direzione attuale
     void setDirection(enums::Direction direction);
@@ -28,5 +28,5 @@ public:
     Position getNextPosition() const;
 
     // getter per l'ultima direzione non nulla
-    enums::Direction getLastNotNullDirection() const; 
+    enums::Direction getLastNotNullDirection() const;
 };
