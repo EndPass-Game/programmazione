@@ -6,21 +6,28 @@
 #include "gamestruct/position.hpp"
 #include "level/collidable.hpp"
 #include "level/displayable-segment.hpp"
+#include "level/segment.hpp"
 namespace level {
 
     class DoorSegment : public DisplayableSegment {
       private:
-        int nextLevelIdx_;  // -1 default per livello inesistente
-        bool isOpen_ = false;
+        // direzione rispetto al centro della stanza in cui si trova la porta
+        // usato principalmente per dare consistenza ai cambi di stanza
+        enums::Direction facingDir_;
 
-        // private helper function to set character of segment to ch
+        // -1 default per livello inesistente che non porta a nessun livello
+        int nextLevelIdx_;
+
+        // true se la porta è aperta, false se chiusa
+        bool isOpen_;
+
+        // functione helper per impostare il carattere del segmento
+        // @param ch: nuovo carattere di display
         void _setDisplayChar(char ch);
 
       public:
         DoorSegment();
-        DoorSegment(Position start_position, enums::Direction direction, int length,
-                    int nextLevelIdx = -1,  // quando è una porta d'uscita che non porta a nessun livello
-                    bool isOpen = false);
+        DoorSegment(const Segment &segment, enums::Direction facingDir, int nextLevelIdx = -1, bool isOpen = false);
 
         bool isDoorOpen() const;
 
@@ -31,6 +38,8 @@ namespace level {
         void setNextLevelIdx(int nextLevelIdx);
 
         int getNextLevelIdx() const;
+
+        enums::Direction getFacingDir() const;
 
         virtual enums::CollisionType getCollisionType() override;
     };

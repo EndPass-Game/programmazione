@@ -7,8 +7,8 @@ namespace loader {
     template <typename T>
     class LoadObject {
       protected:
-        bool _isTransferred;
-        datastruct::Vector<T *> *_loadedObjects;
+        bool isTransferred_;
+        datastruct::Vector<T *> *loadedObjects_;
 
       public:
         LoadObject();
@@ -23,23 +23,23 @@ namespace loader {
 
     template <typename T>
     LoadObject<T>::LoadObject()
-        : _isTransferred(false), _loadedObjects(new datastruct::Vector<T *>()) {}
+        : isTransferred_(false), loadedObjects_(new datastruct::Vector<T *>()) {}
 
     template <typename T>
     LoadObject<T>::~LoadObject() {
-        if (!_isTransferred) {
-            for (unsigned int i = 0; i < _loadedObjects->size(); i++) {
-                delete _loadedObjects->at(i);
+        if (!isTransferred_) {
+            for (unsigned int i = 0; i < loadedObjects_->size(); i++) {
+                delete loadedObjects_->at(i);
             }
         }
-        delete _loadedObjects;
+        delete loadedObjects_;
     }
 
     template <typename T>
     datastruct::Vector<T *> *LoadObject<T>::getLoadedObjects() {
-        if (!_isTransferred) {
-            _isTransferred = true;
-            return _loadedObjects;
+        if (!isTransferred_) {
+            isTransferred_ = true;
+            return loadedObjects_;
         } else {
             return nullptr;
         }
@@ -47,6 +47,6 @@ namespace loader {
 
     template <typename T>
     void LoadObject<T>::resetTransferred() {
-        _isTransferred = false;
+        isTransferred_ = false;
     }
 };  // namespace loader

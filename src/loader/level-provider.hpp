@@ -11,8 +11,18 @@ namespace loader {
       private:
         LevelProvider(const char *directory = "assets/");
         datastruct::Vector<LoaderHandler *> loadedLevels_;
+        datastruct::Vector<LoaderHandler *> withNorthDoor_;
+        datastruct::Vector<LoaderHandler *> withEastDoor_;
+        datastruct::Vector<LoaderHandler *> withSouthDoor_;
+        datastruct::Vector<LoaderHandler *> withWestDoor_;
+
+        bool hasLoadedLevels_;
 
         Logger logger_;
+
+        enums::Direction _getOppositeDirection(enums::Direction direction);
+        void _displatchHandler(LoaderHandler *handler);
+        datastruct::Vector<LoaderHandler *> *_getLevelVector(enums::Direction direction);
 
       public:
         // @retuns l'istanza singleton

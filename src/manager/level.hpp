@@ -38,7 +38,8 @@ namespace manager {
         StateWatcher<int> *levelIdx_;
         loader::DirectoryLoader *dirLoader_;
         LogQueue *logQueue_;
-        Logger logger_ = Logger("manager::Level");
+
+        Logger logger_;
 
       public:
         Level();
@@ -46,8 +47,9 @@ namespace manager {
 
         Player *getPlayer();
 
+        // @param direction il livello aggiunto dovrà avere una porta nella direzione opposta a quella indicata
         // @returns l'index del livello creato
-        int addLevel();
+        int addLevel(enums::Direction direction = enums::Direction::NONE);
 
         // stampa a schermo il livello scelto, se non è presente tale livello (indice invalido)
         // allora ritorna false, altrimenti true;

@@ -6,7 +6,7 @@ namespace loader {
 
         int numeroMuri;
         fscanf(file, "%d", &numeroMuri);
-        this->_loadedObjects->resize(numeroMuri);
+        this->loadedObjects_->resize(numeroMuri);
         for (int i = 0; i < numeroMuri; i++) {
             int direction;
             Position startPosition;
@@ -14,7 +14,7 @@ namespace loader {
             int angleType;
             fscanf(file, "%d %d %d %d %d\n", &startPosition.riga, &startPosition.colonna, &direction, &length, &angleType);
             level::WallSegment *wall = new level::WallSegment(startPosition, (enums::Direction) direction, length, (enums::WallAngleType) angleType);
-            this->_loadedObjects->at(i) = wall;
+            this->loadedObjects_->at(i) = wall;
         }
     }
 }  // namespace loader

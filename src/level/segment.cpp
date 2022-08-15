@@ -10,6 +10,12 @@ namespace level {
         posDirection_ = Position(0, 0);  // 0,0 per direzione invalida
     }
 
+    Segment::Segment(const Segment &segment)
+        : startPosition_(segment.startPosition_),
+          endPosition_(segment.endPosition_),
+          posDirection_(segment.posDirection_),
+          length_(segment.length_) {}
+
     Segment::Segment(Position startPosition, enums::Direction direction, int length)
         : startPosition_(startPosition) {
         length_ = length;

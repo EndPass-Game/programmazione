@@ -5,8 +5,9 @@ namespace level {
     DoorSegment::DoorSegment()
         : DisplayableSegment() {}
 
-    DoorSegment::DoorSegment(Position start_position, enums::Direction direction, int length, int nextLevelIdx, bool isOpen)
-        : DisplayableSegment(start_position, direction, length),
+    DoorSegment::DoorSegment(const Segment &segment, enums::Direction facingDir, int nextLevelIdx, bool isOpen)
+        : DisplayableSegment(segment),
+          facingDir_(facingDir),
           nextLevelIdx_(nextLevelIdx),
           isOpen_(isOpen) {
         if (isOpen_) {
@@ -36,6 +37,10 @@ namespace level {
 
     int DoorSegment::getNextLevelIdx() const {
         return nextLevelIdx_;
+    }
+
+    enums::Direction DoorSegment::getFacingDir() const {
+        return facingDir_;
     }
 
     enums::CollisionType DoorSegment::getCollisionType() {

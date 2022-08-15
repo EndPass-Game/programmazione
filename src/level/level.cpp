@@ -4,19 +4,20 @@
 #include "datastruct/vector.hpp"
 #include "entities/player.hpp"
 #include "enums/collision-type.hpp"
-#include "enums/direction.hpp"
 #include "gamestruct/size.hpp"
 #include "level/door-segment.hpp"
 #include "level/wall-segment.hpp"
 #include "manager/level.hpp"
 
 namespace level {
-    Level::Level(loader::LoaderHandler *loader) {
-        segment_ = datastruct::Vector<DisplayableSegment *>();
-        artifacts_ = datastruct::Vector<collectables::Artifact *>();
-        entities_ = datastruct::Vector<Entity *>(0);
-        powers_ = datastruct::Vector<collectables::Power *>();
-
+    Level::Level(loader::LoaderHandler *loader)
+        : lastPlayerPosition_(1, 1),
+          segment_(),
+          artifacts_(),
+          powers_(),
+          entities_(),
+          playerPositions_(),
+          numOfDoors_(0) {
         datastruct::Vector<WallSegment *> *segments = nullptr;
         segments = loader->wallLoader.getLoadedObjects();
         if (segments != nullptr) {
@@ -32,18 +33,12 @@ namespace level {
             for (unsigned int i = 0; i < doors->size(); i++) {
                 segment_.push_back((DisplayableSegment *) doors->at(i));
             }
-        } else {
-            numOfDoors_ = 0;
         }
 
-        datastruct::Vector<Position *> *playersPos = nullptr;
-        playersPos = loader->playerPosLoader.getLoadedObjects();
-        if (playersPos != nullptr) {
-            lastPlayerPosition_ = *playersPos->at(0);  // only one player position is loaded
-            for (unsigned int i = 0; i < playersPos->size(); i++) {
-                delete playersPos->at(i);
-            }
-        }
+        // avremmo una invalid-read se playerPositions_.size() == 0, ma questo non dovrebbe mai
+        // succedere per checks in loader::LoaderHandler (in particolare quello sulle porte)
+        playerPositions_ = loader->doorLoader.getPlayerPositions();
+        lastPlayerPosition_ = playerPositions_.at(0);
 
         datastruct::Vector<collectables::Artifact *> *artifacts = nullptr;
         artifacts = loader->artifactLoader.getLoadedObjects();
@@ -62,13 +57,30 @@ namespace level {
         }
     }
 
-    Level::Level(loader::LoaderHandler *loader, int oldLevelIdx)
+    Level::Level(loader::LoaderHandler *loader, enums::Direction direction, int oldLevelIdx)
         : Level(loader) {
         logger_.debug("creating level pointing to leveldIdx: %d", oldLevelIdx);
 
-        int doorNumber = rand() % numOfDoors_;
+        DoorSegment *chosenDoor = nullptr;
+
         // questa parte assume che le porte siano tutte nell'ultima parte del segmento:
-        DoorSegment *chosenDoor = (DoorSegment *) segment_.at(segment_.size() - numOfDoors_ + doorNumber);
+        for (unsigned int i = segment_.size() - numOfDoors_; i < segment_.size(); i++) {
+            DoorSegment *door = (DoorSegment *) segment_.at(i);
+            if (door->getFacingDir() == direction) {
+                chosenDoor = door;
+                lastPlayerPosition_ = playerPositions_[i - (segment_.size() - numOfDoors_)];
+                break;
+            }
+        }
+
+        if (chosenDoor == nullptr) {
+            logger_.warning("no door found for direction %d", direction);
+            logger_.info("choosing random door");
+            int doorNumber = rand() % numOfDoors_;
+            chosenDoor = (DoorSegment *) segment_.at(segment_.size() - numOfDoors_ + doorNumber);
+            lastPlayerPosition_ = playerPositions_[doorNumber];
+        }
+
         chosenDoor->setNextLevelIdx(oldLevelIdx);
         chosenDoor->openDoor();
     }

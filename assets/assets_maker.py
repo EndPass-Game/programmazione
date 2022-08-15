@@ -53,11 +53,13 @@ class Walls:
                 board[self.x + x_adder * i][self.y + y_adder * i] = '+'
 
 class DoorSegment:
-    def __init__(self, x, y, direction, length):
+    def __init__(self, x, y, direction, length, px, py):
         self.x = x
         self.y = y
         self.direction = direction
         self.length = length
+        self.px = px
+        self.py = py
 
     def draw(self, board):
         x_adder = 0 
@@ -76,13 +78,7 @@ class DoorSegment:
         for i in range(self.length):
             board[self.x + x_adder * i][self.y + y_adder * i] = print_char
 
-class Player:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
-    def draw(self, board):
-        board[self.x][self.y] = 'P'
+        board[self.px][self.py] = 'P'
 
 class Artifacts: 
     def __init__(self, x, y, life):
@@ -127,13 +123,8 @@ def handle_print(file: str):
         for i in range(n_doors):
             line = f.readline()
             line = line.split()
-            stuff_to_print.append(DoorSegment(int(line[0]), int(line[1]), int(line[2]), int(line[3])))
+            stuff_to_print.append(DoorSegment(int(line[0]), int(line[1]), int(line[2]), int(line[3]), int(line[5]), int(line[6])))
         
-        print("loading the player")
-        line = f.readline()
-        line = line.split()
-        stuff_to_print.append(Player(int(line[0]), int(line[1])))
-
         n_artifacts = int(f.readline())
         print(f"{file} has {n_artifacts} artifacts")
         for i in range(n_artifacts):

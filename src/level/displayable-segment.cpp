@@ -9,16 +9,18 @@ namespace level {
     DisplayableSegment::DisplayableSegment()
         : Segment() {}
 
-    DisplayableSegment::DisplayableSegment(Position startPosition, enums::Direction direction, int length)
-        : Segment(startPosition, direction, length) {
-        // scegliendo la direzione per creare tutti i muri:
+    DisplayableSegment::DisplayableSegment(const Segment &segment)
+        : Segment(segment) {
         Position pos = startPosition_;
-        displayables_.resize(length);
+        displayables_.resize(length_);
         for (int i = 0; i < length_; i++) {
             displayables_[i] = new Displayable(pos, (char) enums::WallType::DEFAULT);
             pos += posDirection_;
         }
     }
+
+    DisplayableSegment::DisplayableSegment(Position startPosition, enums::Direction direction, int length)
+        : DisplayableSegment(Segment(startPosition, direction, length)) {}
 
     DisplayableSegment::~DisplayableSegment() {
         for (int i = 0; i < length_; i++) {

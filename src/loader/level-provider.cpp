@@ -16,7 +16,8 @@ namespace loader {
     }
 
     LevelProvider::LevelProvider(const char *directory)
-        : logger_("loader::LevelProvider") {
+        : hasLoadedLevels_(false),
+          logger_("loader::LevelProvider") {
         DirectoryLoader loader(directory);
         datastruct::Vector<char *> fileNames = loader.getFileNames();
         for (unsigned int i = 0; i < fileNames.size(); i++) {
@@ -32,39 +33,114 @@ namespace loader {
     }
 
     void LevelProvider::loadLevels() {
+        if (hasLoadedLevels_) {
+            logger_.error("Levels already loaded, the loading should only be called once");
+            logger_.info("returning without loading anything");
+            return;
+        }
+
         logger_.info("Loading levels");
+        hasLoadedLevels_ = true;
 
         for (unsigned int i = 0; i < loadedLevels_.size(); i++) {
             loadedLevels_[i]->load();
+            _displatchHandler(loadedLevels_[i]);
         }
 
         logger_.debug("Loaded %d levels", loadedLevels_.size());
     }
 
-    level::Level *LevelProvider::getLevel(enums::Direction wantedDirection, int levelIdx) {
-        // TODO(ang): il random è solamente temporaneo
-        int random = rand() % loadedLevels_.size();
+    level::Level *LevelProvider::getLevel(enums::Direction direction, int levelIdx) {
+        enums::Direction oppositeDirection = _getOppositeDirection(direction);
+        datastruct::Vector<LoaderHandler *> *levelVector = _getLevelVector(oppositeDirection);
+        logger_.debug("getting level with direction %d", oppositeDirection);
+
+        if (levelVector->size() == 0) {
+            logger_.warning(
+                "No levels found for direction %d "
+                " choosing from all available levels",
+                oppositeDirection
+            );
+            levelVector = &loadedLevels_;
+        }
+
+        int random = rand() % levelVector->size();
 
         level::Level *level;
         if (levelIdx == -1) {
-            level = new level::Level(loadedLevels_[random]);
+            level = new level::Level(levelVector->at(random));
         } else {
-            level = new level::Level(loadedLevels_[random], levelIdx);
+            level = new level::Level(levelVector->at(random), oppositeDirection, levelIdx);
         }
 
         // ricarica una nuova copia delle informazioni per essere consumata
         // alla prossima chiamata
-        loadedLevels_[random]->load();
-
-        // TODO: utilizzare la direzione voluta per scegliere il livello
-        // Level *level = new Level();
-        // level->setWantedDirection(wantedDirection);
-        // level->setWallSegment(fileNames_[rand() % fileNames_.size()].wallLoader);
-        // level->setDoorSegment(fileNames_[rand() % fileNames_.size()].doorLoader);
-        // level->setPlayerPosition(fileNames_[rand() % fileNames_.size()].playerPosLoader);
-        // level->setArtifact(fileNames_[rand() % fileNames_.size()].artifactLoader);
-        // level->setPower(fileNames_[rand() % fileNames_.size()].powerLoader);
+        levelVector->at(random)->load();
         return level;
+    }
+
+    void LevelProvider::_displatchHandler(LoaderHandler *handler) {
+        if (handler->doorLoader.hasNorthDoor()) {
+            withNorthDoor_.push_back(handler);
+        }
+
+        if (handler->doorLoader.hasEastDoor()) {
+            withEastDoor_.push_back(handler);
+        }
+
+        if (handler->doorLoader.hasSouthDoor()) {
+            withSouthDoor_.push_back(handler);
+        }
+
+        if (handler->doorLoader.hasWestDoor()) {
+            withWestDoor_.push_back(handler);
+        }
+    }
+
+    enums::Direction LevelProvider::_getOppositeDirection(enums::Direction direction) {
+        enums::Direction oppositeDirection;
+        switch (direction) {
+            case enums::Direction::UP:
+                oppositeDirection = enums::Direction::DOWN;
+                break;
+            case enums::Direction::DOWN:
+                oppositeDirection = enums::Direction::UP;
+                break;
+            case enums::Direction::LEFT:
+                oppositeDirection = enums::Direction::RIGHT;
+                break;
+            case enums::Direction::RIGHT:
+                oppositeDirection = enums::Direction::LEFT;
+                break;
+            default:
+                oppositeDirection = enums::Direction::NONE;
+                break;
+        }
+        return oppositeDirection;
+    }
+
+    datastruct::Vector<LoaderHandler *> *LevelProvider::_getLevelVector(enums::Direction direction) {
+        datastruct::Vector<LoaderHandler *> *levelVector;
+
+        switch (direction) {
+            case enums::Direction::UP:
+                levelVector = &withNorthDoor_;
+                break;
+            case enums::Direction::DOWN:
+                levelVector = &withSouthDoor_;
+                break;
+            case enums::Direction::LEFT:
+                levelVector = &withWestDoor_;
+                break;
+            case enums::Direction::RIGHT:
+                levelVector = &withEastDoor_;
+                break;
+            default:
+                logger_.warning("_getLevelVector called with direction = NONE");
+                levelVector = &withNorthDoor_;
+                break;
+        }
+        return levelVector;
     }
 
 }  // namespace loader

@@ -18,13 +18,16 @@ Funzioni:
 
 namespace manager {
 
-    Level::Level() {
+    Level::Level()
+        : levels_(datastruct::Vector<level::Level *>()),
+          logger_("manager::Level") {
         player_ = new Player();
         levelIdx_ = new StateWatcher<int>(-1);  // -1 indica che non è stato ancora caricato nessun livello
         logQueue_ = new LogQueue(manager::kLogAreaSize.colonna - 2, manager::kLogAreaSize.riga - 2, manager::kPaddingLogArea);
 
         int newLevelIdx = addLevel();
         levelIdx_->setCurrent(newLevelIdx);
+        player_->setPosition(levels_[newLevelIdx]->getLastPlayerPosition());
         goToLevel(newLevelIdx);
     }
 
@@ -41,18 +44,17 @@ namespace manager {
         return player_;
     }
 
-    int Level::addLevel() {
+    int Level::addLevel(enums::Direction direction) {
         logger_.info("Adding new level");
 
         loader::LevelProvider &levelProvider = loader::LevelProvider::getInstance();
 
         if (levelIdx_->getCurrent() == -1) {
-            // TODO(ang): fix the direction later
-            levels_.push_back(levelProvider.getLevel(enums::Direction::UP));
+            levels_.push_back(levelProvider.getLevel(direction));
         } else {
-            // TODO(ang): fix the direction later
-            levels_.push_back(levelProvider.getLevel(enums::Direction::UP, levelIdx_->getCurrent()));
+            levels_.push_back(levelProvider.getLevel(direction, levelIdx_->getCurrent()));
         }
+
         return (int) levels_.size() - 1;
     }
 
@@ -64,6 +66,7 @@ namespace manager {
         logger_.info("Loading level with index: %d", levelIdx);
 
         if (levelIdx < 0 || levelIdx >= (int) levels_.size()) {
+            logger_.error("Invalid go-to-level index, maximum index is: %u", levels_.size());
             return;
         }
         levels_[levelIdx_->getCurrent()]->setLastPlayerPosition(player_->getPosition());

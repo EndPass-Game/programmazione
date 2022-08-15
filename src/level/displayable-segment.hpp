@@ -19,6 +19,9 @@ namespace level {
       public:
         // segmento vuoto, crea un segmento lungo 0, in posizione 0 di direzione nulla
         DisplayableSegment();
+
+        DisplayableSegment(const Segment &segment);
+
         // crea un segmento di lunghezza length, in posizione startPosition di direzione direction
         // Esempio: DisplayableSegment(Position(0, 0), enums::Direction::RIGHT, 10)
         // crea un segmento di 10 muri in posizione (0, 0) e direzione a destra che printata a schermo è
