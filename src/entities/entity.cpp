@@ -58,7 +58,6 @@ void Entity::move(manager::Level *levelManager) {
                 break;
             case enums::CollisionType::POWER:
                 _handlePowerCollision(levelManager, (collectables::Power *) collision, Position(new_x, new_y));
-                delete (collectables::Power *) collision;
                 break;
             case enums::CollisionType::NONE:
                 _handleNoneCollision(levelManager, Position(new_x, new_y));

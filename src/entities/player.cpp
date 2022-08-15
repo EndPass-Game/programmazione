@@ -25,8 +25,8 @@ Altro
 Player::Player()
     : Entity(12, 3,  // TODO: gestire queste costanti hardcoded in un file di setting
              {1, 1}, /* position di spawn */
-             'P')    /* charattere mostrato su schermo */
-{
+             'P'),   /* charattere mostrato su schermo */
+      logger_("player") {
     powers_ = 0;
     score_ = 0;
 }
@@ -34,9 +34,6 @@ Player::Player()
 void Player::attack() {
     logger_.info("attacking");
 }
-
-// TODO
-void Player::pickup() {}
 
 void Player::addPower() {
     logger_.info("picked up power");
@@ -88,6 +85,7 @@ void Player::_handleArtifactCollision(manager::Level *levelManager, collectables
 void Player::_handlePowerCollision(manager::Level *levelManager, collectables::Power *power, Position pos) {
     levelManager->getPlayer()->addPower();
     levelManager->getPlayer()->setPosition(pos);
+    delete power;
 }
 
 void Player::_handleNoneCollision(manager::Level *levelManager, Position pos) {

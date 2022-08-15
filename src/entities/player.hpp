@@ -29,16 +29,15 @@ Altro
 // Player: classe che contiene il personaggio
 class Player : public Entity {
   private:
-    // TODO inventario
     int powers_;
     int score_ = 0;
-    Logger logger_ = Logger("player");
-    virtual void _handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door, Position pos);
-    virtual void _handleWallCollision(manager::Level *levelManager, level::WallSegment *wall, Position pos);
-    virtual void _handleEntityCollision(manager::Level *levelManager, Entity *entity, Position pos);
-    virtual void _handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact, Position pos);
-    virtual void _handlePowerCollision(manager::Level *levelManager, collectables::Power *power, Position pos);
-    virtual void _handleNoneCollision(manager::Level *levelManager, Position pos);
+    Logger logger_;
+    virtual void _handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door, Position pos) override;
+    virtual void _handleWallCollision(manager::Level *levelManager, level::WallSegment *wall, Position pos) override;
+    virtual void _handleEntityCollision(manager::Level *levelManager, Entity *entity, Position pos) override;
+    virtual void _handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact, Position pos) override;
+    virtual void _handlePowerCollision(manager::Level *levelManager, collectables::Power *power, Position pos) override;
+    virtual void _handleNoneCollision(manager::Level *levelManager, Position pos) override;
 
   public:
     Player();
@@ -47,9 +46,6 @@ class Player : public Entity {
     // TODO: ricerca il mostro da attaccare in un certo range
     // se trova applica il danno
     void attack();
-
-    // TODO
-    void pickup();
 
     void addPower();
 
