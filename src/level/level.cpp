@@ -16,8 +16,10 @@ namespace level {
           artifacts_(),
           powers_(),
           entities_(),
+          bullets_(),
           playerPositions_(),
-          numOfDoors_(0) {
+          numOfDoors_(0),
+          logger_("level::Level") {
         datastruct::Vector<WallSegment *> *segments = nullptr;
         segments = loader->wallLoader.getLoadedObjects();
         if (segments != nullptr) {
@@ -101,6 +103,10 @@ namespace level {
         for (unsigned int i = 0; i < powers_.size(); i++) {
             delete powers_[i];
         }
+
+        for (unsigned int i = 0; i < bullets_.size(); i++) {
+            delete bullets_[i];
+        }
     }
 
     Position Level::getLastPlayerPosition() {
@@ -141,6 +147,28 @@ namespace level {
         return nullptr;
     }
 
+    void Level::addBullet(weapon::Bullet *bullet) {
+        bullets_.push_back(bullet);
+    }
+
+    void Level::moveBullets() {
+        unsigned int i = 0;
+        while (i < bullets_.size()) {
+            Position bulletNextPosition = bullets_.at(i)->getNextPosition();
+            Collidable *collision = getCollision(bulletNextPosition);
+
+            // TODO(simo) handle other types of collision
+            if (collision->getCollisionType() != enums::CollisionType::NONE) {
+                logger_.debug("bullet collision with %s", collision->getCollisionType());
+                delete bullets_.at(i);
+                bullets_.remove(i);
+            } else {
+                bullets_.at(i)->move();
+                i++;
+            }
+        }
+    }
+
     void Level::render(WINDOW *win, bool force) {
         for (unsigned int i = 0; i < segment_.size(); i++) {
             segment_[i]->render(win, force);
@@ -149,8 +177,13 @@ namespace level {
         for (unsigned int i = 0; i < artifacts_.size(); i++) {
             artifacts_[i]->render(win, force);
         }
+
         for (unsigned int i = 0; i < powers_.size(); i++) {
             powers_[i]->render(win, force);
+        }
+
+        for (unsigned int i = 0; i < bullets_.size(); i++) {
+            bullets_[i]->render(win, force);
         }
 
         // TODO(ang): come fare a spostare gli entità?

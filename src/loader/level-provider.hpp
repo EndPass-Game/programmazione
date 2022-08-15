@@ -21,14 +21,12 @@ namespace loader {
         Logger logger_;
 
         enums::Direction _getOppositeDirection(enums::Direction direction);
-        void _displatchHandler(LoaderHandler *handler);
+        void _dispatchHandler(LoaderHandler *handler);
         datastruct::Vector<LoaderHandler *> *_getLevelVector(enums::Direction direction);
 
       public:
-        // @retuns l'istanza singleton
+        // @returns l'istanza singleton
         static LevelProvider &getInstance();
-
-        static void init(const char *directory = "assets/");
 
         LevelProvider(const LevelProvider &other) = delete;
         LevelProvider &operator=(const LevelProvider &other) = delete;

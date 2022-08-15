@@ -26,18 +26,21 @@ Altro
 #include "level/collidable.hpp"
 #include "level/door-segment.hpp"
 #include "level/wall-segment.hpp"
+
 // Player: classe che contiene il personaggio
 class Player : public Entity {
   private:
     int powers_;
-    int score_ = 0;
+    int score_;
+
     Logger logger_;
-    virtual void _handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door, Position pos) override;
-    virtual void _handleWallCollision(manager::Level *levelManager, level::WallSegment *wall, Position pos) override;
-    virtual void _handleEntityCollision(manager::Level *levelManager, Entity *entity, Position pos) override;
-    virtual void _handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact, Position pos) override;
-    virtual void _handlePowerCollision(manager::Level *levelManager, collectables::Power *power, Position pos) override;
-    virtual void _handleNoneCollision(manager::Level *levelManager, Position pos) override;
+
+    virtual void _handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door) override;
+    virtual void _handleWallCollision(manager::Level *levelManager, level::WallSegment *wall) override;
+    virtual void _handleEntityCollision(manager::Level *levelManager, Entity *entity) override;
+    virtual void _handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact) override;
+    virtual void _handlePowerCollision(manager::Level *levelManager, collectables::Power *power) override;
+    virtual void _handleNoneCollision(manager::Level *levelManager) override;
 
   public:
     Player();

@@ -19,6 +19,9 @@ namespace views {
             case 's':
                 levelManager_->getPlayer()->setDirection(enums::Direction::DOWN);
                 break;
+            case 'j':
+                levelManager_->playerShoot();
+                break;
         }
     }
     void GameSubView::render(bool force) {

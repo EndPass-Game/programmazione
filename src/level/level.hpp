@@ -6,12 +6,11 @@
 #include "entities/entity.hpp"
 #include "entities/player.hpp"
 #include "enums/direction.hpp"
-#include "gamestruct/displayable.hpp"
 #include "gamestruct/logger.hpp"
-#include "gamestruct/size.hpp"
 #include "level/collidable.hpp"
 #include "level/displayable-segment.hpp"
 #include "loader/loader-handler.hpp"
+#include "entities/weapon/bullet.hpp"
 
 namespace level {
     // contenere tutti i oggetti utili per il singolo livello
@@ -22,10 +21,11 @@ namespace level {
         datastruct::Vector<collectables::Artifact *> artifacts_;
         datastruct::Vector<collectables::Power *> powers_;
         datastruct::Vector<Entity *> entities_;
+        datastruct::Vector<weapon::Bullet *> bullets_;
         datastruct::Vector<Position> playerPositions_;
         int numOfDoors_;  // numero di porte nel livello
 
-        Logger logger_ = Logger("level::Level");
+        Logger logger_;
 
       public:
         Level(loader::LoaderHandler *loader);
@@ -49,6 +49,8 @@ namespace level {
         // @returns true se la posizione è vuota, false altrimenti
         bool isPositionEmpty(Position pos);
 
+        void addBullet(weapon::Bullet *bullet);
+        void moveBullets();
         // @returns l'oggetto di collisione alla data posizione
         Collidable *getCollision(Position pos);
     };

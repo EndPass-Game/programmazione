@@ -15,6 +15,7 @@ Funzioni:
 
 #include "enums/direction.hpp"
 #include "loader/level-provider.hpp"
+#include "entities/weapon/bullet.hpp"
 
 namespace manager {
 
@@ -60,6 +61,12 @@ namespace manager {
 
     level::Collidable *Level::getCollision(Position pos) {
         return levels_[levelIdx_->getCurrent()]->getCollision(pos);
+    }
+
+    void Level::playerShoot() {
+        logger_.info("firing a bullet");
+        weapon::Bullet *bullet = new weapon::Bullet(player_->getNextPosition(), player_->getLastNotNullDirection());
+        levels_[levelIdx_->getCurrent()]->addBullet(bullet);
     }
 
     void Level::goToLevel(int levelIdx) {
