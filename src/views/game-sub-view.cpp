@@ -3,6 +3,7 @@
 namespace views {
     GameSubView::GameSubView(WINDOW *win, manager::Level *levelManager)
         : SubView(win, {0, 0}, manager::kGameAreaSize), levelManager_(levelManager) {
+        levelManager_->getLogQueue()->addEvent("Benvenuti nel gioco, Cliccare <h> per vedere i comandi");
     }
 
     void GameSubView::handleInput(char input) {
