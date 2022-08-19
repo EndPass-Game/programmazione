@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include <cstring>
@@ -7,14 +8,14 @@
 #include "views/screen-too-small.hpp"
 
 namespace views {
-    class PauseView : public ResizableView {
+    class HelpView : public ResizableView {
       private:
         bool quit = false;
         bool returnToGame = false;
         const char *name_ = "Pause";
 
       public:
-        PauseView(Position pos);
+        HelpView(Position pos);
 
         bool handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view, bool changedView) override;
 
