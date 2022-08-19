@@ -44,7 +44,7 @@ namespace loader {
 
         for (unsigned int i = 0; i < loadedLevels_.size(); i++) {
             loadedLevels_[i]->load();
-            _displatchHandler(loadedLevels_[i]);
+            _dispatchHandler(loadedLevels_[i]);
         }
 
         logger_.debug("Loaded %d levels", loadedLevels_.size());
@@ -79,7 +79,7 @@ namespace loader {
         return level;
     }
 
-    void LevelProvider::_displatchHandler(LoaderHandler *handler) {
+    void LevelProvider::_dispatchHandler(LoaderHandler *handler) {
         if (handler->doorLoader.hasNorthDoor()) {
             withNorthDoor_.push_back(handler);
         }

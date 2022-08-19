@@ -13,6 +13,7 @@ Funzioni:
 
 #include <ncurses.h>
 
+#include "entities/weapon/bullet.hpp"
 #include "enums/direction.hpp"
 #include "loader/level-provider.hpp"
 
@@ -62,6 +63,25 @@ namespace manager {
         return levels_[levelIdx_->getCurrent()]->getCollision(pos);
     }
 
+    void Level::playerShoot() {
+        logger_.info("player firing a bullet");
+        Position bulletPosition = player_->getNextPosition();
+        logger_.debug("next position: %d, %d", bulletPosition.colonna, bulletPosition.riga);
+        logger_.debug("curr position: %d, %d", player_->getPosition().colonna, player_->getPosition().riga);
+        level::Collidable *collision = getCollision(bulletPosition);
+
+        // BUG: a volte quando il player va troppo veloce, prendere la sua prossima
+        // posizione non è ancora sufficiente per non cancellarlo dallo schermo
+
+        // TODO(simo): check per vedere la collisione istantanea, cioè gestisci questo
+        // caso ad esempio fare danno subito, perché il bullet va a controllare se
+        // la cella in cui vuole andare colpisce qualcosa
+        if (collision == nullptr) {
+            weapon::Bullet *bullet = new weapon::Bullet(bulletPosition, player_->getLastNotNullDirection());
+            levels_[levelIdx_->getCurrent()]->addBullet(bullet);
+        }
+    }
+
     void Level::goToLevel(int levelIdx) {
         logger_.info("Loading level with index: %d", levelIdx);
 
@@ -82,6 +102,7 @@ namespace manager {
             levelIdx_->setCurrent(levelIdx_->getCurrent());  // FIX PG-34
         }
 
+        player_->move(this);
         player_->clearLast(win);
         player_->render(win, force);
 

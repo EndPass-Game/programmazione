@@ -20,12 +20,13 @@ namespace views {
             case 's':
                 levelManager_->getPlayer()->setDirection(enums::Direction::DOWN);
                 break;
+            case 'j':
+                levelManager_->playerShoot();
+                break;
         }
     }
     void GameSubView::render(bool force) {
         SubView::render(force);
-        levelManager_->getPlayer()->move(levelManager_);
         levelManager_->render(subWin_, force);
     }
-
 };  // namespace views

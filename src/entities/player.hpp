@@ -26,19 +26,21 @@ Altro
 #include "level/collidable.hpp"
 #include "level/door-segment.hpp"
 #include "level/wall-segment.hpp"
+
 // Player: classe che contiene il personaggio
 class Player : public Entity {
   private:
-    // TODO inventario
     int powers_;
-    int score_ = 0;
-    Logger logger_ = Logger("player");
-    virtual void _handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door, Position pos);
-    virtual void _handleWallCollision(manager::Level *levelManager, level::WallSegment *wall, Position pos);
-    virtual void _handleEntityCollision(manager::Level *levelManager, Entity *entity, Position pos);
-    virtual void _handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact, Position pos);
-    virtual void _handlePowerCollision(manager::Level *levelManager, collectables::Power *power, Position pos);
-    virtual void _handleNoneCollision(manager::Level *levelManager, Position pos);
+    int score_;
+
+    Logger logger_;
+
+    virtual void _handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door) override;
+    virtual void _handleWallCollision(manager::Level *levelManager, level::WallSegment *wall) override;
+    virtual void _handleEntityCollision(manager::Level *levelManager, Entity *entity) override;
+    virtual void _handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact) override;
+    virtual void _handlePowerCollision(manager::Level *levelManager, collectables::Power *power) override;
+    virtual void _handleNoneCollision(manager::Level *levelManager) override;
 
   public:
     Player();
@@ -48,9 +50,6 @@ class Player : public Entity {
     // se trova applica il danno
     void attack();
 
-    // TODO
-    void pickup();
-
     void addPower();
 
     void removePower();
@@ -58,6 +57,8 @@ class Player : public Entity {
     int getPowers();
 
     int getScore();
+
+    void setPosition(Position pos);
 
     void incrementScore(int increment);
 };

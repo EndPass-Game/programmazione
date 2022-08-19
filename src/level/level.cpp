@@ -16,8 +16,10 @@ namespace level {
           artifacts_(),
           powers_(),
           entities_(),
+          bullets_(),
           playerPositions_(),
-          numOfDoors_(0) {
+          numOfDoors_(0),
+          logger_("level::Level") {
         datastruct::Vector<WallSegment *> *segments = nullptr;
         segments = loader->wallLoader.getLoadedObjects();
         if (segments != nullptr) {
@@ -101,6 +103,10 @@ namespace level {
         for (unsigned int i = 0; i < powers_.size(); i++) {
             delete powers_[i];
         }
+
+        for (unsigned int i = 0; i < bullets_.size(); i++) {
+            delete bullets_[i];
+        }
     }
 
     Position Level::getLastPlayerPosition() {
@@ -141,6 +147,37 @@ namespace level {
         return nullptr;
     }
 
+    void Level::addBullet(weapon::Bullet *bullet) {
+        bullets_.push_back(bullet);
+    }
+
+    void Level::renderBullets(WINDOW *win) {
+        unsigned int i = 0;
+        while (i < bullets_.size()) {
+            Position bulletNextPosition = bullets_.at(i)->getNextPosition();
+            Collidable *collision = getCollision(bulletNextPosition);
+
+            // TODO(simo): handle other types of collision
+            // TODO(simo): memory leak quando collide con artifactti e powers
+            // perché sono eliminati subito dopo la collisione
+            // dovresti fare altre funzioni per gestire l'eliminazione di artefatti
+            // e powers esternamente a questa classe
+            // TODO(simo): getCollision dovrebbe essere const, e non fare altro
+            // che ritornarti la collisione
+            if (collision != nullptr) {
+                logger_.debug("bullet collision with %d", collision->getCollisionType());
+                bullets_[i]->clear(win);
+                delete bullets_[i];
+                bullets_.remove(i);
+            } else {
+                bullets_[i]->move();
+                bullets_[i]->clearLast(win);
+                bullets_[i]->render(win);
+                i++;
+            }
+        }
+    }
+
     void Level::render(WINDOW *win, bool force) {
         for (unsigned int i = 0; i < segment_.size(); i++) {
             segment_[i]->render(win, force);
@@ -149,10 +186,12 @@ namespace level {
         for (unsigned int i = 0; i < artifacts_.size(); i++) {
             artifacts_[i]->render(win, force);
         }
+
         for (unsigned int i = 0; i < powers_.size(); i++) {
             powers_[i]->render(win, force);
         }
 
+        this->renderBullets(win);
         // TODO(ang): come fare a spostare gli entità?
         // 1. deve updatare questo oppure lo fa un render in un altro momento????
     }
@@ -166,6 +205,11 @@ namespace level {
         }
         for (unsigned int i = 0; i < powers_.size(); i++) {
             powers_[i]->clear(win);
+        }
+        for (unsigned int i = 0; i < bullets_.size(); i++) {
+            // TODO: possibile bug che il proiettile resti bloccato nel punto in cui
+            // abbiamo lasciato il livello?? è un bug??
+            bullets_[i]->clear(win);
         }
     }
 };  // namespace level
