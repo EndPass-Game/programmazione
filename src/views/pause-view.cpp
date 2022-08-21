@@ -32,14 +32,13 @@ namespace views {
     }
 
     void PauseView::render(bool force) {
-        if (force) {
-            char pausa[] = "PAUSA";
-            mvwprintw(window, (manager::kGameWindowsSize.riga) / 2 - 3, (manager::kGameWindowsSize.colonna - strlen(pausa)) / 2, pausa);
-            char riprendere[] = "Premere la <Space> per riprendere.";
-            mvwprintw(window, (manager::kGameWindowsSize.riga) / 2, (manager::kGameWindowsSize.colonna - strlen(riprendere)) / 2, riprendere);
-            char uscire[] = "<Q> per uscire";
-            mvwprintw(window, (manager::kGameWindowsSize.riga) / 2 + 2, (manager::kGameWindowsSize.colonna - strlen(uscire)) / 2, uscire);
-        }
+        char pausa[] = "PAUSA";
+        mvwprintw(window, (manager::kGameWindowsSize.riga) / 2 - 3, (manager::kGameWindowsSize.colonna - strlen(pausa)) / 2, pausa);
+        char riprendere[] = "Premere la <Space> per riprendere.";
+        mvwprintw(window, (manager::kGameWindowsSize.riga) / 2, (manager::kGameWindowsSize.colonna - strlen(riprendere)) / 2, riprendere);
+        char uscire[] = "<Q> per uscire";
+        mvwprintw(window, (manager::kGameWindowsSize.riga) / 2 + 2, (manager::kGameWindowsSize.colonna - strlen(uscire)) / 2, uscire);
+
         ResizableView::render(force);
     }
 
