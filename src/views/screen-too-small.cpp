@@ -9,7 +9,7 @@ namespace views {
     ScreenTooSmallView::ScreenTooSmallView(Size minScreen)
         : View({0, 0}, {0, 0}),
           minimumRequired_(minScreen),
-          name_("ScreenToSmall") {}
+          name_("ScreenTooSmallView") {}
 
     void ScreenTooSmallView::handleInput(char input) {
         if (input == 'q') {

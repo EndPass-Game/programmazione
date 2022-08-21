@@ -58,7 +58,6 @@ namespace views {
     }
 
     void GameView::render(bool force) {
-        // TODO(ang): function that has to handle all the creature moves
         logSubView_->render(force);
         itemSubView_->render(force);
         gameSubView_->render(force);

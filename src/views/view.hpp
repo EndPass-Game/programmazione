@@ -14,7 +14,7 @@ namespace views {
         WINDOW *window;
         Size winSize;
         Position winPosition;
-        const char *name_ = "View";
+        const char *name_;
 
       public:
         // viene chiamata prima del render, modifica la view manager a seconda delle

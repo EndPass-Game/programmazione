@@ -17,7 +17,7 @@ namespace views {
             " / _/ / || // o |/ _,'/ o /_\\ `. _\\ `. ",
             "/___//_/|_//__,'/_/  /_n_//___,'/___,' "};
 
-        const char *name_ = "PauseView";
+        const char *name_;
 
       public:
         MenuView();

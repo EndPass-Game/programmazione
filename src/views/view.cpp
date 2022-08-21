@@ -9,7 +9,7 @@
 namespace views {
 
     View::View(Position pos, Size size)
-        : winSize(size), winPosition(pos) {
+        : winSize(size), winPosition(pos), name_("View") {
         window = newwin(size.riga, size.colonna, pos.riga, pos.colonna);
     }
 
