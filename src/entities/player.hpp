@@ -32,6 +32,8 @@ class Player : public Entity {
   private:
     int powers_;
     int score_;
+    int coolDown_;
+    int coolDownMax_;
 
     Logger logger_;
 
@@ -45,11 +47,6 @@ class Player : public Entity {
   public:
     Player();
 
-    // funzione che sarà chiamata dall'input del giocatore
-    // TODO: ricerca il mostro da attaccare in un certo range
-    // se trova applica il danno
-    void attack();
-
     void addPower();
 
     void removePower();
@@ -61,4 +58,10 @@ class Player : public Entity {
     void setPosition(Position pos);
 
     void incrementScore(int increment);
+
+    void resetCoolDown();
+
+    void coolDown();
+
+    bool canFire();
 };

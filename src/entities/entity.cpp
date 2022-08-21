@@ -20,6 +20,7 @@ void Entity::move(manager::Level *levelManager) {
     if (direction_ == enums::Direction::NONE) {
         return;
     }
+
     lastNotNullDirection_ = direction_;
     nextPosition_ = _computeNextPosition(direction_);
     direction_ = enums::Direction::NONE;

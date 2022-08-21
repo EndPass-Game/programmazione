@@ -28,12 +28,9 @@ Player::Player()
              'P'),    // charattere mostrato su schermo
       powers_(0),
       score_(0),
-      logger_("player") {}
-
-// TODO(simo)
-void Player::attack() {
-    logger_.info("attacking");
-}
+      coolDown_(0),
+      coolDownMax_(10),  // può sparare ogni 5 frame
+      logger_("Player") {}
 
 void Player::addPower() {
     logger_.info("picked up power");
@@ -99,4 +96,19 @@ int Player::getScore() {
 
 void Player::incrementScore(int increment) {
     score_ += increment;
+}
+
+void Player::resetCoolDown() {
+    coolDown_ = coolDownMax_;
+}
+
+void Player::coolDown() {
+    coolDown_--;
+    if (coolDown_ < 0) {
+        coolDown_ = 0;
+    }
+}
+
+bool Player::canFire() {
+    return coolDown_ == 0;
 }
