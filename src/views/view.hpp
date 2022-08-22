@@ -32,6 +32,7 @@ namespace views {
         // la funzione che viene chiamata per aggiornare lo schermo e il forces obbliga a riprintare
         virtual void render(bool forces);
 
+        void clearWindow();
         // create the windows
         View(Position pos, Size size);
         // delete the window

@@ -32,7 +32,7 @@ namespace views {
         }
     }
 
-    void MenuView::printMenu(bool force) {
+    void MenuView::printMenu_() {
         for (int riga = 0; riga < kAsciiArtAltezza_; riga++) {
             mvwprintw(window, riga + 1, (kMenuSize_.colonna - strlen(kAsciiArt_[riga])) / 2, kAsciiArt_[riga]);
         }
@@ -40,12 +40,15 @@ namespace views {
 
     // fa il override di questa funzione da view
     void MenuView::render(bool force) {
-        printMenu(force);
-        char start[] = "Premere <Space> per incominciare";
-        mvwprintw(window, 6, (kMenuSize_.colonna - strlen(start)) / 2, start);
-        char quit[] = "Premere <Q> per abbandonare";
-        mvwprintw(window, 8, (kMenuSize_.colonna - strlen(quit)) / 2, quit);
-        ResizableView::render(force);
+        if(force){
+            View::clearWindow();
+            printMenu_();
+            char start[] = "Premere <Space> per incominciare";
+            mvwprintw(window, 6, (kMenuSize_.colonna - strlen(start)) / 2, start);
+            char quit[] = "Premere <Q> per abbandonare";
+            mvwprintw(window, 8, (kMenuSize_.colonna - strlen(quit)) / 2, quit);
+        }
+        ResizableView::render(false);
     }
 
     void MenuView::handleScreenToSmall(manager::ViewManager *manager) {

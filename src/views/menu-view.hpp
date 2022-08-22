@@ -19,6 +19,8 @@ namespace views {
 
         const char *name_;
 
+        void printMenu_();
+
       public:
         MenuView();
 
@@ -31,7 +33,6 @@ namespace views {
         // fa il override di questa funzione da view
         void render(bool force);
 
-        void printMenu(bool force);
 
         void handleScreenToSmall(manager::ViewManager *manager);
 
