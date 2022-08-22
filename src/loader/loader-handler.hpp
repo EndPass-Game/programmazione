@@ -5,6 +5,7 @@
 #include "level/wall-segment.hpp"
 #include "loader/objects/artifact.hpp"
 #include "loader/objects/door-segment.hpp"
+#include "loader/objects/enemy.hpp"
 #include "loader/objects/power.hpp"
 #include "loader/objects/wall-segment.hpp"
 namespace loader {
@@ -28,6 +29,7 @@ namespace loader {
         DoorSegment doorLoader;
         Artifact artifactLoader;
         Power powerLoader;
+        Enemy enemyLoader;
         LoaderHandler(const char *filename);
         ~LoaderHandler();
 

@@ -19,8 +19,7 @@ namespace weapon {
 
         bool hasHit();
 
-        // TODO(SIMO):
-        void handleEntityHit(Entity *entity);
+        bool handleEntityHit(Entity *entity);
 
         void move();
     };

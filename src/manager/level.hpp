@@ -61,5 +61,7 @@ namespace manager {
         LogQueue *getLogQueue();
 
         void render(WINDOW *win, bool force);
+
+        level::Level *getLevel();
     };
 }  // namespace manager

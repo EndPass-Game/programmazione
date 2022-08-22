@@ -56,8 +56,7 @@ bool Entity::isDead() const {
 }
 
 void Entity::attack(Entity *entity) {
-    // TODO(simo)
-    // implementare l'attacco
+    entity->applyDamage(attack_);
 }
 
 void Entity::applyDamage(int damage) {

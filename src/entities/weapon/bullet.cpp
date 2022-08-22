@@ -13,8 +13,9 @@ namespace weapon {
         return false;
     }
 
-    void Bullet::handleEntityHit(Entity *entity) {
+    bool Bullet::handleEntityHit(Entity *entity) {
         entity->applyDamage(damage_);
+        return (entity->isDead());
     }
 
     void Bullet::move() {

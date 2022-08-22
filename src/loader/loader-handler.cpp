@@ -5,7 +5,8 @@ namespace loader {
         : wallLoader(),
           doorLoader(),
           artifactLoader(),
-          powerLoader() {
+          powerLoader(),
+          enemyLoader() {
         file = fopen(filename, "r");
         if (file == NULL) {
             printf("File %s not found\n", filename);
@@ -23,5 +24,6 @@ namespace loader {
         doorLoader.load(file);
         artifactLoader.load(file);
         powerLoader.load(file);
+        enemyLoader.load(file);
     }
 };  // namespace loader
