@@ -33,7 +33,6 @@ namespace views {
         // fa il override di questa funzione da view
         void render(bool force);
 
-
         void handleScreenToSmall(manager::ViewManager *manager);
 
         const char *getName();

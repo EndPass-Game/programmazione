@@ -40,7 +40,7 @@ namespace views {
 
     // fa il override di questa funzione da view
     void MenuView::render(bool force) {
-        if(force){
+        if (force) {
             View::clearWindow();
             printMenu_();
             char start[] = "Premere <Space> per incominciare";

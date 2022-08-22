@@ -17,10 +17,10 @@ namespace views {
         delwin(window);
     }
 
-    void View::clearWindow(){
+    void View::clearWindow() {
         erase();
         refresh();
-        touchwin(window); 
+        touchwin(window);
     }
 
     void View::render(bool force) {
