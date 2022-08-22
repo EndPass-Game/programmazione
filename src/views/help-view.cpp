@@ -29,8 +29,8 @@ namespace views {
     }
 
     void HelpView::render(bool force) {
-        if (force) {
-            View::clearWindow();
+        ResizableView::render(force);
+        if (force) {  // così printa una unica volta quando cambia view
             struct KeyDescription {
                 char key;
                 char const *message;
@@ -57,8 +57,6 @@ namespace views {
             char uscire[] = "Q per uscire";
             mvwprintw(window, (manager::kGameWindowsSize.riga) - 1, (manager::kGameWindowsSize.colonna - strlen(uscire)) / 2, uscire);
         }
-
-        ResizableView::render(false);
     }
 
     void HelpView::handleScreenToSmall(manager::ViewManager *manager) {
