@@ -4,6 +4,7 @@
 #include "collectables/power.hpp"
 #include "datastruct/vector.hpp"
 #include "entities/entity.hpp"
+#include "entities/enemy.hpp"
 #include "entities/player.hpp"
 #include "entities/weapon/bullet.hpp"
 #include "enums/direction.hpp"
@@ -20,7 +21,7 @@ namespace level {
         datastruct::Vector<DisplayableSegment *> segment_;
         datastruct::Vector<collectables::Artifact *> artifacts_;
         datastruct::Vector<collectables::Power *> powers_;
-        datastruct::Vector<Entity *> entities_;
+        datastruct::Vector<entities::Enemy *> enemies_;
         datastruct::Vector<weapon::Bullet *> bullets_;
         datastruct::Vector<Position> playerPositions_;
         int numOfDoors_;  // numero di porte nel livello
@@ -51,6 +52,8 @@ namespace level {
 
         void addBullet(weapon::Bullet *bullet);
         void renderBullets(WINDOW *win);
+
+        void renderEnemies(WINDOW *win, manager::Level *levelManager);
         // @returns l'oggetto di collisione alla data posizione
         Collidable *getCollision(Position pos);
     };

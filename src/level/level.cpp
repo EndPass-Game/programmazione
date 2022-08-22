@@ -3,6 +3,8 @@
 #include "collectables/power.hpp"
 #include "datastruct/vector.hpp"
 #include "entities/player.hpp"
+#include "entities/entity.hpp"
+#include "entities/enemy.hpp"
 #include "enums/collision-type.hpp"
 #include "gamestruct/size.hpp"
 #include "level/door-segment.hpp"
@@ -15,7 +17,7 @@ namespace level {
           segment_(),
           artifacts_(),
           powers_(),
-          entities_(),
+          enemies_(),
           bullets_(),
           playerPositions_(),
           numOfDoors_(0),
@@ -57,6 +59,14 @@ namespace level {
                 powers_.push_back(powers->at(i));
             }
         }
+
+        datastruct::Vector<entities::Enemy *> *enemies = nullptr;
+        enemies = loader->enemyLoader.getLoadedObjects();
+        if (enemies != nullptr) {
+            for (unsigned int i = 0; i < enemies->size(); i++) {
+                enemies_.push_back(enemies->at(i));
+            }
+        }
     }
 
     Level::Level(loader::LoaderHandler *loader, enums::Direction direction, int oldLevelIdx)
@@ -92,8 +102,8 @@ namespace level {
             delete segment_[i];
         }
 
-        for (unsigned int i = 0; i < entities_.size(); i++) {
-            delete entities_[i];
+        for (unsigned int i = 0; i < enemies_.size(); i++) {
+            delete enemies_[i];
         }
 
         for (unsigned int i = 0; i < artifacts_.size(); i++) {
@@ -106,6 +116,9 @@ namespace level {
 
         for (unsigned int i = 0; i < bullets_.size(); i++) {
             delete bullets_[i];
+        }
+        for (unsigned int i = 0; i < bullets_.size(); i++) {
+            delete enemies_[i];
         }
     }
 
@@ -178,6 +191,19 @@ namespace level {
         }
     }
 
+    void Level::renderEnemies(WINDOW *  win, manager::Level *levelManager){
+        for(unsigned int i = 0; i < enemies_.size(); i++){
+            if(enemies_[i]->canMove()){
+                enemies_[i]->wander();
+                enemies_[i]->move(levelManager);
+                enemies_[i]->clearLast(win);
+                enemies_[i]->render(win);
+                enemies_[i]->resetCoolDown();
+            }
+            enemies_[i]->coolDown();
+        }
+    }
+
     void Level::render(WINDOW *win, bool force) {
         for (unsigned int i = 0; i < segment_.size(); i++) {
             segment_[i]->render(win, force);
@@ -210,6 +236,9 @@ namespace level {
             // TODO: possibile bug che il proiettile resti bloccato nel punto in cui
             // abbiamo lasciato il livello?? è un bug??
             bullets_[i]->clear(win);
+        }
+        for (unsigned int i = 0; i < enemies_.size(); i++) {
+            enemies_[i]->clear(win);
         }
     }
 };  // namespace level

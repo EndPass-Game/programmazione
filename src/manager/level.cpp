@@ -102,10 +102,14 @@ namespace manager {
             levelIdx_->setCurrent(levelIdx_->getCurrent());  // FIX PG-34
         }
 
+        
         player_->move(this);
         player_->clearLast(win);
         player_->render(win, force);
 
+        
+        levels_[levelIdx_->getCurrent()]->renderEnemies(win, this);
+        
         levels_[levelIdx_->getCurrent()]->render(win, force);
         // TODO(ang): print player ( valuta se è meglio printarlo qui o in level/level
         // io pensavo fosse meglio il level/level (gio))
