@@ -10,13 +10,13 @@
 #include "manager/level.hpp"
 namespace entities{
     Enemy::Enemy()
-    : Entity(12, 3,  // TODO: gestire queste costanti hardcoded in un file di setting
+    : Entity(12, 5,  // TODO: gestire queste costanti hardcoded in un file di setting
          {4, 4}, /* position di spawn */
          'E'),
          logger_("Enemy") {}
 
     Enemy::Enemy(Position spawnPos)
-        : Entity(12, 3, spawnPos, 'E'),
+        : Entity(12, 5, spawnPos, 'E'),
         coolDown_(0),
         coolDownMax_(10),  // può muoversi ogni 10 frame
         logger_("Enemy") {}

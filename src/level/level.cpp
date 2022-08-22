@@ -6,6 +6,7 @@
 #include "entities/entity.hpp"
 #include "entities/enemy.hpp"
 #include "enums/collision-type.hpp"
+#include "level/collidable.hpp"
 #include "gamestruct/size.hpp"
 #include "level/door-segment.hpp"
 #include "level/wall-segment.hpp"
@@ -154,6 +155,20 @@ namespace level {
                 return (Collidable *) c;
             }
         }
+        
+        for (unsigned int i = 0; i < powers_.size(); i++) {
+            if (powers_[i]->getPosition() == pos) {
+                collectables::Power *c = powers_[i];
+                powers_.remove(i);
+                return (Collidable *) c;
+            }
+        }
+        for (unsigned int i = 0; i < enemies_.size(); i++) {
+            if (enemies_[i]->getPosition() == pos) {
+                entities::Enemy *c = enemies_[i];
+                return (Collidable *) c;
+            }
+        }
 
         // TODO(simo): gestire altri oggetti di collisione
         // es: entity, ...
@@ -187,6 +202,25 @@ namespace level {
                 bullets_[i]->clearLast(win);
                 bullets_[i]->render(win);
                 i++;
+            }
+        }
+    }
+
+    void Level::enemiesAttack(WINDOW *win, manager::Level *levelManager){
+        Position attackPos;
+        for(unsigned int i = 0; i < enemies_.size(); i++){
+            for(int j = (enemies_[i]->getPosition().riga) - 1; j <= (enemies_[i]->getPosition().riga) + 1; j++){
+                for(int k = (enemies_[i]->getPosition().colonna) - 1; k <= (enemies_[i]->getPosition().colonna) + 1; k++){
+                    attackPos = Position(j, k);
+                    if((levelManager->getPlayer()->getPosition()) == attackPos){
+                        enemies_[i]->attack(levelManager->getPlayer());
+                        if(levelManager->getPlayer()->isDead()){
+                            //TODO (gio?): implementare una finestra di gameover
+                        }
+                        enemies_[i]->clear(win);
+                        enemies_.remove(i);
+                    }
+                }
             }
         }
     }

@@ -107,6 +107,7 @@ namespace manager {
         player_->clearLast(win);
         player_->render(win, force);
 
+        levels_[levelIdx_->getCurrent()]->enemiesAttack(win, this);
         
         levels_[levelIdx_->getCurrent()]->renderEnemies(win, this);
         

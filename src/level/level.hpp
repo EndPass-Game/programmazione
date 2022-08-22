@@ -53,6 +53,7 @@ namespace level {
         void addBullet(weapon::Bullet *bullet);
         void renderBullets(WINDOW *win);
 
+        void enemiesAttack(WINDOW *win, manager::Level *levelManager);
         void renderEnemies(WINDOW *win, manager::Level *levelManager);
         // @returns l'oggetto di collisione alla data posizione
         Collidable *getCollision(Position pos);
