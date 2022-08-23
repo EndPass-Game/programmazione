@@ -169,9 +169,6 @@ namespace level {
                 return (Collidable *) c;
             }
         }
-
-        // TODO(simo): gestire altri oggetti di collisione
-        // es: entity, ...
         return nullptr;
     }
 
@@ -184,7 +181,8 @@ namespace level {
         while (i < bullets_.size()) {
             Position bulletNextPosition = bullets_.at(i)->getNextPosition();
             Collidable *collision = getCollision(bulletNextPosition);
-
+            enums::CollisionType type = enums::CollisionType::NONE;
+            if (collision != nullptr) type = collision->getCollisionType();
             // TODO(simo): handle other types of collision
             // TODO(simo): memory leak quando collide con artifactti e powers
             // perché sono eliminati subito dopo la collisione
@@ -192,16 +190,35 @@ namespace level {
             // e powers esternamente a questa classe
             // TODO(simo): getCollision dovrebbe essere const, e non fare altro
             // che ritornarti la collisione
-            if (collision != nullptr) {
+            if (type == enums::CollisionType::ENTITY) {
                 logger_.debug("bullet collision with %d", collision->getCollisionType());
+                if(bullets_[i]->handleEntityHit((Entity *) collision)){
+                    deleteEnemy(collision);
+                }
                 bullets_[i]->clear(win);
                 delete bullets_[i];
                 bullets_.remove(i);
             } else {
-                bullets_[i]->move();
-                bullets_[i]->clearLast(win);
-                bullets_[i]->render(win);
+                if(type == enums::CollisionType::NONE){
+                    bullets_[i]->move();
+                    bullets_[i]->clearLast(win);
+                    bullets_[i]->render(win);
+                }
+                else{
+                    bullets_[i]->clear(win);
+                    delete bullets_[i];
+                    bullets_.remove(i);
+                }
                 i++;
+            }
+        }
+    }
+
+    void Level::deleteEnemy(Collidable *collision){
+        for(unsigned int i = 0; i < enemies_.size(); i++){
+            if(collision == enemies_[i]){
+                delete enemies_[i];
+                enemies_.remove(i);
             }
         }
     }
@@ -218,6 +235,7 @@ namespace level {
                             //TODO (gio?): implementare una finestra di gameover
                         }
                         enemies_[i]->clear(win);
+                        delete enemies_[i];
                         enemies_.remove(i);
                     }
                 }
