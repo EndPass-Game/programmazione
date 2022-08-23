@@ -2,12 +2,12 @@
 
 #include "collectables/power.hpp"
 #include "datastruct/vector.hpp"
-#include "entities/player.hpp"
-#include "entities/entity.hpp"
 #include "entities/enemy.hpp"
+#include "entities/entity.hpp"
+#include "entities/player.hpp"
 #include "enums/collision-type.hpp"
-#include "level/collidable.hpp"
 #include "gamestruct/size.hpp"
+#include "level/collidable.hpp"
 #include "level/door-segment.hpp"
 #include "level/wall-segment.hpp"
 #include "manager/level.hpp"
@@ -155,7 +155,7 @@ namespace level {
                 return (Collidable *) c;
             }
         }
-        
+
         for (unsigned int i = 0; i < powers_.size(); i++) {
             if (powers_[i]->getPosition() == pos) {
                 collectables::Power *c = powers_[i];
@@ -192,19 +192,18 @@ namespace level {
             // che ritornarti la collisione
             if (type == enums::CollisionType::ENTITY) {
                 logger_.debug("bullet collision with %d", collision->getCollisionType());
-                if(bullets_[i]->handleEntityHit((Entity *) collision)){
+                if (bullets_[i]->handleEntityHit((Entity *) collision)) {
                     deleteEnemy(collision);
                 }
                 bullets_[i]->clear(win);
                 delete bullets_[i];
                 bullets_.remove(i);
             } else {
-                if(type == enums::CollisionType::NONE){
+                if (type == enums::CollisionType::NONE) {
                     bullets_[i]->move();
                     bullets_[i]->clearLast(win);
                     bullets_[i]->render(win);
-                }
-                else{
+                } else {
                     bullets_[i]->clear(win);
                     delete bullets_[i];
                     bullets_.remove(i);
@@ -214,25 +213,25 @@ namespace level {
         }
     }
 
-    void Level::deleteEnemy(Collidable *collision){
-        for(unsigned int i = 0; i < enemies_.size(); i++){
-            if(collision == enemies_[i]){
+    void Level::deleteEnemy(Collidable *collision) {
+        for (unsigned int i = 0; i < enemies_.size(); i++) {
+            if (collision == enemies_[i]) {
                 delete enemies_[i];
                 enemies_.remove(i);
             }
         }
     }
 
-    void Level::enemiesAttack(WINDOW *win, manager::Level *levelManager){
+    void Level::enemiesAttack(WINDOW *win, manager::Level *levelManager) {
         Position attackPos;
-        for(unsigned int i = 0; i < enemies_.size(); i++){
-            for(int j = (enemies_[i]->getPosition().riga) - 1; j <= (enemies_[i]->getPosition().riga) + 1; j++){
-                for(int k = (enemies_[i]->getPosition().colonna) - 1; k <= (enemies_[i]->getPosition().colonna) + 1; k++){
+        for (unsigned int i = 0; i < enemies_.size(); i++) {
+            for (int j = (enemies_[i]->getPosition().riga) - 1; j <= (enemies_[i]->getPosition().riga) + 1; j++) {
+                for (int k = (enemies_[i]->getPosition().colonna) - 1; k <= (enemies_[i]->getPosition().colonna) + 1; k++) {
                     attackPos = Position(j, k);
-                    if((levelManager->getPlayer()->getPosition()) == attackPos){
+                    if ((levelManager->getPlayer()->getPosition()) == attackPos) {
                         enemies_[i]->attack(levelManager->getPlayer());
-                        if(levelManager->getPlayer()->isDead()){
-                            //TODO (gio?): implementare una finestra di gameover
+                        if (levelManager->getPlayer()->isDead()) {
+                            // TODO (gio?): implementare una finestra di gameover
                         }
                         enemies_[i]->clear(win);
                         delete enemies_[i];
@@ -243,9 +242,9 @@ namespace level {
         }
     }
 
-    void Level::renderEnemies(WINDOW *  win, manager::Level *levelManager){
-        for(unsigned int i = 0; i < enemies_.size(); i++){
-            if(enemies_[i]->canMove()){
+    void Level::renderEnemies(WINDOW *win, manager::Level *levelManager) {
+        for (unsigned int i = 0; i < enemies_.size(); i++) {
+            if (enemies_[i]->canMove()) {
                 enemies_[i]->wander();
                 enemies_[i]->move(levelManager);
                 enemies_[i]->clearLast(win);

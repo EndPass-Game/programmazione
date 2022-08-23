@@ -18,32 +18,33 @@
 // Dovrebbe essere sostituito da un sistema per gestire ogni
 // possibile nemico. (quindi un manager)
 // oppure una factory per costruire il nemico specifico
-namespace entities{
-  class Enemy : public Entity {
-  private:
-    int coolDown_;
-    int coolDownMax_;
-    Logger logger_;
-    virtual void _handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door) override;
-    virtual void _handleWallCollision(manager::Level *levelManager, level::WallSegment *wall) override;
-    virtual void _handleEntityCollision(manager::Level *levelManager, Entity *entity) override;
-    virtual void _handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact) override;
-    virtual void _handlePowerCollision(manager::Level *levelManager, collectables::Power *power) override;
-    virtual void _handleNoneCollision(manager::Level *levelManager) override;
-  public:
-    Enemy();
-    Enemy(Position spawnPos);
+namespace entities {
+    class Enemy : public Entity {
+      private:
+        int coolDown_;
+        int coolDownMax_;
+        Logger logger_;
+        virtual void _handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door) override;
+        virtual void _handleWallCollision(manager::Level *levelManager, level::WallSegment *wall) override;
+        virtual void _handleEntityCollision(manager::Level *levelManager, Entity *entity) override;
+        virtual void _handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact) override;
+        virtual void _handlePowerCollision(manager::Level *levelManager, collectables::Power *power) override;
+        virtual void _handleNoneCollision(manager::Level *levelManager) override;
 
-    //int getDamage();
+      public:
+        Enemy();
+        Enemy(Position spawnPos);
 
-    void setPosition(Position pos);
+        // int getDamage();
 
-    void wander();
+        void setPosition(Position pos);
 
-    void resetCoolDown();
+        void wander();
 
-    void coolDown();
+        void resetCoolDown();
 
-    bool canMove();
-  };
-}
+        void coolDown();
+
+        bool canMove();
+    };
+}  // namespace entities
