@@ -154,7 +154,8 @@ namespace level {
     void Level::renderBullets(WINDOW *win) {
         unsigned int i = 0;
         while (i < bullets_.size()) {
-            Position bulletNextPosition = bullets_.at(i)->getNextPosition();
+            Position bulletNextPosition = bullets_[i]->getNextPosition();
+            Position bulletPosition = bullets_[i]->getPosition();
             Collidable *collision = getCollision(bulletNextPosition);
 
             // TODO(simo): handle other types of collision
@@ -171,7 +172,10 @@ namespace level {
                 bullets_.remove(i);
             } else {
                 bullets_[i]->move();
-                bullets_[i]->clearLast(win);
+                // evita la cancellazione del player guardando il carattere printato nello schermo attuale
+                if (mvwinch(win, bulletPosition.riga, bulletPosition.colonna) != 'P') {
+                    bullets_[i]->clearLast(win);
+                }
                 bullets_[i]->render(win);
                 i++;
             }

@@ -64,6 +64,11 @@ namespace manager {
     }
 
     void Level::playerShoot() {
+        if (!player_->canFire()) {
+            return;
+        }
+
+        player_->resetCoolDown();
         logger_.info("player firing a bullet");
         Position bulletPosition = player_->getNextPosition();
         logger_.debug("next position: %d, %d", bulletPosition.colonna, bulletPosition.riga);
@@ -101,12 +106,16 @@ namespace manager {
             levels_[levelIdx_->getLast()]->clear(win);
             levelIdx_->setCurrent(levelIdx_->getCurrent());  // FIX PG-34
         }
+        // WARNING: non spostare questo render sotto al player,
+        // vogliamo che prima renderizzi i bullets e poi il player
+        // altrimenti rischiamo che il bullet cancelli il player.
+        levels_[levelIdx_->getCurrent()]->render(win, force);
 
         player_->move(this);
         player_->clearLast(win);
         player_->render(win, force);
+        player_->coolDown();
 
-        levels_[levelIdx_->getCurrent()]->render(win, force);
         // TODO(ang): print player ( valuta se è meglio printarlo qui o in level/level
         // io pensavo fosse meglio il level/level (gio))
     }
