@@ -63,12 +63,16 @@ void Player::_handleDoorCollision(manager::Level *levelManager, level::DoorSegme
 
     if (door->isDoorOpen()) {
         logger_.info("moving to level with idx %d", door->getNextLevelIdx());
+        levelManager->getLogQueue()->addEvent("Cambiato livello");
         levelManager->goToLevel(door->getNextLevelIdx());
     } else {
-        if (levelManager->getPlayer()->getPowers() > 0) {
+        if (this->getPowers() > 0) {
             logger_.info("opening door with idx %d", door->getNextLevelIdx());
-            levelManager->getPlayer()->removePower();
+            levelManager->getLogQueue()->addEvent("La porta si è aperta!");
+            this->removePower();
             door->openDoor();
+        } else {
+            levelManager->getLogQueue()->addEvent("la porta è chiusa, cerca un potere.");
         }
     }
 }
@@ -78,19 +82,23 @@ void Player::_handleWallCollision(manager::Level *levelManager, level::WallSegme
 void Player::_handleEntityCollision(manager::Level *levelManager, Entity *entity) {}
 
 void Player::_handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact) {
-    levelManager->getPlayer()->setLife(levelManager->getPlayer()->getLife() + artifact->getLifeUpgrade());
-    levelManager->getPlayer()->setPosition(nextPosition_);
+    levelManager->getLogQueue()->addEvent("Artefatto raccolto, aumentata la vita!");
+    this->incrementScore(2);
+    this->setLife(this->getLife() + artifact->getLifeUpgrade());
+    this->setPosition(nextPosition_);
     delete artifact;
 }
 
 void Player::_handlePowerCollision(manager::Level *levelManager, collectables::Power *power) {
-    levelManager->getPlayer()->addPower();
-    levelManager->getPlayer()->setPosition(nextPosition_);
+    levelManager->getLogQueue()->addEvent("Hai raccolto un potere! Puoi sbloccare  una porta!");
+    this->incrementScore(5);
+    this->addPower();
+    this->setPosition(nextPosition_);
     delete power;
 }
 
 void Player::_handleNoneCollision(manager::Level *levelManager) {
-    levelManager->getPlayer()->setPosition(nextPosition_);
+    this->setPosition(nextPosition_);
 }
 
 int Player::getScore() {
