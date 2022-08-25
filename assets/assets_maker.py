@@ -172,7 +172,7 @@ def main():
     files = [f for f in files if f.endswith(".txt")] # get all txt files 
 
     for file in files:
-        print("elaborato il file {}",file)
+        print(f"elaborato il file {file}")
         handle_print(file)
 
     pass 
