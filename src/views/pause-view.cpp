@@ -32,8 +32,8 @@ namespace views {
     }
 
     void PauseView::render(bool force) {
-        ResizableView::render(force);
-        if (force) {  // evita di riprintare ogni singolo frame
+        if (force) {
+            ResizableView::clearWindow();
             char pausa[] = "PAUSA";
             mvwprintw(window, (manager::kGameWindowsSize.riga) / 2 - 3, (manager::kGameWindowsSize.colonna - strlen(pausa)) / 2, pausa);
             char riprendere[] = "Premere la <Space> per riprendere.";
@@ -41,6 +41,7 @@ namespace views {
             char uscire[] = "<Q> per uscire";
             mvwprintw(window, (manager::kGameWindowsSize.riga) / 2 + 2, (manager::kGameWindowsSize.colonna - strlen(uscire)) / 2, uscire);
         }
+        ResizableView::render(false);
     }
 
     void PauseView::handleScreenToSmall(manager::ViewManager *manager) {
