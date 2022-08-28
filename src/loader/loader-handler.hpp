@@ -14,12 +14,14 @@ namespace loader {
     // [numero di muri]
     // pos.x pos.y direzione lunghezza tipo di angolo
     // [numero di porte]
-    // pos.x pos.y direzione lunghezza direzione-rispetto-al-centro player-pos-x player-pos-y
+    // pos.x pos.y direzione  direzione-rispetto-al-centro lunghezza player-pos-x player-pos-y
     // [numero di artefatti]
     // pos.x e pos.y e vita del artefatto
     // [numero di poteri]
     // pos.x e pos.y del potere
     // una volta richiesto un oggetto, deve essere eliminato dal chiamante.
+    // [numero di nemici]
+    // pos.x e pos.y del nemico
     //
     // WARNING: Se il file è mal configurato, o non esiste proprio ci sarà un errore di runtime
     // ----FATALE---- che farà crashare il programma.
