@@ -79,11 +79,10 @@ void Player::_handleWallCollision(manager::Level *levelManager, level::WallSegme
 void Player::_handleEntityCollision(manager::Level *levelManager, Entity *entity) {}
 
 void Player::_handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact) {
-
     datastruct::Vector<collectables::Artifact *> artifacts;
-    artifacts=levelManager->getLevel()->getArtifacts();
-    for(unsigned int i = 0; i < artifacts.size(); i++){
-        if(artifacts[i] == artifact){
+    artifacts = levelManager->getLevel()->getArtifacts();
+    for (unsigned int i = 0; i < artifacts.size(); i++) {
+        if (artifacts[i] == artifact) {
             levelManager->getLevel()->deleteArtifact(i);
             break;
         }
@@ -97,9 +96,9 @@ void Player::_handleArtifactCollision(manager::Level *levelManager, collectables
 
 void Player::_handlePowerCollision(manager::Level *levelManager, collectables::Power *power) {
     datastruct::Vector<collectables::Power *> powers;
-    powers=levelManager->getLevel()->getPowers();
-    for(unsigned int i = 0; i < powers.size(); i++){
-        if(powers[i] == power){
+    powers = levelManager->getLevel()->getPowers();
+    for (unsigned int i = 0; i < powers.size(); i++) {
+        if (powers[i] == power) {
             levelManager->getLevel()->deletePower(i);
             break;
         }

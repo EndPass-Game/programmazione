@@ -162,14 +162,13 @@ namespace level {
         return nullptr;
     }
 
-    datastruct::Vector<collectables::Power*> Level::getPowers(){
+    datastruct::Vector<collectables::Power *> Level::getPowers() {
         return powers_;
     }
 
-    datastruct::Vector<collectables::Artifact*> Level::getArtifacts(){
+    datastruct::Vector<collectables::Artifact *> Level::getArtifacts() {
         return artifacts_;
     }
-
 
     void Level::addBullet(weapon::Bullet *bullet) {
         bullets_.push_back(bullet);
@@ -196,10 +195,10 @@ namespace level {
                     deleteEnemy(collision, win);
                     levelManager->getPlayer()->incrementScore(500);
                     levelManager->getLogQueue()->addEvent("Nemico sconfitto");
-                }else{
+                } else {
                     levelManager->getLogQueue()->addEvent("Nemico colpito da un proiettile");
                 }
-                
+
                 bullets_[i]->clear(win);
                 delete bullets_[i];
                 bullets_.remove(i);
@@ -231,20 +230,20 @@ namespace level {
         }
     }
 
-    void Level::deletePower(int i){
+    void Level::deletePower(int i) {
         powers_.remove(i);
     }
 
-    void Level::deleteArtifact(int i){
+    void Level::deleteArtifact(int i) {
         artifacts_.remove(i);
     }
-    
-    //BUG: non capisco perché ma ora non funziona più nonostante non abbia cambiato nulla e fa attaccare il nemico se il player
-    //     si ritrova sulla colonna o sulla riga di tiro per l'enemy, non su entrambe (che vorrebbe dire che è al massimo a distanza 1)
+
+    // BUG: non capisco perché ma ora non funziona più nonostante non abbia cambiato nulla e fa attaccare il nemico se il player
+    //      si ritrova sulla colonna o sulla riga di tiro per l'enemy, non su entrambe (che vorrebbe dire che è al massimo a distanza 1)
     void Level::enemiesAttack(WINDOW *win, manager::Level *levelManager) {
         for (unsigned int i = 0; i < enemies_.size(); i++) {
-            if((levelManager->getPlayer()->getPosition().riga - enemies_[i]->getPosition().riga) <= 1 && (levelManager->getPlayer()->getPosition().riga - enemies_[i]->getPosition().riga) >= -1){
-                if((levelManager->getPlayer()->getPosition().colonna - enemies_[i]->getPosition().colonna) <= 1 && (levelManager->getPlayer()->getPosition().colonna - enemies_[i]->getPosition().colonna) >= -1){
+            if ((levelManager->getPlayer()->getPosition().riga - enemies_[i]->getPosition().riga) <= 1 && (levelManager->getPlayer()->getPosition().riga - enemies_[i]->getPosition().riga) >= -1) {
+                if ((levelManager->getPlayer()->getPosition().colonna - enemies_[i]->getPosition().colonna) <= 1 && (levelManager->getPlayer()->getPosition().colonna - enemies_[i]->getPosition().colonna) >= -1) {
                     enemies_[i]->attack(levelManager->getPlayer());
                     if (levelManager->getPlayer()->isDead()) {
                         // TODO (gio?): implementare una finestra di gameover
@@ -253,7 +252,6 @@ namespace level {
                     enemies_[i]->clear(win);
                     delete enemies_[i];
                     enemies_.remove(i);
-                    
                 }
             }
         }

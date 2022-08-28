@@ -106,7 +106,7 @@ namespace manager {
             levels_[levelIdx_->getLast()]->clear(win);
             levelIdx_->setCurrent(levelIdx_->getCurrent());  // FIX PG-34
         }
-        
+
         levels_[levelIdx_->getCurrent()]->enemiesAttack(win, this);
         levels_[levelIdx_->getCurrent()]->renderEnemies(win, this);
 
@@ -120,7 +120,6 @@ namespace manager {
         player_->render(win, force);
         player_->coolDown();
 
-
         // TODO(ang): print player ( valuta se è meglio printarlo qui o in level/level
         // io pensavo fosse meglio il level/level (gio))
     }
@@ -129,7 +128,7 @@ namespace manager {
         return logQueue_;
     }
 
-    level::Level *Level::getLevel(){
+    level::Level *Level::getLevel() {
         return levels_[levelIdx_->getCurrent()];
     }
 }  // namespace manager

@@ -51,7 +51,7 @@ namespace level {
         bool isPositionEmpty(Position pos);
 
         datastruct::Vector<collectables::Power *> getPowers();
-        datastruct::Vector<collectables::Artifact*> getArtifacts();
+        datastruct::Vector<collectables::Artifact *> getArtifacts();
 
         void addBullet(weapon::Bullet *bullet);
         void renderBullets(WINDOW *win, manager::Level *levelmanager);
