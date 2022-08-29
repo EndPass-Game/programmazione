@@ -89,6 +89,14 @@ class Artifacts:
     def draw(self, board):
         board[self.x][self.y] = 'A'
 
+class Enemy: 
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def draw(self, board):
+        board[self.x][self.y] = 'E'
+
 class Power: 
     def __init__(self, x, y):
         self.x = x
@@ -139,6 +147,13 @@ def handle_print(file: str):
             line = line.split()
             stuff_to_print.append(Power(int(line[0]), int(line[1])))
 
+        n_enemy = int(f.readline())
+        print(f"{file} has {n_enemy} enemy")
+        for i in range(n_enemy):
+            line = f.readline()
+            line = line.split()
+            stuff_to_print.append(Enemy(int(line[0]), int(line[1])))
+
 
     for i in stuff_to_print:
         i.draw(board)
@@ -157,6 +172,7 @@ def main():
     files = [f for f in files if f.endswith(".txt")] # get all txt files 
 
     for file in files:
+        print(f"elaborato il file {file}")
         handle_print(file)
 
     pass 

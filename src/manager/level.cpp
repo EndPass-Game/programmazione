@@ -106,10 +106,14 @@ namespace manager {
             levels_[levelIdx_->getLast()]->clear(win);
             levelIdx_->setCurrent(levelIdx_->getCurrent());  // FIX PG-34
         }
+
+        levels_[levelIdx_->getCurrent()]->enemiesAttack(win, this);
+        levels_[levelIdx_->getCurrent()]->renderEnemies(win, this);
+
         // WARNING: non spostare questo render sotto al player,
         // vogliamo che prima renderizzi i bullets e poi il player
         // altrimenti rischiamo che il bullet cancelli il player.
-        levels_[levelIdx_->getCurrent()]->render(win, force);
+        levels_[levelIdx_->getCurrent()]->render(win, force, this);
 
         player_->move(this);
         player_->clearLast(win);
@@ -122,5 +126,9 @@ namespace manager {
 
     LogQueue *Level::getLogQueue() {
         return logQueue_;
+    }
+
+    level::Level *Level::getLevel() {
+        return levels_[levelIdx_->getCurrent()];
     }
 }  // namespace manager

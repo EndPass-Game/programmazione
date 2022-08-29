@@ -79,17 +79,33 @@ void Player::_handleWallCollision(manager::Level *levelManager, level::WallSegme
 void Player::_handleEntityCollision(manager::Level *levelManager, Entity *entity) {}
 
 void Player::_handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact) {
-    levelManager->getLogQueue()->addEvent("Artefatto raccolto, aumentata la vita!");
-    this->incrementScore(2);
+    datastruct::Vector<collectables::Artifact *> artifacts;
+    artifacts = levelManager->getLevel()->getArtifacts();
+    for (unsigned int i = 0; i < artifacts.size(); i++) {
+        if (artifacts[i] == artifact) {
+            levelManager->getLevel()->deleteArtifact(i);
+            break;
+        }
+    }
+    levelManager->getLogQueue()->addEvent("Artefatto raccolto");
+    this->incrementScore(100);
     this->setLife(this->getLife() + artifact->getLifeUpgrade());
     this->setPosition(nextPosition_);
     delete artifact;
 }
 
 void Player::_handlePowerCollision(manager::Level *levelManager, collectables::Power *power) {
-    levelManager->getLogQueue()->addEvent("Hai raccolto un potere! Puoi sbloccare  una porta!");
-    this->incrementScore(5);
+    datastruct::Vector<collectables::Power *> powers;
+    powers = levelManager->getLevel()->getPowers();
+    for (unsigned int i = 0; i < powers.size(); i++) {
+        if (powers[i] == power) {
+            levelManager->getLevel()->deletePower(i);
+            break;
+        }
+    }
     this->addPower();
+    levelManager->getLogQueue()->addEvent("Hai raccolto un potere");
+    this->incrementScore(100);
     this->setPosition(nextPosition_);
     delete power;
 }

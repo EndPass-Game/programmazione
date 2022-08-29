@@ -2,9 +2,12 @@
 
 #include "collectables/power.hpp"
 #include "datastruct/vector.hpp"
+#include "entities/enemy.hpp"
+#include "entities/entity.hpp"
 #include "entities/player.hpp"
 #include "enums/collision-type.hpp"
 #include "gamestruct/size.hpp"
+#include "level/collidable.hpp"
 #include "level/door-segment.hpp"
 #include "level/wall-segment.hpp"
 #include "manager/level.hpp"
@@ -15,7 +18,7 @@ namespace level {
           segment_(),
           artifacts_(),
           powers_(),
-          entities_(),
+          enemies_(),
           bullets_(),
           playerPositions_(),
           numOfDoors_(0),
@@ -57,6 +60,14 @@ namespace level {
                 powers_.push_back(powers->at(i));
             }
         }
+
+        datastruct::Vector<entities::Enemy *> *enemies = nullptr;
+        enemies = loader->enemyLoader.getLoadedObjects();
+        if (enemies != nullptr) {
+            for (unsigned int i = 0; i < enemies->size(); i++) {
+                enemies_.push_back(enemies->at(i));
+            }
+        }
     }
 
     Level::Level(loader::LoaderHandler *loader, enums::Direction direction, int oldLevelIdx)
@@ -92,8 +103,8 @@ namespace level {
             delete segment_[i];
         }
 
-        for (unsigned int i = 0; i < entities_.size(); i++) {
-            delete entities_[i];
+        for (unsigned int i = 0; i < enemies_.size(); i++) {
+            delete enemies_[i];
         }
 
         for (unsigned int i = 0; i < artifacts_.size(); i++) {
@@ -106,6 +117,9 @@ namespace level {
 
         for (unsigned int i = 0; i < bullets_.size(); i++) {
             delete bullets_[i];
+        }
+        for (unsigned int i = 0; i < bullets_.size(); i++) {
+            delete enemies_[i];
         }
     }
 
@@ -130,34 +144,44 @@ namespace level {
         for (unsigned int i = 0; i < artifacts_.size(); i++) {
             if (artifacts_[i]->getPosition() == pos) {
                 collectables::Artifact *c = artifacts_[i];
-                artifacts_.remove(i);
                 return (Collidable *) c;
             }
         }
         for (unsigned int i = 0; i < powers_.size(); i++) {
             if (powers_[i]->getPosition() == pos) {
                 collectables::Power *c = powers_[i];
-                powers_.remove(i);
                 return (Collidable *) c;
             }
         }
-
-        // TODO(simo): gestire altri oggetti di collisione
-        // es: entity, ...
+        for (unsigned int i = 0; i < enemies_.size(); i++) {
+            if (enemies_[i]->getPosition() == pos) {
+                entities::Enemy *c = enemies_[i];
+                return (Collidable *) c;
+            }
+        }
         return nullptr;
+    }
+
+    datastruct::Vector<collectables::Power *> Level::getPowers() {
+        return powers_;
+    }
+
+    datastruct::Vector<collectables::Artifact *> Level::getArtifacts() {
+        return artifacts_;
     }
 
     void Level::addBullet(weapon::Bullet *bullet) {
         bullets_.push_back(bullet);
     }
 
-    void Level::renderBullets(WINDOW *win) {
+    void Level::renderBullets(WINDOW *win, manager::Level *levelManager) {
         unsigned int i = 0;
         while (i < bullets_.size()) {
             Position bulletNextPosition = bullets_[i]->getNextPosition();
             Position bulletPosition = bullets_[i]->getPosition();
             Collidable *collision = getCollision(bulletNextPosition);
-
+            enums::CollisionType type = enums::CollisionType::NONE;
+            if (collision != nullptr) type = collision->getCollisionType();
             // TODO(simo): handle other types of collision
             // TODO(simo): memory leak quando collide con artifactti e powers
             // perché sono eliminati subito dopo la collisione
@@ -165,24 +189,88 @@ namespace level {
             // e powers esternamente a questa classe
             // TODO(simo): getCollision dovrebbe essere const, e non fare altro
             // che ritornarti la collisione
-            if (collision != nullptr) {
+            if (type == enums::CollisionType::ENTITY) {
                 logger_.debug("bullet collision with %d", collision->getCollisionType());
+                if (bullets_[i]->handleEntityHit((Entity *) collision)) {
+                    deleteEnemy(collision, win);
+                    levelManager->getPlayer()->incrementScore(500);
+                    levelManager->getLogQueue()->addEvent("Nemico sconfitto");
+                } else {
+                    levelManager->getLogQueue()->addEvent("Nemico colpito da un proiettile");
+                }
+
                 bullets_[i]->clear(win);
                 delete bullets_[i];
                 bullets_.remove(i);
             } else {
-                bullets_[i]->move();
-                // evita la cancellazione del player guardando il carattere printato nello schermo attuale
-                if (mvwinch(win, bulletPosition.riga, bulletPosition.colonna) != 'P') {
-                    bullets_[i]->clearLast(win);
+                if (type == enums::CollisionType::NONE) {
+                    bullets_[i]->move();
+                    // evita la cancellazione del player guardando il carattere printato nello schermo attuale
+                    if (mvwinch(win, bulletPosition.riga, bulletPosition.colonna) != 'P') {
+                        bullets_[i]->clearLast(win);
+                    }
+                    bullets_[i]->render(win);
+                    i++;
+                } else {
+                    bullets_[i]->clear(win);
+                    delete bullets_[i];
+                    bullets_.remove(i);
                 }
-                bullets_[i]->render(win);
-                i++;
             }
         }
     }
 
-    void Level::render(WINDOW *win, bool force) {
+    void Level::deleteEnemy(Collidable *collision, WINDOW *win) {
+        for (unsigned int i = 0; i < enemies_.size(); i++) {
+            if (collision == enemies_[i]) {
+                enemies_[i]->clearLast(win);
+                delete enemies_[i];
+                enemies_.remove(i);
+            }
+        }
+    }
+
+    void Level::deletePower(int i) {
+        powers_.remove(i);
+    }
+
+    void Level::deleteArtifact(int i) {
+        artifacts_.remove(i);
+    }
+
+    // BUG: non capisco perché ma ora non funziona più nonostante non abbia cambiato nulla e fa attaccare il nemico se il player
+    //      si ritrova sulla colonna o sulla riga di tiro per l'enemy, non su entrambe (che vorrebbe dire che è al massimo a distanza 1)
+    void Level::enemiesAttack(WINDOW *win, manager::Level *levelManager) {
+        for (unsigned int i = 0; i < enemies_.size(); i++) {
+            if ((levelManager->getPlayer()->getPosition().riga - enemies_[i]->getPosition().riga) <= 1 && (levelManager->getPlayer()->getPosition().riga - enemies_[i]->getPosition().riga) >= -1) {
+                if ((levelManager->getPlayer()->getPosition().colonna - enemies_[i]->getPosition().colonna) <= 1 && (levelManager->getPlayer()->getPosition().colonna - enemies_[i]->getPosition().colonna) >= -1) {
+                    enemies_[i]->attack(levelManager->getPlayer());
+                    if (levelManager->getPlayer()->isDead()) {
+                        // TODO (gio?): implementare una finestra di gameover
+                    }
+                    levelManager->getLogQueue()->addEvent("Il nemico è esploso");
+                    enemies_[i]->clear(win);
+                    delete enemies_[i];
+                    enemies_.remove(i);
+                }
+            }
+        }
+    }
+
+    void Level::renderEnemies(WINDOW *win, manager::Level *levelManager) {
+        for (unsigned int i = 0; i < enemies_.size(); i++) {
+            if (enemies_[i]->canMove()) {
+                enemies_[i]->wander();
+                enemies_[i]->move(levelManager);
+                enemies_[i]->clearLast(win);
+                enemies_[i]->render(win);
+                enemies_[i]->resetCoolDown();
+            }
+            enemies_[i]->moveCoolDown();
+        }
+    }
+
+    void Level::render(WINDOW *win, bool force, manager::Level *levelManager) {
         for (unsigned int i = 0; i < segment_.size(); i++) {
             segment_[i]->render(win, force);
         }
@@ -195,7 +283,7 @@ namespace level {
             powers_[i]->render(win, force);
         }
 
-        this->renderBullets(win);
+        this->renderBullets(win, levelManager);
         // TODO(ang): come fare a spostare gli entità?
         // 1. deve updatare questo oppure lo fa un render in un altro momento????
     }
@@ -214,6 +302,9 @@ namespace level {
             // TODO: possibile bug che il proiettile resti bloccato nel punto in cui
             // abbiamo lasciato il livello?? è un bug??
             bullets_[i]->clear(win);
+        }
+        for (unsigned int i = 0; i < enemies_.size(); i++) {
+            enemies_[i]->clear(win);
         }
     }
 };  // namespace level
