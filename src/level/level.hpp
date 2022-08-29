@@ -11,8 +11,8 @@
 #include "gamestruct/logger.hpp"
 #include "level/collidable.hpp"
 #include "level/displayable-segment.hpp"
-#include "loader/loader-handler.hpp"
 #include "level/local-door.hpp"
+#include "loader/loader-handler.hpp"
 
 namespace level {
     // contenere tutti i oggetti utili per il singolo livello

@@ -6,8 +6,8 @@
 #include "gamestruct/position.hpp"
 #include "level/collidable.hpp"
 #include "level/displayable-segment.hpp"
-#include "level/segment.hpp"
 #include "level/openable.hpp"
+#include "level/segment.hpp"
 namespace level {
     class DoorSegment : public DisplayableSegment, public Openable {
       private:

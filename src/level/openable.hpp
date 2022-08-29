@@ -7,6 +7,7 @@ namespace level {
       private:
         /// variabile incapsulata per indicare lo stato dell'apertura
         bool isOpen_;
+
       public:
         Openable(bool isOpen);
         virtual ~Openable() = default;

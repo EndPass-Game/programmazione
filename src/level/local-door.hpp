@@ -10,6 +10,7 @@ namespace level {
     class LocalDoor : public DisplayableSegment, public Openable {
       private:
         int id_;
+
       public:
         LocalDoor(const Segment &segment, int id, bool isOpen = false);
         int getId();

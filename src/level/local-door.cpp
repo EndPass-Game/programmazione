@@ -17,12 +17,12 @@ namespace level {
     int LocalDoor::getId() {
         return id_;
     }
-    
+
     void LocalDoor::open() {
         Openable::open();
         DisplayableSegment::_setDisplayChar((char) enums::WallType::EMPTY);
     }
-    
+
     void LocalDoor::close() {
         Openable::close();
         DisplayableSegment::_setDisplayChar((char) enums::WallType::DOORCLOSED);

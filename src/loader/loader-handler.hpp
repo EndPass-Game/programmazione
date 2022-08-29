@@ -6,9 +6,9 @@
 #include "loader/objects/artifact.hpp"
 #include "loader/objects/door-segment.hpp"
 #include "loader/objects/enemy.hpp"
+#include "loader/objects/local-door.hpp"
 #include "loader/objects/power.hpp"
 #include "loader/objects/wall-segment.hpp"
-#include "loader/objects/local-door.hpp"
 
 namespace loader {
     // Carica TUTTI gli oggetti di un livello di gioco da un file di testo

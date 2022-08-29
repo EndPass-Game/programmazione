@@ -3,7 +3,7 @@
 namespace loader {
     void LocalDoor::load(FILE *file) {
         LoadObject::resetTransferred();
-        
+
         int numeroPorte;
         fscanf(file, "%d", &numeroPorte);
         loadedObjects_->resize(numeroPorte);

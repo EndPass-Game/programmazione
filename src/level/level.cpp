@@ -275,7 +275,7 @@ namespace level {
                     enemies_[i]->clear(win);
                     delete enemies_[i];
                     enemies_.remove(i);
-                    
+
                     if (this->isComplete()) {
                         this->openAllDoors();
                     }

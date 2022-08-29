@@ -2,8 +2,8 @@
 
 #include <cstdio>  // FILE
 
-#include "loader/load-object.hpp"
 #include "level/local-door.hpp"
+#include "loader/load-object.hpp"
 
 namespace loader {
     class LocalDoor : public LoadObject<level::LocalDoor> {
