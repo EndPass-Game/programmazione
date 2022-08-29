@@ -47,7 +47,7 @@ namespace manager {
 
     int Level::addLevel(enums::Direction direction) {
         logger_.info("Adding new level");
-
+        
         loader::LevelProvider &levelProvider = loader::LevelProvider::getInstance();
 
         if (levelIdx_->getCurrent() == -1) {
