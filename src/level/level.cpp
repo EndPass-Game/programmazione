@@ -135,7 +135,7 @@ namespace level {
         return getCollision(pos) == nullptr;
     }
 
-    Collidable *Level::getCollision(Position pos) const{
+    Collidable *Level::getCollision(Position pos) const {
         for (unsigned int i = 0; i < segment_.size(); i++) {
             if (segment_[i]->isPositionInSegment(pos)) {
                 return (Collidable *) segment_[i];
