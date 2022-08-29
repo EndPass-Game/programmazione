@@ -135,7 +135,7 @@ namespace level {
         return getCollision(pos) == nullptr;
     }
 
-    Collidable *Level::getCollision(Position pos) {
+    Collidable *Level::getCollision(Position pos) const {
         for (unsigned int i = 0; i < segment_.size(); i++) {
             if (segment_[i]->isPositionInSegment(pos)) {
                 return (Collidable *) segment_[i];
@@ -223,7 +223,7 @@ namespace level {
     void Level::deleteEnemy(Collidable *collision, WINDOW *win) {
         for (unsigned int i = 0; i < enemies_.size(); i++) {
             if (collision == enemies_[i]) {
-                enemies_[i]->clearLast(win);
+                enemies_[i]->clear(win);
                 delete enemies_[i];
                 enemies_.remove(i);
             }

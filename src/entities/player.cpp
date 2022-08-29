@@ -30,11 +30,13 @@ Player::Player()
       score_(0),
       coolDown_(0),
       coolDownMax_(10),  // può sparare ogni 5 frame
+      maxLife_(12),
       logger_("Player") {}
 
 void Player::addPower() {
     logger_.info("picked up power");
     this->powers_++;
+    this->life_ = maxLife_;
 }
 
 void Player::setPosition(Position pos) {
@@ -90,6 +92,7 @@ void Player::_handleArtifactCollision(manager::Level *levelManager, collectables
     levelManager->getLogQueue()->addEvent("Artefatto raccolto");
     this->incrementScore(100);
     this->setLife(this->getLife() + artifact->getLifeUpgrade());
+    this->maxLife_ += artifact->getLifeUpgrade();
     this->setPosition(nextPosition_);
     delete artifact;
 }
