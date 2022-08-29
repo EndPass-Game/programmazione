@@ -21,10 +21,6 @@ namespace level {
         /// -1 default per livello inesistente che non porta a nessun livello
         int nextLevelIdx_;
 
-        /// functione helper per impostare il carattere del segmento
-        /// @param ch: nuovo carattere di display
-        void _setDisplayChar(char ch);
-
       public:
         DoorSegment();
         DoorSegment(const Segment &segment, enums::Direction facingDir, int nextLevelIdx = -1, bool isOpen = false);

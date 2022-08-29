@@ -39,4 +39,10 @@ namespace level {
             displayables_[i]->clear(win);
         }
     }
+
+    void DisplayableSegment::_setDisplayChar(char ch) {
+        for (unsigned int i = 0; i < displayables_.size(); i++) {
+            displayables_[i]->setDisplayChar(ch);
+        }
+    }
 };  // namespace level

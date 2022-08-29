@@ -12,20 +12,20 @@ namespace level {
           facingDir_(facingDir),
           nextLevelIdx_(nextLevelIdx) {
         if (this->isOpen()) {
-            _setDisplayChar((char) enums::WallType::DOOROPEN);
+            DisplayableSegment::_setDisplayChar((char) enums::WallType::DOOROPEN);
         } else {
-            _setDisplayChar((char) enums::WallType::DOORCLOSED);
+            DisplayableSegment::_setDisplayChar((char) enums::WallType::DOORCLOSED);
         }
     }
 
     void DoorSegment::open() {
         Openable::open();
-        _setDisplayChar((char) enums::WallType::DOOROPEN);
+        DisplayableSegment::_setDisplayChar((char) enums::WallType::DOOROPEN);
     }
 
     void DoorSegment::close() {
         Openable::close();
-        _setDisplayChar((char) enums::WallType::DOORCLOSED);
+        DisplayableSegment::_setDisplayChar((char) enums::WallType::DOORCLOSED);
     }
 
     void DoorSegment::setNextLevelIdx(int nextLevelIdx) {
@@ -42,11 +42,5 @@ namespace level {
 
     enums::CollisionType DoorSegment::getCollisionType() {
         return enums::CollisionType::DOORSEGMENT;
-    }
-
-    void DoorSegment::_setDisplayChar(char ch) {
-        for (unsigned int i = 0; i < displayables_.size(); i++) {
-            displayables_[i]->setDisplayChar(ch);
-        }
     }
 };  // namespace level
