@@ -17,7 +17,9 @@ namespace views {
             " / _/ / || // o |/ _,'/ o /_\\ `. _\\ `. ",
             "/___//_/|_//__,'/_/  /_n_//___,'/___,' "};
 
-        const char *name_ = "PauseView";
+        const char *name_;
+
+        void printMenu_();
 
       public:
         MenuView();
@@ -30,8 +32,6 @@ namespace views {
 
         // fa il override di questa funzione da view
         void render(bool force);
-
-        void printMenu(bool force);
 
         void handleScreenToSmall(manager::ViewManager *manager);
 

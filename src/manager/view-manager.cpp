@@ -9,8 +9,7 @@
 namespace manager {
 
     ViewManager::ViewManager()
-        : stackView() {
-    }
+        : stackView() {}
 
     void ViewManager::pushView(views::View *newView) {
         stackView.push(newView);

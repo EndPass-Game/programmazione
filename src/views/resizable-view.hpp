@@ -11,7 +11,7 @@ namespace views {
       protected:
         // ricentra la finestra se la dimensione dello schermo cambia
         void recenterWindow(Size screen);
-        const char *name_ = "ResizableView";
+        const char *name_;
 
       public:
         // override di quella di view

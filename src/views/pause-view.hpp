@@ -11,7 +11,7 @@ namespace views {
       private:
         bool quit = false;
         bool returnToGame = false;
-        const char *name_ = "Pause";
+        const char *name_;
 
       public:
         PauseView(Position pos);
