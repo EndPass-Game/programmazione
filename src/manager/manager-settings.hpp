@@ -9,6 +9,7 @@ namespace manager {
     const Size kLogAreaSize = {kItemAreaSize.riga, kGameWindowsSize.colonna - (kItemAreaSize.colonna + 1)};
     const Size kGameAreaSize = {kGameWindowsSize.riga - kItemAreaSize.riga, kGameWindowsSize.colonna};
     const Size kPaddingLogArea = {1, 1};
+    const Size kMenuSize = {11, 60};
 
     // Decide ogni quanti millisecondi avviene un update a schermo
     const int kSleepTime = 50;

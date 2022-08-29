@@ -4,7 +4,6 @@
 #include "views/resizable-view.hpp"
 
 namespace views {
-    const Size kMenuSize_ = {11, 60};
     class MenuView : public ResizableView {
       private:
         // TODO: variabili per cunicare tra i due thread in un futuro andranno wrappate in una struct o classe mutex protected
