@@ -54,7 +54,7 @@ int Player::getPowers() {
 void Player::_handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door) {
     logger_.info("collided with door");
     if (door->getNextLevelIdx() == -1) {
-        int nextLevelIdx = levelManager->addLevel();
+        int nextLevelIdx = levelManager->addLevel(door->getFacingDir());
         door->setNextLevelIdx(nextLevelIdx);
     }
 

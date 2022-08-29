@@ -137,7 +137,7 @@ namespace loader {
                 break;
             default:
                 logger_.warning("_getLevelVector called with direction = NONE");
-                levelVector = &withNorthDoor_;
+                levelVector = &loadedLevels_;
                 break;
         }
         return levelVector;
