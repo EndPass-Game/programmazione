@@ -3,31 +3,28 @@
 #include "enums/wall-type.hpp"
 namespace level {
     DoorSegment::DoorSegment()
-        : DisplayableSegment() {}
+        : DisplayableSegment(),
+          Openable(false) {}
 
     DoorSegment::DoorSegment(const Segment &segment, enums::Direction facingDir, int nextLevelIdx, bool isOpen)
         : DisplayableSegment(segment),
+          Openable(isOpen),
           facingDir_(facingDir),
-          nextLevelIdx_(nextLevelIdx),
-          isOpen_(isOpen) {
-        if (isOpen_) {
+          nextLevelIdx_(nextLevelIdx) {
+        if (this->isOpen()) {
             _setDisplayChar((char) enums::WallType::DOOROPEN);
         } else {
             _setDisplayChar((char) enums::WallType::DOORCLOSED);
         }
     }
 
-    bool DoorSegment::isDoorOpen() const {
-        return isOpen_;
-    }
-
-    void DoorSegment::openDoor() {
-        isOpen_ = true;
+    void DoorSegment::open() {
+        Openable::open();
         _setDisplayChar((char) enums::WallType::DOOROPEN);
     }
 
-    void DoorSegment::closeDoor() {
-        isOpen_ = false;
+    void DoorSegment::close() {
+        Openable::close();
         _setDisplayChar((char) enums::WallType::DOORCLOSED);
     }
 

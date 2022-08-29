@@ -26,7 +26,7 @@ Player::Player()
     : Entity(12, 3,   // vita e attacco
              {1, 1},  // position di spawn
              'P'),    // charattere mostrato su schermo
-      powers_(0),
+      powers_(100),
       score_(0),
       coolDown_(0),
       coolDownMax_(10),  // può sparare ogni 5 frame
@@ -60,7 +60,7 @@ void Player::_handleDoorCollision(manager::Level *levelManager, level::DoorSegme
         door->setNextLevelIdx(nextLevelIdx);
     }
 
-    if (door->isDoorOpen()) {
+    if (door->isOpen()) {
         logger_.info("moving to level with idx %d", door->getNextLevelIdx());
         levelManager->getLogQueue()->addEvent("Cambiato livello");
         levelManager->goToLevel(door->getNextLevelIdx());
@@ -69,7 +69,7 @@ void Player::_handleDoorCollision(manager::Level *levelManager, level::DoorSegme
             logger_.info("opening door with idx %d", door->getNextLevelIdx());
             levelManager->getLogQueue()->addEvent("La porta si e' aperta!");
             this->removePower();
-            door->openDoor();
+            door->open();
         } else {
             levelManager->getLogQueue()->addEvent("la porta e' chiusa, cerca un potere.");
         }

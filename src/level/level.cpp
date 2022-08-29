@@ -95,7 +95,7 @@ namespace level {
         }
 
         chosenDoor->setNextLevelIdx(oldLevelIdx);
-        chosenDoor->openDoor();
+        chosenDoor->open();
     }
 
     Level::~Level() {
