@@ -55,25 +55,20 @@ int Player::getPowers() {
 
 void Player::_handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door) {
     logger_.info("collided with door");
-    if (door->getNextLevelIdx() == -1) {
-        int nextLevelIdx = levelManager->addLevel(door->getFacingDir());
-        door->setNextLevelIdx(nextLevelIdx);
-    }
-
     if (door->isOpen()) {
+        if (door->getNextLevelIdx() == -1) {
+            levelManager->getLogQueue()->addEvent("Nuovo livello creato.");
+            this->incrementScore(100);
+            levelManager->generateLevel(door);
+        }
         logger_.info("moving to level with idx %d", door->getNextLevelIdx());
         levelManager->getLogQueue()->addEvent("Cambiato livello");
         levelManager->goToLevel(door->getNextLevelIdx());
-    } else {
-        if (this->getPowers() > 0) {
-            logger_.info("opening door with idx %d", door->getNextLevelIdx());
-            levelManager->getLogQueue()->addEvent("La porta si e' aperta!");
-            this->removePower();
-            door->open();
-        } else {
-            levelManager->getLogQueue()->addEvent("la porta e' chiusa, cerca un potere.");
-        }
+
+        return;
     }
+
+    levelManager->getLogQueue()->addEvent("la porta e' chiusa, finisci il livello per aprirla");
 }
 
 void Player::_handleWallCollision(manager::Level *levelManager, level::WallSegment *wall) {}
@@ -82,10 +77,11 @@ void Player::_handleEntityCollision(manager::Level *levelManager, Entity *entity
 
 void Player::_handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact) {
     datastruct::Vector<collectables::Artifact *> artifacts;
-    artifacts = levelManager->getLevel()->getArtifacts();
+    level::Level *level = levelManager->getLevel();
+    artifacts = level->getArtifacts();
     for (unsigned int i = 0; i < artifacts.size(); i++) {
         if (artifacts[i] == artifact) {
-            levelManager->getLevel()->deleteArtifact(i);
+            level->deleteArtifact(i);
             break;
         }
     }
@@ -94,6 +90,11 @@ void Player::_handleArtifactCollision(manager::Level *levelManager, collectables
     this->setLife(this->getLife() + artifact->getLifeUpgrade());
     this->maxLife_ += artifact->getLifeUpgrade();
     this->setPosition(nextPosition_);
+
+    if (level->isComplete()) {
+        level->openAllDoors();
+    }
+
     delete artifact;
 }
 

@@ -27,4 +27,12 @@ namespace level {
         Openable::close();
         DisplayableSegment::_setDisplayChar((char) enums::WallType::DOORCLOSED);
     }
+
+    enums::CollisionType LocalDoor::getCollisionType() {
+        if (this->isOpen()) {
+            return enums::CollisionType::NONE;
+        } else {
+            return enums::CollisionType::WALLSEGMENT;  // si comporta come un semplice muro se è chiuso
+        }
+    }
 }  // namespace level

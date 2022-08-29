@@ -65,11 +65,17 @@ namespace level {
         void enemiesAttack(WINDOW *win, manager::Level *levelManager);
         void renderEnemies(WINDOW *win, manager::Level *levelManager);
 
+        /// @brief ritorna `true` se il livello è finito, `false` altrimenti
+        bool isComplete();
+
         /// @brief opens the local door with the same id as input
         /// @param id id of the local door to open
         void openLocalDoor(int id);
 
         /// @returns l'oggetto di collisione alla data posizione
-        Collidable *getCollision(Position pos);
+        Collidable *getCollision(Position pos) const;
+
+        /// @brief opens all local doors
+        void openAllDoors();
     };
 };  // namespace level

@@ -15,6 +15,7 @@ namespace level {
         int getId();
         void open() override;
         void close() override;
+        enums::CollisionType getCollisionType() override;
     };
 
 }  // namespace level

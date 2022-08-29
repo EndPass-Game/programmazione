@@ -8,6 +8,8 @@
 #include "loader/objects/enemy.hpp"
 #include "loader/objects/power.hpp"
 #include "loader/objects/wall-segment.hpp"
+#include "loader/objects/local-door.hpp"
+
 namespace loader {
     // Carica TUTTI gli oggetti di un livello di gioco da un file di testo
     // struttura del file:
@@ -15,10 +17,12 @@ namespace loader {
     // pos.x pos.y direzione tipo-di-angolo lunghezza
     // [numero di porte]
     // pos.x pos.y direzione  direzione-rispetto-al-centro lunghezza player-pos-x player-pos-y
+    // [numero di local doors]
+    // pos.x pos.y direzione lunghezza id
     // [numero di artefatti]
     // pos.x e pos.y e vita del artefatto
     // [numero di poteri]
-    // pos.x e pos.y del potere
+    // pos.x e pos.y e id-associato-local-dor
     // una volta richiesto un oggetto, deve essere eliminato dal chiamante.
     // [numero di nemici]
     // pos.x e pos.y del nemico
@@ -29,6 +33,7 @@ namespace loader {
         FILE *file;
         WallSegment wallLoader;
         DoorSegment doorLoader;
+        LocalDoor localDoorLoader;
         Artifact artifactLoader;
         Power powerLoader;
         Enemy enemyLoader;

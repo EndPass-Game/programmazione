@@ -1,6 +1,7 @@
 #include "level/door-segment.hpp"
 
 #include "enums/wall-type.hpp"
+#include "gamestruct/logger.hpp"
 namespace level {
     DoorSegment::DoorSegment()
         : DisplayableSegment(),
@@ -19,6 +20,8 @@ namespace level {
     }
 
     void DoorSegment::open() {
+        Logger logger_("DoorSegment::open");
+        logger_.debug("yes i oopened the doors");
         Openable::open();
         DisplayableSegment::_setDisplayChar((char) enums::WallType::DOOROPEN);
     }
