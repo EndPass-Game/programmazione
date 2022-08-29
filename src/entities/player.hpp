@@ -34,6 +34,7 @@ class Player : public Entity {
     int score_;
     int coolDown_;
     int coolDownMax_;
+    int maxLife_;
 
     Logger logger_;
 
