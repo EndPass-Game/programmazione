@@ -12,6 +12,7 @@
 #include "level/collidable.hpp"
 #include "level/displayable-segment.hpp"
 #include "loader/loader-handler.hpp"
+#include "level/local-door.hpp"
 
 namespace level {
     // contenere tutti i oggetti utili per il singolo livello
@@ -24,6 +25,7 @@ namespace level {
         datastruct::Vector<entities::Enemy *> enemies_;
         datastruct::Vector<weapon::Bullet *> bullets_;
         datastruct::Vector<Position> playerPositions_;
+        datastruct::Vector<LocalDoor *> localDoors_;
         int numOfDoors_;  // numero di porte nel livello
 
         Logger logger_;
@@ -34,20 +36,20 @@ namespace level {
 
         ~Level();
 
-        // restituisce la posizione dell'ultimo player
+        /// restituisce la posizione dell'ultimo player
         Position getLastPlayerPosition();
 
-        // setta la posizione dell'ultimo player
+        /// setta la posizione dell'ultimo player
         void setLastPlayerPosition(Position pos);
 
-        // @brief renderizza il contenuto del livello
-        // @param force se true rirenderizza anche quelli non modificati
+        /// @brief renderizza il contenuto del livello
+        /// @param force se true rirenderizza anche quelli non modificati
         void render(WINDOW *win, bool force, manager::Level *levelmanager);
 
-        // cancella tutto quanto printato su schermo
+        /// cancella tutto quanto printato su schermo
         void clear(WINDOW *win);
 
-        // @returns true se la posizione è vuota, false altrimenti
+        /// @returns true se la posizione è vuota, false altrimenti
         bool isPositionEmpty(Position pos);
 
         datastruct::Vector<collectables::Power *> getPowers();
@@ -62,7 +64,12 @@ namespace level {
 
         void enemiesAttack(WINDOW *win, manager::Level *levelManager);
         void renderEnemies(WINDOW *win, manager::Level *levelManager);
-        // @returns l'oggetto di collisione alla data posizione
-        Collidable *getCollision(Position pos) const;
+
+        /// @brief opens the local door with the same id as input
+        /// @param id id of the local door to open
+        void openLocalDoor(int id);
+
+        /// @returns l'oggetto di collisione alla data posizione
+        Collidable *getCollision(Position pos);
     };
 };  // namespace level

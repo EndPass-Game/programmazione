@@ -3,14 +3,19 @@
 #include "enums/wall-type.hpp"
 
 namespace level {
-    LocalDoor::LocalDoor(const Segment &segment, bool isOpen)
+    LocalDoor::LocalDoor(const Segment &segment, int id, bool isOpen)
         : DisplayableSegment(segment),
-          Openable(isOpen) {
+          Openable(isOpen),
+          id_(id) {
         if (this->isOpen()) {
             DisplayableSegment::_setDisplayChar((char) enums::WallType::EMPTY);
         } else {
             DisplayableSegment::_setDisplayChar((char) enums::WallType::DOORCLOSED);
         }
+    }
+
+    int LocalDoor::getId() {
+        return id_;
     }
     
     void LocalDoor::open() {

@@ -8,8 +8,11 @@ namespace level {
     /// a differenza di DoorSegment \link #LocalDoor using another text\endlink
     /// non crea nessun nuovo livello.
     class LocalDoor : public DisplayableSegment, public Openable {
+      private:
+        int id_;
       public:
-        LocalDoor(const Segment &segment, bool isOpen = false);
+        LocalDoor(const Segment &segment, int id, bool isOpen = false);
+        int getId();
         void open() override;
         void close() override;
     };

@@ -99,13 +99,15 @@ void Player::_handleArtifactCollision(manager::Level *levelManager, collectables
 
 void Player::_handlePowerCollision(manager::Level *levelManager, collectables::Power *power) {
     datastruct::Vector<collectables::Power *> powers;
-    powers = levelManager->getLevel()->getPowers();
+    level::Level *currLevel = levelManager->getLevel();
+    powers = currLevel->getPowers();
     for (unsigned int i = 0; i < powers.size(); i++) {
         if (powers[i] == power) {
-            levelManager->getLevel()->deletePower(i);
+            currLevel->deletePower(i);
             break;
         }
     }
+    currLevel->openLocalDoor(power->getId());
     this->addPower();
     levelManager->getLogQueue()->addEvent("Hai raccolto un potere");
     this->incrementScore(100);

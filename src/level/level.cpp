@@ -118,8 +118,9 @@ namespace level {
         for (unsigned int i = 0; i < bullets_.size(); i++) {
             delete bullets_[i];
         }
-        for (unsigned int i = 0; i < bullets_.size(); i++) {
-            delete enemies_[i];
+
+        for (unsigned int i = 0; i < localDoors_.size(); i++) {
+            delete localDoors_[i];
         }
     }
 
@@ -305,6 +306,14 @@ namespace level {
         }
         for (unsigned int i = 0; i < enemies_.size(); i++) {
             enemies_[i]->clear(win);
+        }
+    }
+
+    void Level::openLocalDoor(int id) {
+        for (unsigned int i = 0; i < localDoors_.size(); i++) {
+            if (localDoors_[i]->getId() == id) {
+                localDoors_[i]->open();
+            }
         }
     }
 };  // namespace level
