@@ -12,6 +12,7 @@
 #include "level/collidable.hpp"
 #include "level/door-segment.hpp"
 #include "level/wall-segment.hpp"
+#include "enums/enemyType.hpp"
 
 // Attualmente questa classe contiene un esempio di nemico
 // che si muove e attacca il giocatore.
@@ -46,5 +47,7 @@ namespace entities {
         void moveCoolDown();
 
         bool canMove();
+
+        virtual enums::EnemyType getEnemyType() = 0;
     };
 }  // namespace entities

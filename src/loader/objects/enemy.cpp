@@ -6,14 +6,15 @@ namespace loader {
     void Enemy::load(FILE *file) {
         LoadObject::resetTransferred();
 
-        int numeroNemici;
-        fscanf(file, "%d", &numeroNemici);
-        this->loadedObjects_->resize(numeroNemici);
-        for (int i = 0; i < numeroNemici; i++) {
+        int numeroKamikaze;
+        fscanf(file, "%d", &numeroKamikaze);
+        this->loadedObjects_->resize(numeroKamikaze);
+        for (int i = 0; i < numeroKamikaze; i++) {
             Position startPosition;
             fscanf(file, "%d %d\n", &startPosition.riga, &startPosition.colonna);
-            entities::Enemy *enemy = new entities::Enemy(startPosition);
+            entities::Enemy *enemy = new entities::Kamikaze(startPosition);
             this->loadedObjects_->at(i) = enemy;
         }
+        //TODO: da aggiungere la parte dello shooter
     };
 }  // namespace loader

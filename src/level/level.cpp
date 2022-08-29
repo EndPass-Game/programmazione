@@ -242,17 +242,19 @@ namespace level {
     //      si ritrova sulla colonna o sulla riga di tiro per l'enemy, non su entrambe (che vorrebbe dire che è al massimo a distanza 1)
     void Level::enemiesAttack(WINDOW *win, manager::Level *levelManager) {
         for (unsigned int i = 0; i < enemies_.size(); i++) {
-            if ((levelManager->getPlayer()->getPosition().riga - enemies_[i]->getPosition().riga) <= 1 && (levelManager->getPlayer()->getPosition().riga - enemies_[i]->getPosition().riga) >= -1) {
-                if ((levelManager->getPlayer()->getPosition().colonna - enemies_[i]->getPosition().colonna) <= 1 && (levelManager->getPlayer()->getPosition().colonna - enemies_[i]->getPosition().colonna) >= -1) {
-                    enemies_[i]->attack(levelManager->getPlayer());
-                    if (levelManager->getPlayer()->isDead()) {
-                        // TODO (gio?): implementare una finestra di gameover
+            if(enemies_[i]->getEnemyType() == enums::EnemyType::KAMIKAZE){
+                if ((levelManager->getPlayer()->getPosition().riga - enemies_[i]->getPosition().riga) <= 1 && (levelManager->getPlayer()->getPosition().riga - enemies_[i]->getPosition().riga) >= -1) {
+                    if ((levelManager->getPlayer()->getPosition().colonna - enemies_[i]->getPosition().colonna) <= 1 && (levelManager->getPlayer()->getPosition().colonna - enemies_[i]->getPosition().colonna) >= -1) {
+                        enemies_[i]->attack(levelManager->getPlayer());
+                        if (levelManager->getPlayer()->isDead()) {
+                            // TODO (gio?): implementare una finestra di gameover
+                        }
+                        levelManager->getLogQueue()->addEvent("Il nemico e' esploso");
+                        enemies_[i]->clear(win);
+                        delete enemies_[i];
+                        enemies_.remove(i);
                     }
-                    levelManager->getLogQueue()->addEvent("Il nemico e' esploso");
-                    enemies_[i]->clear(win);
-                    delete enemies_[i];
-                    enemies_.remove(i);
-                }
+            }
             }
         }
     }
