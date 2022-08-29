@@ -65,11 +65,11 @@ void Player::_handleDoorCollision(manager::Level *levelManager, level::DoorSegme
     } else {
         if (this->getPowers() > 0) {
             logger_.info("opening door with idx %d", door->getNextLevelIdx());
-            levelManager->getLogQueue()->addEvent("La porta si è aperta!");
+            levelManager->getLogQueue()->addEvent("La porta si e' aperta!");
             this->removePower();
             door->openDoor();
         } else {
-            levelManager->getLogQueue()->addEvent("la porta è chiusa, cerca un potere.");
+            levelManager->getLogQueue()->addEvent("la porta e' chiusa, cerca un potere.");
         }
     }
 }

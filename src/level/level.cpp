@@ -248,7 +248,7 @@ namespace level {
                     if (levelManager->getPlayer()->isDead()) {
                         // TODO (gio?): implementare una finestra di gameover
                     }
-                    levelManager->getLogQueue()->addEvent("Il nemico è esploso");
+                    levelManager->getLogQueue()->addEvent("Il nemico e' esploso");
                     enemies_[i]->clear(win);
                     delete enemies_[i];
                     enemies_.remove(i);
