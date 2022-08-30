@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdio>  // FILE
+
 #include "datastruct/vector.hpp"
 
 namespace loader {
