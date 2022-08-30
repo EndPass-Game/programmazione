@@ -33,8 +33,8 @@ namespace entities {
         virtual void _handleNoneCollision(manager::Level *levelManager) override;
 
       public:
-        Enemy();
-        Enemy(Position spawnPos);
+        Enemy(char c);
+        Enemy(Position spawnPos, char c);
 
         // int getDamage();
 

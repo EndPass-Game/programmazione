@@ -59,8 +59,8 @@ namespace manager {
         return (int) levels_.size() - 1;
     }
 
-    level::Collidable *Level::getCollision(Position pos) {
-        return levels_[levelIdx_->getCurrent()]->getCollision(pos);
+    level::Collidable *Level::getCollision(Position pos, manager::Level *levelManager) {
+        return levels_[levelIdx_->getCurrent()]->getCollision(pos, levelManager);
     }
 
     void Level::playerShoot() {
@@ -73,7 +73,7 @@ namespace manager {
         Position bulletPosition = player_->getNextPosition();
         logger_.debug("next position: %d, %d", bulletPosition.colonna, bulletPosition.riga);
         logger_.debug("curr position: %d, %d", player_->getPosition().colonna, player_->getPosition().riga);
-        level::Collidable *collision = getCollision(bulletPosition);
+        level::Collidable *collision = getCollision(bulletPosition, this);
 
         // BUG: a volte quando il player va troppo veloce, prendere la sua prossima
         // posizione non è ancora sufficiente per non cancellarlo dallo schermo

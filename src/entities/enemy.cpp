@@ -9,14 +9,14 @@
 #include "level/collidable.hpp"
 #include "manager/level.hpp"
 namespace entities {
-    Enemy::Enemy()
+    Enemy::Enemy(char c)
         : Entity(12, 5,  // TODO: gestire queste costanti hardcoded in un file di setting
                  {4, 4}, /* position di spawn */
-                 'E'),
+                 c),
           logger_("Enemy") {}
 
-    Enemy::Enemy(Position spawnPos)
-        : Entity(12, 5, spawnPos, 'E'),
+    Enemy::Enemy(Position spawnPos, char c)
+        : Entity(12, 5, spawnPos, c),
           coolDown_(0),
           coolDownMax_(10),  // può muoversi ogni 10 frame
           logger_("Enemy") {}

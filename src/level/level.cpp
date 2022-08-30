@@ -131,11 +131,11 @@ namespace level {
         lastPlayerPosition_ = pos;
     }
 
-    bool Level::isPositionEmpty(Position pos) {
-        return getCollision(pos) == nullptr;
+    bool Level::isPositionEmpty(Position pos, manager::Level *levelManager) {
+        return getCollision(pos, levelManager) == nullptr;
     }
 
-    Collidable *Level::getCollision(Position pos) const {
+    Collidable *Level::getCollision(Position pos, manager::Level *levelManager) const {
         for (unsigned int i = 0; i < segment_.size(); i++) {
             if (segment_[i]->isPositionInSegment(pos)) {
                 return (Collidable *) segment_[i];
@@ -159,6 +159,10 @@ namespace level {
                 return (Collidable *) c;
             }
         }
+        if (levelManager->getPlayer()->getPosition() == pos){
+            Player *c = levelManager->getPlayer();
+            return (Collidable *) c;
+        }
         return nullptr;
     }
 
@@ -179,7 +183,7 @@ namespace level {
         while (i < bullets_.size()) {
             Position bulletNextPosition = bullets_[i]->getNextPosition();
             Position bulletPosition = bullets_[i]->getPosition();
-            Collidable *collision = getCollision(bulletNextPosition);
+            Collidable *collision = getCollision(bulletNextPosition, levelManager);
             enums::CollisionType type = enums::CollisionType::NONE;
             if (collision != nullptr) type = collision->getCollisionType();
             // TODO(simo): handle other types of collision
@@ -254,6 +258,16 @@ namespace level {
                         delete enemies_[i];
                         enemies_.remove(i);
                     }
+            }
+            if(enemies_[i]->getEnemyType() == enums::EnemyType::SHOOTER){
+                entities::Shooter *s = dynamic_cast<entities::Shooter *>(enemies_[i]);
+                if(s->canShoot()){
+                    
+                }
+                else{
+                    s->ShootCoolDown();
+                }
+                
             }
             }
         }

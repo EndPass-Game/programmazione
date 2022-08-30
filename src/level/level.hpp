@@ -4,6 +4,7 @@
 #include "collectables/power.hpp"
 #include "datastruct/vector.hpp"
 #include "entities/enemy.hpp"
+#include "entities/shooter.hpp"
 #include "entities/entity.hpp"
 #include "entities/player.hpp"
 #include "entities/weapon/bullet.hpp"
@@ -48,7 +49,7 @@ namespace level {
         void clear(WINDOW *win);
 
         // @returns true se la posizione è vuota, false altrimenti
-        bool isPositionEmpty(Position pos);
+        bool isPositionEmpty(Position pos, manager::Level *levelManager);
 
         datastruct::Vector<collectables::Power *> getPowers();
         datastruct::Vector<collectables::Artifact *> getArtifacts();
@@ -63,6 +64,6 @@ namespace level {
         void enemiesAttack(WINDOW *win, manager::Level *levelManager);
         void renderEnemies(WINDOW *win, manager::Level *levelManager);
         // @returns l'oggetto di collisione alla data posizione
-        Collidable *getCollision(Position pos) const;
+        Collidable *getCollision(Position pos, manager::Level *levelManager) const;
     };
 };  // namespace level

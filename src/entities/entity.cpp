@@ -25,7 +25,7 @@ void Entity::move(manager::Level *levelManager) {
     nextPosition_ = _computeNextPosition(direction_);
     direction_ = enums::Direction::NONE;
 
-    level::Collidable *collision = levelManager->getCollision(nextPosition_);
+    level::Collidable *collision = levelManager->getCollision(nextPosition_, levelManager);
     enums::CollisionType type = enums::CollisionType::NONE;
     if (collision != nullptr) type = collision->getCollisionType();
     switch (type) {

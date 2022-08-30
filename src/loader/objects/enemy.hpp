@@ -4,6 +4,7 @@
 
 #include "entities/enemy.hpp"
 #include "entities/kamikaze.hpp"
+#include "entities/shooter.hpp"
 #include "loader/load-object.hpp"
 
 namespace loader {

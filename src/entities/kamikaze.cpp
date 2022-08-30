@@ -5,10 +5,10 @@
 
 namespace entities{
     Kamikaze::Kamikaze()
-        : Enemy(){}
+        : Enemy('K'){}
     
     Kamikaze::Kamikaze(Position pos)
-        :Enemy(pos){}
+        :Enemy(pos, 'K'){}
     
     enums::EnemyType Kamikaze::getEnemyType(){
         return enums::EnemyType::KAMIKAZE;
