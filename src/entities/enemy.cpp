@@ -11,7 +11,7 @@
 namespace entities {
     Enemy::Enemy()
         : Entity(12, 1000,  // TODO: gestire queste costanti hardcoded in un file di setting
-                 {4, 4}, /* position di spawn */
+                 {4, 4},    /* position di spawn */
                  'E'),
           logger_("Enemy") {}
 
