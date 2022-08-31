@@ -4,7 +4,7 @@
 
 #include "gamestruct/position.hpp"
 #include "level/door-segment.hpp"
-#include "loader/load-object.hpp"
+#include "loader/load-object.tpp"
 
 namespace loader {
     class DoorSegment : public LoadObject<level::DoorSegment> {

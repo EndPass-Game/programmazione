@@ -3,7 +3,7 @@
 #include <cstdlib>
 
 #include "collectables/artifact.hpp"
-#include "loader/load-object.hpp"
+#include "loader/load-object.tpp"
 
 namespace loader {
     class Artifact : public LoadObject<collectables::Artifact> {

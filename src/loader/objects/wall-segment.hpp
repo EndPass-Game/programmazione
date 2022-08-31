@@ -3,7 +3,7 @@
 #include <cstdlib>
 
 #include "level/wall-segment.hpp"
-#include "loader/load-object.hpp"
+#include "loader/load-object.tpp"
 
 namespace loader {
     class WallSegment : public LoadObject<level::WallSegment> {

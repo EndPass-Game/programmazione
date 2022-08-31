@@ -3,7 +3,7 @@
 #include <cstdio>  // FILE
 
 #include "level/local-door.hpp"
-#include "loader/load-object.hpp"
+#include "loader/load-object.tpp"
 
 namespace loader {
     class LocalDoor : public LoadObject<level::LocalDoor> {
