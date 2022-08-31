@@ -15,8 +15,8 @@ namespace entities {
                  c),
           logger_("Enemy") {}
 
-    Enemy::Enemy(Position spawnPos, char c)
-        : Entity(12, 5, spawnPos, c),
+    Enemy::Enemy(Position spawnPos, int attack, char c)
+        : Entity(12, attack, spawnPos, c),
           coolDown_(0),
           coolDownMax_(10),  // può muoversi ogni 10 frame
           logger_("Enemy") {}

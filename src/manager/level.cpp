@@ -81,10 +81,11 @@ namespace manager {
         // TODO(simo): check per vedere la collisione istantanea, cioè gestisci questo
         // caso ad esempio fare danno subito, perché il bullet va a controllare se
         // la cella in cui vuole andare colpisce qualcosa
-        if (collision == nullptr) {
-            weapon::Bullet *bullet = new weapon::Bullet(bulletPosition, player_->getLastNotNullDirection());
+        if (collision == nullptr || collision->getCollisionType() == enums::CollisionType::ENTITY) {
+            weapon::Bullet *bullet = new weapon::Bullet(bulletPosition, player_->getLastNotNullDirection(), player_->getAttack());
             levels_[levelIdx_->getCurrent()]->addBullet(bullet);
         }
+        
     }
 
     void Level::goToLevel(int levelIdx) {
@@ -107,8 +108,8 @@ namespace manager {
             levelIdx_->setCurrent(levelIdx_->getCurrent());  // FIX PG-34
         }
 
-        levels_[levelIdx_->getCurrent()]->enemiesAttack(win, this);
         levels_[levelIdx_->getCurrent()]->renderEnemies(win, this);
+        levels_[levelIdx_->getCurrent()]->enemiesAttack(win, this);
 
         // WARNING: non spostare questo render sotto al player,
         // vogliamo che prima renderizzi i bullets e poi il player

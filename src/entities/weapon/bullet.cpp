@@ -5,7 +5,7 @@ namespace weapon {
 
     Bullet::Bullet(Position position, enums::Direction direction, int damage)
         : Movable(position, '.'),
-          damage_{1} {
+          damage_{damage} {
         Movable::setDirection(direction);
     }
 

@@ -8,7 +8,7 @@ namespace entities{
         : Enemy('K'){}
     
     Kamikaze::Kamikaze(Position pos)
-        :Enemy(pos, 'K'){}
+        :Enemy(pos, 7, 'K'){}
     
     enums::EnemyType Kamikaze::getEnemyType(){
         return enums::EnemyType::KAMIKAZE;

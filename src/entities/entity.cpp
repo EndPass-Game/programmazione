@@ -71,6 +71,10 @@ void Entity::setLife(int life) {
     this->life_ = life;
 }
 
+int Entity::getAttack(){
+    return attack_;
+}
+
 enums::CollisionType Entity::getCollisionType() {
     return enums::CollisionType::ENTITY;
 }

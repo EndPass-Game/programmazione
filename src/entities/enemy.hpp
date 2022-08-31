@@ -34,7 +34,7 @@ namespace entities {
 
       public:
         Enemy(char c);
-        Enemy(Position spawnPos, char c);
+        Enemy(Position spawnPos, int attack, char c);
 
         // int getDamage();
 

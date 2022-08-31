@@ -8,7 +8,7 @@ namespace entities{
         : Enemy('S'){}
     
     Shooter::Shooter(Position pos)
-        :Enemy(pos, 'S'),
+        :Enemy(pos, 3, 'S'),
         shootCoolDown_(0),
         shootCoolDownMax_(20){}
 

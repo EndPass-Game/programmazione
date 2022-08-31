@@ -61,6 +61,7 @@ namespace level {
         void deletePower(int i);
         void deleteArtifact(int i);
 
+        void enemyShoot(entities::Shooter *s, manager::Level *levelManager);
         void enemiesAttack(WINDOW *win, manager::Level *levelManager);
         void renderEnemies(WINDOW *win, manager::Level *levelManager);
         // @returns l'oggetto di collisione alla data posizione
