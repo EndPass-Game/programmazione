@@ -15,7 +15,6 @@ namespace views {
             " / _/ / || // o |/ _,'/ o /_\\ `. _\\ `. ",
             "/___//_/|_//__,'/_/  /_n_//___,'/___,' "};
 
-
         void printMenu_();
 
       public:
@@ -25,7 +24,6 @@ namespace views {
 
         void handleInput(char input) override;
 
-        void printText() override; 
-
+        void printText() override;
     };
 };  // namespace views

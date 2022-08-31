@@ -4,7 +4,7 @@
 
 namespace views {
     EndView::EndView()
-        : StaticTextView({0, 0}, manager::kMenuSize,"EndView") {}
+        : StaticTextView({0, 0}, manager::kMenuSize, "EndView") {}
 
     bool EndView::handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view, bool changedView) {
         if (StaticTextView::handleScreenBeforeRender(screen, view, changedView))

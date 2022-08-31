@@ -1,12 +1,10 @@
 #include "views/screen-too-small.hpp"
 
-
 namespace views {
 
     ScreenTooSmallView::ScreenTooSmallView(Size minScreen)
-        : View({0, 0}, {0, 0},"ScreenTooSmallView") ,
-          minimumRequired_(minScreen)
-          {}
+        : View({0, 0}, {0, 0}, "ScreenTooSmallView"),
+          minimumRequired_(minScreen) {}
 
     void ScreenTooSmallView::handleInput(char input) {
         if (input == 'q') {

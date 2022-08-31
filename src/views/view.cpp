@@ -8,7 +8,7 @@
 
 namespace views {
 
-    View::View(Position pos, Size size,const char* name)
+    View::View(Position pos, Size size, const char *name)
         : winSize(size), winPosition(pos), name_(name) {
         window = newwin(size.riga, size.colonna, pos.riga, pos.colonna);
     }

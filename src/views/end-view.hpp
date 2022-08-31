@@ -31,6 +31,5 @@ namespace views {
         void handleInput(char input) override;
 
         void printText() override;
-
     };
 };  // namespace views

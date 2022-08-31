@@ -36,7 +36,7 @@ namespace views {
 
         View(Position pos, Size size);
 
-        View(Position pos, Size size,const char* name);
+        View(Position pos, Size size, const char *name);
 
         virtual ~View();
 

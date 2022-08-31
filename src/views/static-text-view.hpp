@@ -9,10 +9,11 @@
 
 namespace views {
 
-    //astrazione di una view che printa solo il testo e che non cambia
+    // astrazione di una view che printa solo il testo e che non cambia
 
     class StaticTextView : public ResizableView {
       protected:
+
       public:
         // funzione che printa il testo statico
         virtual void printText() = 0;
@@ -21,13 +22,12 @@ namespace views {
 
         StaticTextView(Position pos, Size s);
 
-        StaticTextView(Position pos, Size s,const char *name);
+        StaticTextView(Position pos, Size s, const char *name);
 
         // tutte queste schermate quando diventano troppo piccole chiamano screen to small
         void handleScreenToSmall(manager::ViewManager *manager);
-        
+
         // questa funzione viene implementata e chiama printText
         void render(bool force);
-
     };
 };  // namespace views

@@ -5,11 +5,11 @@
 #include "views/view.hpp"
 
 namespace views {
-    //view che viene chiamata quando la schermata è troppo piccola
+    // view che viene chiamata quando la schermata è troppo piccola
     class ScreenTooSmallView : public View {
       private:
         // dimensioni minime richieste per la finestra
-        Size minimumRequired_;  
+        Size minimumRequired_;
         bool quit_ = false;
 
       public:
@@ -20,6 +20,5 @@ namespace views {
         void render(bool force);
 
         bool handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view, bool changedView);
-
     };
 };  // namespace views

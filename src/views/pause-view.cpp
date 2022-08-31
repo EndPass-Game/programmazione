@@ -3,7 +3,7 @@
 namespace views {
 
     PauseView::PauseView()
-        : StaticTextView({0, 0}, manager::kGameWindowsSize,"PauseView") {}
+        : StaticTextView({0, 0}, manager::kGameWindowsSize, "PauseView") {}
 
     bool PauseView::handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view, bool changedView) {
         if (StaticTextView::handleScreenBeforeRender(screen, view, changedView))

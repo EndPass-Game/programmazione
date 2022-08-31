@@ -22,11 +22,10 @@ namespace views {
 
         ResizableView(Position pos, Size s);
 
-        ResizableView(Position pos, Size s,const char *name);
+        ResizableView(Position pos, Size s, const char *name);
 
         virtual void handleScreenToSmall(manager::ViewManager *manager) = 0;
 
         virtual void render(bool force);
-
     };
 };  // namespace views

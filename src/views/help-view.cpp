@@ -4,7 +4,7 @@
 namespace views {
 
     HelpView::HelpView(Position pos)
-        : StaticTextView(pos, manager::kGameWindowsSize,"Keys View") {}
+        : StaticTextView(pos, manager::kGameWindowsSize, "Keys View") {}
 
     bool HelpView::handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view, bool changedView) {
         if (StaticTextView::handleScreenBeforeRender(screen, view, changedView))
@@ -55,6 +55,5 @@ namespace views {
         char uscire[] = "Q per uscire";
         mvwprintw(window, (manager::kGameWindowsSize.riga) - 1, (manager::kGameWindowsSize.colonna - strlen(uscire)) / 2, uscire);
     }
-
 
 };  // namespace views
