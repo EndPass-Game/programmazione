@@ -13,144 +13,200 @@ namespace datastruct {
 
         // per l'utilizzo della doubling-halving ho bisogno della prima potenza di 2 maggiore di un numero
         // questa funzione restituisce ciò.
-        size_t _getHigherPowerOfTwo(size_t n) {
-            size_t x = 1;
-            while (x <= n) {
-                x <<= 1;
-            }
-            return x;
-        }
+        size_t _getHigherPowerOfTwo(size_t n);
 
         // versione del resize privata. Più veloce rispetto alla pubblica
         // in quanto non deve ricavare la nuova size.
-        void _resize(size_t size, size_t newRealSize) {
-            int endCopyIdx = size < size_ ? size : size_;  // minore fra i due
-            size_ = size;
-            T *new_space = new T[newRealSize];
-            for (int i = 0; i < endCopyIdx; i++) {
-                new_space[i] = data_[i];
-            }
-            delete[] data_;
-            data_ = new_space;
-            realSize_ = newRealSize;
-        }
+        void _resize(size_t size, size_t newRealSize);
 
-        void _copyFrom(const Vector<T> &other) {
-            size_ = other.size_;
-            realSize_ = other.realSize_;
-            data_ = new T[realSize_];
-            for (unsigned int i = 0; i < size_; i++) {
-                data_[i] = other.data_[i];
-            }
-        }
+        void _copyFrom(const Vector<T> &other);
 
       public:
-        Vector(size_t size) {
-            size_ = 0;
-            realSize_ = _getHigherPowerOfTwo(size);
-            data_ = new T[realSize_];
-        }
+        Vector(size_t size);
 
-        Vector()
-            : Vector(0) {}
+        Vector();
 
-        Vector(const Vector<T> &other) {
-            this->_copyFrom(other);
-        }
+        Vector(const Vector<T> &other);
 
-        ~Vector() {
-            delete[] data_;
-        }
+        ~Vector();
 
-        size_t size() const {
-            return size_;
-        }
+        size_t size() const;
 
-        bool isEmpty() const {
-            return size_ == 0;
-        }
+        bool isEmpty() const;
 
-        T &operator[](const int index) const {
-            return data_[index];
-        }
+        T &operator[](const int index) const;
 
-        T &at(const int index) const {
-            return data_[index];
-        }
+        T &at(const int index) const;
 
         // se il vettore è vuoto ritorna l'elemento del costruttore di default del tipo dato,
         // altrimenti ritorna l'ultimo elemento
-        T back() const {
-            if (isEmpty()) return T();
-            return data_[size_ - 1];
-        }
+        T back() const;
 
         // push con doubling-halving
-        void push_back(T element) {
-            if (size_ == realSize_) {
-                _resize(size_, realSize_ * 2);
-            }
-
-            data_[size_] = element;
-            size_ += 1;
-        }
+        void push_back(T element);
 
         // se il vettore è vuoto ritorna l'elemento del costruttore di default del tipo dato,
         // altrimenti ritorna l'elemento rimosso.
-        T pop_back() {
-            if (isEmpty()) return T();
-            if (size_ == realSize_ / 4) {
-                _resize(size_, realSize_ / 2);
-            }
-            size_ -= 1;
-            return data_[size_];
-        }
+        T pop_back();
 
         // rimuove l'elemento da index senza preservare l'ordine dei restanti elementi
         // se l'index è invalido ritorna l'elemento del costruttore di default
-        T remove(size_t index) {
-            if (index >= size_ or index < 0) return T();
-            if (size_ == realSize_ / 4) {
-                _resize(size_, realSize_ / 2);
-            }
-            T element = data_[index];
-            size_ -= 1;
-            data_[index] = data_[size_];
-            return element;
-        }
+        T remove(size_t index);
 
         // ridimensiona l'array. Se lo spazio più piccolo, gli elementi con index maggiore sono troncati
         // tutti il resto degli elementi sono ricopiati
-        void resize(size_t size) {
-            size_t newRealSize = _getHigherPowerOfTwo(size);
-            _resize(size, newRealSize);
-        }
+        void resize(size_t size);
 
         // ridimensiona l'array per poter contenere SIZE elementi e assegna
         // il valore VAL in input per indici 0..SIZE-1.
-        void assign(size_t size, T val) {
-            resize(size);
-            for (unsigned int i = 0; i < size; i++) {
-                data_[i] = val;
-            }
-            size_ = size;
-        }
+        void assign(size_t size, T val);
 
-        void clear() {
-            delete[] data_;
-            realSize_ = 1;  // 1 per evitare errori nel *2 in push_back
-            size_ = 0;
-            data_ = new T[realSize_];
-        }
-        bool operator==(const Vector<T> &other) = delete;
+        void clear();
 
-        Vector<T> &operator=(const Vector<T> &other) {
-            if (this == &other) return *this;
-
-            delete[] data_;
-            this->_copyFrom(other);
-
-            return *this;
-        }
+        Vector<T> &operator=(const Vector<T> &other);
     };
+
+    template <class T>
+    size_t Vector<T>::_getHigherPowerOfTwo(size_t n) {
+        size_t x = 1;
+        while (x <= n) {
+            x <<= 1;
+        }
+        return x;
+    }
+
+    template <class T>
+    void Vector<T>::_resize(size_t size, size_t newRealSize) {
+        int endCopyIdx = size < size_ ? size : size_;  // minore fra i due
+        size_ = size;
+        T *new_space = new T[newRealSize];
+        for (int i = 0; i < endCopyIdx; i++) {
+            new_space[i] = data_[i];
+        }
+        delete[] data_;
+        data_ = new_space;
+        realSize_ = newRealSize;
+    }
+
+    template <class T>
+    void Vector<T>::_copyFrom(const Vector<T> &other) {
+        size_ = other.size_;
+        realSize_ = other.realSize_;
+        data_ = new T[realSize_];
+        for (unsigned int i = 0; i < size_; i++) {
+            data_[i] = other.data_[i];
+        }
+    }
+
+    template <class T>
+    Vector<T>::Vector(size_t size) {
+        size_ = 0;
+        realSize_ = _getHigherPowerOfTwo(size);
+        data_ = new T[realSize_];
+    }
+
+    template <class T>
+    Vector<T>::Vector()
+        : Vector(0) {}
+
+    template <class T>
+    Vector<T>::Vector(const Vector<T> &other) {
+        this->_copyFrom(other);
+    }
+
+    template <class T>
+    Vector<T>::~Vector() {
+        delete[] data_;
+    }
+
+    template <class T>
+    size_t Vector<T>::size() const {
+        return size_;
+    }
+
+    template <class T>
+    bool Vector<T>::isEmpty() const {
+        return size_ == 0;
+    }
+
+    template <class T>
+    T &Vector<T>::operator[](const int index) const {
+        return data_[index];
+    }
+
+    template <class T>
+    T &Vector<T>::at(const int index) const {
+        return data_[index];
+    }
+
+    template <class T>
+    T Vector<T>::back() const {
+        if (isEmpty()) return T();
+        return data_[size_ - 1];
+    }
+
+    template <class T>
+    void Vector<T>::push_back(T element) {
+        if (size_ == realSize_) {
+            _resize(size_, realSize_ * 2);
+        }
+
+        data_[size_] = element;
+        size_ += 1;
+    }
+
+    template <class T>
+    T Vector<T>::pop_back() {
+        if (isEmpty()) return T();
+        if (size_ == realSize_ / 4) {
+            _resize(size_, realSize_ / 2);
+        }
+        size_ -= 1;
+        return data_[size_];
+    }
+
+    template <class T>
+    T Vector<T>::remove(size_t index) {
+        if (index >= size_ or index < 0) return T();
+        if (size_ == realSize_ / 4) {
+            _resize(size_, realSize_ / 2);
+        }
+        T element = data_[index];
+        size_ -= 1;
+        data_[index] = data_[size_];
+        return element;
+    }
+
+    template <class T>
+    void Vector<T>::resize(size_t size) {
+        size_t newRealSize = _getHigherPowerOfTwo(size);
+        _resize(size, newRealSize);
+    }
+
+    template <class T>
+    void Vector<T>::assign(size_t size, T val) {
+        resize(size);
+        for (unsigned int i = 0; i < size; i++) {
+            data_[i] = val;
+        }
+        size_ = size;
+    }
+
+    template <class T>
+    void Vector<T>::clear() {
+        delete[] data_;
+        realSize_ = 1;  // 1 per evitare errori nel *2 in push_back
+        size_ = 0;
+        data_ = new T[realSize_];
+    }
+
+    template <class T>
+    Vector<T> &Vector<T>::operator=(const Vector<T> &other) {
+        if (this == &other) return *this;
+
+        delete[] data_;
+        this->_copyFrom(other);
+
+        return *this;
+    }
 };  // namespace datastruct
