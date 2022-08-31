@@ -1,14 +1,16 @@
 #pragma once
+
 #include "gamestruct/state-watcher.hpp"
 #include "manager/view-manager.hpp"
 #include "views/view.hpp"
 
 namespace views {
+    //view che viene chiamata quando la schermata è troppo piccola
     class ScreenTooSmallView : public View {
       private:
-        Size minimumRequired_;  // dimensioni minime richieste per la finestra
+        // dimensioni minime richieste per la finestra
+        Size minimumRequired_;  
         bool quit_ = false;
-        const char *name_;
 
       public:
         ScreenTooSmallView(Size minimumRequired_);
@@ -19,6 +21,5 @@ namespace views {
 
         bool handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view, bool changedView);
 
-        const char *getName();
     };
 };  // namespace views

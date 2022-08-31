@@ -4,11 +4,10 @@
 
 namespace views {
     MenuView::MenuView()
-        : ResizableView({0, 0}, manager::kMenuSize), name_("MenuView") {}
+        : StaticTextView({0, 0}, manager::kMenuSize,"MenuView") {}
 
-    // fa il override di questa funzione da view
     bool MenuView::handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view, bool changedView) {
-        if (ResizableView::handleScreenBeforeRender(screen, view, changedView))
+        if (StaticTextView::handleScreenBeforeRender(screen, view, changedView))
             return true;
         if (quit_) {
             view->clear();
@@ -19,7 +18,7 @@ namespace views {
         }
         return false;
     }
-    // fa il override di questa funzione da view
+
     void MenuView::handleInput(char input) {
         switch (input) {
             case 'q':
@@ -38,26 +37,12 @@ namespace views {
         }
     }
 
-    // fa il override di questa funzione da view
-    void MenuView::render(bool force) {
-        if (force) {
-            View::clearWindow();
-            printMenu_();
-            char start[] = "Premere <Space> per incominciare";
-            mvwprintw(window, 6, (manager::kMenuSize.colonna - strlen(start)) / 2, start);
-            char quit[] = "Premere <Q> per abbandonare";
-            mvwprintw(window, 8, (manager::kMenuSize.colonna - strlen(quit)) / 2, quit);
-        }
-        ResizableView::render(false);
-    }
-
-    void MenuView::handleScreenToSmall(manager::ViewManager *manager) {
-        ScreenTooSmallView *toSmall = new ScreenTooSmallView(manager::kMenuSize);
-        manager->pushView(toSmall);
-    }
-
-    const char *MenuView::getName() {
-        return name_;
+    void MenuView::printText() {
+        printMenu_();
+        char start[] = "Premere <Space> per incominciare";
+        mvwprintw(window, 6, (manager::kMenuSize.colonna - strlen(start)) / 2, start);
+        char quit[] = "Premere <Q> per abbandonare";
+        mvwprintw(window, 8, (manager::kMenuSize.colonna - strlen(quit)) / 2, quit);
     }
 
 };  // namespace views

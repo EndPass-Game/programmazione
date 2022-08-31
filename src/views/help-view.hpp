@@ -4,15 +4,13 @@
 #include <cstring>
 
 #include "manager/view-manager.hpp"
-#include "views/resizable-view.hpp"
-#include "views/screen-too-small.hpp"
+#include "views/static-text-view.hpp"
 
 namespace views {
-    class HelpView : public ResizableView {
+    class HelpView : public StaticTextView {
       private:
         bool quit = false;
         bool returnToGame = false;
-        const char *name_;
 
       public:
         HelpView(Position pos);
@@ -21,10 +19,7 @@ namespace views {
 
         void handleInput(char input) override;
 
-        void render(bool force) override;
+        void printText() override;
 
-        void handleScreenToSmall(manager::ViewManager *manager) override;
-
-        const char *getName() override;
     };
 };  // namespace views

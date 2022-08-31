@@ -1,15 +1,12 @@
 #include "views/screen-too-small.hpp"
 
-#include "manager/view-manager.hpp"
-// TODO(gio): fixa gli include di questo file, segui la filosofia: "includi quello che usi"
-// https://google.github.io/styleguide/cppguide.html#Include_What_You_Use
 
 namespace views {
 
     ScreenTooSmallView::ScreenTooSmallView(Size minScreen)
-        : View({0, 0}, {0, 0}),
-          minimumRequired_(minScreen),
-          name_("ScreenTooSmallView") {}
+        : View({0, 0}, {0, 0},"ScreenTooSmallView") ,
+          minimumRequired_(minScreen)
+          {}
 
     void ScreenTooSmallView::handleInput(char input) {
         if (input == 'q') {
@@ -33,7 +30,4 @@ namespace views {
         return false;
     }
 
-    const char *ScreenTooSmallView::getName() {
-        return name_;
-    }
 };  // namespace views
