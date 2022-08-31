@@ -6,6 +6,7 @@ namespace views {
     MenuView::MenuView()
         : StaticTextView({0, 0}, manager::kMenuSize, "MenuView") {}
 
+
     bool MenuView::handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view, bool changedView) {
         if (StaticTextView::handleScreenBeforeRender(screen, view, changedView))
             return true;
@@ -35,6 +36,7 @@ namespace views {
         for (int riga = 0; riga < kAsciiArtAltezza_; riga++) {
             mvwprintw(window, riga + 1, (manager::kMenuSize.colonna - strlen(kAsciiArt_[riga])) / 2, kAsciiArt_[riga]);
         }
+
     }
 
     void MenuView::printText() {

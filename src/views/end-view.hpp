@@ -6,6 +6,7 @@
 
 namespace views {
     class EndView : public StaticTextView {
+
       private:
         // TODO: variabili per cunicare tra i due thread in un futuro andranno wrappate in una struct o classe mutex protected
 
@@ -31,5 +32,6 @@ namespace views {
         void handleInput(char input) override;
 
         void printText() override;
+
     };
 };  // namespace views

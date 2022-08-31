@@ -8,6 +8,7 @@ namespace views {
 
     bool EndView::handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view, bool changedView) {
         if (StaticTextView::handleScreenBeforeRender(screen, view, changedView))
+
             return true;
         if (quit_) {
             view->clear();

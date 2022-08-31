@@ -5,6 +5,7 @@
 
 namespace views {
     class MenuView : public StaticTextView {
+
       private:
         bool quit_ = false;
         bool start_ = false;
