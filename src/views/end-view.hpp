@@ -2,10 +2,10 @@
 
 #include "manager/manager-settings.hpp"
 #include "views/game-view.hpp"
-#include "views/resizable-view.hpp"
+#include "views/static-text-view.hpp"
 
 namespace views {
-    class EndView : public ResizableView {
+    class EndView : public StaticTextView {
       private:
         // TODO: variabili per cunicare tra i due thread in un futuro andranno wrappate in una struct o classe mutex protected
 
@@ -26,17 +26,10 @@ namespace views {
       public:
         EndView();
 
-        // fa il override di questa funzione da view
         bool handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view, bool changedView);
 
-        // fa il override di questa funzione da view
-        void handleInput(char input);
+        void handleInput(char input) override;
 
-        // fa il override di questa funzione da view
-        void render(bool force);
-
-        void handleScreenToSmall(manager::ViewManager *manager);
-
-        const char *getName();
+        void printText() override;
     };
 };  // namespace views

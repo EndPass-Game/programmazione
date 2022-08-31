@@ -33,9 +33,11 @@ namespace views {
         virtual void render(bool forces);
 
         void clearWindow();
-        // create the windows
+
         View(Position pos, Size size);
-        // delete the window
+
+        View(Position pos, Size size, const char *name);
+
         virtual ~View();
 
         virtual const char *getName();

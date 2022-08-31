@@ -7,11 +7,12 @@
 #include "views/view.hpp"
 
 namespace views {
+
+    // classe astratta che recentra la finestra automaticamente
     class ResizableView : public View {
       protected:
         // ricentra la finestra se la dimensione dello schermo cambia
         void recenterWindow(Size screen);
-        const char *name_;
 
       public:
         // override di quella di view
@@ -21,10 +22,10 @@ namespace views {
 
         ResizableView(Position pos, Size s);
 
+        ResizableView(Position pos, Size s, const char *name);
+
         virtual void handleScreenToSmall(manager::ViewManager *manager) = 0;
 
         virtual void render(bool force);
-
-        virtual const char *getName();
     };
 };  // namespace views
