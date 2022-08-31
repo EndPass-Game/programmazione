@@ -12,7 +12,6 @@ namespace views {
     // astrazione di una view che printa solo il testo e che non cambia
 
     class StaticTextView : public ResizableView {
-
       public:
         // funzione che printa il testo statico
         virtual void printText() = 0;
