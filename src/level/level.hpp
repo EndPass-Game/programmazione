@@ -60,18 +60,6 @@ namespace level {
         ~Level();
 
         /**
-         * @returns restituisce la posizione dell'ultimo player
-         */
-        Position getLastPlayerPosition();
-
-        /**
-         * @brief Setter dell'ultima posizione del player
-         *
-         * @param pos positione da settare
-         */
-        void setLastPlayerPosition(Position pos);
-
-        /**
          * @brief renderizza il contenuto del livello
          * @param force se true rirenderizza anche quelli non modificati
          */
@@ -97,25 +85,16 @@ namespace level {
         void renderEnemies(WINDOW *win, manager::Level *levelManager);
         // ENDREGION --------- TODO: discutere di questa parte
 
-        /*
-         * @brief ritorna `true` se il livello è finito, `false` altrimenti
-         */
-        bool isComplete();
-
         /**
          * @brief opens the local door with the same id as input
          * @param id id of the local door to open
          */
         void openLocalDoor(int id);
 
-        /**
-         * @returns l'oggetto di collisione alla data posizione
-         */
+        bool isComplete();
         Collidable *getCollision(Position pos) const;
-
-        /**
-         * @brief opens all local doors
-         */
         void openAllDoors();
+        void setLastPlayerPosition(Position pos);
+        Position getLastPlayerPosition();
     };
 };  // namespace level

@@ -50,9 +50,6 @@ namespace level {
          */
         WallSegment(Position start_position, enums::Direction direction, int length, enums::WallAngleType angle);
 
-        /**
-         * @return enums::CollisionType ritorna il tipo di collisione del muro
-         */
         virtual enums::CollisionType getCollisionType();
     };
 }  // namespace level

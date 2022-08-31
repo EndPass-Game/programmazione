@@ -36,14 +36,7 @@ namespace loader {
          */
         ~DirectoryLoader();
 
-        /**
-         * @returns tutti i file txt contenuti nella directory
-         */
         datastruct::Vector<char *> getFileNames();
-
-        /**
-         * @returns un file txt random contenuto nella directory
-         */
         const char *getRandomFileName();
     };
 };  // namespace loader

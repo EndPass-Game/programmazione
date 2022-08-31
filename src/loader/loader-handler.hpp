@@ -54,6 +54,7 @@ namespace loader {
 
         /**
          * @brief carica tutti gli oggetti dal file in `file`
+         * È importantissimo il file sia nella struttura indicata sopra.
          */
         void load();
     };

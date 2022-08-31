@@ -23,19 +23,8 @@ namespace level {
          */
         virtual ~Openable() = default;
 
-        /**
-         * @brief getter di `isOpen_`
-         */
         bool isOpen() const;
-
-        /**
-         * @brief Apre l'oggetto
-         */
         virtual void open();
-
-        /**
-         * @brief Chiude l'oggetto
-         */
         virtual void close();
     };
 }  // namespace level

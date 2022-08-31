@@ -49,30 +49,9 @@ namespace level {
          */
         void close() override;
 
-        /**
-         * @brief setter di `nextLevelIdx_`
-         *
-         * @param nextLevelIdx l'index del livello collegato alla porta
-         */
         void setNextLevelIdx(int nextLevelIdx);
-
-        /**
-         * @brief Getter di `nextLevelIdx_`
-         *
-         * @return int `nextLevelIdx_`
-         */
         int getNextLevelIdx() const;
-
-        /**
-         * @brief Getter di `facingDir_`
-         *
-         * @return enums::Direction `facingDir_`
-         */
         enums::Direction getFacingDir() const;
-
-        /**
-         * @returns il tipo di collisione associato a door
-         */
         virtual enums::CollisionType getCollisionType() override;
     };
 };  // namespace level

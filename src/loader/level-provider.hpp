@@ -48,10 +48,8 @@ namespace loader {
         datastruct::Vector<LoaderHandler *> *_getLevelVector(enums::Direction direction);
 
       public:
-        /**
-         * @returns l'istanza singleton di levelProvider
-         */
         static LevelProvider &getInstance();
+        ~LevelProvider();
 
         /**
          * @brief Elimina la possibilità chiamare il copy constructor il levelProvider
@@ -62,11 +60,6 @@ namespace loader {
          * @brief Elimina la possibilità di copiare il levelProvider
          */
         LevelProvider &operator=(const LevelProvider &other) = delete;
-
-        /**
-         * @brief distruttore della classe LevelProvider
-         */
-        ~LevelProvider();
 
         /**
          * @brief carica tutti i livelli di gioco, è possibile chiamarlo una singola

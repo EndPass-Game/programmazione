@@ -24,11 +24,6 @@ namespace level {
         LocalDoor(const Segment &segment, int id, bool isOpen = false);
 
         /**
-         * @brief getter di `id_`
-         */
-        int getId();
-
-        /**
          * @brief Apre la porta (cambia anche il carattere mostrato)
          */
         void open() override;
@@ -38,12 +33,8 @@ namespace level {
          */
         void close() override;
 
-        /**
-         * @brief Get the Collision Type enum
-         *
-         * @return enums::CollisionType il tipo di collisione impostata per l'oggetto
-         */
         enums::CollisionType getCollisionType() override;
+        int getId();
     };
 
 }  // namespace level

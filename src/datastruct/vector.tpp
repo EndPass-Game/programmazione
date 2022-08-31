@@ -1,8 +1,8 @@
 #pragma once
 #include <stddef.h>  // size_t
 
+#include "gamestruct/logger.hpp"
 namespace datastruct {
-
     /**
      * @brief implementazione di vector che utilizza un array dinamico doubling-halving
      * @tparam T il tipo di oggetto che il vettore deve contenere
@@ -17,7 +17,7 @@ namespace datastruct {
         /**
          * @brief ritorna la prima potenza di 2 maggiore di un numero
          * per l'utilizzo della doubling-halving ho bisogno della prima potenza di 2 maggiore di un numero
-         * 
+         *
          * @return size_t la prima potenza di 2 maggiore di n
          */
         size_t _getHigherPowerOfTwo(size_t n);
@@ -25,7 +25,7 @@ namespace datastruct {
         /**
          * @brief fa il resize dell'array in `data_` alla nuova dimensione `newRealSize`
          * differisce rispetto a `resize(size_t size)` in quanto non deve ricavare la nuova size, ma lo prende in input.
-         * 
+         *
          * @param size la nuova size di `data_`
          * @param newRealSize la size realmente allocata, deve essere calcolata con _getHigherPowerOfTwo(size)
          */
@@ -33,7 +33,7 @@ namespace datastruct {
 
         /**
          * @brief copia tutto il contenuto di un altro vector nel vettore attuale
-         * 
+         *
          * @param other il vettore da copiare
          */
         void _copyFrom(const Vector<T> &other);
@@ -41,7 +41,7 @@ namespace datastruct {
       public:
         /**
          * @brief costruisce un nuovo Vector object con dimensione size
-         * 
+         *
          * @param size la dimensione del vettore
          */
         Vector(size_t size);
@@ -72,19 +72,9 @@ namespace datastruct {
         bool isEmpty() const;
 
         /**
-         * @returns T& l'elemento in posizione index
-         */
-        T &operator[](const int index) const;
-
-        /**
-         * @returns T& l'elemento in posizione index
-         */
-        T &at(const int index) const;
-
-        /**
          * @brief utilizzato per avere una copia dell'ultimo elemento del vettore,
          * se il vettore non ha elementi, crea un elemento di default
-         * 
+         *
          * @return T ultimo elemento dell'array
          */
         T back() const;
@@ -92,7 +82,7 @@ namespace datastruct {
         /**
          * @brief aggiunge un elemento alla fine del vettore e fa una resize
          * dinamica del vettore secondo necessità utilizzando la doubling-halving
-         * 
+         *
          * @param element l'elemento da aggiungere
          */
         void push_back(T element);
@@ -101,7 +91,7 @@ namespace datastruct {
          * @brief rimuove l'elemento in posizione index e lo ritorna
          * fa una resize del vettore secondo necessità utilizzando la doubling-halving
          * Se è vuoto ritorna l'elemento costruito di default del tipo dato
-         * 
+         *
          * @return T l'elemento rimosso
          */
         T pop_back();
@@ -109,7 +99,7 @@ namespace datastruct {
         /**
          * @brief rimuove l'elemento in posizione index senza preservare l'ordine dei restanti elementi
          * se l'index è invalido ritorna l'elemento del costruttore di default
-         * 
+         *
          * @param index l'indice dell'elemento da rimuovere
          * @return T l'elemento rimosso
          */
@@ -118,7 +108,7 @@ namespace datastruct {
         /**
          * @brief ridimensiona l'array. Se lo spazio più piccolo, gli elementi con index maggiore sono troncati
          * tutti il resto degli elementi sono ricopiati
-         * 
+         *
          * @param size la nuova dimensione del vettore
          */
         void resize(size_t size);
@@ -126,7 +116,7 @@ namespace datastruct {
         /**
          * @brief ridimensiona l'array per poter contenere SIZE elementi e assegna
          * il valore VAL in input per indici 0..SIZE-1.
-         * 
+         *
          * @param size la nuova dimensione del vettore
          * @param val il valore da assegnare ai nuovi elementi
          */
@@ -140,11 +130,14 @@ namespace datastruct {
 
         /**
          * @brief copia tutto il contenuto di un altro vector nel vettore attuale
-         * 
+         *
          * @param other il vettore da copiare
          * @returns reference al vettore attuale
          */
         Vector<T> &operator=(const Vector<T> &other);
+
+        T &operator[](const int index) const;
+        T &at(const int index) const;
     };
 
     template <class T>
