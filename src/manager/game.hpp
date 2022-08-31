@@ -15,10 +15,19 @@ namespace manager {
         Logger logger_;
 
       public:
+        /**
+         * @brief Inizializza il gioco
+         */
         Game();
+
+        /**
+         * @brief Distruttore del gioco
+         */
         ~Game();
 
-        // Crea i thread e gestisce i menu prima e dopo il gioco
+        /**
+         * @brief Crea i thread e gestisce i menu prima e dopo il gioco
+         */
         void run();
     };
 };  // namespace manager
