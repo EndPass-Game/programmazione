@@ -17,7 +17,7 @@ namespace manager {
         while (!viewManager->empty()) {
             int current_input = getch();
             if (current_input != -1) {
-                viewManager->last()->handleInput(current_input);
+                viewManager->top()->handleInput(current_input);
             }
         }
     }

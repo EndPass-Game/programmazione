@@ -32,11 +32,11 @@ namespace manager {
         }
         bool tmpChangedView;
         do {
-            viewManager->last()->handleScreenBeforeRender(screenSize, viewManager, changed);
+            viewManager->top()->handleScreenBeforeRender(screenSize, viewManager, changed);
             tmpChangedView = viewManager->isChangedView();
             changed |= tmpChangedView;
             if (tmpChangedView and !viewManager->empty()) {
-                logger_.info("Changed view %s", (const char *) viewManager->last()->getName());
+                logger_.info("Changed view %s", (const char *) viewManager->top()->getName());
             }
         } while (tmpChangedView and !viewManager->empty());
         return changed;
@@ -46,7 +46,7 @@ namespace manager {
         while (!viewManager->empty()) {
             bool hasUpdated = checkUpdateView();
             if (!viewManager->empty()) {
-                viewManager->last()->render(hasUpdated);
+                viewManager->top()->render(hasUpdated);
                 std::this_thread::sleep_for(std::chrono::milliseconds(kSleepTime));
             }
         }

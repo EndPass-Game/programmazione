@@ -20,8 +20,8 @@ namespace manager {
         delete v;
         changedView = true;
     }
-    views::View *ViewManager::last() {
-        return stackView.last();
+    views::View *ViewManager::top() {
+        return stackView.top();
     }
 
     void ViewManager::clear() {
