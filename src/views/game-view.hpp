@@ -2,6 +2,7 @@
 
 #include "manager/level.hpp"
 #include "manager/view-manager.hpp"
+#include "views/end-view.hpp"
 #include "views/game-sub-view.hpp"
 #include "views/game-view.hpp"
 #include "views/help-view.hpp"
