@@ -2,11 +2,17 @@
 #include <stddef.h>  // size_t
 #pragma once
 namespace datastruct {
+    /**
+     * @brief Implementazione di una coda che utilizza un array dinamico doubling-halving
+     * sono tenuti in considerazione solamente gli indici di inizio e fine coda, in modo 
+     * che si possa avere una coda circolare
+     * @tparam T il tipo di oggetto che la coda deve contenere
+     */
     template <class T>
     class Queue {
       private:
-        size_t end_;
-        size_t start_;
+        size_t end_;  // idx fine della coda
+        size_t start_;  // idx inizio della coda
         size_t size_;
         size_t realSize_;
         T *data_;
@@ -15,23 +21,70 @@ namespace datastruct {
         void _resize(size_t size);
 
       public:
+        /**
+         * @brief costruisce una nuova Queue object con dimensione size
+         * 
+         * @param size la dimensione della Queue
+         */
         Queue(size_t size);
+
+        /**
+         * @brief Costruisce una queue di dimensione 0
+         */
         Queue();
+
+        /**
+         * @brief distruttore di queue, libera la memoria allocata
+         */
         ~Queue();
 
+        /**
+         * @returns size_t la dimensione **usata** della queue
+         * È differente rispetto alla size effettivamente allocata
+         */
         size_t size() const;
 
+        /**
+         * @returns check se la dimensione utilizzata è 0
+         */
         size_t isEmpty() const;
 
+        /**
+         * @brief aggiunge un elemento alla fine della coda e fa una resize
+         * dinamica della coda secondo necessità utilizzando la doubling-halving
+         * 
+         * @param element l'elemento da aggiungere
+         */
         void push(T element);
 
+        /**
+         * @brief ritorna l'ultimo elemento in coda
+         * Non sono fatti nessun check sulla size, attenzione
+         * ad invalid reads.
+         */
         T &last();
 
+        /** 
+         * @brief ritorna il primo elemento in coda
+         * Non sono fatti nessun check sulla size, attenzione
+         * ad invalid reads.
+         */
         T &first();
+
+        /**
+         * @brief rimuove l'elemento in posizione index
+         * se la coda è vuota viene ritornato l'elemento costruito di default
+         */
         T pop();
 
+        /**
+         * @returns T& l'elemento in posizione index
+         */
         T &operator[](const int index) const;
-
+        
+        /**
+         * @returns T& l'elemento in posizione index
+         */
         T &at(const int index) const;
     };
 

@@ -3,7 +3,10 @@
 
 namespace datastruct {
 
-    // implementazione di vector che utilizza un array dinamico doubling-halving
+    /**
+     * @brief implementazione di vector che utilizza un array dinamico doubling-halving
+     * @tparam T il tipo di oggetto che il vettore deve contenere
+     */
     template <class T>
     class Vector {
       protected:
@@ -11,58 +14,136 @@ namespace datastruct {
         size_t realSize_;  // size of allocated memory
         T *data_;
 
-        // per l'utilizzo della doubling-halving ho bisogno della prima potenza di 2 maggiore di un numero
-        // questa funzione restituisce ciò.
+        /**
+         * @brief ritorna la prima potenza di 2 maggiore di un numero
+         * per l'utilizzo della doubling-halving ho bisogno della prima potenza di 2 maggiore di un numero
+         * 
+         * @return size_t la prima potenza di 2 maggiore di n
+         */
         size_t _getHigherPowerOfTwo(size_t n);
 
-        // versione del resize privata. Più veloce rispetto alla pubblica
-        // in quanto non deve ricavare la nuova size.
+        /**
+         * @brief fa il resize dell'array in `data_` alla nuova dimensione `newRealSize`
+         * differisce rispetto a `resize(size_t size)` in quanto non deve ricavare la nuova size, ma lo prende in input.
+         * 
+         * @param size la nuova size di `data_`
+         * @param newRealSize la size realmente allocata, deve essere calcolata con _getHigherPowerOfTwo(size)
+         */
         void _resize(size_t size, size_t newRealSize);
 
+        /**
+         * @brief copia tutto il contenuto di un altro vector nel vettore attuale
+         * 
+         * @param other il vettore da copiare
+         */
         void _copyFrom(const Vector<T> &other);
 
       public:
+        /**
+         * @brief costruisce un nuovo Vector object con dimensione size
+         * 
+         * @param size la dimensione del vettore
+         */
         Vector(size_t size);
 
+        /**
+         * @brief costruisce un nuvo Vector object con nessun elemento
+         */
         Vector();
 
+        /**
+         * @brief copy costructor di Vector
+         */
         Vector(const Vector<T> &other);
 
+        /**
+         * @brief distruttore di Vector, libera la memoria allocata
+         */
         ~Vector();
 
+        /**
+         * @returns size_t la dimensione **usata** del vettore
+         */
         size_t size() const;
 
+        /**
+         * @returns check se la dimensione utilizzata è 0
+         */
         bool isEmpty() const;
 
+        /**
+         * @returns T& l'elemento in posizione index
+         */
         T &operator[](const int index) const;
 
+        /**
+         * @returns T& l'elemento in posizione index
+         */
         T &at(const int index) const;
 
-        // se il vettore è vuoto ritorna l'elemento del costruttore di default del tipo dato,
-        // altrimenti ritorna l'ultimo elemento
+        /**
+         * @brief utilizzato per avere una copia dell'ultimo elemento del vettore,
+         * se il vettore non ha elementi, crea un elemento di default
+         * 
+         * @return T ultimo elemento dell'array
+         */
         T back() const;
 
-        // push con doubling-halving
+        /**
+         * @brief aggiunge un elemento alla fine del vettore e fa una resize
+         * dinamica del vettore secondo necessità utilizzando la doubling-halving
+         * 
+         * @param element l'elemento da aggiungere
+         */
         void push_back(T element);
 
-        // se il vettore è vuoto ritorna l'elemento del costruttore di default del tipo dato,
-        // altrimenti ritorna l'elemento rimosso.
+        /**
+         * @brief rimuove l'elemento in posizione index e lo ritorna
+         * fa una resize del vettore secondo necessità utilizzando la doubling-halving
+         * Se è vuoto ritorna l'elemento costruito di default del tipo dato
+         * 
+         * @return T l'elemento rimosso
+         */
         T pop_back();
 
-        // rimuove l'elemento da index senza preservare l'ordine dei restanti elementi
-        // se l'index è invalido ritorna l'elemento del costruttore di default
+        /**
+         * @brief rimuove l'elemento in posizione index senza preservare l'ordine dei restanti elementi
+         * se l'index è invalido ritorna l'elemento del costruttore di default
+         * 
+         * @param index l'indice dell'elemento da rimuovere
+         * @return T l'elemento rimosso
+         */
         T remove(size_t index);
 
-        // ridimensiona l'array. Se lo spazio più piccolo, gli elementi con index maggiore sono troncati
-        // tutti il resto degli elementi sono ricopiati
+        /**
+         * @brief ridimensiona l'array. Se lo spazio più piccolo, gli elementi con index maggiore sono troncati
+         * tutti il resto degli elementi sono ricopiati
+         * 
+         * @param size la nuova dimensione del vettore
+         */
         void resize(size_t size);
 
-        // ridimensiona l'array per poter contenere SIZE elementi e assegna
-        // il valore VAL in input per indici 0..SIZE-1.
+        /**
+         * @brief ridimensiona l'array per poter contenere SIZE elementi e assegna
+         * il valore VAL in input per indici 0..SIZE-1.
+         * 
+         * @param size la nuova dimensione del vettore
+         * @param val il valore da assegnare ai nuovi elementi
+         */
         void assign(size_t size, T val);
 
+        /**
+         * @brief  elimina tutto quanto contenuto nel vettore e ricostruisce
+         * come il costruttore ()
+         */
         void clear();
 
+        /**
+         * @brief copia tutto il contenuto di un altro vector nel vettore attuale
+         * 
+         * @param other il vettore da copiare
+         * @returns reference al vettore attuale
+         */
         Vector<T> &operator=(const Vector<T> &other);
     };
 
