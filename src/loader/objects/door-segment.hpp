@@ -34,7 +34,7 @@ namespace loader {
 
         /**
          * @brief carica gli oggetti per door-segment
-         * 
+         *
          * @param file File descriptor da cui caricare di door-segment
          */
         void load(FILE *file) override;

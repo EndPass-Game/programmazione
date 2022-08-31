@@ -21,7 +21,7 @@ namespace level {
          */
         Position endPosition_;
         Position posDirection_;  // versore per indicare la direzione
-        int length_;  // lunghezza del segmento
+        int length_;             // lunghezza del segmento
 
       public:
         /**
@@ -31,14 +31,14 @@ namespace level {
 
         /**
          * @brief Costruisce un segmento partendo dal segmento passato come parametro
-         * 
+         *
          * @param segment il segmento da cui copiare le informazioni
          */
         Segment(const Segment &segment);
 
         /**
          * @brief Costruisce un nuovo segmento parallelo a un asse
-         * 
+         *
          * @param startPosition la posizione iniziale del segmento
          * @param direction la direzione del segmento
          * @param length la lunghezza del segmento

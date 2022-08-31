@@ -42,7 +42,7 @@ namespace loader {
 
         /**
          * @brief Costruisce un nuovo loader handler con il filename corrispondente
-         * 
+         *
          * @param filename il file da cui andare a caricare tutti gli oggetti
          */
         LoaderHandler(const char *filename);

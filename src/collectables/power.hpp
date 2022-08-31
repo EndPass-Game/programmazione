@@ -13,7 +13,7 @@ namespace collectables {
       public:
         /**
          * @brief Costruisce un nuovo oggetto power
-         * 
+         *
          * @param posObj la posizione dell'oggetto
          * @param id l'id dell'oggetto, deve essere collegato alla posta locale
          */
@@ -26,7 +26,7 @@ namespace collectables {
 
         /**
          * @brief Get the Collision Type enum
-         * 
+         *
          * @return enums::CollisionType il tipo di collisione impostata per l'oggetto
          */
         virtual enums::CollisionType getCollisionType() override;

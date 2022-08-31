@@ -13,7 +13,7 @@ namespace level {
       public:
         /**
          * @brief Costruttore di un oggetto Openable
-         * 
+         *
          * @param isOpen lo stato dell'apertura
          */
         Openable(bool isOpen);

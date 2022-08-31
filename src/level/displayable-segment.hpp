@@ -32,7 +32,7 @@ namespace level {
 
         /**
          * @brief Costruire un segmento partendo dal segmento passato come parametro
-         * 
+         *
          * @param segment il segmento da cui copiare le informazioni
          */
         DisplayableSegment(const Segment &segment);
@@ -52,7 +52,7 @@ namespace level {
 
         /**
          * @brief renderizza i displayables del segmento
-         * 
+         *
          * @param win la window su cui renderizzare
          * @param force se true, renderizza anche gli elementi che sono ancora gli stessi
          * altrimenti fa lazy rendering, non toccando nessun elemento che rimane lo stesso
@@ -61,7 +61,7 @@ namespace level {
 
         /**
          * @brief Cancella tutti gli elementi del segmento da schermo
-         * 
+         *
          * @param win la window su cui cancellare
          */
         virtual void clear(WINDOW *win);

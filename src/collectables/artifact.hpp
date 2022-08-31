@@ -18,7 +18,7 @@ namespace collectables {
       public:
         /**
          * @brief Costruttore di un oggetto artefatto
-         * 
+         *
          * @param lifeUpgrade_ descrive quanto l'artefatto aumenta la vita
          * @param posObj descrive la posizione dell'artefatto
          */
@@ -32,7 +32,7 @@ namespace collectables {
 
         /**
          * @brief Get the Collision Type enum
-         * 
+         *
          * @return enums::CollisionType il tipo di collisione impostata per l'oggetto
          */
         virtual enums::CollisionType getCollisionType() override;

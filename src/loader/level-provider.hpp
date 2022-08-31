@@ -26,7 +26,7 @@ namespace loader {
 
         /**
          * @brief funzione helper che ritorna la direzione opposta di quella in input
-         * 
+         *
          * @param direction la direzione di cui si vuole ottenere una direzione opposta
          * @return enums::Direction la direzione opposta di direction
          */
@@ -34,14 +34,14 @@ namespace loader {
 
         /**
          * @brief aggiunge `handler` al vettore corretto
-         * 
+         *
          * @param handler il loader-handler da aggiungere
          */
         void _dispatchHandler(LoaderHandler *handler);
 
         /**
          * @brief ritorna il vettore di LoaderHandler corretto in base alla direzione
-         * 
+         *
          * @param direction la direzione di cui si vuole ottenere il vettore
          * @return datastruct::Vector<LoaderHandler *> il vettore corretto
          */

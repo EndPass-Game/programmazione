@@ -2,9 +2,9 @@
 
 namespace enums {
     /**
-     * @brief Rappresenta il carattere di tutte le tipologie di muro 
+     * @brief Rappresenta il carattere di tutte le tipologie di muro
      * o porte printabili
-     * 
+     *
      */
     enum class WallType {
         VERT = '|',

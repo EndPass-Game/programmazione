@@ -16,7 +16,7 @@ namespace level {
       public:
         /**
          * @brief Costruisce un nuovo Local Door object
-         * 
+         *
          * @param segment il segmento per `DisplayableSegment`
          * @param id l'id del door, associato a un Power che lo aprirà
          * @param isOpen lo stato della door
@@ -40,7 +40,7 @@ namespace level {
 
         /**
          * @brief Get the Collision Type enum
-         * 
+         *
          * @return enums::CollisionType il tipo di collisione impostata per l'oggetto
          */
         enums::CollisionType getCollisionType() override;

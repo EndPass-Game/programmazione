@@ -25,7 +25,7 @@ namespace level {
          * utilizzato principalmente per avere consistenza di posizione
          * ad ogni cambio di livello
          */
-        Position lastPlayerPosition_;  
+        Position lastPlayerPosition_;
         datastruct::Vector<DisplayableSegment *> segment_;
         datastruct::Vector<collectables::Artifact *> artifacts_;
         datastruct::Vector<collectables::Power *> powers_;
@@ -40,14 +40,14 @@ namespace level {
       public:
         /**
          * @brief Costruttore di un livello
-         * 
+         *
          * @param loaderHandler il loader che contiene i dati del livello
          */
         Level(loader::LoaderHandler *loader);
 
         /**
          * @brief Construct a new Level object
-         * 
+         *
          * @param loader il loader che contiene i dati del livello
          * @param direction specifica di caricare solo livelli in questa direzione
          * @param oldLevelIdx il collegamento al livello precedente
@@ -59,14 +59,14 @@ namespace level {
          */
         ~Level();
 
-        /** 
+        /**
          * @returns restituisce la posizione dell'ultimo player
          */
         Position getLastPlayerPosition();
 
         /**
          * @brief Setter dell'ultima posizione del player
-         * 
+         *
          * @param pos positione da settare
          */
         void setLastPlayerPosition(Position pos);

@@ -10,7 +10,7 @@ namespace loader {
       public:
         /**
          * @brief carica gli oggetti per i door locali dal file
-         * 
+         *
          * @param file File descriptor da cui caricare i door locali
          */
         void load(FILE *file) override;

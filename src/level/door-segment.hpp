@@ -31,7 +31,7 @@ namespace level {
 
         /**
          * @brief Costruisce un nuovo DoorSegment
-         * 
+         *
          * @param segment il segmento portante della porta
          * @param facingDir la direzione rispetto al centro della stanza in cui si trova la porta
          * @param nextLevelIdx il livello collegato a questa porta
@@ -51,21 +51,21 @@ namespace level {
 
         /**
          * @brief setter di `nextLevelIdx_`
-         * 
+         *
          * @param nextLevelIdx l'index del livello collegato alla porta
          */
         void setNextLevelIdx(int nextLevelIdx);
 
         /**
          * @brief Getter di `nextLevelIdx_`
-         * 
+         *
          * @return int `nextLevelIdx_`
          */
         int getNextLevelIdx() const;
 
         /**
          * @brief Getter di `facingDir_`
-         * 
+         *
          * @return enums::Direction `facingDir_`
          */
         enums::Direction getFacingDir() const;

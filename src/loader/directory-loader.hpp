@@ -16,7 +16,7 @@ namespace loader {
 
         /**
          * @brief valida l'estensione di `filename`
-         * 
+         *
          * @param filename il filename su cui si deve validare l'estensione
          * @param extension l'estensione che deve essere presente alla fine di filename
          * @return true se vale la condizione sopra
@@ -37,7 +37,7 @@ namespace loader {
         ~DirectoryLoader();
 
         /**
-         * @returns tutti i file txt contenuti nella directory 
+         * @returns tutti i file txt contenuti nella directory
          */
         datastruct::Vector<char *> getFileNames();
 

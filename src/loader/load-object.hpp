@@ -7,7 +7,7 @@
 namespace loader {
     /**
      * @brief Classe astratta che descrive gli oggetti che possono essere caricati da un file di testo
-     * 
+     *
      * @tparam T il tipo di oggetto che si vuole caricare
      */
     template <typename T>
@@ -29,10 +29,10 @@ namespace loader {
 
         /**
          * @brief ritorna l'array degli oggetti caricati
-         * 
+         *
          * WARNING: quando questa funzione è chiamata, l'onere di liberare la memoria occupata
          * è lasciata al chiamante.
-         * 
+         *
          * NOTE: è possibile chiamare questa funzione un unica volta per loading
          * altrimenti sarà ritornato un nullptr
          */
@@ -40,7 +40,7 @@ namespace loader {
 
         /**
          * @brief la funzione astratta per caricare i dati da un file di testo
-         * 
+         *
          * @param file il FILE da cui leggere i dati
          */
         virtual void load(FILE *file) = 0;

@@ -10,7 +10,7 @@ namespace loader {
       public:
         /**
          * @brief carica gli oggetti per wallsegment
-         * 
+         *
          * @param file File descriptor da cui caricare di wallsegment
          */
         void load(FILE *file) override;

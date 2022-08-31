@@ -7,10 +7,10 @@
 
 namespace loader {
     class Enemy : public LoadObject<entities::Enemy> {
-      public:        
+      public:
         /**
          * @brief carica gli oggetti per Enemy dal file
-         * 
+         *
          * @param file File descriptor da cui caricare gli enemy
          */
         void load(FILE *file) override;
