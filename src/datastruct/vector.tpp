@@ -6,7 +6,7 @@ namespace datastruct {
     // implementazione di vector che utilizza un array dinamico doubling-halving
     template <class T>
     class Vector {
-      private:
+      protected:
         size_t size_;      // size of used memory
         size_t realSize_;  // size of allocated memory
         T *data_;
