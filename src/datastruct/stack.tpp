@@ -3,33 +3,47 @@
 
 namespace datastruct {
     template <class T>
-    class Stack {
-      private:
-        Vector<T> data_;
-
+    class Stack : private Vector<T>{
       public:
-        Stack()
-            : data_(0) {}
+        Stack();
 
-        bool isEmpty() const {
-            return data_.isEmpty();
-        }
+        bool isEmpty() const;
 
-        T top() const {
-            return data_.back();
-        }
+        T top() const;
 
-        void push(T element) {
-            data_.push_back(element);
-        }
+        void push(T element);
 
-        T last() {
-            int last = data_.size() - 1;
-            return data_[last];
-        }
+        T last();
 
-        T pop() {
-            return data_.pop_back();
-        }
+        T pop();
     };
+
+    template <class T>
+    Stack<T>::Stack()
+        : Vector<T>(0) {}
+
+    template <class T>
+    bool Stack<T>::isEmpty() const {
+        return Vector<T>::isEmpty();
+    }
+
+    template <class T>
+    T Stack<T>::top() const {
+        return Vector<T>::back();
+    }
+
+    template <class T>
+    void Stack<T>::push(T element) {
+        Vector<T>::push_back(element);
+    }
+
+    template <class T>
+    T Stack<T>::last() {
+        return Vector<T>::at(Vector<T>::size() - 1);
+    }
+
+    template <class T>
+    T Stack<T>::pop() {
+        return Vector<T>::pop_back();
+    }
 }  // namespace datastruct
