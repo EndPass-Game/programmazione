@@ -140,10 +140,6 @@ namespace level {
         lastPlayerPosition_ = pos;
     }
 
-    bool Level::isPositionEmpty(Position pos) {
-        return getCollision(pos) == nullptr;
-    }
-
     Collidable *Level::getCollision(Position pos) const {
         for (unsigned int i = 0; i < segment_.size(); i++) {
             if (segment_[i]->isPositionInSegment(pos)) {
