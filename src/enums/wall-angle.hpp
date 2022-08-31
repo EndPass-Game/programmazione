@@ -3,7 +3,6 @@
 namespace enums {
     /**
      * @brief Rappresenta una tipologia di angolo per WallSegment
-     *
      */
     enum class WallAngleType {
         NONE = 0,

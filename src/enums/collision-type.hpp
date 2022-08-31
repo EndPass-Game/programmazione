@@ -3,7 +3,6 @@
 namespace enums {
     /**
      * @brief  descrive l'oggetto con cui si è andato a collidere
-     *
      */
     enum class CollisionType {
         NONE = 0,
