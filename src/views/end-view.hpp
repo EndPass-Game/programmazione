@@ -1,8 +1,8 @@
 #pragma once
 
+#include "manager/manager-settings.hpp"
 #include "views/game-view.hpp"
 #include "views/resizable-view.hpp"
-#include "manager/manager-settings.hpp"
 
 namespace views {
     class EndView : public ResizableView {
@@ -13,7 +13,7 @@ namespace views {
         bool start_ = false;
         const int kAsciiArtAltezza_ = 4;
         const char *kAsciiArt_[4] = {
-          
+
             "   ___  _  __ __ ",
             "  / _/ / |/ //  \\",
             " / _/ / || // o |",

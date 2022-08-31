@@ -36,11 +36,10 @@ namespace views {
             HelpView *helpView = new HelpView({0, 0});
             view->pushView(helpView);
             help_ = false;
-        }else if(levelManager_->getPlayer()->isDead()){
+        } else if (levelManager_->getPlayer()->isDead()) {
             view->popView();
             EndView *endView = new EndView();
             view->pushView(endView);
-
         }
         return false;
     }

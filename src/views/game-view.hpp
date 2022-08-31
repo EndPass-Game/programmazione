@@ -2,6 +2,7 @@
 
 #include "manager/level.hpp"
 #include "manager/view-manager.hpp"
+#include "views/end-view.hpp"
 #include "views/game-sub-view.hpp"
 #include "views/game-view.hpp"
 #include "views/help-view.hpp"
@@ -10,7 +11,6 @@
 #include "views/pause-view.hpp"
 #include "views/resizable-view.hpp"
 #include "views/screen-too-small.hpp"
-#include "views/end-view.hpp"
 
 namespace views {
     class GameView : public ResizableView {
