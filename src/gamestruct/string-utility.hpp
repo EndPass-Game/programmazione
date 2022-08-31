@@ -1,7 +1,7 @@
 #pragma once
 #include <string.h>
 
-#include "datastruct/vector.hpp"
+#include "datastruct/vector.tpp"
 
 namespace stringUtility {
     char *copyString(char const *str);

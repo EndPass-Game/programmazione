@@ -1,6 +1,6 @@
 #pragma once
 
-#include "datastruct/queue.hpp"
+#include "datastruct/queue.tpp"
 #include "gamestruct/displayable-string.hpp"
 #include "gamestruct/size.hpp"
 

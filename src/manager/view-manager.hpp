@@ -2,7 +2,7 @@
 
 #include <mutex>
 
-#include "datastruct/stack.hpp"
+#include "datastruct/stack.tpp"
 #include "gamestruct/size.hpp"
 #include "manager/manager-settings.hpp"
 #include "views/view.fwd.h"  // forward declaration, circular dependency

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "datastruct/vector.hpp"
+#include "datastruct/vector.tpp"
 #include "enums/direction.hpp"
 #include "gamestruct/logger.hpp"
 #include "level/level.hpp"

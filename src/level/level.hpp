@@ -2,7 +2,7 @@
 
 #include "collectables/artifact.hpp"
 #include "collectables/power.hpp"
-#include "datastruct/vector.hpp"
+#include "datastruct/vector.tpp"
 #include "entities/enemy.hpp"
 #include "entities/entity.hpp"
 #include "entities/player.hpp"

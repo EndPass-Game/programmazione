@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string.h>
 
-#include "datastruct/vector.hpp"
+#include "datastruct/vector.tpp"
 #include "gamestruct/string-utility.hpp"
 
 using namespace datastruct;

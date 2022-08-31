@@ -1,4 +1,4 @@
-#include "datastruct/queue.hpp"
+#include "datastruct/queue.tpp"
 
 #include <cassert>
 #include <iostream>

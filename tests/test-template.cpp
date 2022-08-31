@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <iostream>
 
-#include "datastruct/vector.hpp"
+#include "datastruct/vector.tpp"
 
 using namespace datastruct;
 struct functionMETA {

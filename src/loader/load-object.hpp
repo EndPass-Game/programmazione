@@ -2,7 +2,7 @@
 
 #include <cstdio>  // FILE
 
-#include "datastruct/vector.hpp"
+#include "datastruct/vector.tpp"
 
 namespace loader {
     // questa è una classe astratta che descrive gli oggetti che possono essere caricati da un file di testo

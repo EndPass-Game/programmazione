@@ -1,6 +1,6 @@
 #pragma once
 
-#include "datastruct/vector.hpp"
+#include "datastruct/vector.tpp"
 #include "gamestruct/logger.hpp"
 
 namespace loader {

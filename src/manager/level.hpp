@@ -17,7 +17,7 @@ Funzioni:
 
 #include <ncurses.h>
 
-#include "datastruct/vector.hpp"
+#include "datastruct/vector.tpp"
 #include "entities/player.hpp"
 #include "gamestruct/log-queue.hpp"
 #include "gamestruct/logger.hpp"

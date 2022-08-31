@@ -1,6 +1,6 @@
 #pragma once
 
-#include "datastruct/vector.hpp"
+#include "datastruct/vector.tpp"
 #include "level/door-segment.hpp"
 #include "level/wall-segment.hpp"
 #include "loader/objects/artifact.hpp"

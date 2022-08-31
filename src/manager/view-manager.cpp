@@ -1,6 +1,6 @@
 #include "manager/view-manager.hpp"
 
-#include "datastruct/stack.hpp"
+#include "datastruct/stack.tpp"
 #include "views/view.hpp"
 
 // TODO(gio): fixa gli include di questo file, segui la filosofia: "includi quello che usi"

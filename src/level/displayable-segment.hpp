@@ -2,7 +2,7 @@
 
 #include <ncurses.h>
 
-#include "datastruct/vector.hpp"
+#include "datastruct/vector.tpp"
 #include "enums/direction.hpp"
 #include "gamestruct/displayable.hpp"
 #include "gamestruct/position.hpp"
