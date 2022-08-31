@@ -1,13 +1,13 @@
-#include "views/menu-view.hpp"
+#include "views/end-view.hpp"
 
 #include <cstring>
 
 namespace views {
-    MenuView::MenuView()
-        : ResizableView({0, 0}, manager::kMenuSize), name_("MenuView") {}
+    EndView::EndView()
+        : ResizableView({0, 0}, manager::kMenuSize), name_("EndView") {}
 
     // fa il override di questa funzione da view
-    bool MenuView::handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view, bool changedView) {
+    bool EndView::handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view, bool changedView) {
         if (ResizableView::handleScreenBeforeRender(screen, view, changedView))
             return true;
         if (quit_) {
@@ -20,7 +20,7 @@ namespace views {
         return false;
     }
     // fa il override di questa funzione da view
-    void MenuView::handleInput(char input) {
+    void EndView::handleInput(char input) {
         switch (input) {
             case 'q':
             case 'Q':
@@ -32,18 +32,18 @@ namespace views {
         }
     }
 
-    void MenuView::printMenu_() {
+    void EndView::printMenu_() {
         for (int riga = 0; riga < kAsciiArtAltezza_; riga++) {
             mvwprintw(window, riga + 1, (manager::kMenuSize.colonna - strlen(kAsciiArt_[riga])) / 2, kAsciiArt_[riga]);
         }
     }
 
     // fa il override di questa funzione da view
-    void MenuView::render(bool force) {
+    void EndView::render(bool force) {
         if (force) {
             View::clearWindow();
             printMenu_();
-            char start[] = "Premere <Space> per incominciare";
+            char start[] = "Premere <Space> per tornare al menu";
             mvwprintw(window, 6, (manager::kMenuSize.colonna - strlen(start)) / 2, start);
             char quit[] = "Premere <Q> per abbandonare";
             mvwprintw(window, 8, (manager::kMenuSize.colonna - strlen(quit)) / 2, quit);
@@ -51,12 +51,12 @@ namespace views {
         ResizableView::render(false);
     }
 
-    void MenuView::handleScreenToSmall(manager::ViewManager *manager) {
+    void EndView::handleScreenToSmall(manager::ViewManager *manager) {
         ScreenTooSmallView *toSmall = new ScreenTooSmallView(manager::kMenuSize);
         manager->pushView(toSmall);
     }
 
-    const char *MenuView::getName() {
+    const char *EndView::getName() {
         return name_;
     }
 
