@@ -1,9 +1,9 @@
 #pragma once
 
+#include "entities/enemy.fwd.h"
 #include "collectables/artifact.hpp"
 #include "collectables/power.hpp"
 #include "datastruct/vector.hpp"
-#include "entities/enemy.hpp"
 #include "entities/shooter.hpp"
 #include "entities/entity.hpp"
 #include "entities/player.hpp"
@@ -51,20 +51,22 @@ namespace level {
         // @returns true se la posizione è vuota, false altrimenti
         bool isPositionEmpty(Position pos, manager::Level *levelManager);
 
-        datastruct::Vector<collectables::Power *> getPowers();
-        datastruct::Vector<collectables::Artifact *> getArtifacts();
-
         void addBullet(weapon::Bullet *bullet);
         void renderBullets(WINDOW *win, manager::Level *levelmanager);
 
-        void deleteEnemy(Collidable *collision, WINDOW *win);
-        void deletePower(int i);
-        void deleteArtifact(int i);
-
-        void enemyShoot(entities::Shooter *s, manager::Level *levelManager);
-        void enemiesAttack(WINDOW *win, manager::Level *levelManager);
         void renderEnemies(WINDOW *win, manager::Level *levelManager);
         // @returns l'oggetto di collisione alla data posizione
         Collidable *getCollision(Position pos, manager::Level *levelManager) const;
+
+        /**
+         * @brief elimina il collidable in input.
+         * presuppone che sia dei seguenti tipi:
+         * - artifact
+         * - power
+         * - enemy
+         * 
+         * E che questi siano presenti nella lista corrispondente in questo oggetto
+         */
+        void deleteCollidable(Collidable *collidable);
     };
 };  // namespace level

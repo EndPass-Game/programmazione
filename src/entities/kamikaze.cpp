@@ -1,16 +1,26 @@
 #include "entities/kamikaze.hpp"
 
-#include <mutex>
-#include <stdlib.h>
-
+#include <cstdlib>  // abs
+#include "manager/level.hpp"
 namespace entities{
     Kamikaze::Kamikaze()
-        : Enemy('K'){}
+        : Enemy('K') {}
     
     Kamikaze::Kamikaze(Position pos)
-        :Enemy(pos, 7, 'K'){}
+        : Enemy(pos, 7, 'K') {}
     
-    enums::EnemyType Kamikaze::getEnemyType(){
-        return enums::EnemyType::KAMIKAZE;
+    void Kamikaze::attack(manager::Level *levelManager) {
+        if (canAttack(levelManager)) {
+            this->attackEntity(levelManager->getPlayer());
+            levelManager->getLogQueue()->addEvent("Il nemico e' esploso");
+            levelManager->getLevel()->deleteCollidable((level::Collidable * ) this);
+        }
     }
+
+    bool Kamikaze::canAttack(manager::Level *levelManager) {
+        Position playerPosition = levelManager->getPlayer()->getPosition();
+        Position currPosition = this->getPosition();
+        return abs(playerPosition.riga - currPosition.riga) <= 1 && abs(playerPosition.colonna - currPosition.colonna);
+    }
+
 }

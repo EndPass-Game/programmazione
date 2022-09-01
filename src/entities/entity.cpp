@@ -55,7 +55,7 @@ bool Entity::isDead() const {
     return life_ <= 0;
 }
 
-void Entity::attack(Entity *entity) {
+void Entity::attackEntity(Entity *entity) {
     entity->applyDamage(attack_);
 }
 

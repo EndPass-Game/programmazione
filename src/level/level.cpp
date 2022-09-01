@@ -166,19 +166,12 @@ namespace level {
         return nullptr;
     }
 
-    datastruct::Vector<collectables::Power *> Level::getPowers() {
-        return powers_;
-    }
-
-    datastruct::Vector<collectables::Artifact *> Level::getArtifacts() {
-        return artifacts_;
-    }
-
     void Level::addBullet(weapon::Bullet *bullet) {
         bullets_.push_back(bullet);
     }
 
     void Level::renderBullets(WINDOW *win, manager::Level *levelManager) {
+        // TODO(simo): anche questa funzione è tosta, bisognerebbe provare a refactorarla
         unsigned int i = 0;
         while (i < bullets_.size()) {
             Position bulletNextPosition = bullets_[i]->getNextPosition();
@@ -193,8 +186,8 @@ namespace level {
                         levelManager->getLogQueue()->addEvent("Player sconfitto");
                         //TODO (gio): Reindirizzamento alla pagine di game over
                     }
-                    else{
-                        deleteEnemy(collision, win);
+                    else {
+                        deleteCollidable(collision);
                         levelManager->getPlayer()->incrementScore(500);
                         levelManager->getLogQueue()->addEvent("Nemico sconfitto");
                     }
@@ -229,130 +222,25 @@ namespace level {
         }
     }
 
-    void Level::deleteEnemy(Collidable *collision, WINDOW *win) {
-        for (unsigned int i = 0; i < enemies_.size(); i++) {
-            if (collision == enemies_[i]) {
-                enemies_[i]->clear(win);
-                delete enemies_[i];
-                enemies_.remove(i);
-            }
-        }
-    }
-
-    void Level::deletePower(int i) {
-        powers_.remove(i);
-    }
-
-    void Level::deleteArtifact(int i) {
-        artifacts_.remove(i);
-    }
-
-    void Level::enemyShoot(entities::Shooter *s, manager::Level *levelManager){
-        Collidable *collision;
-        bool firable = true;
-        if(s->canShoot()){
-            if(s->getPosition().riga == levelManager->getPlayer()->getPosition().riga){
-                if(s->getPosition().colonna < levelManager->getPlayer()->getPosition().colonna){
-                    for(int i = (s->getPosition().colonna + 1); i <  (levelManager->getPlayer()->getPosition().colonna); i++){
-                        collision = getCollision(Position (s->getPosition().riga, i), levelManager);
-                        enums::CollisionType type = enums::CollisionType::NONE;
-                        if (collision != nullptr) type = collision->getCollisionType();
-                        if(type != enums::CollisionType::NONE){
-                            firable = false;
-                        }
-                    }
-                    if(firable){
-                        s->resetShootCoolDown();
-                        logger_.info("enemy firing a bullet");
-                        Position bulletPosition = Position(s->getPosition().riga, s->getPosition().colonna + 1);
-                        weapon::Bullet *bullet = new weapon::Bullet(bulletPosition, enums::Direction::RIGHT, s->getAttack());
-                        this->addBullet(bullet);
-                    }
-                }
-                else{
-                    for(int i = (s->getPosition().colonna - 1); i >  (levelManager->getPlayer()->getPosition().colonna); i--){
-                        collision = getCollision(Position (s->getPosition().riga, i), levelManager);
-                        enums::CollisionType type = enums::CollisionType::NONE;
-                        if (collision != nullptr) type = collision->getCollisionType();
-                        if(type != enums::CollisionType::NONE){
-                            firable = false;
-                        }
-                    }
-                    if(firable){
-                        s->resetShootCoolDown();
-                        logger_.info("enemy firing a bullet");
-                        Position bulletPosition = Position(s->getPosition().riga, s->getPosition().colonna - 1);
-                        weapon::Bullet *bullet = new weapon::Bullet(bulletPosition, enums::Direction::LEFT, s->getAttack());
-                        this->addBullet(bullet);
-                    }
-                }
-            }
-            if(s->getPosition().colonna == levelManager->getPlayer()->getPosition().colonna){
-                if(s->getPosition().riga < levelManager->getPlayer()->getPosition().riga){
-                    for(int i = (s->getPosition().riga + 1); i <  (levelManager->getPlayer()->getPosition().riga); i++){
-                        collision = getCollision(Position (i, s->getPosition().colonna), levelManager);
-                        enums::CollisionType type = enums::CollisionType::NONE;
-                        if (collision != nullptr) type = collision->getCollisionType();
-                        if(type != enums::CollisionType::NONE){
-                            firable = false;
-                        }
-                    }
-                    if(firable){
-                        s->resetShootCoolDown();
-                        logger_.info("enemy firing a bullet");
-                        Position bulletPosition = Position(s->getPosition().riga + 1, s->getPosition().colonna);
-                        weapon::Bullet *bullet = new weapon::Bullet(bulletPosition, enums::Direction::DOWN, s->getAttack());
-                        this->addBullet(bullet);
-                    }
-                }
-                else{
-                    for(int i = (s->getPosition().riga - 1); i >  (levelManager->getPlayer()->getPosition().riga); i--){
-                        collision = getCollision(Position (i, s->getPosition().colonna), levelManager);
-                        enums::CollisionType type = enums::CollisionType::NONE;
-                        if (collision != nullptr) type = collision->getCollisionType();
-                        if(type != enums::CollisionType::NONE){
-                            firable = false;
-                        }
-                    }
-                    if(firable){
-                        s->resetShootCoolDown();
-                        logger_.info("enemy firing a bullet");
-                        Position bulletPosition = Position(s->getPosition().riga - 1, s->getPosition().colonna);
-                        weapon::Bullet *bullet = new weapon::Bullet(bulletPosition, enums::Direction::UP, s->getAttack());
-                        this->addBullet(bullet);
-                    }
-                }
-            }
-        }
-        else{
-            s->ShootCoolDown();
-        }
-    }
-
-    // BUG: non capisco perché ma ora non funziona più nonostante non abbia cambiato nulla e fa attaccare il nemico se il player
-    //      si ritrova sulla colonna o sulla riga di tiro per l'enemy, non su entrambe (che vorrebbe dire che è al massimo a distanza 1)
-    void Level::enemiesAttack(WINDOW *win, manager::Level *levelManager) {
-        for (unsigned int i = 0; i < enemies_.size(); i++) {
-            if(enemies_[i]->getEnemyType() == enums::EnemyType::KAMIKAZE){
-                if ((levelManager->getPlayer()->getPosition().riga - enemies_[i]->getPosition().riga) <= 1 && (levelManager->getPlayer()->getPosition().riga - enemies_[i]->getPosition().riga) >= -1) {
-                    if ((levelManager->getPlayer()->getPosition().colonna - enemies_[i]->getPosition().colonna) <= 1 && (levelManager->getPlayer()->getPosition().colonna - enemies_[i]->getPosition().colonna) >= -1) {
-                        enemies_[i]->attack(levelManager->getPlayer());
-                        if (levelManager->getPlayer()->isDead()) {
-                            // TODO (gio?): implementare una finestra di gameover
-                        }
-                        levelManager->getLogQueue()->addEvent("Il nemico e' esploso");
-                        enemies_[i]->clear(win);
-                        delete enemies_[i];
-                        enemies_.remove(i);
-                    }
-                }
-            }
-            else{
-                if(enemies_[i]->getEnemyType() == enums::EnemyType::SHOOTER){
-                    this->enemyShoot((entities::Shooter *) enemies_[i], levelManager);
-                }
-            }
-            
+    void Level::deleteCollidable(Collidable *collidable) {
+        enums::CollisionType type = collidable->getCollisionType();
+        switch (type) {
+        case enums::CollisionType::ARTIFACT:
+            artifacts_.remove(artifacts_.indexOf((collectables::Artifact *) collidable));
+            delete (collectables::Artifact *) collidable;
+            break;
+        case enums::CollisionType::POWER:
+            powers_.remove(powers_.indexOf((collectables::Power *) collidable));
+            delete (collectables::Power *) collidable;
+            break;
+        // supponendo che gli entity da eliminare siano sempre e solo gli enemies
+        case enums::CollisionType::ENTITY:
+            enemies_.remove(enemies_.indexOf((entities::Enemy *) collidable));
+            delete (entities::Enemy *) collidable;
+            break;
+        default:
+            logger_.warning("deleteCollidable: type is not supported, not deleted");
+            break;
         }
     }
 
@@ -366,6 +254,12 @@ namespace level {
                 enemies_[i]->resetCoolDown();
             }
             enemies_[i]->moveCoolDown();
+
+            // renderizza solo se il kamikaze non si suicida
+            if (dynamic_cast<entities::Kamikaze *>(enemies_[i]) != nullptr && enemies_[i]->canAttack(levelManager)) {
+                enemies_[i]->clear(win);
+            }
+            enemies_[i]->attack(levelManager);
         }
     }
 

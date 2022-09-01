@@ -76,41 +76,21 @@ void Player::_handleDoorCollision(manager::Level *levelManager, level::DoorSegme
     }
 }
 
-void Player::_handleWallCollision(manager::Level *levelManager, level::WallSegment *wall) {}
-
-void Player::_handleEntityCollision(manager::Level *levelManager, Entity *entity) {}
-
 void Player::_handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact) {
-    datastruct::Vector<collectables::Artifact *> artifacts;
-    artifacts = levelManager->getLevel()->getArtifacts();
-    for (unsigned int i = 0; i < artifacts.size(); i++) {
-        if (artifacts[i] == artifact) {
-            levelManager->getLevel()->deleteArtifact(i);
-            break;
-        }
-    }
     levelManager->getLogQueue()->addEvent("Artefatto raccolto");
     this->incrementScore(100);
     this->setLife(this->getLife() + artifact->getLifeUpgrade());
     this->maxLife_ += artifact->getLifeUpgrade();
     this->setPosition(nextPosition_);
-    delete artifact;
+    levelManager->getLevel()->deleteCollidable((Collidable *) artifact);
 }
 
 void Player::_handlePowerCollision(manager::Level *levelManager, collectables::Power *power) {
-    datastruct::Vector<collectables::Power *> powers;
-    powers = levelManager->getLevel()->getPowers();
-    for (unsigned int i = 0; i < powers.size(); i++) {
-        if (powers[i] == power) {
-            levelManager->getLevel()->deletePower(i);
-            break;
-        }
-    }
     this->addPower();
     levelManager->getLogQueue()->addEvent("Hai raccolto un potere");
     this->incrementScore(100);
     this->setPosition(nextPosition_);
-    delete power;
+    levelManager->getLevel()->deleteCollidable((Collidable *) power);
 }
 
 void Player::_handleNoneCollision(manager::Level *levelManager) {
@@ -138,4 +118,26 @@ void Player::coolDown() {
 
 bool Player::canFire() {
     return coolDown_ == 0;
+}
+
+void Player::attack(manager::Level *levelManager) {
+    if (!this->canFire()) {
+        return;
+    }
+    level::Level *level = levelManager->getLevel();
+
+    this->resetCoolDown();
+    logger_.info("player firing a bullet");
+    Position bulletPosition = this->getNextPosition();
+    logger_.debug("next position: %d, %d", bulletPosition.colonna, bulletPosition.riga);
+    logger_.debug("curr position: %d, %d", this->getPosition().colonna, this->getPosition().riga);
+    level::Collidable *collision = level->getCollision(bulletPosition, levelManager);
+
+    // TODO(simo): check per vedere la collisione istantanea, cioè gestisci questo
+    // caso ad esempio fare danno subito, perché il bullet va a controllare se
+    // la cella in cui vuole andare colpisce qualcosa
+    if (collision == nullptr || collision->getCollisionType() == enums::CollisionType::ENTITY) {
+        weapon::Bullet *bullet = new weapon::Bullet(bulletPosition, this->getLastNotNullDirection(), this->getAttack());
+        level->addBullet(bullet);
+    }
 }
