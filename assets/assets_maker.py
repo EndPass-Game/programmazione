@@ -161,8 +161,8 @@ def handle_print(file: str):
             line = f.readline()
             line = line.split()
             stuff_to_print.append(Enemy(int(line[0]), int(line[1])))
-
-            if (len(line) != 3):
+            
+            if (len(line) != 2):
                 raise Exception("Invalid enemy")
 
     for i in stuff_to_print:
