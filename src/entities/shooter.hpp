@@ -4,6 +4,7 @@
 
 #include "manager/level.fwd.h"
 #include "entities/enemy.hpp"
+#include "enums/direction.hpp"
 #include "gamestruct/position.hpp"
 #include "gamestruct/logger.hpp"
 namespace entities {
@@ -32,5 +33,9 @@ namespace entities {
         bool LineFirable(int line, int begin, int finish, manager::Level *levelManager);
 
         bool columnFirable(int column, int begin, int finish, manager::Level *levelManager);
+
+        enums::Direction findShootDirection(manager::Level *levelManager, Position currPosition, Position playerPosition);
+        
+        Position findBulletPosition(enums::Direction dir);
     };
 }  // namespace entities

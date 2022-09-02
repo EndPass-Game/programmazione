@@ -47,7 +47,7 @@ void Entity::move(manager::Level *levelManager) {
         case enums::CollisionType::NONE:
             _handleNoneCollision(levelManager);
             break;
-    }
+    }   
     nextPosition_ = _computeNextPosition(lastNotNullDirection_);
 }
 

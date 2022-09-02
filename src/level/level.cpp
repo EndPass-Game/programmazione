@@ -187,6 +187,8 @@ namespace level {
                         //TODO (gio): Reindirizzamento alla pagine di game over
                     }
                     else {
+                        //BUG: l'enemy una volta eliminato da questa funzione non viene clearato
+                        //quindi rimane sulla mappa nonostante sia morto
                         deleteCollidable(collision);
                         levelManager->getPlayer()->incrementScore(500);
                         levelManager->getLogQueue()->addEvent("Nemico sconfitto");

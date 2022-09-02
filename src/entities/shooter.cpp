@@ -5,6 +5,7 @@
 #include "entities/weapon/bullet.hpp"
 #include "level/collidable.hpp"
 #include "manager/level.hpp"
+#include "enums/direction.hpp"
 
 namespace entities{
     Shooter::Shooter()
@@ -37,50 +38,16 @@ namespace entities{
             this->ShootCoolDown();
             return;
         }
-        level::Level *level = levelManager->getLevel();
         Position playerPosition = levelManager->getPlayer()->getPosition();
         Position currPosition = this->getPosition();
-        
-        // TODO simo, c'è ancora bisogno di migliorare questa parte
-        if(currPosition.riga == playerPosition.riga){
-            if(currPosition.colonna < playerPosition.colonna){
-                if(LineFirable(currPosition.riga, currPosition.colonna + 1, playerPosition.colonna, levelManager)){
-                    this->resetShootCoolDown();
-                    logger_.info("enemy firing a bullet");
-                    Position bulletPosition = Position(currPosition.riga, currPosition.colonna + 1);
-                    weapon::Bullet *bullet = new weapon::Bullet(bulletPosition, enums::Direction::RIGHT, this->getAttack());
-                    level->addBullet(bullet);
-                }
-            }
-            else{
-                if(LineFirable(currPosition.riga, playerPosition.colonna + 1, currPosition.colonna, levelManager)){
-                    this->resetShootCoolDown();
-                    logger_.info("enemy firing a bullet");
-                    Position bulletPosition = Position(currPosition.riga, currPosition.colonna - 1);
-                    weapon::Bullet *bullet = new weapon::Bullet(bulletPosition, enums::Direction::LEFT, this->getAttack());
-                    level->addBullet(bullet);
-                }
-            }
-        }
-        if(currPosition.colonna == playerPosition.colonna){
-            if(currPosition.riga < playerPosition.riga){
-                if(columnFirable(currPosition.colonna, currPosition.riga + 1, playerPosition.riga, levelManager)){
-                    this->resetShootCoolDown();
-                    logger_.info("enemy firing a bullet");
-                    Position bulletPosition = Position(currPosition.riga + 1, currPosition.colonna);
-                    weapon::Bullet *bullet = new weapon::Bullet(bulletPosition, enums::Direction::DOWN, this->getAttack());
-                    level->addBullet(bullet);
-                }
-            }
-            else{
-                if(columnFirable(currPosition.colonna, playerPosition.riga + 1, currPosition.riga, levelManager)){
-                    this->resetShootCoolDown();
-                    logger_.info("enemy firing a bullet");
-                    Position bulletPosition = Position(currPosition.riga - 1, currPosition.colonna);
-                    weapon::Bullet *bullet = new weapon::Bullet(bulletPosition, enums::Direction::UP, this->getAttack());
-                    level->addBullet(bullet);
-                }
-            }
+        level::Level *level = levelManager->getLevel();
+        if(canAttack(levelManager)){
+            this->resetShootCoolDown();
+            logger_.info("enemy firing a bullet");
+            enums::Direction dir = findShootDirection(levelManager, currPosition, playerPosition);
+            Position bulletPosition = findBulletPosition(dir);
+            weapon::Bullet *bullet = new weapon::Bullet(bulletPosition, dir, this->getAttack());
+            level->addBullet(bullet);
         }
     }
 
@@ -111,7 +78,74 @@ namespace entities{
     }
 
     bool Shooter::canAttack(manager::Level *levelManager){
+        Position playerPosition = levelManager->getPlayer()->getPosition();
+        Position currPosition = this->getPosition();
+        if(currPosition.riga == playerPosition.riga){
+            if(currPosition.colonna < playerPosition.colonna){
+                if(LineFirable(currPosition.riga, currPosition.colonna + 1, playerPosition.colonna, levelManager)){
+                    return true;
+                }
+            }
+            else{
+                if(LineFirable(currPosition.riga, playerPosition.colonna + 1, currPosition.colonna, levelManager)){
+                    return true;
+                }
+            }
+        }
+        if(currPosition.colonna == playerPosition.colonna){
+            if(currPosition.riga < playerPosition.riga){
+                if(columnFirable(currPosition.colonna, currPosition.riga + 1, playerPosition.riga, levelManager)){
+                    return true;
+                }
+            }
+            else{
+                if(columnFirable(currPosition.colonna, playerPosition.riga + 1, currPosition.riga, levelManager)){
+                    return true;
+                }
+            }
+        }
         return false;
+    }
+
+    enums::Direction Shooter::findShootDirection(manager::Level *levelManager, Position currPosition, Position playerPosition){
+        if(currPosition.riga == playerPosition.riga){
+            if(currPosition.colonna < playerPosition.colonna){
+                return enums::Direction::RIGHT;
+            }
+            else{
+                return enums::Direction::LEFT;
+            }
+        }
+        if(currPosition.colonna == playerPosition.colonna){
+            if(currPosition.riga < playerPosition.riga){
+                return enums::Direction::DOWN;
+            }
+            else{
+                return enums::Direction::UP;
+            }
+        }
+        return enums::Direction::NONE;
+    }
+
+    Position Shooter::findBulletPosition(enums::Direction dir){
+        switch(dir){
+            case enums::Direction::RIGHT:
+                return Position (this->getPosition().riga, this->getPosition().colonna + 1);
+                break;
+            case enums::Direction::LEFT:
+                return Position (this->getPosition().riga, this->getPosition().colonna - 1);
+                break;
+            case enums::Direction::DOWN:
+                return Position (this->getPosition().riga + 1, this->getPosition().colonna);
+                break;
+            case enums::Direction::UP:
+                return Position (this->getPosition().riga - 1, this->getPosition().colonna);
+                break;
+            case enums::Direction::NONE:
+                return Position (1,1);
+                break;
+        }
+        return Position (1,1);
     }
     
 }
