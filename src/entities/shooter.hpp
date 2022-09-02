@@ -26,13 +26,7 @@ namespace entities {
 
         void attack(manager::Level *levelManager) override;
 
-
-        // TODO simo
         virtual bool canAttack(manager::Level *levelManager) override;
-
-        bool LineFirable(int line, int begin, int finish, manager::Level *levelManager);
-
-        bool columnFirable(int column, int begin, int finish, manager::Level *levelManager);
 
         enums::Direction findShootDirection(manager::Level *levelManager, Position currPosition, Position playerPosition);
         

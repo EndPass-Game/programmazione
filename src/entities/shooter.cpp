@@ -1,5 +1,7 @@
 #include "entities/shooter.hpp"
 
+#include <cstdlib>  // abs
+
 #include "enums/collision-type.hpp"
 #include "enums/direction.hpp"
 #include "entities/weapon/bullet.hpp"
@@ -41,6 +43,7 @@ namespace entities{
         Position playerPosition = levelManager->getPlayer()->getPosition();
         Position currPosition = this->getPosition();
         level::Level *level = levelManager->getLevel();
+
         if(canAttack(levelManager)){
             this->resetShootCoolDown();
             logger_.info("enemy firing a bullet");
@@ -51,68 +54,43 @@ namespace entities{
         }
     }
 
-    bool Shooter::LineFirable(int line, int begin, int finish, manager::Level *levelManager){
-        level::Collidable *collision;
-        for(int i = begin; i < finish; i++){
-            collision = levelManager->getLevel()->getCollision(Position(line, i), levelManager);
-            enums::CollisionType type = enums::CollisionType::NONE;
-            if (collision != nullptr) type = collision->getCollisionType();
-            if(type != enums::CollisionType::NONE){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    bool Shooter::columnFirable(int column, int begin, int finish, manager::Level *levelManager){
-        level::Collidable *collision;
-        for(int i = begin; i < finish; i++){
-            collision = levelManager->getLevel()->getCollision(Position(i, column), levelManager);
-            enums::CollisionType type = enums::CollisionType::NONE;
-            if (collision != nullptr) type = collision->getCollisionType();
-            if(type != enums::CollisionType::NONE){
-                return false;
-            }
-        }
-        return true;
-    }
-
     bool Shooter::canAttack(manager::Level *levelManager){
         Position playerPosition = levelManager->getPlayer()->getPosition();
         Position currPosition = this->getPosition();
-        if(currPosition.riga == playerPosition.riga){
-            if(currPosition.colonna < playerPosition.colonna){
-                if(LineFirable(currPosition.riga, currPosition.colonna + 1, playerPosition.colonna, levelManager)){
-                    return true;
-                }
-            }
-            else{
-                if(LineFirable(currPosition.riga, playerPosition.colonna + 1, currPosition.colonna, levelManager)){
-                    return true;
-                }
+        level::Collidable *collision = nullptr;
+
+        int endOffset;  // offset della fine del check
+        int xMultiplier, yMultiplier;  // modificatori della direzione
+        if(currPosition.riga == playerPosition.riga) {
+            xMultiplier = 0;
+            yMultiplier = 1;
+            endOffset = abs(currPosition.colonna - playerPosition.colonna);
+        } else if(currPosition.colonna == playerPosition.colonna){
+            xMultiplier = 1;
+            yMultiplier = 0;
+            endOffset = abs(currPosition.riga - playerPosition.riga);
+        } else {
+            return false;
+        }
+
+        for(int i = 1; i < endOffset; i++){
+            Position checkPosition = Position(currPosition.riga + i * xMultiplier, currPosition.colonna + i * yMultiplier);
+            collision = levelManager->getLevel()->getCollision(checkPosition, levelManager);
+            enums::CollisionType type = enums::CollisionType::NONE;
+            if (collision != nullptr) type = collision->getCollisionType();
+            if(type != enums::CollisionType::NONE){
+                return false;
             }
         }
-        if(currPosition.colonna == playerPosition.colonna){
-            if(currPosition.riga < playerPosition.riga){
-                if(columnFirable(currPosition.colonna, currPosition.riga + 1, playerPosition.riga, levelManager)){
-                    return true;
-                }
-            }
-            else{
-                if(columnFirable(currPosition.colonna, playerPosition.riga + 1, currPosition.riga, levelManager)){
-                    return true;
-                }
-            }
-        }
-        return false;
+
+        return true;
     }
 
     enums::Direction Shooter::findShootDirection(manager::Level *levelManager, Position currPosition, Position playerPosition){
         if(currPosition.riga == playerPosition.riga){
             if(currPosition.colonna < playerPosition.colonna){
                 return enums::Direction::RIGHT;
-            }
-            else{
+            } else {
                 return enums::Direction::LEFT;
             }
         }
