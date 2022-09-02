@@ -37,25 +37,14 @@ namespace entities{
             this->ShootCoolDown();
             return;
         }
-
-        level::Collidable *collision;
         level::Level *level = levelManager->getLevel();
         Position playerPosition = levelManager->getPlayer()->getPosition();
         Position currPosition = this->getPosition();
-        bool firable = true;
-
+        
         // TODO simo, c'è ancora bisogno di migliorare questa parte
         if(currPosition.riga == playerPosition.riga){
             if(currPosition.colonna < playerPosition.colonna){
-                for(int i = (currPosition.colonna + 1); i <  (playerPosition.colonna); i++){
-                    collision = level->getCollision(Position(currPosition.riga, i), levelManager);
-                    enums::CollisionType type = enums::CollisionType::NONE;
-                    if (collision != nullptr) type = collision->getCollisionType();
-                    if(type != enums::CollisionType::NONE){
-                        firable = false;
-                    }
-                }
-                if(firable){
+                if(LineFirable(currPosition.riga, currPosition.colonna + 1, playerPosition.colonna, levelManager)){
                     this->resetShootCoolDown();
                     logger_.info("enemy firing a bullet");
                     Position bulletPosition = Position(currPosition.riga, currPosition.colonna + 1);
@@ -64,15 +53,7 @@ namespace entities{
                 }
             }
             else{
-                for(int i = (currPosition.colonna - 1); i >  (playerPosition.colonna); i--){
-                    collision = level->getCollision(Position (currPosition.riga, i), levelManager);
-                    enums::CollisionType type = enums::CollisionType::NONE;
-                    if (collision != nullptr) type = collision->getCollisionType();
-                    if(type != enums::CollisionType::NONE){
-                        firable = false;
-                    }
-                }
-                if(firable){
+                if(LineFirable(currPosition.riga, playerPosition.colonna + 1, currPosition.colonna, levelManager)){
                     this->resetShootCoolDown();
                     logger_.info("enemy firing a bullet");
                     Position bulletPosition = Position(currPosition.riga, currPosition.colonna - 1);
@@ -83,15 +64,7 @@ namespace entities{
         }
         if(currPosition.colonna == playerPosition.colonna){
             if(currPosition.riga < playerPosition.riga){
-                for(int i = (currPosition.riga + 1); i <  (playerPosition.riga); i++){
-                    collision = level->getCollision(Position (i, currPosition.colonna), levelManager);
-                    enums::CollisionType type = enums::CollisionType::NONE;
-                    if (collision != nullptr) type = collision->getCollisionType();
-                    if(type != enums::CollisionType::NONE){
-                        firable = false;
-                    }
-                }
-                if(firable){
+                if(columnFirable(currPosition.colonna, currPosition.riga + 1, playerPosition.riga, levelManager)){
                     this->resetShootCoolDown();
                     logger_.info("enemy firing a bullet");
                     Position bulletPosition = Position(currPosition.riga + 1, currPosition.colonna);
@@ -100,15 +73,7 @@ namespace entities{
                 }
             }
             else{
-                for(int i = (currPosition.riga - 1); i >  (playerPosition.riga); i--){
-                    collision = level->getCollision(Position (i, currPosition.colonna), levelManager);
-                    enums::CollisionType type = enums::CollisionType::NONE;
-                    if (collision != nullptr) type = collision->getCollisionType();
-                    if(type != enums::CollisionType::NONE){
-                        firable = false;
-                    }
-                }
-                if(firable){
+                if(columnFirable(currPosition.colonna, playerPosition.riga + 1, currPosition.riga, levelManager)){
                     this->resetShootCoolDown();
                     logger_.info("enemy firing a bullet");
                     Position bulletPosition = Position(currPosition.riga - 1, currPosition.colonna);
@@ -118,4 +83,35 @@ namespace entities{
             }
         }
     }
+
+    bool Shooter::LineFirable(int line, int begin, int finish, manager::Level *levelManager){
+        level::Collidable *collision;
+        for(int i = begin; i < finish; i++){
+            collision = levelManager->getLevel()->getCollision(Position(line, i), levelManager);
+            enums::CollisionType type = enums::CollisionType::NONE;
+            if (collision != nullptr) type = collision->getCollisionType();
+            if(type != enums::CollisionType::NONE){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    bool Shooter::columnFirable(int column, int begin, int finish, manager::Level *levelManager){
+        level::Collidable *collision;
+        for(int i = begin; i < finish; i++){
+            collision = levelManager->getLevel()->getCollision(Position(i, column), levelManager);
+            enums::CollisionType type = enums::CollisionType::NONE;
+            if (collision != nullptr) type = collision->getCollisionType();
+            if(type != enums::CollisionType::NONE){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    bool Shooter::canAttack(manager::Level *levelManager){
+        return false;
+    }
+    
 }

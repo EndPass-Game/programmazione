@@ -21,12 +21,16 @@ namespace entities {
 
         void ShootCoolDown();
 
-        bool canShoot();
+        bool canShoot();\
 
         void attack(manager::Level *levelManager) override;
 
 
         // TODO simo
-        virtual bool canAttack(manager::Level *levelManager) override {return false;};
+        virtual bool canAttack(manager::Level *levelManager) override;
+
+        bool LineFirable(int line, int begin, int finish, manager::Level *levelManager);
+
+        bool columnFirable(int column, int begin, int finish, manager::Level *levelManager);
     };
 }  // namespace entities
