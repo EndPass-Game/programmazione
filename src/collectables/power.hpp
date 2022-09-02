@@ -19,16 +19,10 @@ namespace collectables {
          */
         Power(Position posObj, int id);
 
-        /// @brief Distruttore generato dal compilatore
         virtual ~Power() = default;
 
         int getId();
 
-        /**
-         * @brief Get the Collision Type enum
-         *
-         * @return enums::CollisionType il tipo di collisione impostata per l'oggetto
-         */
         virtual enums::CollisionType getCollisionType() override;
     };
 

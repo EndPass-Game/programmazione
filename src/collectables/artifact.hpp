@@ -24,17 +24,10 @@ namespace collectables {
          */
         Artifact(int lifeUpgrade_, Position posObj);
 
-        /// @brief Distruttore generato dal compilatore
         virtual ~Artifact() = default;
 
-        /// @brief getter per `lifeUpgrade_`
         int getLifeUpgrade();
 
-        /**
-         * @brief Get the Collision Type enum
-         *
-         * @return enums::CollisionType il tipo di collisione impostata per l'oggetto
-         */
         virtual enums::CollisionType getCollisionType() override;
     };
 
