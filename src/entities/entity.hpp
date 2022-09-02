@@ -37,11 +37,10 @@ class Entity : public Movable, public level::Collidable {
     virtual void attackEntity(Entity *target);
 
     /**
-     * @brief metodo virtuale che implementa ogni genere di attacco per 
+     * @brief metodo virtuale che implementa ogni genere di attacco per
      * tutte le entità
      */
     virtual void attack(manager::Level *levelManager) = 0;
-
 
     // muove l'entità secondo la direzione impostata
     void move(manager::Level *levelManager);
@@ -53,7 +52,6 @@ class Entity : public Movable, public level::Collidable {
     void setLife(int life);
 
     int getAttack();
-
 
     virtual enums::CollisionType getCollisionType() override;
 };

@@ -2,18 +2,18 @@
 
 #include <mutex>
 
-#include "manager/level.fwd.h"
 #include "collectables/artifact.hpp"
 #include "collectables/power.hpp"
 #include "entities/entity.hpp"
 #include "enums/direction.hpp"
+#include "enums/enemyType.hpp"
 #include "gamestruct/displayable.hpp"
 #include "gamestruct/logger.hpp"
 #include "gamestruct/position.hpp"
 #include "level/collidable.hpp"
 #include "level/door-segment.hpp"
 #include "level/wall-segment.hpp"
-#include "enums/enemyType.hpp"
+#include "manager/level.fwd.h"
 
 // Attualmente questa classe contiene un esempio di nemico
 // che si muove e attacca il giocatore.

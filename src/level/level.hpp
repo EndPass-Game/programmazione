@@ -1,12 +1,12 @@
 #pragma once
 
-#include "entities/enemy.fwd.h"
 #include "collectables/artifact.hpp"
 #include "collectables/power.hpp"
 #include "datastruct/vector.hpp"
-#include "entities/shooter.hpp"
+#include "entities/enemy.fwd.h"
 #include "entities/entity.hpp"
 #include "entities/player.hpp"
+#include "entities/shooter.hpp"
 #include "entities/weapon/bullet.hpp"
 #include "enums/direction.hpp"
 #include "gamestruct/logger.hpp"
@@ -64,7 +64,7 @@ namespace level {
          * - artifact
          * - power
          * - enemy
-         * 
+         *
          * E che questi siano presenti nella lista corrispondente in questo oggetto
          */
         void deleteCollidable(Collidable *collidable);

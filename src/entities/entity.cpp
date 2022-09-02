@@ -47,7 +47,7 @@ void Entity::move(manager::Level *levelManager) {
         case enums::CollisionType::NONE:
             _handleNoneCollision(levelManager);
             break;
-    }   
+    }
     nextPosition_ = _computeNextPosition(lastNotNullDirection_);
 }
 
@@ -71,7 +71,7 @@ void Entity::setLife(int life) {
     this->life_ = life;
 }
 
-int Entity::getAttack(){
+int Entity::getAttack() {
     return attack_;
 }
 

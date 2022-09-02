@@ -159,7 +159,7 @@ namespace level {
                 return (Collidable *) c;
             }
         }
-        if (levelManager->getPlayer()->getPosition() == pos){
+        if (levelManager->getPlayer()->getPosition() == pos) {
             Player *c = levelManager->getPlayer();
             return (Collidable *) c;
         }
@@ -182,26 +182,23 @@ namespace level {
             if (type == enums::CollisionType::ENTITY) {
                 logger_.debug("bullet collision with %d", collision->getCollisionType());
                 if (bullets_[i]->handleEntityHit((Entity *) collision)) {
-                    if(collision == levelManager->getPlayer()){
+                    if (collision == levelManager->getPlayer()) {
                         levelManager->getLogQueue()->addEvent("Player sconfitto");
-                        //TODO (gio): Reindirizzamento alla pagine di game over
-                    }
-                    else {
-                        for(unsigned int i = 0; i < enemies_.size(); i++){
-                            if(enemies_[i] == collision) enemies_[i]->clear(win);
+                        // TODO (gio): Reindirizzamento alla pagine di game over
+                    } else {
+                        for (unsigned int i = 0; i < enemies_.size(); i++) {
+                            if (enemies_[i] == collision) enemies_[i]->clear(win);
                         }
                         deleteCollidable(collision);
                         levelManager->getPlayer()->incrementScore(500);
                         levelManager->getLogQueue()->addEvent("Nemico sconfitto");
                     }
                 } else {
-                    if(collision == levelManager->getPlayer()){
+                    if (collision == levelManager->getPlayer()) {
                         levelManager->getLogQueue()->addEvent("Player colpito da un proiettile");
-                    }
-                    else{
+                    } else {
                         levelManager->getLogQueue()->addEvent("Nemico colpito da un proiettile");
                     }
-                    
                 }
 
                 bullets_[i]->clear(win);
@@ -228,22 +225,22 @@ namespace level {
     void Level::deleteCollidable(Collidable *collidable) {
         enums::CollisionType type = collidable->getCollisionType();
         switch (type) {
-        case enums::CollisionType::ARTIFACT:
-            artifacts_.remove(artifacts_.indexOf((collectables::Artifact *) collidable));
-            delete (collectables::Artifact *) collidable;
-            break;
-        case enums::CollisionType::POWER:
-            powers_.remove(powers_.indexOf((collectables::Power *) collidable));
-            delete (collectables::Power *) collidable;
-            break;
-        // supponendo che gli entity da eliminare siano sempre e solo gli enemies
-        case enums::CollisionType::ENTITY:
-            enemies_.remove(enemies_.indexOf((entities::Enemy *) collidable));
-            delete (entities::Enemy *) collidable;
-            break;
-        default:
-            logger_.warning("deleteCollidable: type is not supported, not deleted");
-            break;
+            case enums::CollisionType::ARTIFACT:
+                artifacts_.remove(artifacts_.indexOf((collectables::Artifact *) collidable));
+                delete (collectables::Artifact *) collidable;
+                break;
+            case enums::CollisionType::POWER:
+                powers_.remove(powers_.indexOf((collectables::Power *) collidable));
+                delete (collectables::Power *) collidable;
+                break;
+            // supponendo che gli entity da eliminare siano sempre e solo gli enemies
+            case enums::CollisionType::ENTITY:
+                enemies_.remove(enemies_.indexOf((entities::Enemy *) collidable));
+                delete (entities::Enemy *) collidable;
+                break;
+            default:
+                logger_.warning("deleteCollidable: type is not supported, not deleted");
+                break;
         }
     }
 
