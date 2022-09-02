@@ -20,7 +20,7 @@ namespace entities{
     bool Kamikaze::canAttack(manager::Level *levelManager) {
         Position playerPosition = levelManager->getPlayer()->getPosition();
         Position currPosition = this->getPosition();
-        return abs(playerPosition.riga - currPosition.riga) <= 1 && abs(playerPosition.colonna - currPosition.colonna);
+        return abs(playerPosition.riga - currPosition.riga) <= 1 && abs(playerPosition.colonna - currPosition.colonna) <= 1;
     }
 
 }

@@ -132,10 +132,6 @@ void Player::attack(manager::Level *levelManager) {
     logger_.debug("next position: %d, %d", bulletPosition.colonna, bulletPosition.riga);
     logger_.debug("curr position: %d, %d", this->getPosition().colonna, this->getPosition().riga);
     level::Collidable *collision = level->getCollision(bulletPosition, levelManager);
-
-    // TODO(simo): check per vedere la collisione istantanea, cioè gestisci questo
-    // caso ad esempio fare danno subito, perché il bullet va a controllare se
-    // la cella in cui vuole andare colpisce qualcosa
     if (collision == nullptr || collision->getCollisionType() == enums::CollisionType::ENTITY) {
         weapon::Bullet *bullet = new weapon::Bullet(bulletPosition, this->getLastNotNullDirection(), this->getAttack());
         level->addBullet(bullet);
