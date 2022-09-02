@@ -24,7 +24,7 @@ namespace manager {
         Player *player_;
         StateWatcher<int> *levelIdx_;
         loader::DirectoryLoader *dirLoader_;
-        LogQueue *logQueue_;
+        LogQueue *logQueue_;  // usato per mostrare i messaggi di log sull schermo del giocatore
 
         Logger logger_;
 
@@ -36,31 +36,8 @@ namespace manager {
         int _addLevel(enums::Direction direction = enums::Direction::NONE);
 
       public:
-        /**
-         * @brief costruttore di default
-         */
         Level();
-
-        /**
-         * @brief distruttore
-         */
         ~Level();
-
-        /**
-         * @brief getter del `player_`
-         */
-        Player *getPlayer();
-
-        /**
-         * @brief getter del levelIdx_, usato per indicare il livello corrente
-         */
-        level::Level *getLevel();
-
-        /**
-         * @brief getter del logQueue_, usato per mostrare i messaggi di log
-         * allo schermo del giocatore
-         */
-        LogQueue *getLogQueue();
 
         /**
          * @brief stampa a schermo il livello scelto, se non è presente tale livello (indice invalido)
@@ -88,9 +65,9 @@ namespace manager {
          */
         void generateLevel(level::DoorSegment *door);
 
-        /**
-         * @brief renderizza gli oggetti del livello su schermo
-         */
+        Player *getPlayer();
+        level::Level *getLevel();
+        LogQueue *getLogQueue();
         void render(WINDOW *win, bool force);
     };
 }  // namespace manager
