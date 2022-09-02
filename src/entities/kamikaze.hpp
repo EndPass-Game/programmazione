@@ -4,6 +4,7 @@
 
 #include "entities/enemy.hpp"
 #include "gamestruct/position.hpp"
+#include "manager/level.fwd.h"
 
 namespace entities {
     class Kamikaze : public Enemy {
@@ -13,6 +14,8 @@ namespace entities {
         Kamikaze();
         Kamikaze(Position spawnPos);
 
-        virtual enums::EnemyType getEnemyType() override;
+        void attack(manager::Level *levelManager) override;
+
+        bool canAttack(manager::Level *levelManager) override;
     };
 }  // namespace entities

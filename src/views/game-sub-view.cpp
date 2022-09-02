@@ -21,7 +21,7 @@ namespace views {
                 levelManager_->getPlayer()->setDirection(enums::Direction::DOWN);
                 break;
             case 'j':
-                levelManager_->playerShoot();
+                levelManager_->getPlayer()->attack(levelManager_);
                 break;
         }
     }

@@ -2,6 +2,7 @@
 
 #include <mutex>
 
+#include "manager/level.fwd.h"
 #include "collectables/artifact.hpp"
 #include "collectables/power.hpp"
 #include "entities/entity.hpp"
@@ -48,6 +49,6 @@ namespace entities {
 
         bool canMove();
 
-        virtual enums::EnemyType getEnemyType() = 0;
+        virtual bool canAttack(manager::Level *levelManager) = 0;
     };
 }  // namespace entities

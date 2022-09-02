@@ -63,31 +63,6 @@ namespace manager {
         return levels_[levelIdx_->getCurrent()]->getCollision(pos, levelManager);
     }
 
-    void Level::playerShoot() {
-        if (!player_->canFire()) {
-            return;
-        }
-
-        player_->resetCoolDown();
-        logger_.info("player firing a bullet");
-        Position bulletPosition = player_->getNextPosition();
-        logger_.debug("next position: %d, %d", bulletPosition.colonna, bulletPosition.riga);
-        logger_.debug("curr position: %d, %d", player_->getPosition().colonna, player_->getPosition().riga);
-        level::Collidable *collision = getCollision(bulletPosition, this);
-
-        // BUG: a volte quando il player va troppo veloce, prendere la sua prossima
-        // posizione non è ancora sufficiente per non cancellarlo dallo schermo
-
-        // TODO(simo): check per vedere la collisione istantanea, cioè gestisci questo
-        // caso ad esempio fare danno subito, perché il bullet va a controllare se
-        // la cella in cui vuole andare colpisce qualcosa
-        if (collision == nullptr || collision->getCollisionType() == enums::CollisionType::ENTITY) {
-            weapon::Bullet *bullet = new weapon::Bullet(bulletPosition, player_->getLastNotNullDirection(), player_->getAttack());
-            levels_[levelIdx_->getCurrent()]->addBullet(bullet);
-        }
-        
-    }
-
     void Level::goToLevel(int levelIdx) {
         logger_.info("Loading level with index: %d", levelIdx);
 
@@ -109,7 +84,6 @@ namespace manager {
         }
 
         levels_[levelIdx_->getCurrent()]->renderEnemies(win, this);
-        levels_[levelIdx_->getCurrent()]->enemiesAttack(win, this);
 
         // WARNING: non spostare questo render sotto al player,
         // vogliamo che prima renderizzi i bullets e poi il player
