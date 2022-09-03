@@ -13,8 +13,9 @@
 #include "manager/level.hpp"
 
 namespace level {
-    Level::Level(loader::LoaderHandler *loader)
+    Level::Level(loader::LoaderHandler *loader, Player *player)
         : lastPlayerPosition_(1, 1),
+          player_(player),
           segment_(),
           artifacts_(),
           powers_(),
@@ -70,8 +71,8 @@ namespace level {
         }
     }
 
-    Level::Level(loader::LoaderHandler *loader, enums::Direction direction, int oldLevelIdx)
-        : Level(loader) {
+    Level::Level(loader::LoaderHandler *loader, Player *player, enums::Direction direction, int oldLevelIdx)
+        : Level(loader, player) {
         logger_.debug("creating level pointing to leveldIdx: %d", oldLevelIdx);
 
         DoorSegment *chosenDoor = nullptr;
@@ -132,10 +133,10 @@ namespace level {
     }
 
     bool Level::isPositionEmpty(Position pos, manager::Level *levelManager) {
-        return getCollision(pos, levelManager) == nullptr;
+        return getCollision(pos) == nullptr;
     }
 
-    Collidable *Level::getCollision(Position pos, manager::Level *levelManager) const {
+    Collidable *Level::getCollision(Position pos) const {
         for (unsigned int i = 0; i < segment_.size(); i++) {
             if (segment_[i]->isPositionInSegment(pos)) {
                 return (Collidable *) segment_[i];
@@ -159,10 +160,11 @@ namespace level {
                 return (Collidable *) c;
             }
         }
-        if (levelManager->getPlayer()->getPosition() == pos) {
-            Player *c = levelManager->getPlayer();
-            return (Collidable *) c;
+
+        if (player_->getPosition() == pos) {
+            return (Collidable *) player_;
         }
+
         return nullptr;
     }
 
@@ -170,57 +172,7 @@ namespace level {
         bullets_.push_back(bullet);
     }
 
-    void Level::renderBullets(WINDOW *win, manager::Level *levelManager) {
-        // TODO(simo): anche questa funzione è tosta, bisognerebbe provare a refactorarla
-        unsigned int i = 0;
-        while (i < bullets_.size()) {
-            Position bulletNextPosition = bullets_[i]->getNextPosition();
-            Position bulletPosition = bullets_[i]->getPosition();
-            Collidable *collision = getCollision(bulletNextPosition, levelManager);
-            enums::CollisionType type = enums::CollisionType::NONE;
-            if (collision != nullptr) type = collision->getCollisionType();
-            if (type == enums::CollisionType::ENTITY) {
-                logger_.debug("bullet collision with %d", collision->getCollisionType());
-                if (bullets_[i]->handleEntityHit((Entity *) collision)) {
-                    if (collision == levelManager->getPlayer()) {
-                        levelManager->getLogQueue()->addEvent("Player sconfitto");
-                        // TODO (gio): Reindirizzamento alla pagine di game over
-                    } else {
-                        for (unsigned int i = 0; i < enemies_.size(); i++) {
-                            if (enemies_[i] == collision) enemies_[i]->clear(win);
-                        }
-                        deleteCollidable(collision);
-                        levelManager->getPlayer()->incrementScore(500);
-                        levelManager->getLogQueue()->addEvent("Nemico sconfitto");
-                    }
-                } else {
-                    if (collision == levelManager->getPlayer()) {
-                        levelManager->getLogQueue()->addEvent("Player colpito da un proiettile");
-                    } else {
-                        levelManager->getLogQueue()->addEvent("Nemico colpito da un proiettile");
-                    }
-                }
-
-                bullets_[i]->clear(win);
-                delete bullets_[i];
-                bullets_.remove(i);
-            } else {
-                if (type == enums::CollisionType::NONE) {
-                    bullets_[i]->move();
-                    // evita la cancellazione del player guardando il carattere printato nello schermo attuale
-                    if (mvwinch(win, bulletPosition.riga, bulletPosition.colonna) != 'P') {
-                        bullets_[i]->clearLast(win);
-                    }
-                    bullets_[i]->render(win);
-                    i++;
-                } else {
-                    bullets_[i]->clear(win);
-                    delete bullets_[i];
-                    bullets_.remove(i);
-                }
-            }
-        }
-    }
+    
 
     void Level::deleteCollidable(Collidable *collidable) {
         enums::CollisionType type = collidable->getCollisionType();
@@ -244,26 +196,20 @@ namespace level {
         }
     }
 
-    void Level::renderEnemies(WINDOW *win, manager::Level *levelManager) {
-        for (unsigned int i = 0; i < enemies_.size(); i++) {
-            if (enemies_[i]->canMove()) {
-                enemies_[i]->wander();
-                enemies_[i]->move(levelManager);
-                enemies_[i]->clearLast(win);
-                enemies_[i]->render(win);
-                enemies_[i]->resetCoolDown();
-            }
-            enemies_[i]->moveCoolDown();
-
-            // renderizza solo se il kamikaze non si suicida
-            if (dynamic_cast<entities::Kamikaze *>(enemies_[i]) != nullptr && enemies_[i]->canAttack(levelManager)) {
-                enemies_[i]->clear(win);
-            }
-            enemies_[i]->attack(levelManager);
-        }
-    }
-
+    
     void Level::render(WINDOW *win, bool force, manager::Level *levelManager) {
+        player_->render(win, force);
+
+        for (unsigned int i = 0; i < enemies_.size(); i++) {
+            enemies_[i]->render(win, force);
+
+            if (enemies_[i]->isDead()) {
+                enemies_[i]->clear(win);
+                delete enemies_[i];
+                enemies_.remove(i);
+            }
+        }
+
         for (unsigned int i = 0; i < segment_.size(); i++) {
             segment_[i]->render(win, force);
         }
@@ -276,7 +222,19 @@ namespace level {
             powers_[i]->render(win, force);
         }
 
-        this->renderBullets(win, levelManager);
+        unsigned int bulletIdx = 0;
+        while (bulletIdx < bullets_.size()) {
+            if(bullets_[bulletIdx]->isDestroyed()){
+                bullets_[bulletIdx]->clear(win);
+                delete bullets_[bulletIdx];
+                bullets_.remove(bulletIdx);
+            } else {
+                bullets_[bulletIdx]->clearLast(win);
+                bullets_[bulletIdx]->render(win, force);
+                bulletIdx++;
+            }
+        }
+        
         // TODO(ang): come fare a spostare gli entità?
         // 1. deve updatare questo oppure lo fa un render in un altro momento????
     }
@@ -285,19 +243,36 @@ namespace level {
         for (unsigned int i = 0; i < segment_.size(); i++) {
             segment_[i]->clear(win);
         }
+
         for (unsigned int i = 0; i < artifacts_.size(); i++) {
             artifacts_[i]->clear(win);
         }
+
         for (unsigned int i = 0; i < powers_.size(); i++) {
             powers_[i]->clear(win);
         }
+
         for (unsigned int i = 0; i < bullets_.size(); i++) {
             // TODO: possibile bug che il proiettile resti bloccato nel punto in cui
             // abbiamo lasciato il livello?? è un bug??
             bullets_[i]->clear(win);
         }
+
         for (unsigned int i = 0; i < enemies_.size(); i++) {
             enemies_[i]->clear(win);
         }
+        player_->clear(win);
+    }
+
+    void Level::act(manager::Level *levelManager) {
+        for (unsigned int i = 0; i < enemies_.size(); i++) {
+            enemies_[i]->act(levelManager);
+        }
+
+        for (unsigned int i = 0; i < bullets_.size(); i++) {
+            bullets_[i]->act(levelManager);
+        }
+
+        player_->act(levelManager);
     }
 };  // namespace level

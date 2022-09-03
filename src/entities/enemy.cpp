@@ -21,25 +21,17 @@ namespace entities {
           coolDownMax_(10),  // può muoversi ogni 10 frame
           logger_("Enemy") {}
     // TODO: fare vagabondare il nemico in modo più intelligente
-    void Enemy::wander() {
+    void Enemy::wander(Player* player) {
         // std::lock_guard<std::mutex> lock(mutex_); // FIXME: il mutex bugga il gioco qui
+        enums::Direction directions[]={
+            enums::Direction::UP,
+            enums::Direction::RIGHT,
+            enums::Direction::LEFT,
+            enums::Direction::DOWN,
+            enums::Direction::NONE,
+        };
         int direction = rand() % 5;
-        switch (direction) {
-            case 0:
-                this->setDirection(enums::Direction::UP);
-                break;
-            case 1:
-                this->setDirection(enums::Direction::RIGHT);
-                break;
-            case 2:
-                this->setDirection(enums::Direction::LEFT);
-                break;
-            case 3:
-                this->setDirection(enums::Direction::DOWN);
-                break;
-            default:
-                this->setDirection(enums::Direction::NONE);
-        }
+        this->setDirection(directions[direction]);
     }
     // probabilmente inutile visto che andrebbe automaticamente a prendere quella di displayable (?)
     void Enemy::setPosition(Position pos) {
@@ -73,4 +65,15 @@ namespace entities {
     bool Enemy::canMove() {
         return coolDown_ == 0;
     }
+
+    void Enemy::act(manager::Level *levelManager){
+        if(canMove()){
+            wander(levelManager->getPlayer());
+            move(levelManager);
+            resetCoolDown();
+        }
+        moveCoolDown();
+        attack(levelManager);
+    }
+
 }  // namespace entities

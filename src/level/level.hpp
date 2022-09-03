@@ -4,7 +4,7 @@
 #include "collectables/power.hpp"
 #include "datastruct/vector.hpp"
 #include "entities/enemy.fwd.h"
-#include "entities/entity.hpp"
+#include "entities/entity.fwd.h"
 #include "entities/player.hpp"
 #include "entities/shooter.hpp"
 #include "entities/weapon/bullet.hpp"
@@ -19,6 +19,8 @@ namespace level {
     class Level {
       private:
         Position lastPlayerPosition_;
+        Player *player_;
+
         datastruct::Vector<DisplayableSegment *> segment_;
         datastruct::Vector<collectables::Artifact *> artifacts_;
         datastruct::Vector<collectables::Power *> powers_;
@@ -30,8 +32,8 @@ namespace level {
         Logger logger_;
 
       public:
-        Level(loader::LoaderHandler *loader);
-        Level(loader::LoaderHandler *loader, enums::Direction direction, int oldLevelIdx);
+        Level(loader::LoaderHandler *loader, Player *player);
+        Level(loader::LoaderHandler *loader, Player *player, enums::Direction direction, int oldLevelIdx);
 
         ~Level();
 
@@ -52,11 +54,9 @@ namespace level {
         bool isPositionEmpty(Position pos, manager::Level *levelManager);
 
         void addBullet(weapon::Bullet *bullet);
-        void renderBullets(WINDOW *win, manager::Level *levelmanager);
 
-        void renderEnemies(WINDOW *win, manager::Level *levelManager);
         // @returns l'oggetto di collisione alla data posizione
-        Collidable *getCollision(Position pos, manager::Level *levelManager) const;
+        Collidable *getCollision(Position pos) const;
 
         /**
          * @brief elimina il collidable in input.
@@ -68,5 +68,10 @@ namespace level {
          * E che questi siano presenti nella lista corrispondente in questo oggetto
          */
         void deleteCollidable(Collidable *collidable);
+
+        /**
+          * @brief muove tutti gli oggetti che si devono muovere
+          */
+        void act(manager::Level *levelManager);
     };
 };  // namespace level

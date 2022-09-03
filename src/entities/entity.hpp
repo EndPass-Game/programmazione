@@ -54,4 +54,6 @@ class Entity : public Movable, public level::Collidable {
     int getAttack();
 
     virtual enums::CollisionType getCollisionType() override;
+
+    void render(WINDOW *win, bool force) override;
 };

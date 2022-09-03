@@ -1,6 +1,6 @@
 #pragma once
 
-#include <mutex>
+#include <ncurses.h>
 
 #include "collectables/artifact.hpp"
 #include "collectables/power.hpp"
@@ -12,6 +12,7 @@
 #include "gamestruct/position.hpp"
 #include "level/collidable.hpp"
 #include "level/door-segment.hpp"
+#include "entities/player.hpp"
 #include "level/wall-segment.hpp"
 #include "manager/level.fwd.h"
 
@@ -41,7 +42,7 @@ namespace entities {
 
         void setPosition(Position pos);
 
-        void wander();
+        virtual void wander(Player* player);
 
         void resetCoolDown();
 
@@ -50,5 +51,8 @@ namespace entities {
         bool canMove();
 
         virtual bool canAttack(manager::Level *levelManager) = 0;
+
+        virtual void act(manager::Level *levelManager) override;
+
     };
 }  // namespace entities

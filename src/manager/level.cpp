@@ -51,16 +51,16 @@ namespace manager {
         loader::LevelProvider &levelProvider = loader::LevelProvider::getInstance();
 
         if (levelIdx_->getCurrent() == -1) {
-            levels_.push_back(levelProvider.getLevel(direction));
+            levels_.push_back(levelProvider.getLevel(direction, player_));
         } else {
-            levels_.push_back(levelProvider.getLevel(direction, levelIdx_->getCurrent()));
+            levels_.push_back(levelProvider.getLevel(direction, player_, levelIdx_->getCurrent()));
         }
 
         return (int) levels_.size() - 1;
     }
 
-    level::Collidable *Level::getCollision(Position pos, manager::Level *levelManager) {
-        return levels_[levelIdx_->getCurrent()]->getCollision(pos, levelManager);
+    level::Collidable *Level::getCollision(Position pos) {
+        return levels_[levelIdx_->getCurrent()]->getCollision(pos);
     }
 
     void Level::goToLevel(int levelIdx) {
@@ -82,21 +82,8 @@ namespace manager {
             levels_[levelIdx_->getLast()]->clear(win);
             levelIdx_->setCurrent(levelIdx_->getCurrent());  // FIX PG-34
         }
-
-        levels_[levelIdx_->getCurrent()]->renderEnemies(win, this);
-
-        // WARNING: non spostare questo render sotto al player,
-        // vogliamo che prima renderizzi i bullets e poi il player
-        // altrimenti rischiamo che il bullet cancelli il player.
+        levels_[levelIdx_->getCurrent()]->act(this);
         levels_[levelIdx_->getCurrent()]->render(win, force, this);
-
-        player_->move(this);
-        player_->clearLast(win);
-        player_->render(win, force);
-        player_->coolDown();
-
-        // TODO(ang): print player ( valuta se è meglio printarlo qui o in level/level
-        // io pensavo fosse meglio il level/level (gio))
     }
 
     LogQueue *Level::getLogQueue() {

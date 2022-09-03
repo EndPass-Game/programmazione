@@ -23,6 +23,8 @@ namespace entities {
 
         void ShootCoolDown();
 
+        virtual void wander(Player* player) override;
+
         bool canShoot();
 
         void attack(manager::Level *levelManager) override;

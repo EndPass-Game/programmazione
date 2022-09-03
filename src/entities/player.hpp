@@ -65,4 +65,6 @@ class Player : public Entity {
     bool canFire();
 
     void attack(manager::Level *levelManager) override;
+
+    void act(manager::Level *levelManager) override;
 };

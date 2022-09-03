@@ -55,7 +55,7 @@ namespace manager {
         // allora ritorna false, altrimenti true;
         void goToLevel(int level);
 
-        level::Collidable *getCollision(Position pos, manager::Level *levelManager);
+        level::Collidable *getCollision(Position pos);
 
         LogQueue *getLogQueue();
 

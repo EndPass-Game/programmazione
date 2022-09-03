@@ -16,7 +16,6 @@ Altro
 */
 #include "entities/player.hpp"
 
-#include "entities/entity.hpp"
 #include "enums/collision-type.hpp"
 #include "enums/direction.hpp"
 #include "level/collidable.hpp"
@@ -131,9 +130,17 @@ void Player::attack(manager::Level *levelManager) {
     Position bulletPosition = this->getNextPosition();
     logger_.debug("next position: %d, %d", bulletPosition.colonna, bulletPosition.riga);
     logger_.debug("curr position: %d, %d", this->getPosition().colonna, this->getPosition().riga);
-    level::Collidable *collision = level->getCollision(bulletPosition, levelManager);
-    if (collision == nullptr || collision->getCollisionType() == enums::CollisionType::ENTITY) {
+    level::Collidable *collision = level->getCollision(bulletPosition);
+    if (collision == nullptr) {
         weapon::Bullet *bullet = new weapon::Bullet(bulletPosition, this->getLastNotNullDirection(), this->getAttack());
         level->addBullet(bullet);
+    }else if(collision->getCollisionType() == enums::CollisionType::ENTITY){
+        weapon::Bullet *bullet = new weapon::Bullet(this->getPosition(), this->getLastNotNullDirection(), this->getAttack());
+        level->addBullet(bullet);
     }
+}
+
+void Player::act(manager::Level *levelManager) {
+    this->move(levelManager);
+    this->coolDown();
 }

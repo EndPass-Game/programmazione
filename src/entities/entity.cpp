@@ -25,7 +25,7 @@ void Entity::move(manager::Level *levelManager) {
     nextPosition_ = _computeNextPosition(direction_);
     direction_ = enums::Direction::NONE;
 
-    level::Collidable *collision = levelManager->getCollision(nextPosition_, levelManager);
+    level::Collidable *collision = levelManager->getCollision(nextPosition_);
     enums::CollisionType type = enums::CollisionType::NONE;
     if (collision != nullptr) type = collision->getCollisionType();
     switch (type) {
@@ -78,6 +78,11 @@ int Entity::getAttack() {
 enums::CollisionType Entity::getCollisionType() {
     return enums::CollisionType::ENTITY;
 }
+
+void Entity::render(WINDOW *win, bool force) {
+    this->clearLast(win);
+    Displayable::render(win, force);
+};
 
 void Entity::_handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door) {}
 void Entity::_handleWallCollision(manager::Level *levelManager, level::WallSegment *wall) {}

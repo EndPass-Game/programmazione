@@ -25,7 +25,7 @@ class Displayable {
     // construttore che inizializza l'oggetto changable e display char
     Displayable(Position current, char displayChar);
     // elimina i pointer
-    ~Displayable();
+    virtual ~Displayable();
 
     Position getPosition();
 
@@ -41,5 +41,5 @@ class Displayable {
     void clear(WINDOW *win);
 
     // Se la posizione è stata modificata riprinta il carattere nella posizione corrente
-    void render(WINDOW *win, bool forced = false);
+    virtual void render(WINDOW *win, bool forced = false);
 };
