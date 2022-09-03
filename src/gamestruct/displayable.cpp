@@ -36,6 +36,10 @@ Position Displayable::getPosition() {
     return position_->getCurrent();
 }
 
+Position Displayable::getLastPosition() {
+    return position_->getLast();
+}
+
 void Displayable::render(WINDOW *win, bool forced) {
     if (position_->isChanged() or position_->isFirstValue()) {
         setPosition(position_->getCurrent());
@@ -51,6 +55,7 @@ void Displayable::render(WINDOW *win, bool forced) {
         mvwprintw(win, position_->getCurrent().riga, position_->getCurrent().colonna, "%c", displayChar_->getCurrent());
     }
 }
+
 Displayable::~Displayable() {
     delete position_;
     delete displayChar_;

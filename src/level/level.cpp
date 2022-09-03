@@ -212,7 +212,7 @@ namespace level {
         }
     }
 
-    void Level::render(WINDOW *win, bool force, manager::Level *levelManager) {
+    void Level::render(WINDOW *win, bool force) {
         player_->render(win, force);
 
         for (unsigned int i = 0; i < enemies_.size(); i++) {
@@ -244,11 +244,13 @@ namespace level {
         unsigned int bulletIdx = 0;
         while (bulletIdx < bullets_.size()) {
             if (bullets_[bulletIdx]->isDestroyed()) {
-                bullets_[bulletIdx]->clear(win);
+                Position bulletPos = bullets_[bulletIdx]->getPosition();
+                char currChar = mvwinch(win, bulletPos.riga, bulletPos.colonna);
+                if (currChar == bullets_[bulletIdx]->getDisplayChar())
+                    bullets_[bulletIdx]->clear(win);
                 delete bullets_[bulletIdx];
                 bullets_.remove(bulletIdx);
             } else {
-                bullets_[bulletIdx]->clearLast(win);
                 bullets_[bulletIdx]->render(win, force);
                 bulletIdx++;
             }

@@ -32,7 +32,5 @@ namespace entities {
         virtual bool canAttack(manager::Level *levelManager) override;
 
         enums::Direction findShootDirection(manager::Level *levelManager, Position currPosition, Position playerPosition);
-
-        Position findBulletPosition(enums::Direction dir);
     };
 }  // namespace entities
