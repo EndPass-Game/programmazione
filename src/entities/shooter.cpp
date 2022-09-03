@@ -10,7 +10,9 @@
 
 namespace entities {
     Shooter::Shooter()
-        : Enemy('S'),  // TODO(simo) e shootcool down dove è?
+        : Enemy('S'),
+          shootCoolDown_(0),
+          shootCoolDownMax_(20), 
           logger_("Shooter") {}
 
     Shooter::Shooter(Position pos)
@@ -36,6 +38,7 @@ namespace entities {
 
     void Shooter::attack(manager::Level *levelManager) {
         if (!canShoot()) {
+            logger_.debug("Can't shoot yet");
             this->ShootCoolDown();
             return;
         }
@@ -43,15 +46,15 @@ namespace entities {
         Position currPosition = this->getPosition();
         level::Level *level = levelManager->getLevel();
 
-        logger_.debug("i'm truing to attack");
         if (canAttack(levelManager)) {
-            logger_.debug("attacking!!!");
             this->resetShootCoolDown();
             logger_.info("enemy firing a bullet");
             enums::Direction dir = findShootDirection(levelManager, currPosition, playerPosition);
             Position bulletPosition = findBulletPosition(dir);
             weapon::Bullet *bullet = new weapon::Bullet(bulletPosition, dir, this->getAttack());
             level->addBullet(bullet);
+        } else {
+            logger_.debug("Can't attack yet, there is somethign");
         }
     }
 
@@ -64,10 +67,10 @@ namespace entities {
         int xMultiplier, yMultiplier;  // modificatori della direzione
         if (currPosition.riga == playerPosition.riga) {
             xMultiplier = 0;
-            yMultiplier = 1;
+            yMultiplier = currPosition.colonna < playerPosition.colonna ? 1 : -1;
             endOffset = abs(currPosition.colonna - playerPosition.colonna);
         } else if (currPosition.colonna == playerPosition.colonna) {
-            xMultiplier = 1;
+            xMultiplier = currPosition.riga < playerPosition.riga ? 1 : -1;
             yMultiplier = 0;
             endOffset = abs(currPosition.riga - playerPosition.riga);
         } else {

@@ -41,9 +41,7 @@ namespace weapon {
             if (this->handleEntityHit((Entity *) collision)) {
                 if (collision == levelManager->getPlayer()) {
                     levelManager->getLogQueue()->addEvent("Player sconfitto");
-                } else {
-                    // TODO: clear the death enemy from the screen
-                    
+                } else {                    
                     levelManager->getPlayer()->incrementScore(500);
                     levelManager->getLogQueue()->addEvent("Nemico sconfitto");
                 }

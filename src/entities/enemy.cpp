@@ -10,7 +10,7 @@
 #include "manager/level.hpp"
 namespace entities {
     Enemy::Enemy(char c)
-        : Entity(12, 5,  // TODO: gestire queste costanti hardcoded in un file di setting
+        : Entity(12, 5,  
                  {4, 4}, /* position di spawn */
                  c),
           logger_("Enemy") {}
@@ -20,9 +20,7 @@ namespace entities {
           coolDown_(0),
           coolDownMax_(10),  // può muoversi ogni 10 frame
           logger_("Enemy") {}
-    // TODO: fare vagabondare il nemico in modo più intelligente
     void Enemy::wander(Player* player) {
-        // std::lock_guard<std::mutex> lock(mutex_); // FIXME: il mutex bugga il gioco qui
         enums::Direction directions[]={
             enums::Direction::UP,
             enums::Direction::RIGHT,

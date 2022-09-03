@@ -10,9 +10,7 @@
 #include "level/wall-segment.hpp"
 #include "manager/level.fwd.h"  // circlular import
 
-// TODO: invece che ogni classe figlia erediti da questa
-// sarebbe buona cosa rendere questa classe una factory
-// che sforni entità, ognuna settata con certe specifiche
+
 class Entity : public Movable, public level::Collidable {
   protected:
     int life_;    // quantità di vita

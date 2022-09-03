@@ -5,10 +5,6 @@
 #include "gamestruct/position.hpp"
 #include "gamestruct/state-watcher.hpp"
 
-// TODO:bisogna poter includere questo file
-
-// ISSUE: muovere questo in una directory per classi astratte?
-
 // Displayable: è una classe che astratta per mostrare gli oggetti
 // sullo schermo
 class Displayable {
