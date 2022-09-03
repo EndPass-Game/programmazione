@@ -30,34 +30,14 @@ namespace weapon {
     bool Bullet::checkCollision(manager::Level *levelManager) {
         Position bulletNextPosition = this->getNextPosition();
         level::Collidable *collision = levelManager->getLevel()->getCollision(bulletNextPosition);
+        Position bulletPosition = this->getPosition();
+        level::Collidable *currCollision = levelManager->getLevel()->getCollision(bulletPosition);
 
-        // TODO: fai funzionare per la collisione attuale dopo
-        // Position bulletPosition = this->getPosition();
-        // level::Collidable *currCollision = getCollision(bulletPosition);
-
-        enums::CollisionType type = enums::CollisionType::NONE;
-        if (collision != nullptr) type = collision->getCollisionType();
-        if (type == enums::CollisionType::ENTITY) {
-            if (this->handleEntityHit((Entity *) collision)) {
-                if (collision == levelManager->getPlayer()) {
-                    levelManager->getLogQueue()->addEvent("Player sconfitto");
-                } else {
-                    levelManager->getPlayer()->incrementScore(500);
-                    levelManager->getLogQueue()->addEvent("Nemico sconfitto");
-                }
-            } else {
-                if (collision == levelManager->getPlayer()) {
-                    levelManager->getLogQueue()->addEvent("Sei stato colpito da un proiettile");
-                } else {
-                    levelManager->getLogQueue()->addEvent("Nemico colpito da un proiettile");
-                }
-            }
+        if (_handleCollision(levelManager, currCollision)) {
             return true;
-        } else if (type == enums::CollisionType::NONE) {
-            return false;
-        }
-
-        return true
+        } else if (_handleCollision(levelManager, collision)) {
+            return true;
+        } else return false;
     }
 
     void Bullet::act(manager::Level *levelManager) {
@@ -79,5 +59,30 @@ namespace weapon {
             this->clearLast(win);
             Displayable::render(win, force);
         }
+    }
+
+    bool Bullet::_handleCollision(manager::Level *levelManager, level::Collidable *collision) {
+        if (collision == nullptr || collision->getCollisionType() == enums::CollisionType::NONE) {
+            return false;
+        }
+
+        enums::CollisionType type = collision->getCollisionType();
+        if (type == enums::CollisionType::ENTITY) {
+            if (this->handleEntityHit((Entity *) collision)) {
+                if (collision == levelManager->getPlayer()) {
+                    levelManager->getLogQueue()->addEvent("Player sconfitto");
+                } else {
+                    levelManager->getPlayer()->incrementScore(500);
+                    levelManager->getLogQueue()->addEvent("Nemico sconfitto");
+                }
+            } else {
+                if (collision == levelManager->getPlayer()) {
+                    levelManager->getLogQueue()->addEvent("Sei stato colpito da un proiettile");
+                } else {
+                    levelManager->getLogQueue()->addEvent("Nemico colpito da un proiettile");
+                }
+            }
+        }
+        return true;
     }
 }  // namespace weapon
