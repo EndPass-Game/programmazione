@@ -54,42 +54,43 @@ int Player::getPowers() {
 
 void Player::_handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door) {
     logger_.info("collided with door");
-    if (door->getNextLevelIdx() == -1) {
-        int nextLevelIdx = levelManager->addLevel(door->getFacingDir());
-        door->setNextLevelIdx(nextLevelIdx);
-    }
-
-    if (door->isDoorOpen()) {
+    if (door->isOpen()) {
+        if (door->getNextLevelIdx() == -1) {
+            levelManager->getLogQueue()->addEvent("Nuovo livello creato.");
+            this->incrementScore(100);
+            levelManager->generateLevel(door);
+        }
         logger_.info("moving to level with idx %d", door->getNextLevelIdx());
         levelManager->getLogQueue()->addEvent("Cambiato livello");
         levelManager->goToLevel(door->getNextLevelIdx());
     } else {
-        if (this->getPowers() > 0) {
-            logger_.info("opening door with idx %d", door->getNextLevelIdx());
-            levelManager->getLogQueue()->addEvent("La porta si e' aperta!");
-            this->removePower();
-            door->openDoor();
-        } else {
-            levelManager->getLogQueue()->addEvent("la porta e' chiusa, cerca un potere.");
-        }
+        levelManager->getLogQueue()->addEvent("la porta e' chiusa, finisci il livello per aprirla");
     }
 }
 
 void Player::_handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact) {
+    level::Level *level = levelManager->getLevel();
     levelManager->getLogQueue()->addEvent("Artefatto raccolto");
     this->incrementScore(100);
     this->setLife(this->getLife() + artifact->getLifeUpgrade());
     this->maxLife_ += artifact->getLifeUpgrade();
     this->setPosition(nextPosition_);
+    
     levelManager->getLevel()->deleteCollidable((Collidable *) artifact);
+
+    if (level->isComplete()) {
+        level->openAllDoors();
+    }
 }
 
 void Player::_handlePowerCollision(manager::Level *levelManager, collectables::Power *power) {
+    level::Level *currLevel = levelManager->getLevel();
+    currLevel->openLocalDoor(power->getId());
     this->addPower();
     levelManager->getLogQueue()->addEvent("Hai raccolto un potere");
     this->incrementScore(100);
     this->setPosition(nextPosition_);
-    levelManager->getLevel()->deleteCollidable((Collidable *) power);
+    currLevel->deleteCollidable((Collidable *) power);
 }
 
 void Player::_handleNoneCollision(manager::Level *levelManager) {

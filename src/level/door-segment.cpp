@@ -1,34 +1,34 @@
 #include "level/door-segment.hpp"
 
 #include "enums/wall-type.hpp"
+#include "gamestruct/logger.hpp"
 namespace level {
     DoorSegment::DoorSegment()
-        : DisplayableSegment() {}
+        : DisplayableSegment(),
+          Openable(false) {}
 
     DoorSegment::DoorSegment(const Segment &segment, enums::Direction facingDir, int nextLevelIdx, bool isOpen)
         : DisplayableSegment(segment),
+          Openable(isOpen),
           facingDir_(facingDir),
-          nextLevelIdx_(nextLevelIdx),
-          isOpen_(isOpen) {
-        if (isOpen_) {
-            _setDisplayChar((char) enums::WallType::DOOROPEN);
+          nextLevelIdx_(nextLevelIdx) {
+        if (this->isOpen()) {
+            DisplayableSegment::_setDisplayChar((char) enums::WallType::DOOROPEN);
         } else {
-            _setDisplayChar((char) enums::WallType::DOORCLOSED);
+            DisplayableSegment::_setDisplayChar((char) enums::WallType::DOORCLOSED);
         }
     }
 
-    bool DoorSegment::isDoorOpen() const {
-        return isOpen_;
+    void DoorSegment::open() {
+        Logger logger_("DoorSegment::open");
+        logger_.debug("yes i oopened the doors");
+        Openable::open();
+        DisplayableSegment::_setDisplayChar((char) enums::WallType::DOOROPEN);
     }
 
-    void DoorSegment::openDoor() {
-        isOpen_ = true;
-        _setDisplayChar((char) enums::WallType::DOOROPEN);
-    }
-
-    void DoorSegment::closeDoor() {
-        isOpen_ = false;
-        _setDisplayChar((char) enums::WallType::DOORCLOSED);
+    void DoorSegment::close() {
+        Openable::close();
+        DisplayableSegment::_setDisplayChar((char) enums::WallType::DOORCLOSED);
     }
 
     void DoorSegment::setNextLevelIdx(int nextLevelIdx) {
@@ -45,11 +45,5 @@ namespace level {
 
     enums::CollisionType DoorSegment::getCollisionType() {
         return enums::CollisionType::DOORSEGMENT;
-    }
-
-    void DoorSegment::_setDisplayChar(char ch) {
-        for (unsigned int i = 0; i < displayables_.size(); i++) {
-            displayables_[i]->setDisplayChar(ch);
-        }
     }
 };  // namespace level

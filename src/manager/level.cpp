@@ -26,7 +26,7 @@ namespace manager {
         levelIdx_ = new StateWatcher<int>(-1);  // -1 indica che non è stato ancora caricato nessun livello
         logQueue_ = new LogQueue(manager::kLogAreaSize.colonna - 2, manager::kLogAreaSize.riga - 2, manager::kPaddingLogArea);
 
-        int newLevelIdx = addLevel();
+        int newLevelIdx = _addLevel();
         levelIdx_->setCurrent(newLevelIdx);
         player_->setPosition(levels_[newLevelIdx]->getLastPlayerPosition());
         goToLevel(newLevelIdx);
@@ -45,7 +45,7 @@ namespace manager {
         return player_;
     }
 
-    int Level::addLevel(enums::Direction direction) {
+    int Level::_addLevel(enums::Direction direction) {
         logger_.info("Adding new level");
 
         loader::LevelProvider &levelProvider = loader::LevelProvider::getInstance();
@@ -92,5 +92,13 @@ namespace manager {
 
     level::Level *Level::getLevel() {
         return levels_[levelIdx_->getCurrent()];
+    }
+
+    void Level::generateLevel(level::DoorSegment *door) {
+        if (!door->isOpen()) {
+            return;
+        }
+        int nextLevelIdx = _addLevel(door->getFacingDir());
+        door->setNextLevelIdx(nextLevelIdx);
     }
 }  // namespace manager

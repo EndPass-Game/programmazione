@@ -46,6 +46,14 @@ namespace level {
         playerPositions_ = loader->doorLoader.getPlayerPositions();
         lastPlayerPosition_ = playerPositions_.at(0);
 
+        datastruct::Vector<LocalDoor *> *localDoors = nullptr;
+        localDoors = loader->localDoorLoader.getLoadedObjects();
+        if (localDoors != nullptr) {
+            for (unsigned int i = 0; i < localDoors->size(); i++) {
+                localDoors_.push_back(localDoors->at(i));
+            }
+        }
+
         datastruct::Vector<collectables::Artifact *> *artifacts = nullptr;
         artifacts = loader->artifactLoader.getLoadedObjects();
         if (artifacts != nullptr) {
@@ -96,7 +104,7 @@ namespace level {
         }
 
         chosenDoor->setNextLevelIdx(oldLevelIdx);
-        chosenDoor->openDoor();
+        chosenDoor->open();
     }
 
     Level::~Level() {
@@ -119,8 +127,9 @@ namespace level {
         for (unsigned int i = 0; i < bullets_.size(); i++) {
             delete bullets_[i];
         }
-        for (unsigned int i = 0; i < bullets_.size(); i++) {
-            delete enemies_[i];
+
+        for (unsigned int i = 0; i < localDoors_.size(); i++) {
+            delete localDoors_[i];
         }
     }
 
@@ -142,18 +151,27 @@ namespace level {
                 return (Collidable *) segment_[i];
             }
         }
+
+        for (unsigned int i = 0; i < localDoors_.size(); i++) {
+            if (localDoors_[i]->isPositionInSegment(pos)) {
+                return (Collidable *) localDoors_[i];
+            }
+        }
+
         for (unsigned int i = 0; i < artifacts_.size(); i++) {
             if (artifacts_[i]->getPosition() == pos) {
                 collectables::Artifact *c = artifacts_[i];
                 return (Collidable *) c;
             }
         }
+
         for (unsigned int i = 0; i < powers_.size(); i++) {
             if (powers_[i]->getPosition() == pos) {
                 collectables::Power *c = powers_[i];
                 return (Collidable *) c;
             }
         }
+
         for (unsigned int i = 0; i < enemies_.size(); i++) {
             if (enemies_[i]->getPosition() == pos) {
                 entities::Enemy *c = enemies_[i];
@@ -171,8 +189,6 @@ namespace level {
     void Level::addBullet(weapon::Bullet *bullet) {
         bullets_.push_back(bullet);
     }
-
-    
 
     void Level::deleteCollidable(Collidable *collidable) {
         enums::CollisionType type = collidable->getCollisionType();
@@ -207,6 +223,10 @@ namespace level {
                 enemies_[i]->clear(win);
                 delete enemies_[i];
                 enemies_.remove(i);
+
+                if (this->isComplete()) {
+                    this->openAllDoors();
+                }
             }
         }
 
@@ -235,8 +255,9 @@ namespace level {
             }
         }
         
-        // TODO(ang): come fare a spostare gli entità?
-        // 1. deve updatare questo oppure lo fa un render in un altro momento????
+        for (unsigned int i = 0; i < localDoors_.size(); i++) {
+            localDoors_[i]->render(win, force);
+        }
     }
 
     void Level::clear(WINDOW *win) {
@@ -262,6 +283,10 @@ namespace level {
             enemies_[i]->clear(win);
         }
         player_->clear(win);
+        
+        for (unsigned int i = 0; i < localDoors_.size(); i++) {
+            localDoors_[i]->clear(win);
+        }
     }
 
     void Level::act(manager::Level *levelManager) {
@@ -274,5 +299,28 @@ namespace level {
         }
 
         player_->act(levelManager);
+        
+    }
+
+    bool Level::isComplete() {
+        logger_.debug("size of enemies is %d and of artifacts %d", enemies_.size(), artifacts_.size());
+        logger_.debug("value of the boolean is %d", enemies_.size() == 0 && artifacts_.size() == 0);
+        return enemies_.size() == 0 && artifacts_.size() == 0;
+    }
+
+    void Level::openLocalDoor(int id) {
+        for (unsigned int i = 0; i < localDoors_.size(); i++) {
+            if (localDoors_[i]->getId() == id) {
+                localDoors_[i]->open();
+            }
+        }
+    }
+
+    void Level::openAllDoors() {
+        logger_.info("All doors are open");
+        // si assume che le porte siano nell'ultima parte del segmento
+        for (unsigned int i = segment_.size() - numOfDoors_; i < segment_.size(); i++) {
+            dynamic_cast<DoorSegment *>(segment_[i])->open();
+        }
     }
 };  // namespace level

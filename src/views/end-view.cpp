@@ -1,13 +1,14 @@
-#include "views/menu-view.hpp"
+#include "views/end-view.hpp"
 
 #include <cstring>
 
 namespace views {
-    MenuView::MenuView()
-        : StaticTextView({0, 0}, manager::kMenuSize, "MenuView") {}
+    EndView::EndView()
+        : StaticTextView({0, 0}, manager::kMenuSize, "EndView") {}
 
-    bool MenuView::handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view, bool changedView) {
+    bool EndView::handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view, bool changedView) {
         if (StaticTextView::handleScreenBeforeRender(screen, view, changedView))
+
             return true;
         if (quit_) {
             view->clear();
@@ -19,7 +20,7 @@ namespace views {
         return false;
     }
 
-    void MenuView::handleInput(char input) {
+    void EndView::handleInput(char input) {
         switch (input) {
             case 'q':
             case 'Q':
@@ -31,15 +32,15 @@ namespace views {
         }
     }
 
-    void MenuView::printMenu_() {
+    void EndView::printMenu_() {
         for (int riga = 0; riga < kAsciiArtAltezza_; riga++) {
             mvwprintw(window, riga + 1, (manager::kMenuSize.colonna - strlen(kAsciiArt_[riga])) / 2, kAsciiArt_[riga]);
         }
     }
 
-    void MenuView::printText() {
+    void EndView::printText() {
         printMenu_();
-        char start[] = "Premere <Space> per incominciare";
+        char start[] = "Premere <Space> per tornare al menu";
         mvwprintw(window, 6, (manager::kMenuSize.colonna - strlen(start)) / 2, start);
         char quit[] = "Premere <Q> per abbandonare";
         mvwprintw(window, 8, (manager::kMenuSize.colonna - strlen(quit)) / 2, quit);

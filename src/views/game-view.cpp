@@ -29,13 +29,17 @@ namespace views {
         if (quit_) {
             view->popView();
         } else if (pause_) {
-            PauseView *pauseView = new PauseView({0, 0});
+            PauseView *pauseView = new PauseView();
             view->pushView(pauseView);
             pause_ = false;
         } else if (help_) {
             HelpView *helpView = new HelpView({0, 0});
             view->pushView(helpView);
             help_ = false;
+        } else if (levelManager_->getPlayer()->isDead()) {
+            view->popView();
+            EndView *endView = new EndView();
+            view->pushView(endView);
         }
         return false;
     }
@@ -65,7 +69,7 @@ namespace views {
     }
 
     void GameView::handleScreenToSmall(manager::ViewManager *manager) {
-        PauseView *pauseView = new PauseView({0, 0});
+        PauseView *pauseView = new PauseView();
         manager->pushView(pauseView);
         ScreenTooSmallView *toSmall = new ScreenTooSmallView(manager::kGameWindowsSize);
         manager->pushView(toSmall);
