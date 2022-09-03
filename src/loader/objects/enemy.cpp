@@ -1,8 +1,8 @@
 #include "loader/objects/enemy.hpp"
 
-#include "gamestruct/position.hpp"
-#include "entities/shooter.hpp"
 #include "entities/enemy.hpp"
+#include "entities/shooter.hpp"
+#include "gamestruct/position.hpp"
 
 namespace loader {
     void Enemy::load(FILE *file) {

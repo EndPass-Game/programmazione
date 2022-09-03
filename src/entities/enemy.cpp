@@ -1,16 +1,16 @@
 #include "entities/enemy.hpp"
 
+#include "entities/entity.hpp"
 #include "entities/kamikaze.hpp"
 #include "entities/shooter.hpp"
-#include "entities/entity.hpp"
 #include "enums/collision-type.hpp"
 #include "enums/direction.hpp"
 #include "level/collidable.hpp"
 #include "manager/level.hpp"
 namespace entities {
     Enemy::Enemy(char c)
-        : Entity(12, 5,  // vita e attacco
-                {4, 4},  // position di spawn
+        : Entity(12, 5,   // vita e attacco
+                 {4, 4},  // position di spawn
                  c),
           logger_("Enemy") {}
 
