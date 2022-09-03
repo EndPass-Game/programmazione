@@ -20,19 +20,19 @@ namespace entities {
         }
     }
 
-    void Kamikaze::wander(Player* player) {
+    void Kamikaze::wander(Player *player) {
         Position posPlayer = player->getPosition();
         Position posMine = this->getPosition();
-        int distRiga = posPlayer.riga-posMine.riga;
-        int distColonna = posPlayer.colonna-posMine.colonna;
+        int distRiga = posPlayer.riga - posMine.riga;
+        int distColonna = posPlayer.colonna - posMine.colonna;
         enums::Direction luckyestDir;
-        if(abs(distRiga) < abs(distColonna)){
-            luckyestDir = (distColonna > 0) ? enums::Direction::RIGHT : enums::Direction::LEFT; 
-        }else{
-            luckyestDir = (distRiga < 0) ? enums::Direction::UP : enums::Direction::DOWN; 
+        if (abs(distRiga) < abs(distColonna)) {
+            luckyestDir = (distColonna > 0) ? enums::Direction::RIGHT : enums::Direction::LEFT;
+        } else {
+            luckyestDir = (distRiga < 0) ? enums::Direction::UP : enums::Direction::DOWN;
         }
         this->setDirection(luckyestDir);
-    }   
+    }
 
     bool Kamikaze::canAttack(manager::Level *levelManager) {
         Position playerPosition = levelManager->getPlayer()->getPosition();

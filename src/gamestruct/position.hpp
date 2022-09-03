@@ -5,7 +5,6 @@ struct Position {
     int riga;
     int colonna;
 
-
     Position();
     Position(int riga, int colonna);
 

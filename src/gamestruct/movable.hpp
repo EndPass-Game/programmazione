@@ -32,7 +32,7 @@ class Movable : public Displayable {
     enums::Direction getLastNotNullDirection() const;
 
     /**
-      * @brief funzione astratta che gestisce il movimento a singolo frame
-      */
+     * @brief funzione astratta che gestisce il movimento a singolo frame
+     */
     virtual void act(manager::Level *levelManager) = 0;
 };

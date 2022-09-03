@@ -41,7 +41,7 @@ void Displayable::render(WINDOW *win, bool forced) {
         setPosition(position_->getCurrent());
         forced = true;
     }
-    
+
     if (displayChar_->isChanged() or displayChar_->isFirstValue()) {
         setDisplayChar(displayChar_->getCurrent());
         forced = true;

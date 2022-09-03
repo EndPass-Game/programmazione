@@ -10,8 +10,7 @@
 #include "manager/level.hpp"
 namespace entities {
     Enemy::Enemy(char c)
-        : Entity(12, 5,  
-                 {4, 4}, /* position di spawn */
+        : Entity(12, 5, {4, 4}, /* position di spawn */
                  c),
           logger_("Enemy") {}
 
@@ -20,8 +19,8 @@ namespace entities {
           coolDown_(0),
           coolDownMax_(10),  // può muoversi ogni 10 frame
           logger_("Enemy") {}
-    void Enemy::wander(Player* player) {
-        enums::Direction directions[]={
+    void Enemy::wander(Player *player) {
+        enums::Direction directions[] = {
             enums::Direction::UP,
             enums::Direction::RIGHT,
             enums::Direction::LEFT,
@@ -64,8 +63,8 @@ namespace entities {
         return coolDown_ == 0;
     }
 
-    void Enemy::act(manager::Level *levelManager){
-        if(canMove()){
+    void Enemy::act(manager::Level *levelManager) {
+        if (canMove()) {
             wander(levelManager->getPlayer());
             move(levelManager);
             resetCoolDown();

@@ -14,7 +14,7 @@ namespace entities {
         Kamikaze();
         Kamikaze(Position spawnPos);
 
-        virtual void wander(Player* player) override;
+        virtual void wander(Player *player) override;
 
         void attack(manager::Level *levelManager) override;
 

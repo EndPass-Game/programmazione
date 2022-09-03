@@ -23,7 +23,7 @@ namespace entities {
 
         void ShootCoolDown();
 
-        virtual void wander(Player* player) override;
+        virtual void wander(Player *player) override;
 
         bool canShoot();
 

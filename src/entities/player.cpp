@@ -75,7 +75,7 @@ void Player::_handleArtifactCollision(manager::Level *levelManager, collectables
     this->setLife(this->getLife() + artifact->getLifeUpgrade());
     this->maxLife_ += artifact->getLifeUpgrade();
     this->setPosition(nextPosition_);
-    
+
     levelManager->getLevel()->deleteCollidable((Collidable *) artifact);
 
     if (level->isComplete()) {
@@ -135,7 +135,7 @@ void Player::attack(manager::Level *levelManager) {
     if (collision == nullptr) {
         weapon::Bullet *bullet = new weapon::Bullet(bulletPosition, this->getLastNotNullDirection(), this->getAttack());
         level->addBullet(bullet);
-    }else if(collision->getCollisionType() == enums::CollisionType::ENTITY){
+    } else if (collision->getCollisionType() == enums::CollisionType::ENTITY) {
         weapon::Bullet *bullet = new weapon::Bullet(this->getPosition(), this->getLastNotNullDirection(), this->getAttack());
         level->addBullet(bullet);
     }

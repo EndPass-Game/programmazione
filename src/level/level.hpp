@@ -69,8 +69,8 @@ namespace level {
         void deleteCollidable(Collidable *collidable);
 
         /**
-          * @brief muove tutti gli oggetti che si devono muovere
-          */
+         * @brief muove tutti gli oggetti che si devono muovere
+         */
         void act(manager::Level *levelManager);
         /// @brief ritorna `true` se il livello è finito, `false` altrimenti
         bool isComplete();

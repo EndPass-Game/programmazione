@@ -41,7 +41,7 @@ namespace weapon {
             if (this->handleEntityHit((Entity *) collision)) {
                 if (collision == levelManager->getPlayer()) {
                     levelManager->getLogQueue()->addEvent("Player sconfitto");
-                } else {                    
+                } else {
                     levelManager->getPlayer()->incrementScore(500);
                     levelManager->getLogQueue()->addEvent("Nemico sconfitto");
                 }
@@ -60,8 +60,8 @@ namespace weapon {
         }
         return false;
     }
-    
-    void Bullet::act(manager::Level *levelManager){
+
+    void Bullet::act(manager::Level *levelManager) {
         if (checkCollision(levelManager)) {
             isDestroyed_ = true;
         } else {
@@ -77,9 +77,8 @@ namespace weapon {
         // evita la cancellazione del player guardando il carattere printato nello schermo attuale
         char currChar = mvwinch(win, this->getPosition().riga, this->getPosition().colonna);
         if (currChar == 'P' || currChar == 'S') {
-           this->clearLast(win);
+            this->clearLast(win);
         }
         Displayable::render(win, force);
     }
 }  // namespace weapon
-    

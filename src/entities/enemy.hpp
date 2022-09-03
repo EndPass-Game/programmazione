@@ -5,6 +5,7 @@
 #include "collectables/artifact.hpp"
 #include "collectables/power.hpp"
 #include "entities/entity.hpp"
+#include "entities/player.hpp"
 #include "enums/direction.hpp"
 #include "enums/enemyType.hpp"
 #include "gamestruct/displayable.hpp"
@@ -12,7 +13,6 @@
 #include "gamestruct/position.hpp"
 #include "level/collidable.hpp"
 #include "level/door-segment.hpp"
-#include "entities/player.hpp"
 #include "level/wall-segment.hpp"
 #include "manager/level.fwd.h"
 
@@ -42,7 +42,7 @@ namespace entities {
 
         void setPosition(Position pos);
 
-        virtual void wander(Player* player);
+        virtual void wander(Player *player);
 
         void resetCoolDown();
 
@@ -53,6 +53,5 @@ namespace entities {
         virtual bool canAttack(manager::Level *levelManager) = 0;
 
         virtual void act(manager::Level *levelManager) override;
-
     };
 }  // namespace entities

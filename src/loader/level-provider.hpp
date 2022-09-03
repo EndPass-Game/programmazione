@@ -1,11 +1,11 @@
 #pragma once
 
 #include "datastruct/vector.hpp"
+#include "entities/player.hpp"
 #include "enums/direction.hpp"
 #include "gamestruct/logger.hpp"
 #include "level/level.hpp"
 #include "loader/loader-handler.hpp"
-#include "entities/player.hpp"
 
 namespace loader {
     class LevelProvider {

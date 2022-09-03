@@ -12,7 +12,7 @@ namespace entities {
     Shooter::Shooter()
         : Enemy('S'),
           shootCoolDown_(0),
-          shootCoolDownMax_(20), 
+          shootCoolDownMax_(20),
           logger_("Shooter") {}
 
     Shooter::Shooter(Position pos)
@@ -128,29 +128,28 @@ namespace entities {
         }
         return Position(1, 1);
     }
-    void Shooter::wander(Player* player) {
+    void Shooter::wander(Player *player) {
         Position posPlayer = player->getPosition();
         Position posMine = this->getPosition();
-        int distRiga = posPlayer.riga-posMine.riga;
-        int distColonna = posPlayer.colonna-posMine.colonna;
+        int distRiga = posPlayer.riga - posMine.riga;
+        int distColonna = posPlayer.colonna - posMine.colonna;
         enums::Direction luckyestDir;
         // se è troppo vicino
-        if(abs(distRiga) < 8 || abs(distColonna) < 8){
-            if(abs(distRiga) < abs(distColonna) ){
-                luckyestDir = (distColonna < 0) ? enums::Direction::RIGHT : enums::Direction::LEFT; 
-            }else {
-                luckyestDir = (distRiga > 0) ? enums::Direction::UP : enums::Direction::DOWN; 
+        if (abs(distRiga) < 8 || abs(distColonna) < 8) {
+            if (abs(distRiga) < abs(distColonna)) {
+                luckyestDir = (distColonna < 0) ? enums::Direction::RIGHT : enums::Direction::LEFT;
+            } else {
+                luckyestDir = (distRiga > 0) ? enums::Direction::UP : enums::Direction::DOWN;
             }
-        }else{
-            if(abs(distRiga) > abs(distColonna) ){
-                luckyestDir = (distColonna > 0) ? enums::Direction::RIGHT : enums::Direction::LEFT; 
-                if(distColonna==0) luckyestDir = enums::Direction::NONE;
-            }else {
-                luckyestDir = (distRiga < 0) ? enums::Direction::UP : enums::Direction::DOWN; 
-                if(distRiga==0) luckyestDir = enums::Direction::NONE;
+        } else {
+            if (abs(distRiga) > abs(distColonna)) {
+                luckyestDir = (distColonna > 0) ? enums::Direction::RIGHT : enums::Direction::LEFT;
+                if (distColonna == 0) luckyestDir = enums::Direction::NONE;
+            } else {
+                luckyestDir = (distRiga < 0) ? enums::Direction::UP : enums::Direction::DOWN;
+                if (distRiga == 0) luckyestDir = enums::Direction::NONE;
             }
-
         }
         this->setDirection(luckyestDir);
-    }   
+    }
 }  // namespace entities

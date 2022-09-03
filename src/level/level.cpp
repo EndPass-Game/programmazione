@@ -212,7 +212,6 @@ namespace level {
         }
     }
 
-    
     void Level::render(WINDOW *win, bool force, manager::Level *levelManager) {
         player_->render(win, force);
 
@@ -244,7 +243,7 @@ namespace level {
 
         unsigned int bulletIdx = 0;
         while (bulletIdx < bullets_.size()) {
-            if(bullets_[bulletIdx]->isDestroyed()){
+            if (bullets_[bulletIdx]->isDestroyed()) {
                 bullets_[bulletIdx]->clear(win);
                 delete bullets_[bulletIdx];
                 bullets_.remove(bulletIdx);
@@ -254,7 +253,7 @@ namespace level {
                 bulletIdx++;
             }
         }
-        
+
         for (unsigned int i = 0; i < localDoors_.size(); i++) {
             localDoors_[i]->render(win, force);
         }
@@ -283,7 +282,7 @@ namespace level {
             enemies_[i]->clear(win);
         }
         player_->clear(win);
-        
+
         for (unsigned int i = 0; i < localDoors_.size(); i++) {
             localDoors_[i]->clear(win);
         }
@@ -299,7 +298,6 @@ namespace level {
         }
 
         player_->act(levelManager);
-        
     }
 
     bool Level::isComplete() {
