@@ -3,6 +3,7 @@
 #include "enums/direction.hpp"
 #include "gamestruct/displayable.hpp"
 #include "gamestruct/position.hpp"
+#include "manager/level.fwd.h"
 
 // rappresenta un oggetto che si può muovere mostrabile a schermo
 class Movable : public Displayable {
@@ -29,4 +30,9 @@ class Movable : public Displayable {
 
     // getter per l'ultima direzione non nulla
     enums::Direction getLastNotNullDirection() const;
+
+    /**
+     * @brief funzione astratta che gestisce il movimento a singolo frame
+     */
+    virtual void act(manager::Level *levelManager) = 0;
 };

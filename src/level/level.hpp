@@ -3,9 +3,10 @@
 #include "collectables/artifact.hpp"
 #include "collectables/power.hpp"
 #include "datastruct/vector.hpp"
-#include "entities/enemy.hpp"
-#include "entities/entity.hpp"
+#include "entities/enemy.fwd.h"
+#include "entities/entity.fwd.h"
 #include "entities/player.hpp"
+#include "entities/shooter.hpp"
 #include "entities/weapon/bullet.hpp"
 #include "enums/direction.hpp"
 #include "gamestruct/logger.hpp"
@@ -19,6 +20,8 @@ namespace level {
     class Level {
       private:
         Position lastPlayerPosition_;
+        Player *player_;
+
         datastruct::Vector<DisplayableSegment *> segment_;
         datastruct::Vector<collectables::Artifact *> artifacts_;
         datastruct::Vector<collectables::Power *> powers_;
@@ -31,8 +34,8 @@ namespace level {
         Logger logger_;
 
       public:
-        Level(loader::LoaderHandler *loader);
-        Level(loader::LoaderHandler *loader, enums::Direction direction, int oldLevelIdx);
+        Level(loader::LoaderHandler *loader, Player *player);
+        Level(loader::LoaderHandler *loader, Player *player, enums::Direction direction, int oldLevelIdx);
 
         ~Level();
 
@@ -50,21 +53,25 @@ namespace level {
         void clear(WINDOW *win);
 
         /// @returns true se la posizione è vuota, false altrimenti
-        bool isPositionEmpty(Position pos);
-
-        datastruct::Vector<collectables::Power *> getPowers();
-        datastruct::Vector<collectables::Artifact *> getArtifacts();
+        bool isPositionEmpty(Position pos, manager::Level *levelManager);
 
         void addBullet(weapon::Bullet *bullet);
-        void renderBullets(WINDOW *win, manager::Level *levelmanager);
 
-        void deleteEnemy(Collidable *collision, WINDOW *win);
-        void deletePower(int i);
-        void deleteArtifact(int i);
+        /**
+         * @brief elimina il collidable in input.
+         * presuppone che sia dei seguenti tipi:
+         * - artifact
+         * - power
+         * - enemy
+         *
+         * E che questi siano presenti nella lista corrispondente in questo oggetto
+         */
+        void deleteCollidable(Collidable *collidable);
 
-        void enemiesAttack(WINDOW *win, manager::Level *levelManager);
-        void renderEnemies(WINDOW *win, manager::Level *levelManager);
-
+        /**
+         * @brief muove tutti gli oggetti che si devono muovere
+         */
+        void act(manager::Level *levelManager);
         /// @brief ritorna `true` se il livello è finito, `false` altrimenti
         bool isComplete();
 

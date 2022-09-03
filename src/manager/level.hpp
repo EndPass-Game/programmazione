@@ -53,6 +53,10 @@ namespace manager {
         /// @brief getter del player_
         Player *getPlayer();
 
+        // @param direction il livello aggiunto dovrà avere una porta nella direzione opposta a quella indicata
+        // @returns l'index del livello creato
+        int addLevel(enums::Direction direction = enums::Direction::NONE);
+
         /// @brief getter del levelIdx_, usato per indicare il livello corrente
         level::Level *getLevel();
 

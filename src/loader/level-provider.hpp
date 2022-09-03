@@ -1,6 +1,7 @@
 #pragma once
 
 #include "datastruct/vector.hpp"
+#include "entities/player.hpp"
 #include "enums/direction.hpp"
 #include "gamestruct/logger.hpp"
 #include "level/level.hpp"
@@ -39,6 +40,6 @@ namespace loader {
 
         // @param levelIdx l'indice del livello di arrivo, -1 default per dire che non c'è nessun livello
         // @returns un livello con una porta nella direzione desiderata
-        level::Level *getLevel(enums::Direction wantedDirection, int levelIdx = -1);
+        level::Level *getLevel(enums::Direction wantedDirection, Player *player, int levelIdx = -1);
     };
 }  // namespace loader

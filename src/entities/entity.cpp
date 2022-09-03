@@ -55,7 +55,7 @@ bool Entity::isDead() const {
     return life_ <= 0;
 }
 
-void Entity::attack(Entity *entity) {
+void Entity::attackEntity(Entity *entity) {
     entity->applyDamage(attack_);
 }
 
@@ -71,9 +71,18 @@ void Entity::setLife(int life) {
     this->life_ = life;
 }
 
+int Entity::getAttack() {
+    return attack_;
+}
+
 enums::CollisionType Entity::getCollisionType() {
     return enums::CollisionType::ENTITY;
 }
+
+void Entity::render(WINDOW *win, bool force) {
+    this->clearLast(win);
+    Displayable::render(win, force);
+};
 
 void Entity::_handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door) {}
 void Entity::_handleWallCollision(manager::Level *levelManager, level::WallSegment *wall) {}

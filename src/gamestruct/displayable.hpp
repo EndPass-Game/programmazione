@@ -5,10 +5,6 @@
 #include "gamestruct/position.hpp"
 #include "gamestruct/state-watcher.hpp"
 
-// TODO:bisogna poter includere questo file
-
-// ISSUE: muovere questo in una directory per classi astratte?
-
 // Displayable: è una classe che astratta per mostrare gli oggetti
 // sullo schermo
 class Displayable {
@@ -25,7 +21,7 @@ class Displayable {
     // construttore che inizializza l'oggetto changable e display char
     Displayable(Position current, char displayChar);
     // elimina i pointer
-    ~Displayable();
+    virtual ~Displayable();
 
     Position getPosition();
 
@@ -41,5 +37,5 @@ class Displayable {
     void clear(WINDOW *win);
 
     // Se la posizione è stata modificata riprinta il carattere nella posizione corrente
-    void render(WINDOW *win, bool forced = false);
+    virtual void render(WINDOW *win, bool forced = false);
 };

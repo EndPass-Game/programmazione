@@ -13,8 +13,9 @@
 #include "manager/level.hpp"
 
 namespace level {
-    Level::Level(loader::LoaderHandler *loader)
+    Level::Level(loader::LoaderHandler *loader, Player *player)
         : lastPlayerPosition_(1, 1),
+          player_(player),
           segment_(),
           artifacts_(),
           powers_(),
@@ -78,8 +79,8 @@ namespace level {
         }
     }
 
-    Level::Level(loader::LoaderHandler *loader, enums::Direction direction, int oldLevelIdx)
-        : Level(loader) {
+    Level::Level(loader::LoaderHandler *loader, Player *player, enums::Direction direction, int oldLevelIdx)
+        : Level(loader, player) {
         logger_.debug("creating level pointing to leveldIdx: %d", oldLevelIdx);
 
         DoorSegment *chosenDoor = nullptr;
@@ -140,7 +141,7 @@ namespace level {
         lastPlayerPosition_ = pos;
     }
 
-    bool Level::isPositionEmpty(Position pos) {
+    bool Level::isPositionEmpty(Position pos, manager::Level *levelManager) {
         return getCollision(pos) == nullptr;
     }
 
@@ -178,126 +179,56 @@ namespace level {
             }
         }
 
+        if (player_->getPosition() == pos) {
+            return (Collidable *) player_;
+        }
+
         return nullptr;
-    }
-
-    datastruct::Vector<collectables::Power *> Level::getPowers() {
-        return powers_;
-    }
-
-    datastruct::Vector<collectables::Artifact *> Level::getArtifacts() {
-        return artifacts_;
     }
 
     void Level::addBullet(weapon::Bullet *bullet) {
         bullets_.push_back(bullet);
     }
 
-    void Level::renderBullets(WINDOW *win, manager::Level *levelManager) {
-        unsigned int i = 0;
-        while (i < bullets_.size()) {
-            Position bulletNextPosition = bullets_[i]->getNextPosition();
-            Position bulletPosition = bullets_[i]->getPosition();
-            Collidable *collision = getCollision(bulletNextPosition);
-            enums::CollisionType type = enums::CollisionType::NONE;
-            if (collision != nullptr) type = collision->getCollisionType();
-            // TODO(simo): handle other types of collision
-            // TODO(simo): memory leak quando collide con artifactti e powers
-            // perché sono eliminati subito dopo la collisione
-            // dovresti fare altre funzioni per gestire l'eliminazione di artefatti
-            // e powers esternamente a questa classe
-            // TODO(simo): getCollision dovrebbe essere const, e non fare altro
-            // che ritornarti la collisione
-            if (type == enums::CollisionType::ENTITY) {
-                logger_.debug("bullet collision with %d", collision->getCollisionType());
-                if (bullets_[i]->handleEntityHit((Entity *) collision)) {
-                    deleteEnemy(collision, win);
-                    levelManager->getPlayer()->incrementScore(500);
-                    levelManager->getLogQueue()->addEvent("Nemico sconfitto");
-                } else {
-                    levelManager->getLogQueue()->addEvent("Nemico colpito da un proiettile");
-                }
-
-                bullets_[i]->clear(win);
-                delete bullets_[i];
-                bullets_.remove(i);
-
-                if (this->isComplete()) {
-                    this->openAllDoors();
-                }
-            } else {
-                if (type == enums::CollisionType::NONE) {
-                    bullets_[i]->move();
-                    // evita la cancellazione del player guardando il carattere printato nello schermo attuale
-                    if (mvwinch(win, bulletPosition.riga, bulletPosition.colonna) != 'P') {
-                        bullets_[i]->clearLast(win);
-                    }
-                    bullets_[i]->render(win);
-                    i++;
-                } else {
-                    bullets_[i]->clear(win);
-                    delete bullets_[i];
-                    bullets_.remove(i);
-                }
-            }
-        }
-    }
-
-    void Level::deleteEnemy(Collidable *collision, WINDOW *win) {
-        for (unsigned int i = 0; i < enemies_.size(); i++) {
-            if (collision == enemies_[i]) {
-                enemies_[i]->clear(win);
-                delete enemies_[i];
-                enemies_.remove(i);
-            }
-        }
-    }
-
-    void Level::deletePower(int i) {
-        powers_.remove(i);
-    }
-
-    void Level::deleteArtifact(int i) {
-        artifacts_.remove(i);
-    }
-
-    // BUG: non capisco perché ma ora non funziona più nonostante non abbia cambiato nulla e fa attaccare il nemico se il player
-    //      si ritrova sulla colonna o sulla riga di tiro per l'enemy, non su entrambe (che vorrebbe dire che è al massimo a distanza 1)
-    void Level::enemiesAttack(WINDOW *win, manager::Level *levelManager) {
-        for (unsigned int i = 0; i < enemies_.size(); i++) {
-            if ((levelManager->getPlayer()->getPosition().riga - enemies_[i]->getPosition().riga) <= 1 && (levelManager->getPlayer()->getPosition().riga - enemies_[i]->getPosition().riga) >= -1) {
-                if ((levelManager->getPlayer()->getPosition().colonna - enemies_[i]->getPosition().colonna) <= 1 && (levelManager->getPlayer()->getPosition().colonna - enemies_[i]->getPosition().colonna) >= -1) {
-                    enemies_[i]->attack(levelManager->getPlayer());
-                    if (levelManager->getPlayer()->isDead()) {
-                        // TODO (gio?): implementare una finestra di gameover
-                    }
-                    levelManager->getLogQueue()->addEvent("Il nemico e' esploso");
-                    enemies_[i]->clear(win);
-                    delete enemies_[i];
-                    enemies_.remove(i);
-
-                    if (this->isComplete()) {
-                        this->openAllDoors();
-                    }
-                }
-            }
-        }
-    }
-
-    void Level::renderEnemies(WINDOW *win, manager::Level *levelManager) {
-        for (unsigned int i = 0; i < enemies_.size(); i++) {
-            if (enemies_[i]->canMove()) {
-                enemies_[i]->wander();
-                enemies_[i]->move(levelManager);
-                enemies_[i]->clearLast(win);
-                enemies_[i]->render(win);
-                enemies_[i]->resetCoolDown();
-            }
-            enemies_[i]->moveCoolDown();
+    void Level::deleteCollidable(Collidable *collidable) {
+        enums::CollisionType type = collidable->getCollisionType();
+        switch (type) {
+            case enums::CollisionType::ARTIFACT:
+                artifacts_.remove(artifacts_.indexOf((collectables::Artifact *) collidable));
+                delete (collectables::Artifact *) collidable;
+                break;
+            case enums::CollisionType::POWER:
+                powers_.remove(powers_.indexOf((collectables::Power *) collidable));
+                delete (collectables::Power *) collidable;
+                break;
+            // supponendo che gli entity da eliminare siano sempre e solo gli enemies
+            case enums::CollisionType::ENTITY:
+                enemies_.remove(enemies_.indexOf((entities::Enemy *) collidable));
+                delete (entities::Enemy *) collidable;
+                break;
+            default:
+                logger_.warning("deleteCollidable: type is not supported, not deleted");
+                break;
         }
     }
 
     void Level::render(WINDOW *win, bool force, manager::Level *levelManager) {
+        player_->render(win, force);
+
+        for (unsigned int i = 0; i < enemies_.size(); i++) {
+            enemies_[i]->render(win, force);
+
+            if (enemies_[i]->isDead()) {
+                enemies_[i]->clear(win);
+                delete enemies_[i];
+                enemies_.remove(i);
+
+                if (this->isComplete()) {
+                    this->openAllDoors();
+                }
+            }
+        }
+
         for (unsigned int i = 0; i < segment_.size(); i++) {
             segment_[i]->render(win, force);
         }
@@ -310,36 +241,63 @@ namespace level {
             powers_[i]->render(win, force);
         }
 
+        unsigned int bulletIdx = 0;
+        while (bulletIdx < bullets_.size()) {
+            if (bullets_[bulletIdx]->isDestroyed()) {
+                bullets_[bulletIdx]->clear(win);
+                delete bullets_[bulletIdx];
+                bullets_.remove(bulletIdx);
+            } else {
+                bullets_[bulletIdx]->clearLast(win);
+                bullets_[bulletIdx]->render(win, force);
+                bulletIdx++;
+            }
+        }
+
         for (unsigned int i = 0; i < localDoors_.size(); i++) {
             localDoors_[i]->render(win, force);
         }
-
-        this->renderBullets(win, levelManager);
-        // TODO(ang): come fare a spostare gli entità?
-        // 1. deve updatare questo oppure lo fa un render in un altro momento????
     }
 
     void Level::clear(WINDOW *win) {
         for (unsigned int i = 0; i < segment_.size(); i++) {
             segment_[i]->clear(win);
         }
+
         for (unsigned int i = 0; i < artifacts_.size(); i++) {
             artifacts_[i]->clear(win);
         }
+
         for (unsigned int i = 0; i < powers_.size(); i++) {
             powers_[i]->clear(win);
         }
+
         for (unsigned int i = 0; i < bullets_.size(); i++) {
             // TODO: possibile bug che il proiettile resti bloccato nel punto in cui
             // abbiamo lasciato il livello?? è un bug??
             bullets_[i]->clear(win);
         }
+
         for (unsigned int i = 0; i < enemies_.size(); i++) {
             enemies_[i]->clear(win);
         }
+        player_->clear(win);
+
         for (unsigned int i = 0; i < localDoors_.size(); i++) {
             localDoors_[i]->clear(win);
         }
+    }
+
+    void Level::act(manager::Level *levelManager) {
+        for (unsigned int i = 0; i < enemies_.size(); i++) {
+            enemies_[i]->act(levelManager);
+        }
+
+        for (unsigned int i = 0; i < bullets_.size(); i++) {
+            bullets_[i]->act(levelManager);
+        }
+
+        player_->act(levelManager);
     }
 
     bool Level::isComplete() {

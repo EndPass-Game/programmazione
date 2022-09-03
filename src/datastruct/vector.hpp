@@ -152,5 +152,12 @@ namespace datastruct {
 
             return *this;
         }
+
+        int indexOf(T el) {
+            for (unsigned int i = 0; i < size_; i++) {
+                if (data_[i] == el) return i;
+            }
+            return -1;
+        }
     };
 };  // namespace datastruct
