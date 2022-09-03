@@ -3,9 +3,10 @@
 #include "collectables/artifact.hpp"
 #include "collectables/power.hpp"
 #include "datastruct/vector.tpp"
-#include "entities/enemy.hpp"
-#include "entities/entity.hpp"
+#include "entities/enemy.fwd.h"
+#include "entities/entity.fwd.h"
 #include "entities/player.hpp"
+#include "entities/shooter.hpp"
 #include "entities/weapon/bullet.hpp"
 #include "enums/direction.hpp"
 #include "gamestruct/logger.hpp"
@@ -26,6 +27,8 @@ namespace level {
          * ad ogni cambio di livello
          */
         Position lastPlayerPosition_;
+        Player *player_;
+
         datastruct::Vector<DisplayableSegment *> segment_;
         datastruct::Vector<collectables::Artifact *> artifacts_;
         datastruct::Vector<collectables::Power *> powers_;
@@ -41,18 +44,20 @@ namespace level {
         /**
          * @brief Costruttore di un livello
          *
+         * @param player il player del manager
          * @param loaderHandler il loader che contiene i dati del livello
          */
-        Level(loader::LoaderHandler *loader);
+        Level(loader::LoaderHandler *loader, Player *player);
 
         /**
          * @brief Construct a new Level object
          *
          * @param loader il loader che contiene i dati del livello
+         * @param player il player del manager
          * @param direction specifica di caricare solo livelli in questa direzione
          * @param oldLevelIdx il collegamento al livello precedente
          */
-        Level(loader::LoaderHandler *loader, enums::Direction direction, int oldLevelIdx);
+        Level(loader::LoaderHandler *loader, Player *player, enums::Direction direction, int oldLevelIdx);
 
         /**
          * @brief Distruttore che elimina ogni oggetto contenuto nel livello
@@ -70,20 +75,24 @@ namespace level {
          */
         void clear(WINDOW *win);
 
-        // REGION --------- TODO: discutere di questa parte
-        datastruct::Vector<collectables::Power *> getPowers();
-        datastruct::Vector<collectables::Artifact *> getArtifacts();
-
         void addBullet(weapon::Bullet *bullet);
-        void renderBullets(WINDOW *win, manager::Level *levelmanager);
 
-        void deleteEnemy(Collidable *collision, WINDOW *win);
-        void deletePower(int i);
-        void deleteArtifact(int i);
+        /**
+         * @brief elimina il collidable in input.
+         * presuppone che sia dei seguenti tipi:
+         * - artifact
+         * - power
+         * - enemy
+         *
+         * E che questi siano presenti nella lista corrispondente in questo oggetto
+         */
+        void deleteCollidable(Collidable *collidable);
 
-        void enemiesAttack(WINDOW *win, manager::Level *levelManager);
-        void renderEnemies(WINDOW *win, manager::Level *levelManager);
-        // ENDREGION --------- TODO: discutere di questa parte
+        /**
+         * @brief muove tutti gli oggetti che si devono muovere
+         * all'interno del livello
+         */
+        void act(manager::Level *levelManager);
 
         /**
          * @brief opens the local door with the same id as input

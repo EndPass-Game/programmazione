@@ -1,45 +1,34 @@
 #include "entities/enemy.hpp"
 
-#include <mutex>
-#include <stdlib.h>
-
+#include "entities/kamikaze.hpp"
+#include "entities/shooter.hpp"
 #include "entities/entity.hpp"
 #include "enums/collision-type.hpp"
 #include "enums/direction.hpp"
 #include "level/collidable.hpp"
 #include "manager/level.hpp"
 namespace entities {
-    Enemy::Enemy()
-        : Entity(12, 1000,  // TODO: gestire queste costanti hardcoded in un file di setting
-                 {4, 4},    /* position di spawn */
-                 'E'),
+    Enemy::Enemy(char c)
+        : Entity(12, 5,  // vita e attacco
+                {4, 4},  // position di spawn
+                 c),
           logger_("Enemy") {}
 
-    Enemy::Enemy(Position spawnPos)
-        : Entity(12, 1000, spawnPos, 'E'),
+    Enemy::Enemy(Position spawnPos, int attack, char c)
+        : Entity(12, attack, spawnPos, c),
           coolDown_(0),
           coolDownMax_(10),  // può muoversi ogni 10 frame
           logger_("Enemy") {}
-    // TODO: fare vagabondare il nemico in modo più intelligente
-    void Enemy::wander() {
-        // std::lock_guard<std::mutex> lock(mutex_); // FIXME: il mutex bugga il gioco qui
+    void Enemy::wander(Player *player) {
+        enums::Direction directions[] = {
+            enums::Direction::UP,
+            enums::Direction::RIGHT,
+            enums::Direction::LEFT,
+            enums::Direction::DOWN,
+            enums::Direction::NONE,
+        };
         int direction = rand() % 5;
-        switch (direction) {
-            case 0:
-                this->setDirection(enums::Direction::UP);
-                break;
-            case 1:
-                this->setDirection(enums::Direction::RIGHT);
-                break;
-            case 2:
-                this->setDirection(enums::Direction::LEFT);
-                break;
-            case 3:
-                this->setDirection(enums::Direction::DOWN);
-                break;
-            default:
-                this->setDirection(enums::Direction::NONE);
-        }
+        this->setDirection(directions[direction]);
     }
     // probabilmente inutile visto che andrebbe automaticamente a prendere quella di displayable (?)
     void Enemy::setPosition(Position pos) {
@@ -73,4 +62,15 @@ namespace entities {
     bool Enemy::canMove() {
         return coolDown_ == 0;
     }
+
+    void Enemy::act(manager::Level *levelManager) {
+        if (canMove()) {
+            wander(levelManager->getPlayer());
+            move(levelManager);
+            resetCoolDown();
+        }
+        moveCoolDown();
+        attack(levelManager);
+    }
+
 }  // namespace entities

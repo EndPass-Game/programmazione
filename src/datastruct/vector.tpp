@@ -138,6 +138,7 @@ namespace datastruct {
 
         T &operator[](const int index) const;
         T &at(const int index) const;
+        int indexOf(T el);
     };
 
     template <class T>
@@ -282,5 +283,13 @@ namespace datastruct {
         this->_copyFrom(other);
 
         return *this;
+    }
+
+    template <class T>
+    int Vector<T>::indexOf(T el) {
+        for (unsigned int i = 0; i < size_; i++) {
+            if (data_[i] == el) return i;
+        }
+        return -1;
     }
 };  // namespace datastruct

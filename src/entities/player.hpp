@@ -39,8 +39,6 @@ class Player : public Entity {
     Logger logger_;
 
     virtual void _handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door) override;
-    virtual void _handleWallCollision(manager::Level *levelManager, level::WallSegment *wall) override;
-    virtual void _handleEntityCollision(manager::Level *levelManager, Entity *entity) override;
     virtual void _handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact) override;
     virtual void _handlePowerCollision(manager::Level *levelManager, collectables::Power *power) override;
     virtual void _handleNoneCollision(manager::Level *levelManager) override;
@@ -65,4 +63,8 @@ class Player : public Entity {
     void coolDown();
 
     bool canFire();
+
+    void attack(manager::Level *levelManager) override;
+
+    void act(manager::Level *levelManager) override;
 };

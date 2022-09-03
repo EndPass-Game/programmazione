@@ -50,7 +50,7 @@ namespace loader {
         logger_.debug("Loaded %d levels", loadedLevels_.size());
     }
 
-    level::Level *LevelProvider::getLevel(enums::Direction direction, int levelIdx) {
+    level::Level *LevelProvider::getLevel(enums::Direction direction, Player *player, int levelIdx) {
         enums::Direction oppositeDirection = _getOppositeDirection(direction);
         datastruct::Vector<LoaderHandler *> *levelVector = _getLevelVector(oppositeDirection);
         logger_.debug("getting level with direction %d", oppositeDirection);
@@ -68,9 +68,9 @@ namespace loader {
 
         level::Level *level;
         if (levelIdx == -1) {
-            level = new level::Level(levelVector->at(random));
+            level = new level::Level(levelVector->at(random), player);
         } else {
-            level = new level::Level(levelVector->at(random), oppositeDirection, levelIdx);
+            level = new level::Level(levelVector->at(random), player, oppositeDirection, levelIdx);
         }
 
         // ricarica una nuova copia delle informazioni per essere consumata

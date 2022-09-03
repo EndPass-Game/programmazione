@@ -40,6 +40,12 @@ namespace manager {
         ~Level();
 
         /**
+         * @param direction il livello aggiunto dovrà avere una porta nella direzione opposta a quella indicata
+         * @returns l'index del livello creato
+         */
+        int addLevel(enums::Direction direction = enums::Direction::NONE);
+
+        /**
          * @brief stampa a schermo il livello scelto, se non è presente tale livello (indice invalido)
          * allora ritorna false, altrimenti true;
          * @param level: è l'indice del livello in cui andare

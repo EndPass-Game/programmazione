@@ -3,27 +3,22 @@
 #include <cstring>
 
 #include "manager/view-manager.hpp"
-#include "views/resizable-view.hpp"
-#include "views/screen-too-small.hpp"
+#include "views/static-text-view.hpp"
 
 namespace views {
-    class PauseView : public ResizableView {
+
+    class PauseView : public StaticTextView {
       private:
         bool quit = false;
         bool returnToGame = false;
-        const char *name_;
 
       public:
-        PauseView(Position pos);
+        PauseView();
 
         bool handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view, bool changedView) override;
 
         void handleInput(char input) override;
 
-        void render(bool force) override;
-
-        void handleScreenToSmall(manager::ViewManager *manager) override;
-
-        const char *getName() override;
+        void printText() override;
     };
 };  // namespace views
