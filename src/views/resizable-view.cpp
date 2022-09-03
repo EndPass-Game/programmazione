@@ -1,8 +1,11 @@
 #include "views/resizable-view.hpp"
 
 namespace views {
+    ResizableView::ResizableView(Position pos, Size s, const char *name)
+        : View(pos, s, name) {}
+
     ResizableView::ResizableView(Position pos, Size s)
-        : View(pos, s), name_("ResizableView") {
+        : ResizableView(pos, s, "ResizableView") {
     }
 
     void ResizableView::recenterWindow(Size screen) {
@@ -25,10 +28,6 @@ namespace views {
 
     void ResizableView::render(bool forces) {
         View::render(forces);
-    }
-
-    const char *ResizableView::getName() {
-        return name_;
     }
 
 };  // namespace views

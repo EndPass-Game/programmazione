@@ -11,8 +11,9 @@ namespace loader {
         this->loadedObjects_->resize(numeroPoteri);
         for (int i = 0; i < numeroPoteri; i++) {
             Position startPosition;
-            fscanf(file, "%d %d\n", &startPosition.riga, &startPosition.colonna);
-            collectables::Power *power = new collectables::Power(startPosition);
+            int id;
+            fscanf(file, "%d %d %d\n", &startPosition.riga, &startPosition.colonna, &id);
+            collectables::Power *power = new collectables::Power(startPosition, id);
             this->loadedObjects_->at(i) = power;
         }
     };

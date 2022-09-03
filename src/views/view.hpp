@@ -14,7 +14,7 @@ namespace views {
         WINDOW *window;
         Size winSize;
         Position winPosition;
-        const char *name_ = "View";
+        const char *name_;
 
       public:
         // viene chiamata prima del render, modifica la view manager a seconda delle
@@ -32,9 +32,12 @@ namespace views {
         // la funzione che viene chiamata per aggiornare lo schermo e il forces obbliga a riprintare
         virtual void render(bool forces);
 
-        // create the windows
+        void clearWindow();
+
         View(Position pos, Size size);
-        // delete the window
+
+        View(Position pos, Size size, const char *name);
+
         virtual ~View();
 
         virtual const char *getName();

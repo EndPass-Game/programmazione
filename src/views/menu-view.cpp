@@ -4,11 +4,10 @@
 
 namespace views {
     MenuView::MenuView()
-        : ResizableView({0, 0}, kMenuSize_), name_("MenuView") {}
+        : StaticTextView({0, 0}, manager::kMenuSize, "MenuView") {}
 
-    // fa il override di questa funzione da view
     bool MenuView::handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view, bool changedView) {
-        if (ResizableView::handleScreenBeforeRender(screen, view, changedView))
+        if (StaticTextView::handleScreenBeforeRender(screen, view, changedView))
             return true;
         if (quit_) {
             view->clear();
@@ -19,41 +18,31 @@ namespace views {
         }
         return false;
     }
-    // fa il override di questa funzione da view
+
     void MenuView::handleInput(char input) {
         switch (input) {
             case 'q':
+            case 'Q':
                 quit_ = true;
                 break;
-            case '\n':
+            case ' ':
                 start_ = true;
                 break;
         }
     }
 
-    void MenuView::printMenu(bool force) {
+    void MenuView::printMenu_() {
         for (int riga = 0; riga < kAsciiArtAltezza_; riga++) {
-            mvwprintw(window, riga + 1, (kMenuSize_.colonna - strlen(kAsciiArt_[riga])) / 2, kAsciiArt_[riga]);
+            mvwprintw(window, riga + 1, (manager::kMenuSize.colonna - strlen(kAsciiArt_[riga])) / 2, kAsciiArt_[riga]);
         }
     }
 
-    // fa il override di questa funzione da view
-    void MenuView::render(bool force) {
-        printMenu(force);
-        char start[] = "Premere <Invio> per incominciare";
-        mvwprintw(window, 6, (kMenuSize_.colonna - strlen(start)) / 2, start);
-        char quit[] = "Premere 'q' per abbandonare";
-        mvwprintw(window, 8, (kMenuSize_.colonna - strlen(quit)) / 2, quit);
-        ResizableView::render(force);
-    }
-
-    void MenuView::handleScreenToSmall(manager::ViewManager *manager) {
-        ScreenTooSmallView *toSmall = new ScreenTooSmallView(kMenuSize_);
-        manager->pushView(toSmall);
-    }
-
-    const char *MenuView::getName() {
-        return name_;
+    void MenuView::printText() {
+        printMenu_();
+        char start[] = "Premere <Space> per incominciare";
+        mvwprintw(window, 6, (manager::kMenuSize.colonna - strlen(start)) / 2, start);
+        char quit[] = "Premere <Q> per abbandonare";
+        mvwprintw(window, 8, (manager::kMenuSize.colonna - strlen(quit)) / 2, quit);
     }
 
 };  // namespace views

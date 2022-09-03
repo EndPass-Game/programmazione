@@ -7,11 +7,14 @@
 
 namespace collectables {
 
-    Power::Power(Position posObj)
-        : Displayable(posObj, 'C') {}
+    Power::Power(Position posObj, int id)
+        : Displayable(posObj, 'C'), id_(id) {}
+
+    int Power::getId() {
+        return id_;
+    }
 
     enums::CollisionType Power::getCollisionType() {
         return enums::CollisionType::POWER;
     }
-
 }  // namespace collectables

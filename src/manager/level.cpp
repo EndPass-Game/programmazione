@@ -13,6 +13,7 @@ Funzioni:
 
 #include <ncurses.h>
 
+#include "entities/weapon/bullet.hpp"
 #include "enums/direction.hpp"
 #include "loader/level-provider.hpp"
 
@@ -25,7 +26,7 @@ namespace manager {
         levelIdx_ = new StateWatcher<int>(-1);  // -1 indica che non è stato ancora caricato nessun livello
         logQueue_ = new LogQueue(manager::kLogAreaSize.colonna - 2, manager::kLogAreaSize.riga - 2, manager::kPaddingLogArea);
 
-        int newLevelIdx = addLevel();
+        int newLevelIdx = _addLevel();
         levelIdx_->setCurrent(newLevelIdx);
         player_->setPosition(levels_[newLevelIdx]->getLastPlayerPosition());
         goToLevel(newLevelIdx);
@@ -44,15 +45,15 @@ namespace manager {
         return player_;
     }
 
-    int Level::addLevel(enums::Direction direction) {
+    int Level::_addLevel(enums::Direction direction) {
         logger_.info("Adding new level");
 
         loader::LevelProvider &levelProvider = loader::LevelProvider::getInstance();
 
         if (levelIdx_->getCurrent() == -1) {
-            levels_.push_back(levelProvider.getLevel(direction));
+            levels_.push_back(levelProvider.getLevel(direction, player_));
         } else {
-            levels_.push_back(levelProvider.getLevel(direction, levelIdx_->getCurrent()));
+            levels_.push_back(levelProvider.getLevel(direction, player_, levelIdx_->getCurrent()));
         }
 
         return (int) levels_.size() - 1;
@@ -81,16 +82,23 @@ namespace manager {
             levels_[levelIdx_->getLast()]->clear(win);
             levelIdx_->setCurrent(levelIdx_->getCurrent());  // FIX PG-34
         }
-
-        player_->clearLast(win);
-        player_->render(win, force);
-
-        levels_[levelIdx_->getCurrent()]->render(win, force);
-        // TODO(ang): print player ( valuta se è meglio printarlo qui o in level/level
-        // io pensavo fosse meglio il level/level (gio))
+        levels_[levelIdx_->getCurrent()]->act(this);
+        levels_[levelIdx_->getCurrent()]->render(win, force, this);
     }
 
     LogQueue *Level::getLogQueue() {
         return logQueue_;
+    }
+
+    level::Level *Level::getLevel() {
+        return levels_[levelIdx_->getCurrent()];
+    }
+
+    void Level::generateLevel(level::DoorSegment *door) {
+        if (!door->isOpen()) {
+            return;
+        }
+        int nextLevelIdx = _addLevel(door->getFacingDir());
+        door->setNextLevelIdx(nextLevelIdx);
     }
 }  // namespace manager

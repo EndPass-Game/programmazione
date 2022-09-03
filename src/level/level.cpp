@@ -2,22 +2,28 @@
 
 #include "collectables/power.hpp"
 #include "datastruct/vector.hpp"
+#include "entities/enemy.hpp"
+#include "entities/entity.hpp"
 #include "entities/player.hpp"
 #include "enums/collision-type.hpp"
 #include "gamestruct/size.hpp"
+#include "level/collidable.hpp"
 #include "level/door-segment.hpp"
 #include "level/wall-segment.hpp"
 #include "manager/level.hpp"
 
 namespace level {
-    Level::Level(loader::LoaderHandler *loader)
+    Level::Level(loader::LoaderHandler *loader, Player *player)
         : lastPlayerPosition_(1, 1),
+          player_(player),
           segment_(),
           artifacts_(),
           powers_(),
-          entities_(),
+          enemies_(),
+          bullets_(),
           playerPositions_(),
-          numOfDoors_(0) {
+          numOfDoors_(0),
+          logger_("level::Level") {
         datastruct::Vector<WallSegment *> *segments = nullptr;
         segments = loader->wallLoader.getLoadedObjects();
         if (segments != nullptr) {
@@ -40,6 +46,14 @@ namespace level {
         playerPositions_ = loader->doorLoader.getPlayerPositions();
         lastPlayerPosition_ = playerPositions_.at(0);
 
+        datastruct::Vector<LocalDoor *> *localDoors = nullptr;
+        localDoors = loader->localDoorLoader.getLoadedObjects();
+        if (localDoors != nullptr) {
+            for (unsigned int i = 0; i < localDoors->size(); i++) {
+                localDoors_.push_back(localDoors->at(i));
+            }
+        }
+
         datastruct::Vector<collectables::Artifact *> *artifacts = nullptr;
         artifacts = loader->artifactLoader.getLoadedObjects();
         if (artifacts != nullptr) {
@@ -55,10 +69,18 @@ namespace level {
                 powers_.push_back(powers->at(i));
             }
         }
+
+        datastruct::Vector<entities::Enemy *> *enemies = nullptr;
+        enemies = loader->enemyLoader.getLoadedObjects();
+        if (enemies != nullptr) {
+            for (unsigned int i = 0; i < enemies->size(); i++) {
+                enemies_.push_back(enemies->at(i));
+            }
+        }
     }
 
-    Level::Level(loader::LoaderHandler *loader, enums::Direction direction, int oldLevelIdx)
-        : Level(loader) {
+    Level::Level(loader::LoaderHandler *loader, Player *player, enums::Direction direction, int oldLevelIdx)
+        : Level(loader, player) {
         logger_.debug("creating level pointing to leveldIdx: %d", oldLevelIdx);
 
         DoorSegment *chosenDoor = nullptr;
@@ -82,7 +104,7 @@ namespace level {
         }
 
         chosenDoor->setNextLevelIdx(oldLevelIdx);
-        chosenDoor->openDoor();
+        chosenDoor->open();
     }
 
     Level::~Level() {
@@ -90,8 +112,8 @@ namespace level {
             delete segment_[i];
         }
 
-        for (unsigned int i = 0; i < entities_.size(); i++) {
-            delete entities_[i];
+        for (unsigned int i = 0; i < enemies_.size(); i++) {
+            delete enemies_[i];
         }
 
         for (unsigned int i = 0; i < artifacts_.size(); i++) {
@@ -100,6 +122,14 @@ namespace level {
 
         for (unsigned int i = 0; i < powers_.size(); i++) {
             delete powers_[i];
+        }
+
+        for (unsigned int i = 0; i < bullets_.size(); i++) {
+            delete bullets_[i];
+        }
+
+        for (unsigned int i = 0; i < localDoors_.size(); i++) {
+            delete localDoors_[i];
         }
     }
 
@@ -111,37 +141,94 @@ namespace level {
         lastPlayerPosition_ = pos;
     }
 
-    bool Level::isPositionEmpty(Position pos) {
+    bool Level::isPositionEmpty(Position pos, manager::Level *levelManager) {
         return getCollision(pos) == nullptr;
     }
 
-    Collidable *Level::getCollision(Position pos) {
+    Collidable *Level::getCollision(Position pos) const {
         for (unsigned int i = 0; i < segment_.size(); i++) {
             if (segment_[i]->isPositionInSegment(pos)) {
                 return (Collidable *) segment_[i];
             }
         }
+
+        for (unsigned int i = 0; i < localDoors_.size(); i++) {
+            if (localDoors_[i]->isPositionInSegment(pos)) {
+                return (Collidable *) localDoors_[i];
+            }
+        }
+
         for (unsigned int i = 0; i < artifacts_.size(); i++) {
             if (artifacts_[i]->getPosition() == pos) {
                 collectables::Artifact *c = artifacts_[i];
-                artifacts_.remove(i);
                 return (Collidable *) c;
             }
         }
+
         for (unsigned int i = 0; i < powers_.size(); i++) {
             if (powers_[i]->getPosition() == pos) {
                 collectables::Power *c = powers_[i];
-                powers_.remove(i);
                 return (Collidable *) c;
             }
         }
 
-        // TODO(simo): gestire altri oggetti di collisione
-        // es: entity, ...
+        for (unsigned int i = 0; i < enemies_.size(); i++) {
+            if (enemies_[i]->getPosition() == pos) {
+                entities::Enemy *c = enemies_[i];
+                return (Collidable *) c;
+            }
+        }
+
+        if (player_->getPosition() == pos) {
+            return (Collidable *) player_;
+        }
+
         return nullptr;
     }
 
-    void Level::render(WINDOW *win, bool force) {
+    void Level::addBullet(weapon::Bullet *bullet) {
+        bullets_.push_back(bullet);
+    }
+
+    void Level::deleteCollidable(Collidable *collidable) {
+        enums::CollisionType type = collidable->getCollisionType();
+        switch (type) {
+            case enums::CollisionType::ARTIFACT:
+                artifacts_.remove(artifacts_.indexOf((collectables::Artifact *) collidable));
+                delete (collectables::Artifact *) collidable;
+                break;
+            case enums::CollisionType::POWER:
+                powers_.remove(powers_.indexOf((collectables::Power *) collidable));
+                delete (collectables::Power *) collidable;
+                break;
+            // supponendo che gli entity da eliminare siano sempre e solo gli enemies
+            case enums::CollisionType::ENTITY:
+                enemies_.remove(enemies_.indexOf((entities::Enemy *) collidable));
+                delete (entities::Enemy *) collidable;
+                break;
+            default:
+                logger_.warning("deleteCollidable: type is not supported, not deleted");
+                break;
+        }
+    }
+
+    void Level::render(WINDOW *win, bool force, manager::Level *levelManager) {
+        player_->render(win, force);
+
+        for (unsigned int i = 0; i < enemies_.size(); i++) {
+            enemies_[i]->render(win, force);
+
+            if (enemies_[i]->isDead()) {
+                enemies_[i]->clear(win);
+                delete enemies_[i];
+                enemies_.remove(i);
+
+                if (this->isComplete()) {
+                    this->openAllDoors();
+                }
+            }
+        }
+
         for (unsigned int i = 0; i < segment_.size(); i++) {
             segment_[i]->render(win, force);
         }
@@ -149,23 +236,89 @@ namespace level {
         for (unsigned int i = 0; i < artifacts_.size(); i++) {
             artifacts_[i]->render(win, force);
         }
+
         for (unsigned int i = 0; i < powers_.size(); i++) {
             powers_[i]->render(win, force);
         }
 
-        // TODO(ang): come fare a spostare gli entità?
-        // 1. deve updatare questo oppure lo fa un render in un altro momento????
+        unsigned int bulletIdx = 0;
+        while (bulletIdx < bullets_.size()) {
+            if (bullets_[bulletIdx]->isDestroyed()) {
+                bullets_[bulletIdx]->clear(win);
+                delete bullets_[bulletIdx];
+                bullets_.remove(bulletIdx);
+            } else {
+                bullets_[bulletIdx]->clearLast(win);
+                bullets_[bulletIdx]->render(win, force);
+                bulletIdx++;
+            }
+        }
+
+        for (unsigned int i = 0; i < localDoors_.size(); i++) {
+            localDoors_[i]->render(win, force);
+        }
     }
 
     void Level::clear(WINDOW *win) {
         for (unsigned int i = 0; i < segment_.size(); i++) {
             segment_[i]->clear(win);
         }
+
         for (unsigned int i = 0; i < artifacts_.size(); i++) {
             artifacts_[i]->clear(win);
         }
+
         for (unsigned int i = 0; i < powers_.size(); i++) {
             powers_[i]->clear(win);
+        }
+
+        for (unsigned int i = 0; i < bullets_.size(); i++) {
+            // TODO: possibile bug che il proiettile resti bloccato nel punto in cui
+            // abbiamo lasciato il livello?? è un bug??
+            bullets_[i]->clear(win);
+        }
+
+        for (unsigned int i = 0; i < enemies_.size(); i++) {
+            enemies_[i]->clear(win);
+        }
+        player_->clear(win);
+
+        for (unsigned int i = 0; i < localDoors_.size(); i++) {
+            localDoors_[i]->clear(win);
+        }
+    }
+
+    void Level::act(manager::Level *levelManager) {
+        for (unsigned int i = 0; i < enemies_.size(); i++) {
+            enemies_[i]->act(levelManager);
+        }
+
+        for (unsigned int i = 0; i < bullets_.size(); i++) {
+            bullets_[i]->act(levelManager);
+        }
+
+        player_->act(levelManager);
+    }
+
+    bool Level::isComplete() {
+        logger_.debug("size of enemies is %d and of artifacts %d", enemies_.size(), artifacts_.size());
+        logger_.debug("value of the boolean is %d", enemies_.size() == 0 && artifacts_.size() == 0);
+        return enemies_.size() == 0 && artifacts_.size() == 0;
+    }
+
+    void Level::openLocalDoor(int id) {
+        for (unsigned int i = 0; i < localDoors_.size(); i++) {
+            if (localDoors_[i]->getId() == id) {
+                localDoors_[i]->open();
+            }
+        }
+    }
+
+    void Level::openAllDoors() {
+        logger_.info("All doors are open");
+        // si assume che le porte siano nell'ultima parte del segmento
+        for (unsigned int i = segment_.size() - numOfDoors_; i < segment_.size(); i++) {
+            dynamic_cast<DoorSegment *>(segment_[i])->open();
         }
     }
 };  // namespace level

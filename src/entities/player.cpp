@@ -16,31 +16,31 @@ Altro
 */
 #include "entities/player.hpp"
 
-#include "entities/entity.hpp"
 #include "enums/collision-type.hpp"
 #include "enums/direction.hpp"
 #include "level/collidable.hpp"
 #include "manager/level.hpp"
 
 Player::Player()
-    : Entity(12, 3,  // TODO: gestire queste costanti hardcoded in un file di setting
-             {1, 1}, /* position di spawn */
-             'P')    /* charattere mostrato su schermo */
-{
-    powers_ = 0;
-    score_ = 0;
-}
-// TODO
-void Player::attack() {
-    logger_.info("attacking");
-}
-
-// TODO
-void Player::pickup() {}
+    : Entity(12, 3,   // vita e attacco
+             {1, 1},  // position di spawn
+             'P'),    // charattere mostrato su schermo
+      powers_(0),
+      score_(0),
+      coolDown_(0),
+      coolDownMax_(10),  // può sparare ogni 5 frame
+      maxLife_(12),
+      logger_("Player") {}
 
 void Player::addPower() {
     logger_.info("picked up power");
     this->powers_++;
+    this->life_ = maxLife_;
+}
+
+void Player::setPosition(Position pos) {
+    Displayable::setPosition(pos);
+    nextPosition_ = Movable::_computeNextPosition(lastNotNullDirection_);
 }
 
 void Player::removePower() {
@@ -52,51 +52,96 @@ int Player::getPowers() {
     return powers_;
 }
 
-void Player::_handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door, Position pos) {
+void Player::_handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door) {
     logger_.info("collided with door");
-    if (door->getNextLevelIdx() == -1) {
-        int nextLevelIdx = levelManager->addLevel();
-        door->setNextLevelIdx(nextLevelIdx);
-    }
-
-    if (door->isDoorOpen()) {
+    if (door->isOpen()) {
+        if (door->getNextLevelIdx() == -1) {
+            levelManager->getLogQueue()->addEvent("Nuovo livello creato.");
+            this->incrementScore(100);
+            levelManager->generateLevel(door);
+        }
         logger_.info("moving to level with idx %d", door->getNextLevelIdx());
+        levelManager->getLogQueue()->addEvent("Cambiato livello");
         levelManager->goToLevel(door->getNextLevelIdx());
     } else {
-        if (levelManager->getPlayer()->getPowers() > 0) {
-            logger_.info("opening door with idx %d", door->getNextLevelIdx());
-            levelManager->getPlayer()->removePower();
-            door->openDoor();  // temporaneo
-        }
+        levelManager->getLogQueue()->addEvent("la porta e' chiusa, finisci il livello per aprirla");
     }
 }
 
-void Player::_handleWallCollision(manager::Level *levelManager, level::WallSegment *wall, Position pos) {
+void Player::_handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact) {
+    level::Level *level = levelManager->getLevel();
+    levelManager->getLogQueue()->addEvent("Artefatto raccolto");
+    this->incrementScore(100);
+    this->setLife(this->getLife() + artifact->getLifeUpgrade());
+    this->maxLife_ += artifact->getLifeUpgrade();
+    this->setPosition(nextPosition_);
+
+    levelManager->getLevel()->deleteCollidable((Collidable *) artifact);
+
+    if (level->isComplete()) {
+        level->openAllDoors();
+    }
 }
 
-void Player::_handleEntityCollision(manager::Level *levelManager, Entity *entity, Position pos) {
+void Player::_handlePowerCollision(manager::Level *levelManager, collectables::Power *power) {
+    level::Level *currLevel = levelManager->getLevel();
+    currLevel->openLocalDoor(power->getId());
+    this->addPower();
+    levelManager->getLogQueue()->addEvent("Hai raccolto un potere");
+    this->incrementScore(100);
+    this->setPosition(nextPosition_);
+    currLevel->deleteCollidable((Collidable *) power);
 }
 
-void Player::_handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact, Position pos) {
-    collectables::Artifact *art;
-    art = dynamic_cast<collectables::Artifact *>(artifact);
-    levelManager->getPlayer()->setLife(levelManager->getPlayer()->getLife() + art->getLifeUpgrade());
-    levelManager->getPlayer()->setPosition(pos);
-    delete art;
+void Player::_handleNoneCollision(manager::Level *levelManager) {
+    this->setPosition(nextPosition_);
 }
 
-void Player::_handlePowerCollision(manager::Level *levelManager, collectables::Power *power, Position pos) {
-    levelManager->getPlayer()->addPower();
-    levelManager->getPlayer()->setPosition(pos);
-}
-
-void Player::_handleNoneCollision(manager::Level *levelManager, Position pos) {
-    levelManager->getPlayer()->setPosition(pos);
-}
 int Player::getScore() {
     return score_;
 }
 
 void Player::incrementScore(int increment) {
     score_ += increment;
+}
+
+void Player::resetCoolDown() {
+    coolDown_ = coolDownMax_;
+}
+
+void Player::coolDown() {
+    coolDown_--;
+    if (coolDown_ < 0) {
+        coolDown_ = 0;
+    }
+}
+
+bool Player::canFire() {
+    return coolDown_ == 0;
+}
+
+void Player::attack(manager::Level *levelManager) {
+    if (!this->canFire()) {
+        return;
+    }
+    level::Level *level = levelManager->getLevel();
+
+    this->resetCoolDown();
+    logger_.info("player firing a bullet");
+    Position bulletPosition = this->getNextPosition();
+    logger_.debug("next position: %d, %d", bulletPosition.colonna, bulletPosition.riga);
+    logger_.debug("curr position: %d, %d", this->getPosition().colonna, this->getPosition().riga);
+    level::Collidable *collision = level->getCollision(bulletPosition);
+    if (collision == nullptr) {
+        weapon::Bullet *bullet = new weapon::Bullet(bulletPosition, this->getLastNotNullDirection(), this->getAttack());
+        level->addBullet(bullet);
+    } else if (collision->getCollisionType() == enums::CollisionType::ENTITY) {
+        weapon::Bullet *bullet = new weapon::Bullet(this->getPosition(), this->getLastNotNullDirection(), this->getAttack());
+        level->addBullet(bullet);
+    }
+}
+
+void Player::act(manager::Level *levelManager) {
+    this->move(levelManager);
+    this->coolDown();
 }

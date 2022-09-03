@@ -26,12 +26,20 @@ namespace views {
         if (ResizableView::handleScreenBeforeRender(screen, view, changedView))
             return true;
 
-        if (quit) {
+        if (quit_) {
             view->popView();
-        } else if (pause) {
-            PauseView *pauseView = new PauseView({0, 0});
+        } else if (pause_) {
+            PauseView *pauseView = new PauseView();
             view->pushView(pauseView);
-            pause = false;
+            pause_ = false;
+        } else if (help_) {
+            HelpView *helpView = new HelpView({0, 0});
+            view->pushView(helpView);
+            help_ = false;
+        } else if (levelManager_->getPlayer()->isDead()) {
+            view->popView();
+            EndView *endView = new EndView();
+            view->pushView(endView);
         }
         return false;
     }
@@ -39,10 +47,13 @@ namespace views {
     void GameView::handleInput(char input) {
         switch (input) {
             case 'q':
-                quit = true;
+                quit_ = true;
                 break;
             case 'p':
-                pause = true;
+                pause_ = true;
+                break;
+            case 'h':
+                help_ = true;
                 break;
             default:
                 gameSubView_->handleInput(input);
@@ -51,7 +62,6 @@ namespace views {
     }
 
     void GameView::render(bool force) {
-        // TODO(ang): function that has to handle all the creature moves
         logSubView_->render(force);
         itemSubView_->render(force);
         gameSubView_->render(force);
@@ -59,7 +69,7 @@ namespace views {
     }
 
     void GameView::handleScreenToSmall(manager::ViewManager *manager) {
-        PauseView *pauseView = new PauseView({0, 0});
+        PauseView *pauseView = new PauseView();
         manager->pushView(pauseView);
         ScreenTooSmallView *toSmall = new ScreenTooSmallView(manager::kGameWindowsSize);
         manager->pushView(toSmall);

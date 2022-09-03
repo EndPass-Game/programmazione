@@ -3,6 +3,7 @@
 namespace views {
     GameSubView::GameSubView(WINDOW *win, manager::Level *levelManager)
         : SubView(win, {0, 0}, manager::kGameAreaSize), levelManager_(levelManager) {
+        levelManager_->getLogQueue()->addEvent("Benvenuti nel gioco, Cliccare <h> per vedere i comandi");
     }
 
     void GameSubView::handleInput(char input) {
@@ -19,12 +20,13 @@ namespace views {
             case 's':
                 levelManager_->getPlayer()->setDirection(enums::Direction::DOWN);
                 break;
+            case 'j':
+                levelManager_->getPlayer()->attack(levelManager_);
+                break;
         }
     }
     void GameSubView::render(bool force) {
         SubView::render(force);
-        levelManager_->getPlayer()->move(levelManager_);
         levelManager_->render(subWin_, force);
     }
-
 };  // namespace views

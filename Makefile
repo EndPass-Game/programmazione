@@ -15,6 +15,10 @@ OBJS_NO_BUILD_PATH := $(patsubst %.cpp, %.o, $(sources))
 OBJS = $(addprefix $(BUILD_PATH)/, $(OBJS_NO_BUILD_PATH))
 TESTS = $(shell find $(TESTS_PATH)/ -type f ! -name "test-template.cpp")
 
+makerun: 
+	make main
+	make run
+
 #build command
 main:  $(OBJS) 
 	$(CC) $(CFLAGS) $(INCLUDE_SRC) $^ $(LDFLAGS)  -o $(BUILD_PATH)/$@

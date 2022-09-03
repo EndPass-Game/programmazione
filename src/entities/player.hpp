@@ -26,30 +26,25 @@ Altro
 #include "level/collidable.hpp"
 #include "level/door-segment.hpp"
 #include "level/wall-segment.hpp"
+
 // Player: classe che contiene il personaggio
 class Player : public Entity {
   private:
-    // TODO inventario
     int powers_;
-    int score_ = 0;
-    Logger logger_ = Logger("player");
-    virtual void _handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door, Position pos);
-    virtual void _handleWallCollision(manager::Level *levelManager, level::WallSegment *wall, Position pos);
-    virtual void _handleEntityCollision(manager::Level *levelManager, Entity *entity, Position pos);
-    virtual void _handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact, Position pos);
-    virtual void _handlePowerCollision(manager::Level *levelManager, collectables::Power *power, Position pos);
-    virtual void _handleNoneCollision(manager::Level *levelManager, Position pos);
+    int score_;
+    int coolDown_;
+    int coolDownMax_;
+    int maxLife_;
+
+    Logger logger_;
+
+    virtual void _handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door) override;
+    virtual void _handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact) override;
+    virtual void _handlePowerCollision(manager::Level *levelManager, collectables::Power *power) override;
+    virtual void _handleNoneCollision(manager::Level *levelManager) override;
 
   public:
     Player();
-
-    // funzione che sarà chiamata dall'input del giocatore
-    // TODO: ricerca il mostro da attaccare in un certo range
-    // se trova applica il danno
-    void attack();
-
-    // TODO
-    void pickup();
 
     void addPower();
 
@@ -59,5 +54,17 @@ class Player : public Entity {
 
     int getScore();
 
+    void setPosition(Position pos);
+
     void incrementScore(int increment);
+
+    void resetCoolDown();
+
+    void coolDown();
+
+    bool canFire();
+
+    void attack(manager::Level *levelManager) override;
+
+    void act(manager::Level *levelManager) override;
 };

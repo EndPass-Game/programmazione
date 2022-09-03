@@ -3,14 +3,16 @@
 #include "collectables/artifact.hpp"
 #include "collectables/power.hpp"
 #include "datastruct/vector.hpp"
-#include "entities/entity.hpp"
+#include "entities/enemy.fwd.h"
+#include "entities/entity.fwd.h"
 #include "entities/player.hpp"
+#include "entities/shooter.hpp"
+#include "entities/weapon/bullet.hpp"
 #include "enums/direction.hpp"
-#include "gamestruct/displayable.hpp"
 #include "gamestruct/logger.hpp"
-#include "gamestruct/size.hpp"
 #include "level/collidable.hpp"
 #include "level/displayable-segment.hpp"
+#include "level/local-door.hpp"
 #include "loader/loader-handler.hpp"
 
 namespace level {
@@ -18,38 +20,69 @@ namespace level {
     class Level {
       private:
         Position lastPlayerPosition_;
+        Player *player_;
+
         datastruct::Vector<DisplayableSegment *> segment_;
         datastruct::Vector<collectables::Artifact *> artifacts_;
         datastruct::Vector<collectables::Power *> powers_;
-        datastruct::Vector<Entity *> entities_;
+        datastruct::Vector<entities::Enemy *> enemies_;
+        datastruct::Vector<weapon::Bullet *> bullets_;
         datastruct::Vector<Position> playerPositions_;
+        datastruct::Vector<LocalDoor *> localDoors_;
         int numOfDoors_;  // numero di porte nel livello
 
-        Logger logger_ = Logger("level::Level");
+        Logger logger_;
 
       public:
-        Level(loader::LoaderHandler *loader);
-        Level(loader::LoaderHandler *loader, enums::Direction direction, int oldLevelIdx);
+        Level(loader::LoaderHandler *loader, Player *player);
+        Level(loader::LoaderHandler *loader, Player *player, enums::Direction direction, int oldLevelIdx);
 
         ~Level();
 
-        // restituisce la posizione dell'ultimo player
+        /// restituisce la posizione dell'ultimo player
         Position getLastPlayerPosition();
 
-        // setta la posizione dell'ultimo player
+        /// setta la posizione dell'ultimo player
         void setLastPlayerPosition(Position pos);
 
-        // @brief renderizza il contenuto del livello
-        // @param force se true rirenderizza anche quelli non modificati
-        void render(WINDOW *win, bool force);
+        /// @brief renderizza il contenuto del livello
+        /// @param force se true rirenderizza anche quelli non modificati
+        void render(WINDOW *win, bool force, manager::Level *levelmanager);
 
-        // cancella tutto quanto printato su schermo
+        /// cancella tutto quanto printato su schermo
         void clear(WINDOW *win);
 
-        // @returns true se la posizione è vuota, false altrimenti
-        bool isPositionEmpty(Position pos);
+        /// @returns true se la posizione è vuota, false altrimenti
+        bool isPositionEmpty(Position pos, manager::Level *levelManager);
 
-        // @returns l'oggetto di collisione alla data posizione
-        Collidable *getCollision(Position pos);
+        void addBullet(weapon::Bullet *bullet);
+
+        /**
+         * @brief elimina il collidable in input.
+         * presuppone che sia dei seguenti tipi:
+         * - artifact
+         * - power
+         * - enemy
+         *
+         * E che questi siano presenti nella lista corrispondente in questo oggetto
+         */
+        void deleteCollidable(Collidable *collidable);
+
+        /**
+         * @brief muove tutti gli oggetti che si devono muovere
+         */
+        void act(manager::Level *levelManager);
+        /// @brief ritorna `true` se il livello è finito, `false` altrimenti
+        bool isComplete();
+
+        /// @brief opens the local door with the same id as input
+        /// @param id id of the local door to open
+        void openLocalDoor(int id);
+
+        /// @returns l'oggetto di collisione alla data posizione
+        Collidable *getCollision(Position pos) const;
+
+        /// @brief opens all local doors
+        void openAllDoors();
     };
 };  // namespace level
