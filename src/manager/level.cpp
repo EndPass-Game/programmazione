@@ -60,7 +60,7 @@ namespace manager {
     }
 
     level::Collidable *Level::getCollision(Position pos) {
-        return levels_[levelIdx_->getCurrent()]->getCollision(pos);
+        return this->getLevel()->getCollision(pos);
     }
 
     void Level::goToLevel(int levelIdx) {
@@ -70,9 +70,9 @@ namespace manager {
             logger_.error("Invalid go-to-level index, maximum index is: %u", levels_.size());
             return;
         }
-        levels_[levelIdx_->getCurrent()]->setLastPlayerPosition(player_->getPosition());
+        this->getLevel()->setLastPlayerPosition(player_->getPosition());
         levelIdx_->setCurrent(levelIdx);
-        player_->setPosition(levels_[levelIdx_->getCurrent()]->getLastPlayerPosition());
+        player_->setPosition(this->getLevel()->getLastPlayerPosition());
         return;
     }
 
@@ -82,8 +82,8 @@ namespace manager {
             levels_[levelIdx_->getLast()]->clear(win);
             levelIdx_->setCurrent(levelIdx_->getCurrent());  // FIX PG-34
         }
-        levels_[levelIdx_->getCurrent()]->act(this);
-        levels_[levelIdx_->getCurrent()]->render(win, force, this);
+        this->getLevel()->act(this);
+        this->getLevel()->render(win, force);
     }
 
     LogQueue *Level::getLogQueue() {
