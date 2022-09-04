@@ -25,7 +25,9 @@ namespace loader {
      * [numero di poteri]
      * pos.x e pos.y e id-associato-local-dor
      * una volta richiesto un oggetto, deve essere eliminato dal chiamante.
-     * [numero di nemici]
+     * [numero di kamikaze]
+     * pos.x e pos.y del nemico
+     * [numero di shooter]
      * pos.x e pos.y del nemico
      *
      * WARNING: Se il file è mal configurato, o non esiste proprio ci sarà un errore di runtime

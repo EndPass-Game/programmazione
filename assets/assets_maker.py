@@ -90,13 +90,21 @@ class Artifacts:
     def draw(self, board):
         board[self.x][self.y] = 'A'
 
-class Enemy: 
+class Shooter: 
     def __init__(self, x, y):
         self.x = x
         self.y = y
 
     def draw(self, board):
-        board[self.x][self.y] = 'E'
+        board[self.x][self.y] = 'S'
+
+class Kamikaze: 
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def draw(self, board):
+        board[self.x][self.y] = 'K'
 
 class Power: 
     def __init__(self, x, y):
@@ -155,15 +163,20 @@ def handle_print(file: str):
             line = line.split()
             stuff_to_print.append(Power(int(line[0]), int(line[1])))
 
-        n_enemy = int(f.readline())
-        print(f"{file} has {n_enemy} enemy")
-        for i in range(n_enemy):
+        n_kamikaze = int(f.readline())
+        print(f"{file} has {n_kamikaze} kamikaze")
+        for i in range(n_kamikaze):
             line = f.readline()
             line = line.split()
-            stuff_to_print.append(Enemy(int(line[0]), int(line[1])))
+            stuff_to_print.append(Kamikaze(int(line[0]), int(line[1])))
 
-            if (len(line) != 3):
-                raise Exception("Invalid enemy")
+        n_shooter = int(f.readline())
+        print(f"{file} has {n_shooter} shooter")
+        for i in range(n_shooter):
+            line = f.readline()
+            line = line.split()
+            stuff_to_print.append(Shooter(int(line[0]), int(line[1])))
+
 
     for i in stuff_to_print:
         i.draw(board)

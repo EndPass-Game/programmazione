@@ -105,7 +105,7 @@ namespace entities {
         int distColonna = posPlayer.colonna - posMine.colonna;
         enums::Direction luckyestDir;
         // se è troppo vicino
-        if (abs(distRiga) < 8 || abs(distColonna) < 8) {
+        if (abs(distRiga) < 8 && abs(distColonna) < 16) {
             if (abs(distRiga) < abs(distColonna)) {
                 luckyestDir = (distColonna < 0) ? enums::Direction::RIGHT : enums::Direction::LEFT;
             } else {
