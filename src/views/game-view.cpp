@@ -37,6 +37,7 @@ namespace views {
             view->pushView(helpView);
             help_ = false;
         } else if (levelManager_->getPlayer()->isDead()) {
+            manager::SharedInformation::getInstance().setLastPlayerScore(levelManager_->getPlayer()->getScore());
             view->popView();
             EndView *endView = new EndView();
             view->pushView(endView);
