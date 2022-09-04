@@ -2,6 +2,7 @@
 
 #include "entities/enemy.hpp"
 #include "entities/shooter.hpp"
+#include "entities/kamikaze.hpp"
 #include "gamestruct/position.hpp"
 
 namespace loader {
