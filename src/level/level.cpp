@@ -213,8 +213,6 @@ namespace level {
     }
 
     void Level::render(WINDOW *win, bool force) {
-        player_->render(win, force);
-
         for (unsigned int i = 0; i < enemies_.size(); i++) {
             enemies_[i]->render(win, force);
 
@@ -259,6 +257,10 @@ namespace level {
         for (unsigned int i = 0; i < localDoors_.size(); i++) {
             localDoors_[i]->render(win, force);
         }
+
+        /// WARNING: spostare il player sopra ai bullets potrebbe causare
+        /// leggeri problemi di rendering. VEDI PG-72
+        player_->render(win, force);
     }
 
     void Level::clear(WINDOW *win) {

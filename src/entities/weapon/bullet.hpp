@@ -15,6 +15,12 @@ namespace weapon {
         int damage_;
         bool isDestroyed_;
 
+        /**
+         * @brief applica il danno alla collisione, se possibile (solo entity).
+         * @returns se ha colliso o meno.
+         */
+        bool _handleCollision(manager::Level *levelManager, level::Collidable *collision);
+
       public:
         Bullet(Position position, enums::Direction direction, int damage = 1);
 
@@ -24,6 +30,10 @@ namespace weapon {
 
         void move();
 
+        /**
+         * @brief gestisce il danno all'entità alla prossima collisione
+         * @returns true se il proiettile ha avuto una collisione
+         */
         bool checkCollision(manager::Level *levelManager);
 
         void render(WINDOW *win, bool force) override;
