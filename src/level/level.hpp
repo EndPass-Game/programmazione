@@ -68,7 +68,7 @@ namespace level {
          * @brief renderizza il contenuto del livello
          * @param force se true rirenderizza anche quelli non modificati
          */
-        void render(WINDOW *win, bool force, manager::Level *levelmanager);
+        void render(WINDOW *win, bool force);
 
         /**
          * @brief cancella tutto quanto printato su schermo
