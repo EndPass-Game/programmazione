@@ -1,6 +1,7 @@
 #pragma once
 
 #include "manager/level.hpp"
+#include "manager/shared-information.hpp"
 #include "manager/view-manager.hpp"
 #include "views/end-view.hpp"
 #include "views/game-sub-view.hpp"

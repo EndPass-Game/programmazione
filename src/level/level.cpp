@@ -213,7 +213,6 @@ namespace level {
     }
 
     void Level::render(WINDOW *win, bool force) {
-
         for (unsigned int i = 0; i < enemies_.size(); i++) {
             enemies_[i]->render(win, force);
 

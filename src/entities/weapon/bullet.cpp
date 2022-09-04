@@ -83,6 +83,7 @@ namespace weapon {
                 }
             }
         }
+        
         return true;
     }
 }  // namespace weapon
