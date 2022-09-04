@@ -12,20 +12,20 @@ namespace loader {
         fscanf(file, "%d", &numeroKamikaze);
         this->loadedObjects_->resize(numeroKamikaze);
         for (int i = 0; i < numeroKamikaze; i++) {
-           Position startPosition;
-           fscanf(file, "%d %d\n", &startPosition.riga, &startPosition.colonna);
-           entities::Enemy *enemy = new entities::Kamikaze(startPosition);
-           this->loadedObjects_->at(i) = enemy;
+            Position startPosition;
+            fscanf(file, "%d %d\n", &startPosition.riga, &startPosition.colonna);
+            entities::Enemy *enemy = new entities::Kamikaze(startPosition);
+            this->loadedObjects_->at(i) = enemy;
         }
 
         int numeroShooter;
         fscanf(file, "%d", &numeroShooter);
-        this->loadedObjects_->resize(numeroKamikaze+numeroShooter);
+        this->loadedObjects_->resize(numeroKamikaze + numeroShooter);
         for (int i = 0; i < numeroShooter; i++) {
             Position startPosition;
             fscanf(file, "%d %d\n", &startPosition.riga, &startPosition.colonna);
             entities::Enemy *enemy = new entities::Shooter(startPosition);
-            this->loadedObjects_->at(numeroKamikaze+i) = enemy;
+            this->loadedObjects_->at(numeroKamikaze + i) = enemy;
         }
     };
 }  // namespace loader
