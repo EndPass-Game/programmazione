@@ -1,6 +1,8 @@
 #pragma once
 
+#include "gamestruct/string-utility.hpp"
 #include "manager/manager-settings.hpp"
+#include "manager/shared-information.hpp"
 #include "views/game-view.hpp"
 #include "views/static-text-view.hpp"
 

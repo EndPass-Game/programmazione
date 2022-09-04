@@ -4,7 +4,7 @@
 
 namespace views {
     EndView::EndView()
-        : StaticTextView({0, 0}, manager::kMenuSize, "EndView") {}
+        : StaticTextView({0, 0}, manager::kGameAreaSize, "EndView") {}
 
     bool EndView::handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view, bool changedView) {
         if (StaticTextView::handleScreenBeforeRender(screen, view, changedView))
@@ -34,16 +34,21 @@ namespace views {
 
     void EndView::printMenu_() {
         for (int riga = 0; riga < kAsciiArtAltezza_; riga++) {
-            mvwprintw(window, riga + 1, (manager::kMenuSize.colonna - strlen(kAsciiArt_[riga])) / 2, kAsciiArt_[riga]);
+            mvwprintw(window, riga + 1, (manager::kGameAreaSize.colonna - strlen(kAsciiArt_[riga])) / 2, kAsciiArt_[riga]);
         }
     }
 
     void EndView::printText() {
         printMenu_();
+        char scoreText[] = "Hai fatto uno score di:";
+        mvwprintw(window, 8, (manager::kGameAreaSize.colonna - strlen(scoreText)) / 2, scoreText);
+        char *score = stringUtility::intToString(manager::SharedInformation::getInstance().getLastPlayerScore());
+        mvwprintw(window, 10, (manager::kGameAreaSize.colonna - strlen(score)) / 2, score);
+        delete[] score;
         char start[] = "Premere <Space> per tornare al menu";
-        mvwprintw(window, 6, (manager::kMenuSize.colonna - strlen(start)) / 2, start);
+        mvwprintw(window, 12, (manager::kGameAreaSize.colonna - strlen(start)) / 2, start);
         char quit[] = "Premere <Q> per abbandonare";
-        mvwprintw(window, 8, (manager::kMenuSize.colonna - strlen(quit)) / 2, quit);
+        mvwprintw(window, 14, (manager::kGameAreaSize.colonna - strlen(quit)) / 2, quit);
     }
 
 };  // namespace views
