@@ -3,15 +3,15 @@ X                           P                              X
 X                                                          X
 XP                                                        PX
 X                                                          X
-X                                                          X
-+                                                          +
-|XX                                                        |
-|AX                           C                            |
-|XX                                                        |
-|AX                                                        |
-|XX                                                        |
-|AX                                                        |
-|XX                                                        |
+X                        XXXXXXXXXXX                       X
++                        X         X                       +
+|XX                      X         X                     XX|
+|AX C                    X   S K   X                   C XA|
+|XX                      X         X                     XX|
+|                        XXXXXXXXXXX                       |
+|XX                           C                          XX|
+|AX C                                                  C XA|
+|XX                                                      XX|
 |                                                          |
-| C                         P                             C|
+|                           P                              |
 +-----------------------+XXXXXXX+-------------------------+ 
