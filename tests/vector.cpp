@@ -1,4 +1,4 @@
-#include "datastruct/vector.hpp"
+#include "datastruct/vector.tpp"
 
 #include <cassert>
 #include <iostream>

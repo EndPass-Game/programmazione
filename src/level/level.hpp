@@ -2,7 +2,7 @@
 
 #include "collectables/artifact.hpp"
 #include "collectables/power.hpp"
-#include "datastruct/vector.hpp"
+#include "datastruct/vector.tpp"
 #include "entities/enemy.fwd.h"
 #include "entities/entity.fwd.h"
 #include "entities/player.hpp"
@@ -16,9 +16,16 @@
 #include "loader/loader-handler.hpp"
 
 namespace level {
-    // contenere tutti i oggetti utili per il singolo livello
+    /**
+     * @brief Questa classe contiene tutti gli oggetti utili per il singolo livello
+     */
     class Level {
       private:
+        /**
+         * @brief ultima posizione del player in questo livello
+         * utilizzato principalmente per avere consistenza di posizione
+         * ad ogni cambio di livello
+         */
         Position lastPlayerPosition_;
         Player *player_;
 
@@ -34,26 +41,39 @@ namespace level {
         Logger logger_;
 
       public:
+        /**
+         * @brief Costruttore di un livello
+         *
+         * @param player il player del manager
+         * @param loaderHandler il loader che contiene i dati del livello
+         */
         Level(loader::LoaderHandler *loader, Player *player);
+
+        /**
+         * @brief Construct a new Level object
+         *
+         * @param loader il loader che contiene i dati del livello
+         * @param player il player del manager
+         * @param direction specifica di caricare solo livelli in questa direzione
+         * @param oldLevelIdx il collegamento al livello precedente
+         */
         Level(loader::LoaderHandler *loader, Player *player, enums::Direction direction, int oldLevelIdx);
 
+        /**
+         * @brief Distruttore che elimina ogni oggetto contenuto nel livello
+         */
         ~Level();
 
-        /// restituisce la posizione dell'ultimo player
-        Position getLastPlayerPosition();
-
-        /// setta la posizione dell'ultimo player
-        void setLastPlayerPosition(Position pos);
-
-        /// @brief renderizza il contenuto del livello
-        /// @param force se true rirenderizza anche quelli non modificati
+        /**
+         * @brief renderizza il contenuto del livello
+         * @param force se true rirenderizza anche quelli non modificati
+         */
         void render(WINDOW *win, bool force);
 
-        /// cancella tutto quanto printato su schermo
+        /**
+         * @brief cancella tutto quanto printato su schermo
+         */
         void clear(WINDOW *win);
-
-        /// @returns true se la posizione è vuota, false altrimenti
-        bool isPositionEmpty(Position pos, manager::Level *levelManager);
 
         void addBullet(weapon::Bullet *bullet);
 
@@ -70,19 +90,20 @@ namespace level {
 
         /**
          * @brief muove tutti gli oggetti che si devono muovere
+         * all'interno del livello
          */
         void act(manager::Level *levelManager);
-        /// @brief ritorna `true` se il livello è finito, `false` altrimenti
-        bool isComplete();
 
-        /// @brief opens the local door with the same id as input
-        /// @param id id of the local door to open
+        /**
+         * @brief opens the local door with the same id as input
+         * @param id id of the local door to open
+         */
         void openLocalDoor(int id);
 
-        /// @returns l'oggetto di collisione alla data posizione
+        bool isComplete();
         Collidable *getCollision(Position pos) const;
-
-        /// @brief opens all local doors
         void openAllDoors();
+        void setLastPlayerPosition(Position pos);
+        Position getLastPlayerPosition();
     };
 };  // namespace level

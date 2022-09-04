@@ -2,7 +2,7 @@
 
 #include <mutex>
 
-#include "datastruct/stack.hpp"
+#include "datastruct/stack.tpp"
 #include "gamestruct/size.hpp"
 #include "manager/manager-settings.hpp"
 #include "views/view.fwd.h"  // forward declaration, circular dependency
@@ -26,7 +26,7 @@ namespace manager {
         bool empty();
         bool isChangedView();
         // ritorna la view che viene visualizzata
-        views::View *last();
+        views::View *top();
         // rimuove tutti gli elementi in pratica termina il programma
         void clear();
     };

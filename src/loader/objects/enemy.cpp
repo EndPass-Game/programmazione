@@ -1,5 +1,8 @@
 #include "loader/objects/enemy.hpp"
 
+#include "entities/enemy.hpp"
+#include "entities/kamikaze.hpp"
+#include "entities/shooter.hpp"
 #include "gamestruct/position.hpp"
 
 namespace loader {

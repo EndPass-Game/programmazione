@@ -11,18 +11,23 @@ fanno altre cose? ma non credo, non per ora
 #include "level/collidable.hpp"
 
 namespace collectables {
-
     class Artifact : public Displayable, public level::Collidable {
       private:
         int lifeUpgrade_;
 
       public:
-        // costruttore che inizializza la variabile che definisce l'aumento di vità che darà l'artefatto e la sua posizione
+        /**
+         * @brief Costruttore di un oggetto artefatto
+         *
+         * @param lifeUpgrade_ descrive quanto l'artefatto aumenta la vita
+         * @param posObj descrive la posizione dell'artefatto
+         */
         Artifact(int lifeUpgrade_, Position posObj);
+
         virtual ~Artifact() = default;
+
         int getLifeUpgrade();
 
-        // override del metodo virtuale per restituire il tipo di oggetto
         virtual enums::CollisionType getCollisionType() override;
     };
 

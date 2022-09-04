@@ -1,7 +1,7 @@
 #include "level/level.hpp"
 
 #include "collectables/power.hpp"
-#include "datastruct/vector.hpp"
+#include "datastruct/vector.tpp"
 #include "entities/enemy.hpp"
 #include "entities/entity.hpp"
 #include "entities/player.hpp"
@@ -139,10 +139,6 @@ namespace level {
 
     void Level::setLastPlayerPosition(Position pos) {
         lastPlayerPosition_ = pos;
-    }
-
-    bool Level::isPositionEmpty(Position pos, manager::Level *levelManager) {
-        return getCollision(pos) == nullptr;
     }
 
     Collidable *Level::getCollision(Position pos) const {

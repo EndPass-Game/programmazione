@@ -1,8 +1,10 @@
 #pragma once
 
 namespace enums {
-    // Tipologie di Wall esistenti
-    // saranno usate per generare i muri
+    /**
+     * @brief Rappresenta il carattere di tutte le tipologie di muro
+     * o porte printabili
+     */
     enum class WallType {
         VERT = '|',
         HORIZ = '-',

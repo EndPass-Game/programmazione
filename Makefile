@@ -10,7 +10,7 @@ SRC = ./src
 INCLUDE_SRC = $(addprefix -I, $(SRC))
 
 sources = $(shell find $(SRC)/ -type f -name '*.cpp')
-headers = $(shell find $(SRC)/ -type f -name '*.hpp')
+headers = $(shell find $(SRC)/ -type f -name '*.hpp') $(shell find $(SRC)/ -type f -name '*.tpp')
 OBJS_NO_BUILD_PATH := $(patsubst %.cpp, %.o, $(sources))
 OBJS = $(addprefix $(BUILD_PATH)/, $(OBJS_NO_BUILD_PATH))
 TESTS = $(shell find $(TESTS_PATH)/ -type f ! -name "test-template.cpp")

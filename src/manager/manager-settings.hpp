@@ -2,6 +2,10 @@
 
 #include "gamestruct/size.hpp"
 
+/**
+ * @brief Questo file contiene alcune variabili utilizzate per la configurazione
+ * delle finestre del gioco
+ */
 namespace manager {
     // la size della finersta
     const Size kGameWindowsSize = {22, 60};

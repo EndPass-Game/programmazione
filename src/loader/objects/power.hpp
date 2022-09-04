@@ -3,7 +3,7 @@
 #include <cstdlib>
 
 #include "collectables/power.hpp"
-#include "loader/load-object.hpp"
+#include "loader/load-object.tpp"
 
 namespace loader {
     class Power : public LoadObject<collectables::Power> {

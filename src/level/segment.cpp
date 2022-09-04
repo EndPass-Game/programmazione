@@ -44,8 +44,6 @@ namespace level {
         endPosition_ = pos + posDirection_ * (length_ - 1);
     }
 
-    Segment::~Segment() = default;
-
     bool Segment::isPositionInSegment(Position pos) {
         if (startPosition_.colonna == pos.colonna) {
             int min = startPosition_.riga < endPosition_.riga ? startPosition_.riga : endPosition_.riga;

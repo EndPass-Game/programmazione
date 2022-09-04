@@ -1,6 +1,6 @@
 #include "manager/view-manager.hpp"
 
-#include "datastruct/stack.hpp"
+#include "datastruct/stack.tpp"
 #include "views/view.hpp"
 
 // TODO(gio): fixa gli include di questo file, segui la filosofia: "includi quello che usi"
@@ -20,8 +20,8 @@ namespace manager {
         delete v;
         changedView = true;
     }
-    views::View *ViewManager::last() {
-        return stackView.last();
+    views::View *ViewManager::top() {
+        return stackView.top();
     }
 
     void ViewManager::clear() {
