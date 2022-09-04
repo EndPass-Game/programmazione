@@ -35,7 +35,7 @@ namespace entities {
     void Enemy::setPosition(Position pos) {
         Displayable::setPosition(pos);
     }
-    
+
     void Enemy::resetCoolDown() {
         coolDown_ = coolDownMax_;
     }
