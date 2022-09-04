@@ -32,9 +32,6 @@ void Entity::move(manager::Level *levelManager) {
         case enums::CollisionType::DOORSEGMENT:
             _handleDoorCollision(levelManager, (level::DoorSegment *) collision);
             break;
-        case enums::CollisionType::WALLSEGMENT:
-            _handleWallCollision(levelManager, (level::WallSegment *) collision);
-            break;
         case enums::CollisionType::ENTITY:
             _handleEntityCollision(levelManager, (Entity *) collision);
             break;
@@ -46,6 +43,9 @@ void Entity::move(manager::Level *levelManager) {
             break;
         case enums::CollisionType::NONE:
             _handleNoneCollision(levelManager);
+            break;
+        default:
+            // do nothing
             break;
     }
     nextPosition_ = _computeNextPosition(lastNotNullDirection_);
@@ -85,8 +85,10 @@ void Entity::render(WINDOW *win, bool force) {
 };
 
 void Entity::_handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door) {}
-void Entity::_handleWallCollision(manager::Level *levelManager, level::WallSegment *wall) {}
 void Entity::_handleEntityCollision(manager::Level *levelManager, Entity *entity) {}
 void Entity::_handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact) {}
 void Entity::_handlePowerCollision(manager::Level *levelManager, collectables::Power *power) {}
-void Entity::_handleNoneCollision(manager::Level *levelManager) {}
+
+void Entity::_handleNoneCollision(manager::Level *levelManager) {
+    this->setPosition(nextPosition_);
+}

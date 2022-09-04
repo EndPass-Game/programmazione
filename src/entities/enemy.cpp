@@ -35,19 +35,6 @@ namespace entities {
     void Enemy::setPosition(Position pos) {
         Displayable::setPosition(pos);
     }
-    void Enemy::_handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door) {
-    }
-    void Enemy::_handleWallCollision(manager::Level *levelManager, level::WallSegment *wall) {
-    }
-    void Enemy::_handleEntityCollision(manager::Level *levelManager, Entity *entity) {
-    }
-    void Enemy::_handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact) {
-    }
-    void Enemy::_handlePowerCollision(manager::Level *levelManager, collectables::Power *power) {
-    }
-    void Enemy::_handleNoneCollision(manager::Level *levelManager) {
-        this->setPosition(nextPosition_);
-    }
 
     void Enemy::resetCoolDown() {
         coolDown_ = coolDownMax_;

@@ -42,7 +42,6 @@ class Player : public Entity {
     virtual void _handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door) override;
     virtual void _handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact) override;
     virtual void _handlePowerCollision(manager::Level *levelManager, collectables::Power *power) override;
-    virtual void _handleNoneCollision(manager::Level *levelManager) override;
 
   public:
     Player();

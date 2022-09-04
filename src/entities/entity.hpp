@@ -16,7 +16,6 @@ class Entity : public Movable, public level::Collidable {
     int attack_;  // danno fatto alle altre entità
 
     virtual void _handleDoorCollision(manager::Level *levelManager, level::DoorSegment *door);
-    virtual void _handleWallCollision(manager::Level *levelManager, level::WallSegment *wall);
     virtual void _handleEntityCollision(manager::Level *levelManager, Entity *entity);
     virtual void _handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact);
     virtual void _handlePowerCollision(manager::Level *levelManager, collectables::Power *power);
