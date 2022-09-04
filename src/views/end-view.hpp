@@ -3,6 +3,8 @@
 #include "manager/manager-settings.hpp"
 #include "views/game-view.hpp"
 #include "views/static-text-view.hpp"
+#include "gamestruct/string-utility.hpp"
+#include "manager/shared-information.hpp"
 
 namespace views {
     class EndView : public StaticTextView {

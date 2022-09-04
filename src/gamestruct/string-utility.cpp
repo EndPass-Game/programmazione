@@ -32,4 +32,34 @@ namespace stringUtility {
         return result;
     }
 
+    char* intToString(int number){
+        int len = 0;
+        int temp = number;
+        while(temp != 0){
+            temp /= 10;
+            len++;
+        }
+        char *result = new char[len + 1];
+        result[len] = '\0';
+        for(int i = len - 1; i >= 0; i--){
+            result[i] = number % 10 + '0';
+            number /= 10;
+        }
+        return result;
+    }
+
+    char* concat(char const *str1, char const *str2){
+        int len1 = strlen(str1);
+        int len2 = strlen(str2);
+        char *result = new char[len1 + len2 + 1];
+        for(int i = 0; i < len1; i++){
+            result[i] = str1[i];
+        }
+        for(int i = 0; i < len2; i++){
+            result[i + len1] = str2[i];
+        }
+        result[len1 + len2] = '\0';
+        return result;
+    }
+
 };  // namespace stringUtility

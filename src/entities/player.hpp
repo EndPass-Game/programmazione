@@ -26,6 +26,7 @@ Altro
 #include "level/collidable.hpp"
 #include "level/door-segment.hpp"
 #include "level/wall-segment.hpp"
+#include "gamestruct/string-utility.hpp"
 
 // Player: classe che contiene il personaggio
 class Player : public Entity {
