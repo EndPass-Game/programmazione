@@ -1,10 +1,11 @@
 #pragma once
 
 namespace manager {
-    class SharedInformation{
-        private:
+    class SharedInformation {
+      private:
         int lastPlayerScore;
-        public:
+
+      public:
         // @returns l'istanza singleton
         static SharedInformation &getInstance();
 
@@ -18,4 +19,4 @@ namespace manager {
         int getLastPlayerScore();
         void setLastPlayerScore(int score);
     };
-}; // namespace manager
+};  // namespace manager

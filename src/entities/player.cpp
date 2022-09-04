@@ -70,11 +70,11 @@ void Player::_handleDoorCollision(manager::Level *levelManager, level::DoorSegme
 
 void Player::_handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact) {
     level::Level *level = levelManager->getLevel();
-    char const* artefattoText = "Artefatto raccolto";
+    char const *artefattoText = "Artefatto raccolto";
     levelManager->getLogQueue()->addEvent(artefattoText);
-    char const* vitaText = "Aumentata la vita di: ";
-    char* incrementLifeText = stringUtility::intToString(artifact->getLifeUpgrade());
-    char* text = stringUtility::concat(vitaText, incrementLifeText);
+    char const *vitaText = "Aumentata la vita di: ";
+    char *incrementLifeText = stringUtility::intToString(artifact->getLifeUpgrade());
+    char *text = stringUtility::concat(vitaText, incrementLifeText);
     levelManager->getLogQueue()->addEvent(text);
     delete[] incrementLifeText;
     delete[] text;
