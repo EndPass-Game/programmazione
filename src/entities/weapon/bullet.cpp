@@ -37,7 +37,8 @@ namespace weapon {
             return true;
         } else if (_handleCollision(levelManager, collision)) {
             return true;
-        } else return false;
+        } else
+            return false;
     }
 
     void Bullet::act(manager::Level *levelManager) {
@@ -83,7 +84,7 @@ namespace weapon {
                 }
             }
         }
-        
+
         return true;
     }
 }  // namespace weapon

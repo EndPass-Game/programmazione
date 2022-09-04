@@ -14,7 +14,7 @@ namespace weapon {
       private:
         int damage_;
         bool isDestroyed_;
-        
+
         /**
          * @brief applica il danno alla collisione, se possibile (solo entity).
          * @returns se ha colliso o meno.
