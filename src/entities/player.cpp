@@ -100,10 +100,6 @@ void Player::_handlePowerCollision(manager::Level *levelManager, collectables::P
     currLevel->deleteCollidable((Collidable *) power);
 }
 
-void Player::_handleNoneCollision(manager::Level *levelManager) {
-    this->setPosition(nextPosition_);
-}
-
 int Player::getScore() {
     return score_;
 }
