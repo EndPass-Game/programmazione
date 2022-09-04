@@ -19,6 +19,7 @@ namespace entities {
           coolDown_(0),
           coolDownMax_(10),  // può muoversi ogni 10 frame
           logger_("Enemy") {}
+
     void Enemy::wander(Player *player) {
         enums::Direction directions[] = {
             enums::Direction::UP,

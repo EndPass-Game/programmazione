@@ -70,7 +70,7 @@ void Player::_handleDoorCollision(manager::Level *levelManager, level::DoorSegme
 
 void Player::_handleArtifactCollision(manager::Level *levelManager, collectables::Artifact *artifact) {
     level::Level *level = levelManager->getLevel();
-    levelManager->getLogQueue()->addEvent("Artefatto raccolto");
+    levelManager->getLogQueue()->addEvent("Artefatto raccolto, aumentata la vita");
     this->incrementScore(100);
     this->setLife(this->getLife() + artifact->getLifeUpgrade());
     this->maxLife_ += artifact->getLifeUpgrade();
