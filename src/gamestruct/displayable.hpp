@@ -23,6 +23,7 @@ class Displayable {
     // elimina i pointer
     virtual ~Displayable();
 
+    Position getLastPosition();
     Position getPosition();
 
     char getDisplayChar();

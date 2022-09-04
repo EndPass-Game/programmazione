@@ -47,7 +47,7 @@ namespace weapon {
                 }
             } else {
                 if (collision == levelManager->getPlayer()) {
-                    levelManager->getLogQueue()->addEvent("Player colpito da un proiettile");
+                    levelManager->getLogQueue()->addEvent("Sei stato colpito da un proiettile");
                 } else {
                     levelManager->getLogQueue()->addEvent("Nemico colpito da un proiettile");
                 }
@@ -55,10 +55,9 @@ namespace weapon {
             return true;
         } else if (type == enums::CollisionType::NONE) {
             return false;
-        } else {
-            return true;
         }
-        return false;
+
+        return true;
     }
 
     void Bullet::act(manager::Level *levelManager) {
@@ -75,10 +74,10 @@ namespace weapon {
 
     void Bullet::render(WINDOW *win, bool force) {
         // evita la cancellazione del player guardando il carattere printato nello schermo attuale
-        char currChar = mvwinch(win, this->getPosition().riga, this->getPosition().colonna);
-        if (currChar == 'P' || currChar == 'S') {
+        char lastChar = mvwinch(win, this->getLastPosition().riga, this->getLastPosition().colonna);
+        if (lastChar != 'P' && lastChar != 'S') {
             this->clearLast(win);
+            Displayable::render(win, force);
         }
-        Displayable::render(win, force);
     }
 }  // namespace weapon

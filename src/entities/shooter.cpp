@@ -50,11 +50,9 @@ namespace entities {
             this->resetShootCoolDown();
             logger_.info("enemy firing a bullet");
             enums::Direction dir = findShootDirection(levelManager, currPosition, playerPosition);
-            Position bulletPosition = findBulletPosition(dir);
+            Position bulletPosition = Movable::_computeNextPosition(dir);
             weapon::Bullet *bullet = new weapon::Bullet(bulletPosition, dir, this->getAttack());
             level->addBullet(bullet);
-        } else {
-            logger_.debug("Can't attack yet, there is somethign");
         }
     }
 
@@ -92,42 +90,14 @@ namespace entities {
 
     enums::Direction Shooter::findShootDirection(manager::Level *levelManager, Position currPosition, Position playerPosition) {
         if (currPosition.riga == playerPosition.riga) {
-            if (currPosition.colonna < playerPosition.colonna) {
-                return enums::Direction::RIGHT;
-            } else {
-                return enums::Direction::LEFT;
-            }
+            return currPosition.colonna < playerPosition.colonna ? enums::Direction::RIGHT : enums::Direction::LEFT;
+        } else if (currPosition.colonna == playerPosition.colonna) {
+            return currPosition.riga < playerPosition.riga ? enums::Direction::DOWN : enums::Direction::UP;
+        } else {
+            return enums::Direction::NONE;
         }
-        if (currPosition.colonna == playerPosition.colonna) {
-            if (currPosition.riga < playerPosition.riga) {
-                return enums::Direction::DOWN;
-            } else {
-                return enums::Direction::UP;
-            }
-        }
-        return enums::Direction::NONE;
     }
 
-    Position Shooter::findBulletPosition(enums::Direction dir) {
-        switch (dir) {
-            case enums::Direction::RIGHT:
-                return Position(this->getPosition().riga, this->getPosition().colonna + 1);
-                break;
-            case enums::Direction::LEFT:
-                return Position(this->getPosition().riga, this->getPosition().colonna - 1);
-                break;
-            case enums::Direction::DOWN:
-                return Position(this->getPosition().riga + 1, this->getPosition().colonna);
-                break;
-            case enums::Direction::UP:
-                return Position(this->getPosition().riga - 1, this->getPosition().colonna);
-                break;
-            case enums::Direction::NONE:
-                return Position(1, 1);
-                break;
-        }
-        return Position(1, 1);
-    }
     void Shooter::wander(Player *player) {
         Position posPlayer = player->getPosition();
         Position posMine = this->getPosition();
