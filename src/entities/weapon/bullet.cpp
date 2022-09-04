@@ -57,7 +57,7 @@ namespace weapon {
             return false;
         }
 
-        return true
+        return true;
     }
 
     void Bullet::act(manager::Level *levelManager) {
