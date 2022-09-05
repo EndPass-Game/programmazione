@@ -85,7 +85,7 @@ namespace datastruct {
     template <class T>
     size_t Queue<T>::_getHigherPowerOfTwo(size_t n) {
         size_t x = 1;
-        while (x <= size_) {
+        while (x <= n) {
             x <<= 1;
         }
         return x;
