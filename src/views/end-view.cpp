@@ -8,8 +8,8 @@ namespace views {
 
     bool EndView::handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view, bool changedView) {
         if (StaticTextView::handleScreenBeforeRender(screen, view, changedView))
-
             return true;
+
         if (quit_) {
             view->clear();
         } else if (start_) {
@@ -17,6 +17,7 @@ namespace views {
             view->pushView(game);
             start_ = false;
         }
+
         return false;
     }
 
@@ -50,5 +51,4 @@ namespace views {
         char quit[] = "Premere <Q> per abbandonare";
         mvwprintw(window, 14, (manager::kGameAreaSize.colonna - strlen(quit)) / 2, quit);
     }
-
 };  // namespace views

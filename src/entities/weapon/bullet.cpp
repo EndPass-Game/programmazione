@@ -13,10 +13,6 @@ namespace weapon {
         Movable::setDirection(direction);
     }
 
-    bool Bullet::hasHit() {
-        return false;
-    }
-
     bool Bullet::handleEntityHit(Entity *entity) {
         entity->applyDamage(damage_);
         return (entity->isDead());

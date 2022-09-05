@@ -7,7 +7,7 @@
 #include "gamestruct/log-queue.hpp"
 #include "gamestruct/logger.hpp"
 #include "gamestruct/size.hpp"
-#include "gamestruct/state-watcher.hpp"
+#include "gamestruct/state-watcher.tpp"
 #include "level/collidable.hpp"
 #include "level/level.hpp"
 #include "loader/directory-loader.hpp"

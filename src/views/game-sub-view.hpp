@@ -13,7 +13,9 @@ namespace views {
 
       public:
         GameSubView(WINDOW *win, manager::Level *levelManager);
+
         void render(bool force) override;
+
         void handleInput(char input);
     };
 };  // namespace views

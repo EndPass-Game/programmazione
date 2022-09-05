@@ -1,6 +1,8 @@
 #pragma once
 
-// struttura che mantiene la posizione di un elemento nello spazio
+/**
+ * @brief struttura che mantiene la posizione di un elemento nello spazio
+ */
 struct Position {
     int riga;
     int colonna;

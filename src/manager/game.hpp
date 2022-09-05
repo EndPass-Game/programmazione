@@ -15,14 +15,8 @@ namespace manager {
         Logger logger_;
 
       public:
-        /**
-         * @brief Inizializza il gioco
-         */
         Game();
 
-        /**
-         * @brief Distruttore del gioco
-         */
         ~Game();
 
         /**

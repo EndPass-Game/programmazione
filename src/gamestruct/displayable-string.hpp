@@ -3,9 +3,13 @@
 #include <ncurses.h>
 
 #include "gamestruct/position.hpp"
-#include "gamestruct/state-watcher.hpp"
+#include "gamestruct/state-watcher.tpp"
 #include "gamestruct/string-utility.hpp"
 
+/**
+ * @brief rappresenta una stringa che può essere printata a schermo
+ * principalmente utilizzata nel log-queue.hpp
+ */
 class DisplayableString {
   protected:
     StateWatcher<Position> *position_;

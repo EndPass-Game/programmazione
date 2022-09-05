@@ -31,7 +31,7 @@ namespace level {
         DisplayableSegment();
 
         /**
-         * @brief Costruire un segmento partendo dal segmento passato come parametro
+         * @brief Costruisce un segmento partendo dal segmento passato come parametro
          *
          * @param segment il segmento da cui copiare le informazioni
          */

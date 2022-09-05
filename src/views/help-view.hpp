@@ -7,6 +7,9 @@
 #include "views/static-text-view.hpp"
 
 namespace views {
+    /**
+     * @brief classe che mostra la schermata di aiuto del gioco
+     */
     class HelpView : public StaticTextView {
       private:
         bool quit = false;

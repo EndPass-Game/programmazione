@@ -25,6 +25,7 @@ namespace views {
                 break;
         }
     }
+
     void GameSubView::render(bool force) {
         SubView::render(force);
         levelManager_->render(subWin_, force);

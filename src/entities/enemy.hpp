@@ -7,7 +7,6 @@
 #include "entities/entity.hpp"
 #include "entities/player.hpp"
 #include "enums/direction.hpp"
-#include "enums/enemyType.hpp"
 #include "gamestruct/displayable.hpp"
 #include "gamestruct/logger.hpp"
 #include "gamestruct/position.hpp"
@@ -16,12 +15,10 @@
 #include "level/wall-segment.hpp"
 #include "manager/level.fwd.h"
 
-// Attualmente questa classe contiene un esempio di nemico
-// che si muove e attacca il giocatore.
-// Dovrebbe essere sostituito da un sistema per gestire ogni
-// possibile nemico. (quindi un manager)
-// oppure una factory per costruire il nemico specifico
 namespace entities {
+    /**
+     * @brief rappresenta un generico nemico
+     */
     class Enemy : public Entity {
       private:
         int coolDown_;
@@ -29,13 +26,19 @@ namespace entities {
         Logger logger_;
 
       public:
-        Enemy(char c);
+        /**
+         * @param spawnPos posizione nell oschermo del nemico
+         * @param attack il valore di attacco del nemico
+         * @param c il carattere printato a schermo rappresentante il nemico
+         */
         Enemy(Position spawnPos, int attack, char c);
 
-        // int getDamage();
-
-        void setPosition(Position pos);
-
+        /**
+         * @brief applica un movimento generico per l'enemy
+         *
+         * @param player sarà utilizzato per applicare euristiche
+         * sulal posizione
+         */
         virtual void wander(Player *player);
 
         void resetCoolDown();
@@ -44,7 +47,7 @@ namespace entities {
 
         bool canMove();
 
-        virtual bool canAttack(manager::Level *levelManager) = 0;
+        void setPosition(Position pos);
 
         virtual void act(manager::Level *levelManager) override;
     };

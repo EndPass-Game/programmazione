@@ -1,10 +1,10 @@
 #include "views/sub-view.hpp"
 
 namespace views {
-
     SubView::SubView(WINDOW *win, Position pos, Size size) {
         subWin_ = derwin(win, size.riga, size.colonna, pos.riga, pos.colonna);
     }
+
     SubView::~SubView() {
         delwin(subWin_);
     }

@@ -101,9 +101,13 @@ namespace level {
         void openLocalDoor(int id);
 
         bool isComplete();
+
         Collidable *getCollision(Position pos) const;
+
         void openAllDoors();
+
         void setLastPlayerPosition(Position pos);
+
         Position getLastPlayerPosition();
     };
 };  // namespace level

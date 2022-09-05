@@ -34,6 +34,7 @@ namespace level {
         void close() override;
 
         enums::CollisionType getCollisionType() override;
+
         int getId();
     };
 

@@ -7,15 +7,16 @@
 #include "views/static-text-view.hpp"
 
 namespace views {
+    /**
+     * @brief Questa classe contiene la schermata di fine gioco
+     */
     class EndView : public StaticTextView {
       private:
         // TODO: variabili per cunicare tra i due thread in un futuro andranno wrappate in una struct o classe mutex protected
-
         bool quit_ = false;
         bool start_ = false;
         const int kAsciiArtAltezza_ = 4;
         const char *kAsciiArt_[4] = {
-
             "   ___  _  __ __ ",
             "  / _/ / |/ //  \\",
             " / _/ / || // o |",
@@ -28,7 +29,11 @@ namespace views {
       public:
         EndView();
 
-        bool handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view, bool changedView);
+        bool handleScreenBeforeRender(
+            StateWatcher<Size> &screen,
+            manager::ViewManager *view,
+            bool changedView
+        ) override;
 
         void handleInput(char input) override;
 
