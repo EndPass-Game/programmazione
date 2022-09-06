@@ -11,20 +11,20 @@ Simone Ruggiero : 0001021768
 
 A grandi linee il progetto è stato diviso in questo modo:
 
-### Xuanqiang
+### Huang
 
 1. Gestione e caricamento di tutti i livelli
 2. Gestione del cambio di livello e l'esplorazione graduale dei livelli.
 3. Ideazione ed implementazione dell'intera logica per i muri, porte mostrate nel livello.
 
-### Giovanni
+### Spadaccini
 
 1. Studio di ncurses per creare delle astrazioni, più facilmente utilizzabili
 2. Creazione del sistema a stack per le View e rendering di tutte le view nel gioco
 3. Creazione di QueueLogger e altre stutture per gestire gli oggetti nell'interfaccia
    
 
-### Simone
+### Ruggiero
 
 1. Creazione e gestione di tutte le entità
 2. Ideazione ed implementazione della logica per gli artefatti
@@ -57,6 +57,7 @@ Esistono alcuni file e directory in particolare che sono stati frutto di coopera
 ### Scelte implementative ad alto livello
 
 Il progetto è diviso in tre macroaree:
+
 1. Gestione della logica per oggetti del singolo livello
 
    1. Nemici
@@ -86,9 +87,10 @@ Il progetto è diviso in tre macroaree:
 Il progetto è organizzato in cartelle che seguono queste macroaree. 
 A seconda delle necessità, sono stati introdotti `namespaces` che seguono il nome della directory in cui sono presenti.
 
-## Xuanqiang
+## Huang
 
 Eccetto per i file elencati in [Files di gruppo](#files-di-gruppo), il lavoro svolto in autonomia è racchiuso nelle directory
+
 - `loaders`
   
 - `level`
@@ -97,6 +99,7 @@ Eccetto per i file elencati in [Files di gruppo](#files-di-gruppo), il lavoro sv
 
 I loaders si interessano del caricamento dei file di descrizione per i singoli livelli e dalla loro traduzione in oggetti del gioco.
 Sono presenti 4 classi principali:
+
 1. `loader-handler` è la classe che gestisce il caricamento del singolo livello
    
 2. `directory-loader` è la classe incaricata di percorrere la directory per trovare i file di descrizione delle mappe
@@ -110,6 +113,7 @@ Sono presenti 4 classi principali:
 In questa directory sono presenti classi utili a rappresentare i muri e le porte (oltre al `level::Level` che le gestisce).
 
 Qui sono presenti 4 classi da cui derivano le classi concrete
+
 - `door-segment`
   
 - `local-door`
@@ -117,6 +121,7 @@ Qui sono presenti 4 classi da cui derivano le classi concrete
 - `wall-segment`
 
 **Descrizione delle classi astratte**
+
 - `Collidable` descrive ogni oggetto che può essere gestito come elemento di collisione in `level::Level`, tra cui tutte le tre classi concrete in questa directory e tutte le classi concrete in `entities`
   
 - `Openable` descrive in modo astratto un oggetto che si può aprire e chiudere. In questa directory è implementato da entrambe le classi porte
@@ -126,13 +131,14 @@ Qui sono presenti 4 classi da cui derivano le classi concrete
 - `displayable-segment` eredita da segment, e descrive un segmento che si può mostrare a schermo.
 
 **Descrizione delle classi concrete**
+
 - `door-segment` rappresenta una porta di livello. È collegato ad un indice di un altro livello tramite `manager::Level`.
   
 - `local-door` rappresenta una porta all'interno di una stanza del singolo livello. È collegato tramite al suo ID interno a un `collectables::Power`, che la sblocca.
   
 - `wall-segment` rappresenta un segmento di muro che né `Player` né  nemici possono attraversare
 
-## Gio
+## Spadaccini
 
 ### View
 
@@ -162,7 +168,7 @@ Il vantaggio che abbiamo avuto e che non dobbiamo fare nessun check per eliminar
 - `manager::Input` : legge l'input dall'utente e lo passa chiamando `View::handleInput` sull'ultima view nel ViewManager
 
 
-## Simone
+## Ruggiero
 
 La mia parte è stata caratterizzata principalmente dallo sviluppo delle meccaniche di gameplay del gioco, quindi dalla creazione e dalla gestione delle varie entità e della loro suddivisione, degli oggetti presenti nei livelli e del loro funzionamento
 
