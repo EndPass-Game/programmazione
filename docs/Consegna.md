@@ -161,5 +161,13 @@ Questa classe definisce tutti i membri e tutti i metodi comuni a tutte le tipolo
 Classe che rappresenta un nemico capace di sparare proiettili nel momento in cui il giocatore entra nella sua linea di tiro. Questa entità si muoverà cercando di tenersi a distanza dal giocatore e cercando di allinearsi con lui in modo da averlo a portata di tiro.
 
 ### Kamikaze
+Questa classe rappresenta un nemico che insegue il giocatore e si suicida al momento di incontro ravvicinato causando danno al giocatore.
+
+### Artifact
+Questa classe rappresenta un collezionabile presente sulla mappa che permette di aumentare la vita massima del giocatore. Ogni artefatto sulla mappa aumenta la vita di un valore diverso, in base alla difficoltà del livello.A
+
+### Power
+Classe che rappresenta un collezionabile presente sulla mappa, che restituisce vita al giocatore e apre una porta a lui collegata che permette l'accesso ad un artefatto altrimenti irraggiungibile.
+## Scelte implementative
 
 Questa classe rappresenta un nemico che insegue il giocatore e si suicida al momento di incontro ravvicinato causando danno al giocatore.
