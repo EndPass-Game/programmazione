@@ -2,9 +2,9 @@
 
 ### Membri del Gruppo
 
-Xuanqiang Huang : 0001030271
-Giovanni Spadaccini : 0001021270
-Simone Ruggiero : 0001021768
+Xuanqiang Huang : 0001030271  
+Giovanni Spadaccini : 0001021270  
+Simone Ruggiero : 0001021768  
 
 
 ## Divisione dei compiti
