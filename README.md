@@ -6,6 +6,14 @@ Xuanqiang Huang
 
 Nome progetto: **Endpass**
 
+## Compilazione ed esecuzione
+È presente un makefile per aiutare nei processi di compilazione ed esecuzione del gioco.
+
+1. Avere installato la libreria di **ncurses** per la parte grafica
+2. Eseguire `make main` per creare l'eseguibile. Sarà presente nella directory `build/`
+3. `make run` per eseguire il file, oppure eseguirlo con `./build/main`.
+
+
 ## Legenda dei caratteri del gioco
 - P: il personaggio del gioco
 - S: un nemico shooter
@@ -35,19 +43,10 @@ Sono delle entità che si suicidano causando danno a contatto del player
 **Shooter**
 Sono delle entità che sparano a vista al player nel caso abbiano la linea di tiro libera.
 
-
-## Compilazione ed esecuzione
-È presente un makefile per aiutare nei processi di compilazione ed esecuzione del gioco.
-
-1. Avere installato la libreria di ncurses per la parte grafica
-2. Eseguire `make main` per creare l'eseguibile. Sarà presente nella directory `build/`
-3. `make run` per eseguire il file, oppure eseguirlo con `./build/main`.
-
 ## Assets
 In questa directory sono presenti i file da cui vengono generate tutte le mappe del gioco, è quindi fondamentale tenere questa directory nel modo in cui è provvisto per evitare errori di runtime durante l'avvio del gioco.
 
-Per questo motivo non è possibile eseguire il main direttamente dalla directory di build.
-
+Per questo motivo **non è possibile eseguire il main direttamente dalla directory di build**.
 
 ## Note
 Il progetto è stato sviluppato e testato su sistema operativo linux, non è quindi garantito il corretto funzionamento su altri sistemi operativi
