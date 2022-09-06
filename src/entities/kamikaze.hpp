@@ -8,16 +8,16 @@
 
 namespace entities {
     class Kamikaze : public Enemy {
-      private:
-
       public:
-        Kamikaze();
         Kamikaze(Position spawnPos);
 
         virtual void wander(Player *player) override;
 
         void attack(manager::Level *levelManager) override;
 
-        bool canAttack(manager::Level *levelManager) override;
+        /**
+         * @brief Controlla l'area circostante il kamikaze alla ricerca del player
+         */
+        bool canAttack(manager::Level *levelManager);
     };
 }  // namespace entities

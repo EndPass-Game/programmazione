@@ -11,6 +11,7 @@ namespace views {
 
       public:
         SubView(WINDOW *win, Size size, Position pos);
+
         virtual ~SubView();
 
         virtual void render(bool force);

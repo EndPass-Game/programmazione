@@ -26,11 +26,6 @@ class Entity : public Movable, public level::Collidable {
     Entity(int life, int attack);
     Entity(int life, int attack, Position current, char displayChar);
     virtual ~Entity() = default;
-    bool isDead() const;
-
-    // metodo virtuale che sarà definita a
-    // seconda del metodo d'attacco dell'entità
-    virtual void attackEntity(Entity *target);
 
     /**
      * @brief metodo virtuale che implementa ogni genere di attacco per
@@ -38,8 +33,15 @@ class Entity : public Movable, public level::Collidable {
      */
     virtual void attack(manager::Level *levelManager) = 0;
 
-    // muove l'entità secondo la direzione impostata
+    /**
+     * @brief muove l'entità a seconda della posizione calcola con `Movable`
+     * e applica la gestione delle collisione tramite gli handleCollisions
+     */
     void move(manager::Level *levelManager);
+
+    bool isDead() const;
+
+    virtual void attackEntity(Entity *target);
 
     void applyDamage(int damage);
 

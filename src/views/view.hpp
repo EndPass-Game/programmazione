@@ -4,11 +4,11 @@
 
 #include "gamestruct/position.hpp"
 #include "gamestruct/size.hpp"
-#include "gamestruct/state-watcher.hpp"
+#include "gamestruct/state-watcher.tpp"
 #include "manager/view-manager.fwd.h"  // forward declaration, circular dependency
 
 namespace views {
-    // classe base che astrae la visualizzazione di una schemata
+    /// @brief classe base che astrae la visualizzazione di una schemata
     class View {
       protected:
         WINDOW *window;
@@ -17,28 +17,38 @@ namespace views {
         const char *name_;
 
       public:
-        // viene chiamata prima del render, modifica la view manager a seconda delle
-        // necessità
+        View(Position pos, Size size);
+
+        View(Position pos, Size size, const char *name);
+
+        virtual ~View();
+
+        /**
+         * @brief viene chiamata prima del render, modifica
+         * la view manager a seconda delle necessità
+         *
+         * @return returna se devi fare un force update dello schermo oppure no
+         */
         virtual bool handleScreenBeforeRender(
             StateWatcher<Size> &screen,
             manager::ViewManager *view,
             bool changedView
         ) = 0;
 
-        // funzione astratta: ogni classe figlia avrà una propria funzione
-        // per gestire gli input, che possono essere diverse ad ogni view.
+        /**
+         * @brief funzione astratta: ogni classe figlia avrà una propria funzione
+         * per gestire gli input, che possono essere diverse ad ogni view.
+         *
+         * @param input dato dall'InputManager
+         */
         virtual void handleInput(char input) = 0;
 
-        // la funzione che viene chiamata per aggiornare lo schermo e il forces obbliga a riprintare
+        /**
+         * @brief la funzione che viene chiamata per aggiornare lo schermo e il forces obbliga a riprintare
+         */
         virtual void render(bool forces);
 
         void clearWindow();
-
-        View(Position pos, Size size);
-
-        View(Position pos, Size size, const char *name);
-
-        virtual ~View();
 
         virtual const char *getName();
     };

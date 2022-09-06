@@ -8,12 +8,6 @@
 #include "level/collidable.hpp"
 #include "manager/level.hpp"
 namespace entities {
-    Enemy::Enemy(char c)
-        : Entity(12, 5,   // vita e attacco
-                 {4, 4},  // position di spawn
-                 c),
-          logger_("Enemy") {}
-
     Enemy::Enemy(Position spawnPos, int attack, char c)
         : Entity(12, attack, spawnPos, c),
           coolDown_(0),
@@ -31,6 +25,7 @@ namespace entities {
         int direction = rand() % 5;
         this->setDirection(directions[direction]);
     }
+
     // probabilmente inutile visto che andrebbe automaticamente a prendere quella di displayable (?)
     void Enemy::setPosition(Position pos) {
         Displayable::setPosition(pos);

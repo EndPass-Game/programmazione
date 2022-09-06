@@ -3,8 +3,11 @@
 #include <cstdarg>  // va_list
 #include <mutex>
 #include <stdio.h>
-// questa classe contiene i metodi che permettono di registrare tutte le azioni avvenute nel gioco all'interno del file di log
 
+/**
+ * @brief questa classe contiene i metodi che permettono di registrare tutte
+ * le azioni avvenute all'interno del gioco in un file di log
+ */
 class Logger {
   private:
     FILE *fileStream_;        // usato per scrivere nel file di log
@@ -15,10 +18,14 @@ class Logger {
 
   public:
     Logger(const char *loggerName, const char *filename = "game.log", const char *mode = "a");
+
     ~Logger();
 
     void debug(const char *format, ...);
+
     void info(const char *format, ...);
+
     void warning(const char *format, ...);
+
     void error(const char *format, ...);
 };

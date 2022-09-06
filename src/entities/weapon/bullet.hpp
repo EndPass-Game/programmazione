@@ -22,12 +22,24 @@ namespace weapon {
         bool _handleCollision(manager::Level *levelManager, level::Collidable *collision);
 
       public:
+        /**
+         * @brief ctor un nuovo proiettile
+         *
+         * @param position posizione del nuovo proiettile
+         * @param direction direzione di movimento del nuovo proiettile
+         * @param damage il danno da inpatto su entità
+         */
         Bullet(Position position, enums::Direction direction, int damage = 1);
 
-        bool hasHit();
-
+        /**
+         * @brief applica il danno all'entità.
+         * @return true se l'entità è morta, altrimenti false
+         */
         bool handleEntityHit(Entity *entity);
 
+        /**
+         * @brief setta la nuova posizione e calcola posizione prossima
+         */
         void move();
 
         /**

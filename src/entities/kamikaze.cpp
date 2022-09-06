@@ -5,9 +5,6 @@
 #include "manager/level.hpp"
 
 namespace entities {
-    Kamikaze::Kamikaze()
-        : Enemy('K') {}
-
     Kamikaze::Kamikaze(Position pos)
         : Enemy(pos, 7, 'K') {}
 

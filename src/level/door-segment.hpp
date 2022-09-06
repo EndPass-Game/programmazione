@@ -50,8 +50,11 @@ namespace level {
         void close() override;
 
         void setNextLevelIdx(int nextLevelIdx);
+
         int getNextLevelIdx() const;
+
         enums::Direction getFacingDir() const;
+
         virtual enums::CollisionType getCollisionType() override;
     };
 };  // namespace level

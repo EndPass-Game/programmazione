@@ -4,6 +4,9 @@
 #include "views/static-text-view.hpp"
 
 namespace views {
+    /**
+     * @brief classe che mostra la view del menù di gioco principale
+     */
     class MenuView : public StaticTextView {
       private:
         bool quit_ = false;

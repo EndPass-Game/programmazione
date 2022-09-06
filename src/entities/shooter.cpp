@@ -9,12 +9,6 @@
 #include "manager/level.hpp"
 
 namespace entities {
-    Shooter::Shooter()
-        : Enemy('S'),
-          shootCoolDown_(0),
-          shootCoolDownMax_(20),
-          logger_("Shooter") {}
-
     Shooter::Shooter(Position pos)
         : Enemy(pos, 3, 'S'),
           shootCoolDown_(0),

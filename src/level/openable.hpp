@@ -24,7 +24,9 @@ namespace level {
         virtual ~Openable() = default;
 
         bool isOpen() const;
+
         virtual void open();
+
         virtual void close();
     };
 }  // namespace level

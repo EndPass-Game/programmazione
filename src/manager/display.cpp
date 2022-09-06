@@ -1,10 +1,3 @@
-/*
-Descrizione:
-Questa classe si occupa di mostrare sullo schermo
-
-Funzioni:
-1. Errori
-*/
 #include "manager/display.hpp"
 
 #include "manager/view-manager.hpp"
@@ -13,7 +6,8 @@ Funzioni:
 namespace manager {
     Display::Display(ViewManager *viewManager)
         : viewManager(viewManager),
-          screenSize(getScreenSize()) {
+          screenSize(getScreenSize()),
+          logger_("display") {
     }
 
     Size Display::getScreenSize() {

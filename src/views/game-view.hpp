@@ -14,6 +14,9 @@
 #include "views/screen-too-small.hpp"
 
 namespace views {
+    /**
+     * @brief classe principale per la gestione di tutte le view del gioco
+     */
     class GameView : public ResizableView {
       private:
         // TODO: variabili per cunicare tra i due thread in un futuro andranno wrappate in una struct o classe mutex protected
@@ -28,15 +31,21 @@ namespace views {
 
       public:
         GameView(Position pos);
+
         ~GameView();
-        bool handleScreenBeforeRender(StateWatcher<Size> &screen, manager::ViewManager *view, bool changedView);
 
-        void handleInput(char input);
+        bool handleScreenBeforeRender(
+            StateWatcher<Size> &screen,
+            manager::ViewManager *view,
+            bool changedView
+        ) override;
 
-        void render(bool force);
+        void handleInput(char input) override;
 
-        void handleScreenToSmall(manager::ViewManager *manager);
+        void render(bool force) override;
 
-        const char *getName();
+        void handleScreenToSmall(manager::ViewManager *manager) override;
+
+        const char *getName() override;
     };
 };  // namespace views

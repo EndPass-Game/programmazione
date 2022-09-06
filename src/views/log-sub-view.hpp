@@ -5,6 +5,9 @@
 #include "views/sub-view.hpp"
 
 namespace views {
+    /**
+     * @brief Classe che mostra la finestra dei log nel gioco
+     */
     class LogSubView : SubView {
       private:
         manager::Level *levelManager_;

@@ -1,12 +1,11 @@
 #pragma once
 
-#include <mutex>
-
 #include "entities/enemy.hpp"
 #include "enums/direction.hpp"
 #include "gamestruct/logger.hpp"
 #include "gamestruct/position.hpp"
 #include "manager/level.fwd.h"
+
 namespace entities {
     class Shooter : public Enemy {
       private:
@@ -16,8 +15,12 @@ namespace entities {
         Logger logger_;
 
       public:
-        Shooter();
         Shooter(Position spawnPos);
+
+        /**
+         * @brief controlla se la linea di tiro contro il player è libera
+         */
+        virtual bool canAttack(manager::Level *levelManager);
 
         void resetShootCoolDown();
 
@@ -28,8 +31,6 @@ namespace entities {
         bool canShoot();
 
         void attack(manager::Level *levelManager) override;
-
-        virtual bool canAttack(manager::Level *levelManager) override;
 
         enums::Direction findShootDirection(manager::Level *levelManager, Position currPosition, Position playerPosition);
     };
