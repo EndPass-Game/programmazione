@@ -9,8 +9,6 @@ Simone Ruggiero : 0001021768
 
 ## Divisione dei compiti
 
-A grandi linee il progetto è stato diviso in questo modo:
-
 ### Huang
 
 1. Gestione e caricamento di tutti i livelli
@@ -19,35 +17,35 @@ A grandi linee il progetto è stato diviso in questo modo:
 
 ### Spadaccini
 
-1. Studio di ncurses per creare delle astrazioni, più facilmente utilizzabili
-2. Creazione del sistema a stack per le View e rendering di tutte le view nel gioco
-3. Creazione di QueueLogger e altre stutture per gestire gli oggetti nell'interfaccia
+1. Studio di ncurses per creare delle astrazioni, per facilitare l'utilizzo della libreria
+2. Creazione del sistema a stack per le View, creazione e rendering di tutte le schermate nel gioco
+3. Creazione di `log-queue` e altre stutture per gestire gli oggetti nell'interfaccia
    
 
 ### Ruggiero
 
-1. Creazione e gestione di tutte le entità
+1. Creazione e gestione di tutte le entità (nemici e player)
 2. Ideazione ed implementazione della logica per gli artefatti
 3. Creazione della logica per i poteri
 
 ## Metodi di lavoro
 
-> In cui andiamo a descrivere in che modo abbiamo sviluppato il progetto dal punto di vista della collaborazione in gruppo
+Ognuno ha lavorato a stretto contatto con gli altri per quanto riguarda le classi che mettono assieme campi di competenza diversi come per esempio il `level::Level` che collegava la gestione del livello a tutti i nemici, giocatore, artefatti e poteri, o come il `Displayable`, la classe astratta da cui dipendono molti oggetti del gioco per essere mostrati su schermo.
 
-Ognuno ha lavorato a stretto contatto con gli altri per quanto riguarda le classi che mettono assieme campi di competenza diversi come per esempio il `level::Level` che collegava la gestione del livello a tutti i nemici, giocatore, artefatti e poteri, o come altro livello il `Displayable` la classe astratta da cui dipendono molti oggetti del gioco per essere mostrati su schermo.
 
-Per il resto del progetto ognuno ha lavorato principalmente in modo asincrono, utilizzando il sistema di Pull Request offerto da Github, in modo simile a quanto si contruibuisce a un progetto Open Source lì hostato: data una nuova feature, l'autore creava una Pull Request che veniva letta e criticata opportunamente dal resto del gruppo.
+Per il resto del progetto ognuno ha lavorato principalmente in modo asincrono, utilizzando il sistema di Pull Request offerto da Github: data una nuova feature, l’autore creava una Pull Request che veniva letta e criticata opportunamente dal resto del gruppo
 
 ### Files di gruppo
 
-Esistono alcuni file e directory in particolare che sono stati frutto di cooperazione da parte di tutto il gruppo:
-- `loader/objects/` in cui vengono caricati tutti gli oggetti da file di configurazione di livello
+Esistono alcuni files e directory in particolare che sono stati frutto di cooperazione da parte di tutto il gruppo:
 
-- `level::Level` e `manager::Level` che sono i gestori dei livelli principali.
+- `loader/objects/` in cui vengono caricati tutti gli oggetti da file di configurazione di livello.
 
-- `gamestructs/` che introducevano alcune strutture utili per tutti
+- `level::Level` e `manager::Level` che sono i gestori dei livelli, il primo gestisce il singolo livello, e il secondo gestisce l'insieme di tutti i livelli della partita.
 
-- `enums/` in cui sono raccolti alcuni enums utili per tutti
+- `gamestructs/` che introducevano alcune strutture utili per tutti.
+
+- `enums/` in cui sono raccolti alcuni enums utili per tutti.
 
 - `datastruct/` in cui sono presenti alcune strutture di dati utilizzati nell'intero progetto.
 
@@ -89,11 +87,15 @@ A seconda delle necessità, sono stati introdotti `namespaces` che seguono il no
 
 ## Huang
 
+<!--
+
 Eccetto per i file elencati in [Files di gruppo](#files-di-gruppo), il lavoro svolto in autonomia è racchiuso nelle directory
 
 - `loaders`
   
 - `level`
+
+-->
 
 ### Loaders
 
@@ -102,23 +104,17 @@ Sono presenti 4 classi principali:
 
 1. `loader-handler` è la classe che gestisce il caricamento del singolo livello
    
-2. `directory-loader` è la classe incaricata di percorrere la directory per trovare i file di descrizione delle mappe
+2. `directory-loader` è la classe che trova i file di descrizione delle mappe nella directory assets
    
-3. `level-provider` è un singoletto il cui scopo è creare i `level::Level` a seconda della richiesta
+3. `level-provider` è un singoletto il cui scopo è creare il livello (`level::Level`) a seconda della richiesta
    
-4. `load-object` è una classe astratta che implementa tutte le funzioni utili alla creazione e del caricamento dei singoli oggetti, tranne il loading stesso, che è delegato ai `loader/objects/`
+4. `load-object` è una classe astratta che implementa tutte le funzioni utili alla creazione e del caricamento dei singoli oggetti che costituiscono un livello; le implementazioni di questa classe per i vari oggetti sono sotto `loader/objects/`
+
 
 ### Level
 
 In questa directory sono presenti classi utili a rappresentare i muri e le porte (oltre al `level::Level` che le gestisce).
 
-Qui sono presenti 4 classi da cui derivano le classi concrete
-
-- `door-segment`
-  
-- `local-door`
-  
-- `wall-segment`
 
 **Descrizione delle classi astratte**
 
@@ -132,7 +128,7 @@ Qui sono presenti 4 classi da cui derivano le classi concrete
 
 **Descrizione delle classi concrete**
 
-- `door-segment` rappresenta una porta di livello. È collegato ad un indice di un altro livello tramite `manager::Level`.
+- `door-segment` rappresenta una porta che conduce ad un altro livello collegato tramite un indice in `manager::Level`.
   
 - `local-door` rappresenta una porta all'interno di una stanza del singolo livello. È collegato tramite al suo ID interno a un `collectables::Power`, che la sblocca.
   
@@ -142,50 +138,47 @@ Qui sono presenti 4 classi da cui derivano le classi concrete
 
 ### View
 
-Rappresentano una pagina che viene renderizzata a video, ha i seguenti metodi astratti:
-- `View::render` :  prende in input un booleano che gli dice se deve riscrivere tutto sullo schermo o può farlo in maniera lazy
+Nella directory view sono presenti tutte le schermate mostrate nel gioco. La classe astratta `view::View` descrive le funzioni principali che tutte le singole view possiedono devono implementare.  I principali metodi di `view::View` sono:
+
+- `View::render`: prende in input un booleano che decide se la renderizzazione dello scermo può essere fatta in maniera lazy (cioè scrivere solo le differenze rispetto alla vecchia schermata)
   
-- `View::handleInput` : prende in input una char ed è la funzione che viene eseguita ogni volta che viene preso un input
+- `View::handleInput`: Gestisce gli input provvisti a ogni frame dal `manager::Input`
   
-- `View::handleScreenBeforeRender` : viene eseguita prima del render e serve sia per cambiare finestra, inoltre gli vengono passate le informazioni sulla dimensione della finestra così può essere gestito il resize
+- `View::handleScreenBeforeRender`: viene eseguita prima del render e serve sia per cambiare finestra; inoltre gli vengono passate le informazioni sulla dimensione della finestra così può essere gestita il resize
   
-- `View::getName` : funzione utilizzata ai fini di debug
+- `View::getName`: funzione utilizzata ai fini di debug
 
 ### View Manager
-
-Tiene uno stack contenente le view, l'ultima di essa è quella che sta eseguendo. Tenendo lo stack si può facilmente passare da una view all'altra senza perdere lo stato della view.
+Gestisce la view mostrata a schermo tenendo uno stack contenente le view, l'ultima inserita è quella che viene eseguita in un determinato momento. Tenendo lo stack si può facilmente passare da una view all'altra senza perdere lo stato della view che viene salvato nello stack.
 Quando il View manager non ha view il programma termina.
 
 
 ### Gestione dell'input e output
-
 Per la gestione dell'input e dell'output abbiamo deciso dopo varie prove di utilizzare due thread, uno dedicato alla lettura da input e l'altro dedicato a la renderizzazione dei contenuti e al output di essi.  
+Il vantaggio principale è l'assenza di checks per eliminare input troppo veloci e non perdere input se fossero passati durante la fase di output/calcolo.
 
-Il vantaggio che abbiamo avuto e che non dobbiamo fare nessun check per eliminare input troppo veloci e non perdere input se fossero passati durante la fase di output/calcolo.
+- `manager::Display` : tiene aggiornata la posizione della finestra e la passa a `View::handleScreenBeforeRender`. Inoltre in caso di cambiamenti come il cambiamento delle dimensioni della finestra o il cambiamento della view, chiama `View::render` con il force a true. 
 
-- `manager::Display` : tiene aggiornata la posizione della finestra e la passa a `View::handleScreenBeforeRender`. Inoltre in caso di cambiamenti come il cambiamento delle dimensioni della finestra o il cambiamento della view, chiama `View::render` con il force a true. Queste funzioni vengono eseguite sull'ultima view del ViewManger.
-
-- `manager::Input` : legge l'input dall'utente e lo passa chiamando `View::handleInput` sull'ultima view nel ViewManager
-
+- `manager::Input` : legge l'input dall'utente e lo passa chiamando `View::handleInput` alla view corrente.
 
 ## Ruggiero
 
-La mia parte è stata caratterizzata principalmente dallo sviluppo delle meccaniche di gameplay del gioco, quindi dalla creazione e dalla gestione delle varie entità e della loro suddivisione, degli oggetti presenti nei livelli e del loro funzionamento
+La mia parte è stata caratterizzata principalmente dallo sviluppo delle meccaniche di gameplay del gioco, quindi dalla creazione e dalla gestione delle varie entità (nemici e il player), degli oggetti presenti nei livelli e del loro funzionamento.
 
 ### Entity
 
-La classe su cui si basano tutte le entità è la classe `Entity` nella quale sono presenti tutti i metodi virtuali, come quelli per gestire le collisioni oppure per attaccare, utili alle classi che la erediteranno, in modo da permettere ad ogni entità di gestirle in maniera differente, inoltre gestisce il compito di renderizzare tutte le entità che fanno parte del gioco.
-Questa classe viene ereditata dalle classi `Player` e `Enemy`
-Il player viene gestito da tastiera tramite un apposito thread, mentre gli enemy sono gestiti tutti quanti dal computer.
+La classe astratta su cui si basano tutte le entità è la classe `Entity`, nella quale sono presenti i metodi virtuali, utili a gestire le collisioni,e l'attacco.
+Implementandola permette ad ogni entità di gestirle in maniera differente questi aspetti oltre a gestire il compito di renderizzare tutte le entità che fanno parte del gioco.
+Le principali classi che la implementano sono `Player` e `Enemy`.
 
 ### Player
 
 Questa classe contiene tutti i membri e i metodi che perettono al giocatore di muoversi, attaccare e interagire con la mappa
-Le funzioni virtuali per gestire collisioni ereditate dalla classe `Entity` sono overridate e modificate in base all'utilizzo. Molte classi sono fortemente collegate a questa come `Artifact` e `Power` visto che sono oggetti collezionabili dal player. 
+Le funzioni virtuali per gestire collisioni ereditate dalla classe `Entity` sono overridate e modificate in base all'utilizzo. 
 
 ### Enemy
 
-Questa classe definisce tutti i membri e tutti i metodi comuni a tutte le tipologie di nemici. Possiede delle funzioni virtuali come `wander` e `canAttack` che sono implementate in modo differente a seconda della tipologia di nemico.
+Questa classe definisce tutti i membri e tutti i metodi comuni a tutte le tipologie di nemici. Possiede delle funzioni virtuali come `wander` che sono implementate in modo differente a seconda della tipologia di nemico.
 
 ### Shooter
 
@@ -193,11 +186,12 @@ Classe che rappresenta un nemico capace di sparare proiettili nel momento in cui
 
 ### Kamikaze
 
-Questa classe rappresenta un nemico che insegue il giocatore e si suicida al momento di incontro ravvicinato causando danno al giocatore.
+Questa classe rappresenta un nemico che insegue il giocatore e esplode causando danno al giocatore.
 
 ### Artifact
 
-Questa classe rappresenta un collezionabile presente sulla mappa che permette di aumentare la vita massima del giocatore. Ogni artefatto sulla mappa aumenta la vita di un valore diverso, in base alla difficoltà del livello.A
+Questa classe rappresenta un collezionabile presente sulla mappa che permette di aumentare la vita massima del giocatore. Ogni artefatto sulla mappa aumenta la vita di un valore diverso, in base alla difficoltà del livello.
 
 ### Power
+
 Classe che rappresenta un collezionabile presente sulla mappa, che restituisce vita al giocatore e apre una porta a lui collegata che permette l'accesso ad un artefatto altrimenti irraggiungibile.
