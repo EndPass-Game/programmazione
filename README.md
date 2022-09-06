@@ -10,7 +10,7 @@ Nome progetto: **Endpass**
 È presente un makefile per aiutare nei processi di compilazione ed esecuzione del gioco.
 
 1. Avere installato la libreria di **ncurses** per la parte grafica
-2. Eseguire `make main` per creare l'eseguibile. Sarà presente nella directory `build/`
+2. Eseguire `make remake` per creare l'eseguibile. Sarà presente nella directory `build/`
 3. `make run` per eseguire il file, oppure eseguirlo con `./build/main`.
 
 
